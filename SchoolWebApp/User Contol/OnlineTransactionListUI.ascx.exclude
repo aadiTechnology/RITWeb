@@ -1,0 +1,437 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="OnlineTransactionListUI.ascx.cs"
+    Inherits="OnlineTransactionListUI" %>
+<%@ Register Src="~/RITeSchool/User Contol/ClearanceListFiltersUI.ascx" TagName="ucClearanceListFiltersUI"
+    TagPrefix="uc1" %>
+<%@ Register Assembly="RJS.Web.WebControl.PopCalendar.Net.2008" Namespace="RJS.Web.WebControl"
+    TagPrefix="rjs" %>
+<table width="100%">
+    <tr>
+        <td align="center" valign="top" colspan="3">
+            <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <asp:Label ID="lblSuccessMsg" runat="server" CssClass="LblNormalImg" Font-Bold="true"
+                        Font-Size="Small" ForeColor="Blue" Visible="true"></asp:Label>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" colspan="3">
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <asp:ValidationSummary ID="valSumErrorMsg" runat="server" CssClass="lblNormal" ValidationGroup="Show" />
+                    <asp:CustomValidator ID="cstForm" Display="None" runat="server" CssClass="ClsMdtStar"
+                        Visible="true" ErrorMessage="Cheque number should not be blank." ClientValidationFunction="ValidateControls"
+                        ValidationGroup="Show"></asp:CustomValidator>
+                    <asp:Label ID="lblError" runat="server" Visible="false" CssClass="ClsMdtStar"></asp:Label>
+                    <asp:ValidationSummary ID="valSave" runat="server" CssClass="lblNormal" ValidationGroup="Save" />
+                    <asp:CustomValidator ID="cstClearanceDate" Display="None" runat="server" CssClass="ClsMdtStar"
+                        Visible="true" ErrorMessage="TPSLTransactionID should not be blank." ClientValidationFunction="ValidateGridControls"
+                        ValidationGroup="Save"></asp:CustomValidator>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <table width="100%">
+                        <tr>
+                            <td colspan="3">
+                                <table width="97%" align="center">
+                                    <tr>
+                                        <td class="ClsBorderlight" valign="top" width="2%">
+                                            <asp:RadioButton ID="optTransactionNumber" runat="server" GroupName="Filter" AutoPostBack="true"
+                                                Checked="true" OnCheckedChanged="optTransactionNumber_CheckedChanged" TabIndex="1" />
+                                        </td>
+                                        <td valign="top" class="ClsBorderlight" width="30%">
+                                            <span class="ClsLabel">TPSLTransaction ID :</span>
+                                        </td>
+                                        <td valign="top" align="left" width="70%">
+                                            <asp:TextBox ID="txtTransactionIDNumber" runat="server" CssClass="MidTxtBox" MaxLength="30"
+                                                onblur="extractNumber(this,0,false);" onkeyup="extractNumber(this,0,false);"
+                                                onkeypress="return blockNonNumbers (this, event, false, false);" onpaste="event.returnValue=false;"
+                                                ondrop="event.returnValue=false;" TabIndex="2"></asp:TextBox>
+                                            <%--<asp:Label ID="lblChequeNumberMandMark" runat="server" CssClass="ClsMdtStar" Text="*"
+                                                        Height="14px" Width="14px"></asp:Label>--%>
+                                        </td>
+                                    </tr>
+                                    <tr id="Tr1">
+                                        <td align="center" class="HilightBGGray" colspan="3">
+                                            <img src="../images/ArrowBlueDblRev.gif" /><span class="ClsHilightTextB">OR </span>
+                                            <img src="../images/ArrowBlueDblNw.gif" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <uc1:ucClearanceListFiltersUI ID="ClearanceListFilters" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top" colspan="3">
+                                <asp:Button ID="btnShow" runat="server" Text="Show" CssClass="ClsBtn" TabIndex="7"
+                                    Width="100px" ValidationGroup="Show" OnClick="btnShow_Click" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" valign="top" colspan="3">
+                                <table id="Table1" runat="server" width="100%">
+                                    <tr runat="server" id="trTotalRec" align="center" visible="false">
+                                        <td colspan="6">
+                                            <asp:Label ID="lblStartIndex" runat="server" CssClass="LblNrmlB" />
+                                            <span class="LblNormal">To</span>
+                                            <asp:Label ID="lblEndIndex" runat="server" CssClass="LblNrmlB" />
+                                            <span class="LblNormal">Out Of</span>
+                                            <asp:Label ID="lblTotal" runat="server" CssClass="LblNrmlB" />
+                                            <span class="LblNormal">Records</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" valign="top" colspan="3">
+                                            <asp:GridView ID="grdOnlineFeeTransactionDetails" runat="server" Width="100%" ForeColor="#333333"
+                                                AutoGenerateColumns="False" BackColor="White" CssClass="GridBorder" GridLines="None"
+                                                CellPadding="0" CellSpacing="1" AllowPaging="True" EmptyDataRowStyle-HorizontalAlign="Center"
+                                                EmptyDataText="No Record Found" DataKeyNames="NetBankingPaymentTransactionID"
+                                                TabIndex="10" OnRowDataBound="grdOnlineFeeTransactionDetails_RowDataBound" 
+                                                OnPageIndexChanging="grdOnlineFeeTransactionDetails_PageIndexChanging">
+                                                <PagerStyle ForeColor="Black" HorizontalAlign="Right" Font-Bold="True" Font-Underline="False">
+                                                </PagerStyle>
+                                                <Columns>
+                                                    <asp:BoundField HeaderText="Reg.No." DataField="RegNo">
+                                                        <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" CssClass="paddingLSML"
+                                                            Width="12%" />
+                                                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="false" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField HeaderText="Name" DataField="StudentName">
+                                                        <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" CssClass="paddingLSML" Width="190px" />
+                                                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="false" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField HeaderText="Class" DataField="ClassName">
+                                                        <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" CssClass="paddingLSML" Width="80px" />
+                                                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="true" />
+                                                    </asp:BoundField>
+                                                    <asp:TemplateField HeaderText="TPSLTransaction ID">
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtTSPLTransactionID" runat="server" CssClass="SmlTxtBox" Width=" 90px"
+                                                                MaxLength="30" TabIndex="8" Text='<%#Eval("TPSLTransactionID")%>' onblur="extractNumber(this,0,false);"
+                                                                onkeyup="extractNumber(this,0,false);" onkeypress="return blockNonNumbers (this, event, false, false);"
+                                                                onpaste="event.returnValue=false;" ondrop="event.returnValue=false;"></asp:TextBox>
+                                                        </ItemTemplate>
+                                                        <ItemStyle Width="15%" HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                        <HeaderStyle Width="18%" HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                    </asp:TemplateField>
+                                                    <asp:BoundField HeaderText="Bank" DataField="Bank_Name">
+                                                        <ItemStyle HorizontalAlign="Left" VerticalAlign="Middle" CssClass="paddingLSML" Width="15%" />
+                                                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="true" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField HeaderText="Amount" DataField="Amount">
+                                                        <ItemStyle HorizontalAlign="Right" VerticalAlign="Middle" CssClass="ClspaddingR" />
+                                                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="false" />
+                                                    </asp:BoundField>
+                                                    <asp:BoundField HeaderText="Transaction Date" DataField="TransactionDateTime">
+                                                        <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                        <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" Wrap="false" />
+                                                    </asp:BoundField>
+                                                    <asp:TemplateField HeaderText="Clearance Dt.">
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtclearance" runat="server" CssClass="SmlTxtBox" MaxLength="11"
+                                                                TabIndex="8" Text='<%#Eval("ClearanceDate","{0:dd-MMM-yyyy}")%>'></asp:TextBox>
+                                                            <rjs:PopCalendar ID="cClrDate" runat="server" Control="txtclearance" Format="dd MMM yyyy"
+                                                                ShowWeekend="True" Enabled="true" ShowErrorMessage="false" InvalidDateMessage="Please select valid to date." />
+                                                        </ItemTemplate>
+                                                        <ItemStyle Width="17%" HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                        <HeaderStyle Width="17%" HorizontalAlign="Center" VerticalAlign="Middle" />
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                                <RowStyle CssClass="ClsGridRow" />
+                                                <HeaderStyle CssClass="ClsGridHeader" />
+                                                <AlternatingRowStyle CssClass="ClsGridAltRow" />
+                                                <EmptyDataRowStyle BackColor="#E6EEFC" CssClass="LblNoRecord" />
+                                                <PagerTemplate>
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td width="70%" align="left" class="ClsBorderPager" valign="middle">
+                                                                <asp:Label ID="MessageLabel" Text="Select a page:" runat="server" CssClass="LblNrmlB" />
+                                                                <asp:DropDownList ID="PageDropDownList" AutoPostBack="true" CssClass="LblNormal"
+                                                                    OnSelectedIndexChanged="PageDropDownList_SelectedIndexChanged" runat="server">
+                                                                </asp:DropDownList>
+                                                            </td>
+                                                            <td width="30%" align="right" class="ClsBorderPager" valign="middle">
+                                                                <asp:Label ID="CurrentPageLabel" runat="server" CssClass="LblNormal" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </PagerTemplate>
+                                            </asp:GridView>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table align="center" id="tblTotalAmount" runat="server" visible="false">
+                                                <tr>
+                                                    <td style="background-color: #e4efc4;" align="left">
+                                                        <%--<asp:Label ID="Label9" runat="server" CssClass="LblNrmlB" EnableViewState="False"
+                                                        Width="200px">Total Pending Amount :</asp:Label>--%>
+                                                        <span class="LblNrmlB" style="width: 200px">Total Amount :</span>
+                                                    </td>
+                                                    <td align="left" style="background-color: #eaeaea">
+                                                        <asp:Label ID="lblTotalAmount" Width=" 75px" runat="server" CssClass="ClsHilightFeeL" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <asp:HiddenField ID="hidPageNo" runat="server" />
+                                <asp:HiddenField ID="hidRowCnt" runat="server" />
+                                <asp:HiddenField ID="hidServerDate" runat="server" />
+                                <asp:HiddenField ID="hidCurrentDate" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="46%">
+            <asp:Button ID="btnSave" Text="Save" CssClass="ClsBtn" runat="server" OnClick="btnSave_Click"
+                ValidationGroup="Save" TabIndex="11" />
+        </td>
+        <td>
+            <asp:Button ID="btnBack" Text="Back" CssClass="ClsBtn" runat="server" CausesValidation="false"
+                PostBackUrl="~/RITeSchool/Common/ControlPanel.aspx" TabIndex="12" />
+            <asp:Button ID="btnExport" Text="Export" CssClass="ClsBtn" runat="server" OnClick="btnExport_Click"
+                TabIndex="13" />
+        </td>
+    </tr>
+
+    <script language="javascript" type="text/javascript">
+        _clientcstForm = "<%=this.cstForm.ClientID %>"
+        _clienthidRowCnt = "<%=this.hidRowCnt.ClientID %>"
+        _clientbtnExport = "<%=this.btnExport.ClientID %>"
+        _clientGrdId = "<%=this.grdOnlineFeeTransactionDetails.ClientID %>"
+        _clientlblSuccessMsg = "<%=this.lblSuccessMsg.ClientID %>"
+        _clientlblErrorId = "<%=this.lblError.ClientID %>"
+        _clientbtnSave = "<%=this.btnSave.ClientID %>"
+        _clientbtnShow = "<%=this.btnShow.ClientID %>"
+        _clienthidPageNo = "<%=this.hidPageNo.ClientID %>"
+        _clientvalSumErrorMsgId = "<%=this.valSumErrorMsg.ClientID %>"
+        _clienthidCurrentDate = "<%=this.hidCurrentDate.ClientID%>"
+
+        var prm = Sys.WebForms.PageRequestManager.getInstance()
+        prm.add_endRequest(EndReqHandler)
+
+        function EndReqHandler(sender, args) {
+
+            var postBackElement = sender._postBackSettings.sourceElement
+            if ((postBackElement != null && postBackElement.id == _clientbtnShow) || (postBackElement != null && postBackElement.id == _clientbtnSave)) {
+                if (document.getElementById(_clientbtnExport).style.visibility == "hidden") {
+                    if (document.getElementById(_clientGrdId) != undefined && document.getElementById(_clientGrdId) != null) {
+                        var iCount = document.getElementById(_clientGrdId).rows.length - 1
+                        if (iCount > 0) {
+                            document.getElementById(_clientbtnExport).style.visibility = "inherit"
+                            document.getElementById(_clientbtnSave).style.visibility = "inherit"
+                        }
+                        else {
+                            if (document.getElementById(_clientlblSuccessMsg) != undefined) {
+                                document.getElementById(_clientlblSuccessMsg).innerHTML = ""
+                            }
+                            document.getElementById(_clientbtnExport).style.visibility = "hidden"
+                            document.getElementById(_clientbtnSave).style.visibility = "hidden"
+                        }
+                    }
+                    else {
+                        if (document.getElementById(_clientlblSuccessMsg) != undefined) {
+                            document.getElementById(_clientlblSuccessMsg).innerHTML = ""
+                        }
+                        document.getElementById(_clientbtnExport).style.visibility = "hidden"
+                        document.getElementById(_clientbtnSave).style.visibility = "hidden"
+                    }
+                }
+                else {
+                    if ((postBackElement != null && postBackElement.id == _clientbtnSave)) {
+                        document.getElementById(_clientbtnExport).style.visibility = "inherit"
+                        document.getElementById(_clientbtnSave).style.visibility = "inherit"
+                        if (document.getElementById(_clientGrdId) != undefined && document.getElementById(_clientGrdId) != null) {
+                            var iCount = document.getElementById(_clientGrdId).rows.length - 1
+                            if (iCount > 0) {
+                                document.getElementById(_clientbtnExport).style.visibility = "inherit"
+                                document.getElementById(_clientbtnSave).style.visibility = "inherit"
+                            }
+                            else {
+                                if (document.getElementById(_clientlblSuccessMsg) != undefined) {
+                                    document.getElementById(_clientlblSuccessMsg).innerHTML = ""
+                                }
+                                document.getElementById(_clientbtnExport).style.visibility = "hidden"
+                                document.getElementById(_clientbtnSave).style.visibility = "hidden"
+                            }
+                        }
+                        else {
+                            if (document.getElementById(_clientlblSuccessMsg) != undefined) {
+                                document.getElementById(_clientlblSuccessMsg).innerHTML = ""
+                            }
+                            document.getElementById(_clientbtnExport).style.visibility = "hidden"
+                            document.getElementById(_clientbtnSave).style.visibility = "hidden"
+                        }
+                    }
+                    else {
+                        if (document.getElementById(_clientlblSuccessMsg) != undefined) {
+                            document.getElementById(_clientlblSuccessMsg).innerHTML = ""
+                        }
+                        document.getElementById(_clientbtnExport).style.visibility = "hidden"
+                        document.getElementById(_clientbtnSave).style.visibility = "hidden"
+                    }
+                }
+            }
+        }
+
+        function ValidateGridControls(oSrc, args) {
+            document.getElementById(_clienthidCurrentDate).value = new Date().format("dd-MMM-yyyy")
+            if (document.getElementById(_clientlblSuccessMsg) != undefined) {
+                document.getElementById(_clientlblSuccessMsg).innerHTML = ""
+            }
+            if (document.getElementById(_clientlblErrorId) != undefined) {
+                document.getElementById(_clientlblErrorId).innerHTML = ""
+            }
+            oSrc.errormessage = ""
+            var iRowCount = document.getElementById(_clienthidRowCnt).value
+            var TodayDate = document.getElementById(_clienthidCurrentDate).value
+            var iRowNoP = ""
+            var iRowNos = ""
+            var iRowChequeNo = ""
+            var iChequeDate = ""
+            var dtToday
+
+            for (i = 1; i <= iRowCount; i++) {
+                if (i < 9) {
+                    sRow = "_ctl0" + (i + 1) + "_txtclearance"
+                    var TransactionDate = document.getElementById(_clientGrdId).rows[i].cells[6].innerHTML
+                    var txtClearanceDate = document.getElementById(_clientGrdId + sRow)
+
+                    if ((TransactionDate).value != "" && (txtClearanceDate).value != "") {
+                        var sDate = TransactionDate.split("");
+                        var DateString = ""
+                        for (j = 0; j <= 10; j++) {
+                            if (j == 2 || j == 6)
+                                sDate[j] = "-"
+                            DateString += sDate[j]
+                        }
+                        var DateOfTransaction = new Date(convertvaliddate(DateString))
+                        var DateOfClearance = new Date(convertvaliddate(txtClearanceDate.value))
+                        if (document.all)
+                            dtToday = new Date(TodayDate.replace('-', ' '))
+                        else
+                            dtToday = new Date(convertdate(TodayDate))
+
+                        if (DateOfTransaction > DateOfClearance)
+                            iRowNos += i.toString() + ", "
+                        else if (dtToday < DateOfClearance)
+                            iRowNoP += i.toString() + ", "
+                    }
+                    sRow1 = "_ctl0" + (i + 1) + "_txtTSPLTransactionID"
+                    txtTSPLTransactionID = document.getElementById(_clientGrdId + sRow1)
+                    if ((txtTSPLTransactionID).value == "")
+                        iRowChequeNo += i.toString() + ", "
+                }
+                else {
+                    sRow = "_ctl" + (i + 1) + "_txtclearance"
+                    sRow1 = "_ctl" + (i + 1) + "_txtTSPLTransactionID"
+                    var TransactionDate = document.getElementById(_clientGrdId).rows[i].cells[6].innerHTML
+                    var txtClearanceDate = document.getElementById(_clientGrdId + sRow)
+
+                    if ((TransactionDate).value != "" && (txtClearanceDate).value != "") {
+                        var sDate = TransactionDate.split("");
+                        var DateString = ""
+                        for (j = 0; j <= 10; j++) {
+                            if (j == 2 || j == 6)
+                                sDate[j] = "-"
+                            DateString += sDate[j]
+                        }
+                        var DateOfTransaction = new Date(convertvaliddate(DateString))
+                        var DateOfClearance = new Date(convertvaliddate(txtClearanceDate.value))
+                        if (document.all)
+                            dtToday = new Date(TodayDate.replace('-', ' '))
+                        else
+                            dtToday = new Date(convertdate(TodayDate))
+
+                        if (DateOfTransaction > DateOfClearance)
+                            iRowNos += i.toString() + ", "
+                        else if (dtToday < DateOfClearance)
+                            iRowNoP += i.toString() + ", "
+                    }
+                    sRow1 = "_ctl" + (i + 1) + "_txtTSPLTransactionID"
+                    txtTSPLTransactionID = document.getElementById(_clientGrdId + sRow1)
+                    if ((txtTSPLTransactionID).value == "")
+                        iRowChequeNo += i.toString() + ", "
+                }
+            }
+
+            if (iRowChequeNo != "") {
+                iRowChequeNo = iRowChequeNo.substring(0, iRowChequeNo.lastIndexOf(","))
+                oSrc.errormessage = "TSPLTransactionID should not be blank for row(s) : " + iRowChequeNo + "<br/>"
+                if (iRowNos != "") {
+                    iRowNos = iRowNos.substring(0, iRowNos.lastIndexOf(","))
+                    oSrc.errormessage += "Clearance date should be greater than transaction date for row(s) : " + iRowNos + "<br/>"
+                }
+                if (iRowNoP != "") {
+                    iRowNoP = iRowNoP.substring(0, iRowNoP.lastIndexOf(","))
+                    oSrc.errormessage += "clearance date should not be future date for row(s) : " + iRowNoP + "<br/>"
+                }
+                args.IsValid = false
+                return true
+            }
+            if (iRowNos != "") {
+                iRowNos = iRowNos.substring(0, iRowNos.lastIndexOf(","))
+                oSrc.errormessage += "Clearance date should be greater than transaction date for row(s) : " + iRowNos + "<br/>"
+                args.IsValid = false
+                return true
+            }
+            if (iRowNoP != "") {
+                iRowNoP = iRowNoP.substring(0, iRowNoP.lastIndexOf(","))
+                oSrc.errormessage += "Clearance date should not be future date for row(s) : " + iRowNoP + "<br/>"
+                args.IsValid = false
+                return true
+            }
+
+            args.IsValid = true
+            return false
+        }
+
+        function MessageAboutDate(oCmb) {
+            var bIsValid
+            if (window.confirm('If you change the page then selected date and entered TPSLTransactionID number from current page will get lost. Do you want to continue?'))
+                bIsValid = true
+            else {
+                document.getElementById(oCmb).value = document.getElementById(_clienthidPageNo).value
+                bIsValid = false
+            }
+            return bIsValid
+        }
+
+        function ClearValSum() {
+            if (document.getElementById(_clientvalSumErrorMsgId) != null) document.getElementById(_clientvalSumErrorMsgId).style.display = "none"
+            if (document.getElementById(_clientlblErrorId) != undefined) {
+                document.getElementById(_clientlblErrorId).innerHTML = ""
+            }
+            return true
+        }       
+       
+    </script>
+
+</table>

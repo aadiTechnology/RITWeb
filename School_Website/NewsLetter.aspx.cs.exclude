@@ -1,0 +1,94 @@
+﻿/* File Name :- NewsLetter.aspx.cs
+ * Modified By :- Yogesh
+ * Modified Date :- 16-June-2015
+ * Class Description :- This class is used to display E-NewsLetter List.
+*/
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web.UI.WebControls;
+using BusinessLogic;
+using BusinessLogic.Exceptions;
+using SchoolEntities;
+using Utility;
+
+public partial class NewsLetter : SchoolBase
+{
+    #region Constant(s)
+
+    private const string S_PAGE_NAME = "NewsLetter";
+    private const int I_NEWSLETTER_PARENT_MENU_ID = 89;
+
+    #endregion
+
+    #region Event(s)
+    /// <summary>
+    /// This event will fired at page load
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            fillNewsLetterList();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event will fired when click on link of ListView.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void lstvwNewsLetterList_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+        try
+        {
+            ListViewDataItem oCurrentItem = e.Item as ListViewDataItem;
+            HyperLink oHyperLink = oCurrentItem.FindControl("lnkName") as HyperLink;
+            string sMenuId = lstvwNewsLetterList.DataKeys[oCurrentItem.DisplayIndex]["ConfigureMenuId"].ToString();
+            string sNavigateUrl = lstvwNewsLetterList.DataKeys[oCurrentItem.DisplayIndex]["FilePath"].ToString();
+            oHyperLink.Attributes["onclick"] = String.Format("window.open('{0}', '_new'); return false;", Page.ResolveUrl(@"~\" + sNavigateUrl));
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
+    #endregion
+
+    #region Private Method(s)
+
+    /// <summary>
+    /// This method is used to fill Newsletter ListView.
+    /// </summary>
+    private void fillNewsLetterList()
+    {
+        SchoolBL oSchoolBL = new SchoolBL();
+        List<NewsLetterDetails> lstNewsLetter = oSchoolBL.GetNewsLetterDetails(I_NEWSLETTER_PARENT_MENU_ID, ConfigurationManager.AppSettings["SchoolID"].ToInt());
+        lstvwNewsLetterList.DataSource = lstNewsLetter;
+        lstvwNewsLetterList.DataBind();
+    }
+
+    /// <summary>
+    /// This method is used to enctypt query string.
+    /// </summary>
+    /// <param name="asMenuId"></param>
+    /// <param name="asManuName"></param>
+    /// <returns></returns>
+    private string GetEncryptedMenuQueryString(string asMenuId, string asManuName)
+    {
+        string sQuerystring = "";
+        asManuName = asManuName.Replace("&", " sps ");
+        sQuerystring = "MenuId=" + asMenuId + "&MenuName=" + asManuName + "&ExternalPages=" + true;
+        string sEncryptedString = "RITeSchool/Common/DisplayMenuContents.aspx?" + Utility.CommonUtility.EncryptQuerystring(sQuerystring);
+        return sEncryptedString;
+    }
+
+    #endregion
+}

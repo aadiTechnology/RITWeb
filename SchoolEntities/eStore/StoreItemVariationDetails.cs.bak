@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace SchoolEntities.eStore
+{
+    [Serializable]
+    public class StoreItemVariationDetails : StoreItemBasic
+    {
+        public int Id { get; set; }
+        public int StoreItemMasterId { get; set; }
+        public int ColorId { get; set; }
+        public int SizeId { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+        public int ReorderQuantity { get; set; }
+        public string Title { get; set; }
+        public string FileNames { get; set; }
+        public int TotalRows { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
+        public string FileIdsToDelete { get; set; }
+        public List<Attachment> ImageFileList { get; set; }
+        public string UOM { get; set; }
+        public string GST { get; set; }
+     }
+    
+    public class StoreItemSize
+    {
+        public int Id { get; set; }
+        public int Size { get; set; }
+    }
+
+    public class Color
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+}

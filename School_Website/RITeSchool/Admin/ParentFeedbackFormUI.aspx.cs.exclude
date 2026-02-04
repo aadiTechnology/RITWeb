@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BusinessLogic.Exceptions;
+using BusinessLogic;
+
+public partial class RITeSchool_Admin_ParentFeedbackFormUI : SchoolBase
+{
+    #region enums
+
+    public enum ParentFeedback
+    {
+        Combobox=1,
+        Textbox=2,
+        RadioButton=3
+    }
+
+    #endregion enums
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!IsPostBack)
+            {
+                FillListview();
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
+    private void FillListview()
+    {
+        List<ParentFeedback> lstParentFeedback = new List<ParentFeedback>();
+        ParentFeedbackBL oParentFeedbackBL = new ParentFeedbackBL();
+        lstvwParentFeedback.DataSourceID = oParentFeedbackBL.GetParentFeedback(); 
+        lstvwParentFeedback.DataBind();
+        
+    }
+}

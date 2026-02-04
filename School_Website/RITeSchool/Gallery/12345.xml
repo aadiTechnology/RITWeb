@@ -1,0 +1,9 @@
+<gallery base="" background="#ffffff" banner="#ffffff" text="#cc3366" link="#1313A2" alink="#8F6F6F" vlink="#550080" date="Gallery Name :  12345">
+  <banner font="Verdana" fontsize="5" color="#F0F0F0" />
+  <thumbnail base="../images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" rows="0" col="0" />
+  <large base="../images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" />
+  <images id="images">
+    <image path="Blue hills172351.jpg" width="800" height="500" thumbpath="Blue hills172351.jpg" />
+    <image path="Winter17286.jpg" width="800" height="500" thumbpath="Winter17286.jpg" />
+  </images>
+</gallery>

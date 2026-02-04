@@ -1,0 +1,538 @@
+﻿using System;
+using System.Data;
+using System.Text;
+using System.Threading;
+using System.Web.UI.WebControls;
+using System.Collections.Generic;
+using System.Web.UI;
+using System.Xml;
+using BusinessLogic;
+using Utility;
+
+public partial class OnlineTransactionListUI : PaymentClearanceUC
+{
+    #region "Constant"
+
+    const int FILTER_BY_TRANSACTION_ID = 1;
+    const int I_COLUMN_INDEX_CLEARANCE_DATETIME = 6;
+    const int I_COLUMN_INDEX_TSPLTRANSACTIONID = 2;
+    const int FILTER_BY_STUDENT_NAME_REG_NO = 2;
+    const int FILTER_BY_TRANSACTION_DATE = 3;
+    const int FILTER_BY_CLEARANCE_DATE = 4;
+    const int GRID_PAGE_COUNT = 20;
+    const string HIDE_PAGE_NUMBER = "1";
+
+    #endregion
+
+    #region "Properties"
+
+    public Button ShowButton
+    {
+        get { return btnShow; }
+    }
+
+    public RadioButton RadioButtonTransactionNumber
+    {
+        get { return optTransactionNumber; }
+    }
+
+    #endregion
+
+    #region "Event"
+
+    /// <summary>
+    /// This method is used to initialize the controls and set the handler to the event from the filters users control.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!IsPostBack)
+            {
+                InitiliseControl();
+                SetClientScriptAttribute(AddControls());
+                HideButtons(btnSave, btnExport);
+            }
+            ClearanceListFilters.OnClearanceFiltersChanged += new EventHandler(ClearanceListFilters_ClearanceFiltersChanged);
+            ClearanceListFilters.PaymentDateLable.Text = "Transaction Start Date";
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+
+    /// <summary>
+    /// This event is used uncheck the transaction number radio button when one of the radio buttons from the filters user control is checked. 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void ClearanceListFilters_ClearanceFiltersChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            optTransactionNumber.Checked = false;
+            txtTransactionIDNumber.Text = "";
+            txtTransactionIDNumber.Enabled = false;
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+
+    /// <summary>
+    /// This event is used to fill the grid according to filter.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnShow_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ShowPaymnetsGrid();
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+    
+    /// <summary>
+    /// This event is used to set grid according to selected page in the footer drop down list of grid.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void grdOnlineFeeTransactionDetails_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        try
+        {
+            SetNewPageIndex(sender, e, grdOnlineFeeTransactionDetails);
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+
+    /// <summary>
+    /// This event is used to set grid according to selected page in the footer drop down list of grid.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void PageDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {            
+            hidPageNo.Value = SetPageForGrid(grdOnlineFeeTransactionDetails);
+            lblError.Visible = false;
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+    
+    /// <summary>
+    /// This event is used to save value updated in grid and also check is TPSlTransaction ID duplicate or not.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string sOnlineTrasactionXML = GenerateXML();
+            NetBankingPaymentTransactionsBL oUpdateNetBankingPaymentTransactions = new NetBankingPaymentTransactionsBL();
+            DataTable oDTMessage = NetBankingPaymentTransactionsBL.IsTSPLIDuplicate(sOnlineTrasactionXML);
+            if (oDTMessage == null || !(oDTMessage.Rows.Count > 0) || oDTMessage.Rows[0][0] == null)
+            {
+                oUpdateNetBankingPaymentTransactions.SetOnlineTransactionDetails(sOnlineTrasactionXML);
+                FillPaymnetsGrid();
+                lblError.Visible = false;
+                lblSuccessMsg.Visible = true;
+                lblSuccessMsg.Text = "Online transaction clearance data updated successfully !!!";
+            }
+            else
+            {
+                StringBuilder msMessage = new StringBuilder();
+                string sMessage = string.Empty;
+                for (int i = 0; i < oDTMessage.Rows.Count; i++)
+                    msMessage.Append(", " + Convert.ToString(oDTMessage.Rows[i]["StudentName"]));
+                lblError.Visible = true;
+                lblSuccessMsg.Visible = false;
+                lblError.Text = "TPSLTransactionID should not be duplicated for student(s): " + msMessage.Remove(0, 1).ToString() + ".";
+            }
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+
+    /// <summary>
+    /// This event is used to set filter of TPSLTransaction ID for displaying grid.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void optTransactionNumber_CheckedChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            SetTransactionNumberRadioButtons();
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+                (ex.Message + Constants.S_TRACE + ex.StackTrace,
+                System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+                Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+
+    /// <summary>
+    /// This event is used to set the query string and to fill footer drop down list in the grid
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void grdOnlineFeeTransactionDetails_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            SetDataPagerOfGrid(sender, e, grdOnlineFeeTransactionDetails);
+            lblStartIndex.Text = StartIndex;
+            lblEndIndex.Text = EndIndex;
+            lblTotal.Text = Total;
+            trTotalRec.Visible = ShowTotalRecords;            
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+               (ex.Message + Constants.S_TRACE + ex.StackTrace,
+               System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+               Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+    
+    #endregion
+
+    #region "Private Method"
+
+    /// <summary>
+    /// This method used to hide error labels.
+    /// </summary>
+    private void DisableErrorLabel()
+    {
+        trTotalRec.Visible = false;
+        lblError.Visible = false;
+    }
+   
+    public override List<Control> AddControls()
+    {
+        List<Control> olstControls = new List<Control>();
+        olstControls.Add(btnShow);
+        olstControls.Add(btnSave);
+        olstControls.Add(btnBack);
+        olstControls.Add(btnExport);
+        olstControls.Add(optTransactionNumber);
+        olstControls.Add(ClearanceListFilters.RegNoRadioButton);
+        olstControls.Add(ClearanceListFilters.PaymentDateRadioButton);
+        olstControls.Add(ClearanceListFilters.ClearanceDateRadioButton);
+        return olstControls;
+    }
+
+    /// <summary>
+    /// This method initialises variables.
+    /// </summary>
+    private void InitiliseControl()
+    {
+        txtTransactionIDNumber.Focus();
+        optTransactionNumber.Checked = true;
+        optTransactionNumber_CheckedChanged(null, null);
+        ClearanceListFilters.DisableAll();
+        valSumErrorMsg.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
+        valSave.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
+        grdOnlineFeeTransactionDetails.PageSize = GRID_PAGE_COUNT;
+        hidPageNo.Value = HIDE_PAGE_NUMBER;        
+    }
+
+    /// <summary>
+    /// This method used to fill the grid according to selected filter.
+    /// </summary>
+    public override void FillPaymnetsGrid()
+    {
+        lblError.Visible = false;
+        DataSet odsOnlineTransaction = null;
+        DataTable odtOnlineTrasaction = null;
+        int iTotalAmount = 0;
+        int iAcaYearId = Convert.ToInt32(Session[Constants.S_SESSION_CURRENT_ACADEMIC_YEAR_ID]);
+        if (optTransactionNumber.Checked)
+        {
+            odsOnlineTransaction = NetBankingPaymentTransactionsBL.FetchOnlineTransactionDetail(txtTransactionIDNumber.Text.Trim(), "", "", ClearanceListFilters.IncludeAll, FILTER_BY_TRANSACTION_ID, iAcaYearId);
+            odtOnlineTrasaction = odsOnlineTransaction.Tables[0];
+        }
+        else if (ClearanceListFilters.RegNoChecked)
+        {
+            odsOnlineTransaction = NetBankingPaymentTransactionsBL.FetchOnlineTransactionDetail(ClearanceListFilters.StudentNameOrRegNo.Trim(), "", "", ClearanceListFilters.IncludeAll, FILTER_BY_STUDENT_NAME_REG_NO, iAcaYearId);
+            odtOnlineTrasaction = odsOnlineTransaction.Tables[0];
+        }
+        else if (ClearanceListFilters.PaymentDateChecked)
+        {
+            odsOnlineTransaction = NetBankingPaymentTransactionsBL.FetchOnlineTransactionDetail(null, ClearanceListFilters.PaymentStartDate.ToString(), ClearanceListFilters.PaymentEndDate.ToString(), ClearanceListFilters.IncludeAll, FILTER_BY_TRANSACTION_DATE, iAcaYearId);
+            odtOnlineTrasaction = odsOnlineTransaction.Tables[0];
+        }
+        else if (ClearanceListFilters.ClearanceDateChecked)
+        {
+            odsOnlineTransaction = NetBankingPaymentTransactionsBL.FetchOnlineTransactionDetail(null, ClearanceListFilters.ClearanceStartDate.ToString(), ClearanceListFilters.ClearanceEndDate.ToString(), ClearanceListFilters.IncludeAll, FILTER_BY_CLEARANCE_DATE, iAcaYearId);
+            odtOnlineTrasaction = odsOnlineTransaction.Tables[0];
+        }
+        if (odsOnlineTransaction != null)
+        {
+            if (odtOnlineTrasaction != null)
+            {
+                grdOnlineFeeTransactionDetails.Visible = true;
+                SetGridViewDateColumnProperties();
+                grdOnlineFeeTransactionDetails.DataSource = odtOnlineTrasaction.DefaultView;
+                grdOnlineFeeTransactionDetails.DataBind();
+                hidRowCnt.Value = Convert.ToString(grdOnlineFeeTransactionDetails.Rows.Count);
+            }
+            if (Convert.ToString(odsOnlineTransaction.Tables[1].Rows[0][0]) != string.Empty)
+            {
+                tblTotalAmount.Visible = true;
+                iTotalAmount = Convert.ToInt32(odsOnlineTransaction.Tables[1].Rows[0][0]);
+                lblTotalAmount.Text = iTotalAmount.ToString();
+            }
+            else
+                tblTotalAmount.Visible = false;
+
+            if (odtOnlineTrasaction.Rows.Count == 0)
+                trTotalRec.Visible = false;
+        }
+
+    }
+
+    /// <summary>
+    /// This method is used to display transaction date in proper formate.
+    /// </summary>
+    private void SetGridViewDateColumnProperties()
+    {
+        const Int32 I_COLUMN_INDEX_PAYMENT_DATE = 6;
+        BoundField oPaymentDate = (BoundField)grdOnlineFeeTransactionDetails.Columns[I_COLUMN_INDEX_PAYMENT_DATE];
+        oPaymentDate.HtmlEncode = false;
+        oPaymentDate.DataFormatString = Constants.S_STANDARD_GRID_DATE_FORMAT;
+    }       
+
+    /// <summary>
+    ///  This XML is used to set the parameters to clear online transactions detais.
+    /// </summary>    
+    private string GenerateXML()
+    {
+        const string S_ELEMENT = "element";
+        string sAttribute;
+        XmlDocument oDoc = new XmlDocument();
+        XmlElement oElement = oDoc.CreateElement("OnlineTrasactionInfo");
+        XmlNode oXmlRootNode = oDoc.CreateNode(S_ELEMENT, "OnlineTrasactionInfo", "");
+        for (int i = 0; i < grdOnlineFeeTransactionDetails.Rows.Count; i++)
+        {
+            TextBox otxtClearanceDate = (TextBox)grdOnlineFeeTransactionDetails.Rows[i].Cells[I_COLUMN_INDEX_CLEARANCE_DATETIME].FindControl("txtclearance");
+            TextBox otxtTSPLTransactionID = (TextBox)grdOnlineFeeTransactionDetails.Rows[i].Cells[I_COLUMN_INDEX_TSPLTRANSACTIONID].FindControl("txtTSPLTransactionID");
+
+            XmlNode oXMLNode = oDoc.CreateNode(S_ELEMENT, "OnlineTrasactionInfo", "");
+
+            sAttribute = "NetBankingPaymentTransactionID";
+            XmlAttribute oAttr = oDoc.CreateAttribute(sAttribute);
+            oAttr.Value = grdOnlineFeeTransactionDetails.DataKeys[i]["NetBankingPaymentTransactionID"].ToString();
+            oXMLNode.Attributes.Append(oAttr);
+
+            sAttribute = "TPSLTransactionID";
+            oAttr = oDoc.CreateAttribute(sAttribute);
+            oAttr.Value = otxtTSPLTransactionID.Text.Trim();
+            oXMLNode.Attributes.Append(oAttr);
+
+            sAttribute = "Update_Date";
+            oAttr = oDoc.CreateAttribute(sAttribute);
+            oAttr.Value = System.DateTime.Now.ToString();
+            oXMLNode.Attributes.Append(oAttr);
+
+            sAttribute = "Updated_By_Id";
+            oAttr = oDoc.CreateAttribute(sAttribute);
+            oAttr.Value = Session[Constants.S_SESSION_USER_ID].ToString();
+            oXMLNode.Attributes.Append(oAttr);
+
+            sAttribute = "ClearanceDate";
+            oAttr = oDoc.CreateAttribute(sAttribute);
+            if (otxtClearanceDate.Text.Trim() != "")
+                oAttr.Value = otxtClearanceDate.Text.Trim();
+            else
+                oAttr.Value = DBNull.Value.ToString();
+            oXMLNode.Attributes.Append(oAttr);
+
+            oXmlRootNode.AppendChild(oXMLNode);
+        }
+        oElement.AppendChild(oXmlRootNode);
+        return oElement.InnerXml;
+    }
+
+    #endregion
+
+    #region "Public"
+
+    /// <summary>
+    /// This method exposes the functionality to check the Radio button of transaction number.
+    /// </summary>
+    public void SetTransactionNumberRadioButtons()
+    {
+        txtTransactionIDNumber.Enabled = true;
+        DisableErrorLabel();
+        ClearanceListFilters.RegNoRadioButton.Checked = !optTransactionNumber.Checked;
+        ClearanceListFilters.PaymentDateRadioButton.Checked = !optTransactionNumber.Checked;
+        ClearanceListFilters.ClearanceDateRadioButton.Checked = !optTransactionNumber.Checked;
+        ClearanceListFilters.DisableAll();
+    }
+
+    /// <summary>
+    /// This method exposes the functionality of showing the grid depending on the caption of the show button.
+    /// </summary>
+    public override void ShowPaymnetsGrid()
+    {
+        if (btnShow.Text == "Show")
+        {
+            hidPageNo.Value = HIDE_PAGE_NUMBER;
+            grdOnlineFeeTransactionDetails.PageIndex = Constants.I_ZERO;
+            FillPaymnetsGrid();
+            btnShow.Text = "Change Input";
+            optTransactionNumber.Enabled = false;
+            txtTransactionIDNumber.Enabled = false;           
+            this.ClearanceListFilters.EnableDisableControlChecked(false);
+            this.ClearanceListFilters.EnableDisableControls(false);
+        }
+        else
+        {
+            btnShow.Text = "Show";
+            optTransactionNumber.Enabled = true;
+            txtTransactionIDNumber.Enabled = true;
+            this.ClearanceListFilters.EnableDisableControlChecked(true);
+            this.ClearanceListFilters.EnableDisableControls(true);
+            grdOnlineFeeTransactionDetails.DataSource = null;
+            grdOnlineFeeTransactionDetails.DataBind();
+            grdOnlineFeeTransactionDetails.Visible = false;
+            trTotalRec.Visible = false;
+            tblTotalAmount.Visible = false;
+        }
+        lblError.Visible = false;
+    }
+   
+    #endregion 
+
+    #region Functionality For Export
+
+    /// <summary>
+    /// This event is used to export the cheque clearance details in the Excel sheet.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnExport_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ReportDisplay oReportDisplay = new ReportDisplay(Constants.ExportReports.OnlineTransactionClearanceDetails, GetFilterString());
+            oReportDisplay.DisplayReport();
+        }
+        catch (ThreadAbortException)
+        {
+
+        }
+        catch (Exception ex)
+        {
+            BusinessLogic.Exceptions.ExceptionHandler.WriteExceptionToErrorLog
+            (ex.Message + Constants.S_TRACE + ex.StackTrace,
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + '.' + System.Reflection.MethodBase.GetCurrentMethod().Name,
+            Convert.ToInt32(Session[Constants.S_SESSION_USER_ID]));
+        }
+    }
+
+
+    private string GetFilterString()
+    {
+        string sFilter = "";
+        string sViewFilter = Constants.S_EXPORT_ONLINETRANSACTIONCLEARANCE_USP + "..Filter}";
+        string sExportFilter = "";
+        int iAcaYearId = Convert.ToInt32(Session[Constants.S_SESSION_CURRENT_ACADEMIC_YEAR_ID]);
+        if (optTransactionNumber.Checked)
+            sFilter = SetFilterString(txtTransactionIDNumber.Text.Trim(), "", "", ClearanceListFilters.IncludeAll, FILTER_BY_TRANSACTION_ID, iAcaYearId);
+        else if (ClearanceListFilters.RegNoChecked)
+            sFilter = SetFilterString(ClearanceListFilters.StudentNameOrRegNo, "", "", ClearanceListFilters.IncludeAll, FILTER_BY_STUDENT_NAME_REG_NO, iAcaYearId);
+        else if (ClearanceListFilters.PaymentDateChecked)
+            sFilter = SetFilterString(null, ClearanceListFilters.PaymentStartDate.ToString(), ClearanceListFilters.PaymentEndDate.ToString(), ClearanceListFilters.IncludeAll, FILTER_BY_TRANSACTION_DATE, iAcaYearId);
+        else if (ClearanceListFilters.ClearanceDateChecked)
+            sFilter = SetFilterString(null, ClearanceListFilters.ClearanceStartDate.ToString(), ClearanceListFilters.ClearanceEndDate.ToString(), ClearanceListFilters.IncludeAll, FILTER_BY_CLEARANCE_DATE, iAcaYearId);
+        sExportFilter = "(" + sViewFilter + "==" + sFilter + ")@ ";
+        return sExportFilter;
+        //return sFilter;
+    }
+
+    /// <summary>
+    /// This method generates the report filter as per the field selection.
+    /// </summary>
+    /// <returns></returns>
+    private string SetFilterString(string asFilter, string adStartDate, string adEndDate, bool abIncldeCheck, int aiOptCheck, int aiAcadmicID)
+    {
+        string sFilter = "";
+        asFilter = asFilter != null ? asFilter : "";
+        switch (aiOptCheck)
+        {
+            case 1:
+                sFilter = " AND NetBankingPaymentTransactions.TPSLTransactionID like '%" + asFilter + "%'";
+                break;
+            case 2:
+                sFilter = " AND ( SchoolWise_Student_Master.Enrolment_Number like '%" + StringUtility.ReplaceSingleQuoteInString(asFilter, false) + "%'" +
+                    " OR SchoolWise_Student_Master.First_Name like '%" + StringUtility.ReplaceSingleQuoteInString(asFilter, false) + "%'" +
+                    " OR SchoolWise_Student_Master.Middle_Name like '%" + StringUtility.ReplaceSingleQuoteInString(asFilter, false) + "%'" +
+                    " OR  SchoolWise_Student_Master.Last_Name like '%" + StringUtility.ReplaceSingleQuoteInString(asFilter, false) + "%')";
+                break;
+            case 3:
+                if (adStartDate != "" && adEndDate != "")
+                    sFilter = " AND NetBankingPaymentTransactions.TransactionDateTime BETWEEN '" + adStartDate.ToString() + "' AND '" + adEndDate.ToString() + "'";
+                if (adStartDate != "" && adEndDate == "")
+                    sFilter = " AND NetBankingPaymentTransactions.TransactionDateTime >='" + adStartDate.ToString() + "'";
+                if (adStartDate == "" && adEndDate != "")
+                    sFilter = " AND NetBankingPaymentTransactions.TransactionDateTime <='" + adEndDate.ToString() + "'";
+                break;
+            case 4:
+                if (adStartDate != "" && adEndDate != "")
+                    sFilter = " AND NetBankingPaymentTransactions.ClearanceDate BETWEEN '" + adStartDate.ToString() + "' AND '" + adEndDate.ToString() + "'";
+                if (adStartDate != "" && adEndDate == "")
+                    sFilter = " AND NetBankingPaymentTransactions.ClearanceDate >='" + adStartDate.ToString() + "'";
+                if (adStartDate == "" && adEndDate != "")
+                    sFilter = " AND NetBankingPaymentTransactions.ClearanceDate <='" + adEndDate.ToString() + "'";
+                break;
+        }
+
+        if (!abIncldeCheck)
+            sFilter = sFilter + " AND NetBankingPaymentTransactions.ClearanceDate is null ";
+        return sFilter = sFilter + "AND Schoolwise_Student_Fee_Details_1.Academic_Year_Id = " + aiAcadmicID;
+    }
+
+    #endregion
+    
+}

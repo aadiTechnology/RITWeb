@@ -1,0 +1,288 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RITeSchool/MasterPages/MasterPage.master" AutoEventWireup="true" CodeFile="AccountHeaderConfiguration.aspx.cs" Inherits="AccountHeaderConfiguration" %>
+
+<%@ Register Assembly="RJS.Web.WebControl.PopCalendar.Net.2008" Namespace="RJS.Web.WebControl"
+    TagPrefix="rjs" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="headContentPlaceholder" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainBody" runat="Server">
+    <div class="MainBodyDiv">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="97%">
+            <tr>
+                <td>
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                     <asp:ValidationSummary ID="valSumErrorMsg" runat="server" CssClass="ClsMdtStar" />
+                                       <asp:RequiredFieldValidator ID="reqvalAcHeaderName" runat="server" Display="None" ControlToValidate="txtAcHeaderName"
+                                                 ErrorMessage="AcHeaderName should not be blank.">
+                                       </asp:RequiredFieldValidator>
+                                       <asp:RequiredFieldValidator ID="reqvalAccountNumber" runat="server" Display="None" ControlToValidate="txtAccountNumber"
+                                               ErrorMessage="School CurrentAccount Number should not be blank.">
+                                      </asp:RequiredFieldValidator>
+                                     <asp:RequiredFieldValidator ID="reqvalFeeSubType" runat="server" Display="None" ControlToValidate="cmbBankId" InitialValue="0"
+                                               ErrorMessage="BankName should not be blank."></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="reqvaBankAddress" runat="server" Display="None" ControlToValidate="txtBankAddress"
+                                               ErrorMessage="BankAddress should not be blank.">
+                                   </asp:RequiredFieldValidator>
+                                   </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                        <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
+                                        <asp:AsyncPostBackTrigger ControlID="lstvwAcHeaderConfiguration" EventName="ItemCommand"/>
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                            <td width="20%" align="right">
+                                <span class="ClsMdtStar">* Mandatory Fields </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" id="tdMessage" runat="server" colspan="2">
+                    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:Label ID="lblMessage" runat="server" EnableViewState="True" CssClass="ClsLabelNrml"
+                                Font-Bold="true" ForeColor="Blue" Style="text-align: center"></asp:Label>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                            <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
+                              <asp:AsyncPostBackTrigger ControlID="lstvwAcHeaderConfiguration" EventName="ItemCommand"/>  
+                        </Triggers>
+                    </asp:UpdatePanel>
+                </td>
+            </tr>
+            <tr id="trControls" runat="server">
+                <td align="center">
+                    <table width="75%">
+                        <tr>
+                            <td colspan="4" align="center" style="height: 23px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <table>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="150px">
+                                                    <span class="ClsLabel">Account Header Name : </span>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtAcHeaderName" runat="server" CssClass="ExLrgTxtBox" Width="300px"> </asp:TextBox>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="150px">
+                                                    <span class="ClsLabel">Account Name : </span>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtAccountNumber" runat="server" CssClass="ExLrgTxtBox" Width="300px"> </asp:TextBox>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="150px">
+                                                    <span class="ClsLabel">Bank Name&nbsp; : </span>
+                                                </td>
+                                                <td>
+                                                    <asp:DropDownList ID="cmbBankId" runat="server" CssClass="MidCombo" Width="300px"
+                                                        AutoPostBack="True" 
+                                                        onselectedindexchanged="cmbBankId_SelectedIndexChanged">
+                                                    </asp:DropDownList>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="190px">
+                                                    <span class="ClsLabel">&nbsp;Bank Address : </span>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtBankAddress" runat="server" CssClass="ExLrgTxtBox" Width="300px"></asp:TextBox>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" align="center">
+                                                    <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="ClsBtn" 
+                                                        onclick="btnSave_Click"/>
+                                                    <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="ClsBtn" 
+                                                        CausesValidation="false" onclick="btnCancel_Click" />
+                                                    <asp:HiddenField ID="hidAccountHeaderId" runat="server" Value="0" />
+                                                    <asp:HiddenField ID="hidSortExpression" runat="server" Value="" />
+                                                    <asp:HiddenField ID="hidSortDirection" runat="server" Value="" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                        <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
+                                          <asp:AsyncPostBackTrigger ControlID="lstvwAcHeaderConfiguration" EventName="ItemCommand"/>
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <table width="100%">
+                                            <tr>
+                                                <td align="center">
+                                                    <asp:ListView ID="lstvwAcHeaderConfiguration" runat="server" DataKeyNames="AccountHeaderId,BankId"
+                                                       ViewStateMode="Enabled" ClientIDMode="AutoID" 
+                                                        EnablePersistedSelection="True" onitemcommand="lstvwAcHeaderConfiguration_ItemCommand" 
+                                                        onitemdatabound="lstvwAcHeaderConfiguration_ItemDataBound">
+                                                        <LayoutTemplate>
+                                                            <table width="100%" style="color: #333333" cellpadding="0" cellspacing="1" class="GridBorder">
+                                                                <tr class="ClsGridHeader" id="trHeader" runat="server">
+                                                                    <th align="left" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="lnkTitle" runat="server" CommandName="Sort" CommandArgument="Account Header Name"
+                                                                            CausesValidation="false" ForeColor="Black">
+                                                                                                                  Account Header Name </asp:LinkButton>
+                                                                    </th>
+                                                                    <th align="center" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="lnkName" runat="server" CommandName="Sort" CommandArgument="Account Name"
+                                                                            CausesValidation="false" ForeColor="Black"> Account Name </asp:LinkButton>
+                                                                    </th>
+                                                                    <th align="center" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Sort" CommandArgument="Bank Name"
+                                                                            CausesValidation="false" ForeColor="Black"> Bank Name</asp:LinkButton>
+                                                                    </th>
+                                                                    <th align="center" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="LinkButton2" runat="server" CommandName="Sort" CommandArgument="Bank Address"
+                                                                            CausesValidation="false" ForeColor="Black">
+                                                                                         Bank Address</asp:LinkButton>
+                                                                    </th>
+                                                                    <th width="50px" align="center" class="clsLabelgrd">
+                                                                        Edit
+                                                                    </th>
+                                                                    <th width="50px" class="clsLabelgrd">
+                                                                        Delete
+                                                                    </th>
+                                                                </tr>
+                                                                <tr id="itemPlaceholder" runat="server">
+                                                                </tr>
+                                                            </table>
+                                                        </LayoutTemplate>
+                                                        <ItemTemplate>
+                                                            <tr id="Tr2" runat="server" class="ClsGridRow">
+                                                                <td align="center">
+                                                                    <asp:Label ID="lblAccountHeaderName" runat="server" CssClass="ClsLabel" Text='<%#Eval("AccountHeaderName")%>'></asp:Label>
+                                                                    <asp:HiddenField ID="hidAccountHeaderId" runat="server" Value='<%#Eval("AccountHeaderId")%>' />
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblAcoountNumber" runat="server" Text='<%#Eval("SchoolCurrentAccountNumber")%>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="LblBankName" runat="server" Text='<%#Eval("BankName") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblBankAddress" runat="server" Text='<%#Eval("BankAddress") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="UpdateCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex %>" ImageUrl="~/RITeSchool/images/IconGrid_Edit.gif"
+                                                                        ToolTip="Edit" />
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="RemoveCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex%>" ImageUrl="~/RITeSchool/images/IconGrid_Delete.gif" ToolTip="Delete" />
+                                                                </td>
+                                                            </tr>
+                                                        </ItemTemplate>
+                                                        <AlternatingItemTemplate>
+                                                            <tr id="Tr3" runat="server" class="ClsGridAltRow">
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblAccountHeaderName" runat="server" CssClass="ClsLabel" Text='<%#Eval("AccountHeaderName") %>'></asp:Label>
+                                                                    <asp:HiddenField ID="hidAccountHeaderId" runat="server" Value='<%#Eval("AccountHeaderId") %>' />
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblAcoountNumber" runat="server" Text='<%#Eval("SchoolCurrentAccountNumber") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="LblBankName" runat="server" Text='<%#Eval("BankName") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblBankAddress" runat="server" Text='<%#Eval("BankAddress")%>'></asp:Label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="UpdateCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex%>" ImageUrl="~/RITeSchool/images/IconGrid_Edit.gif" ToolTip="Edit" />
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="RemoveCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex %>" ImageUrl="~/RITeSchool/images/IconGrid_Delete.gif"
+                                                                        ToolTip="Delete" />
+                                                                </td>
+                                                            </tr>
+                                                        </AlternatingItemTemplate>
+                                                        <EmptyDataTemplate>
+                                                            <tr>
+                                                                <td class="LblNoRecord" align="center">
+                                                                    No record found.
+                                                                </td>
+                                                            </tr>
+                                                        </EmptyDataTemplate>
+                                                    </asp:ListView>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ContentTemplate>
+                                    <Triggers>
+                                   <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="ClsBtn" CausesValidation="false" />
+                                    </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+           <script language="javascript" type="text/javascript">
+
+               _clientTxtAccountHeaderName = "<%=this.txtAcHeaderName.ClientID%>";
+               _clientTxtAcountNumber = "<%=this.txtAccountNumber.ClientID%>";
+               _clienthidAccountHeaderId = "<%=this.hidAccountHeaderId.ClientID%>";
+               _clientlblMessage = "<%=this.lblMessage.ClientID%>";
+               _clientlstvwAcHeaderConfiguration = "<%=this.lstvwAcHeaderConfiguration.ClientID%>";
+               _clientTxtBankAddress = "<%=this.txtBankAddress.ClientID%>";
+
+               function ClearFields() 
+               {
+                   $get(_clientTxtAcHeaderName).value = "";
+                   $get( _clientTxtAccountNumber).value = "";
+                   $get(_clientTxtBankAddress).value = "";
+                   $get(_clienthidAccountHeaderId).value = 0;
+               }
+
+               function ConfirmDelete() {
+                   return confirm('Are you sure you want to delete this record?');
+               }
+               function ClearMessage() {
+                   $get(_clientlblMessage).innerHTML = "";
+               }
+         </script>
+                </div>
+                </asp:Content>
+                <asp:Content ID="Content3" ContentPlaceHolderID="PopupMainBody" runat="Server">
+                </asp:Content>

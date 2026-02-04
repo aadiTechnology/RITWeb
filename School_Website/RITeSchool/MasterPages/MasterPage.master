@@ -1,0 +1,1098 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<asp:literal id="docType" runat="server" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Welcome to
+        <%= ConfigurationManager.AppSettings["SchoolName"] %></title>
+    <link href="../Styles/Styles.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/Styles1.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/Styles2.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/Styles2.css?version=1.0.0" type="text/css" rel="stylesheet" />
+    <link href="../Styles/Styles3.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/round-button.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/Toppers.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/ppsStyles.css" type="text/css" rel="stylesheet" />
+    <link rel="SHORTCUT ICON" href="../../images/favicon.ico?version=1.9" type="image/x-icon" />
+    <link href="../Kendo/css/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Kendo/css/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Kendo/js/kendo.web.min.js" rel="stylesheet" />
+    <link href="../Styles/KendoGrid.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/NoticeDiv.css" rel="stylesheet" type="text/css" />
+    <link href="../Kendo/Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../Kendo/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+    <link href="../Styles/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/ace-fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/ace.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/Coin%20Slider/jquery.bxslider.css" rel="stylesheet"
+        type="text/css" />
+    <link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/ThemeOverride.css?version=1.1" rel="stylesheet" type="text/css" />
+    <link href="../Styles/Site.css?version=1.1" rel="stylesheet" type="text/css" />
+    <link href="../Styles/ButtonStyleOverride.css?version=1.1" rel="stylesheet" type="text/css" />
+    <link href="../Styles/Master.css?version=1.2.0" rel="stylesheet" type="text/css" />
+    <link href="../Styles/animations.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .navbar
+        {
+            background: transparent;
+            background-image: url("../images/BGline.gif");
+            border-bottom: 3px solid #16a085;
+        }
+		
+		 #divNotice span {
+            display: inherit;
+            display: -moz-inline-box;
+            display: -webkit-inline-box;
+            width: 100px;
+        }
+		
+    </style>
+</head>
+<body style="margin: 0; width: 100%; height: 100%; position: absolute; background-image: url(../images/BGline.gif);
+    background-repeat: repeat;" class="<%=  (Session[Utility.Constants.S_SESSION_LANGUAGE].ToString() + " navbar-fixed-top")%>">
+    <% if (Utility.Constants.S_LEGEND_SCREEN_NAME.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+            <link href="../Styles/GridStyleOverride.css?version=1.1" rel="stylesheet" type="text/css" />
+    <% }%>
+    <%-- Below script section is moved from Head tag to body tag. Because of this if statement we were getting error on Trial Balance screen -
+         system.web.httpexception: the controls collection cannot be modified because the control contains code blocks (i.e. <% ... %>)
+         To resolve this issue we had to move this block in the body section. We have also moved subsequent JavaScript files as they are dependent on the JQuery.
+    --%>
+    <% if (Request.Url.ToString().Contains("ControlPanel.aspx") == false)
+       {%>
+    <script type="text/javascript" src="../Kendo/js/jquery.min.js"></script>
+    <% }
+       else
+       { %>
+    <script src="../Kendo/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <% } %>
+    <script src="../Kendo/js/kendo.all.min.js" type="text/javascript"></script>
+    <script src="../Kendo/js/Common.js" type="text/javascript"></script>
+    <script src="../Kendo/js/ace-extra.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../Scripts/Ajax.js"></script>
+    <script type="text/javascript" src="../Scripts/Validate2.js?version=1.0"></script>
+    <script type="text/javascript" src="../Scripts/Validations.js"></script>
+    <script type="text/javascript" src="../Scripts/Script.js?version=1.0"></script>
+    <script type="text/javascript" src="../RITAutoCompleteService/RITAutoSuggest.js?version=1.12"></script>
+    <script src="../Scripts/jquery-ui.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../Scripts/jquery.inview.js"></script>
+    <script src="../../assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/ace.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/jquery.easy-pie-chart.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/Coin%20Slider/jquery.bxslider.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="../../assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
+    <script src="../Scripts/base.js?version=1.1.3" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on("click", "input:submit[disable-page='true']", function () {
+                DisablePage(this);
+            });
+
+            /// As new theme is included in master page, alignment is changed for close button of static pop up like school notice.
+            /// added class to parent div                
+            $("img[src*='close_vista.gif']").parent().parent().addClass('close-img-style');
+
+
+            // Local storage key for user profile picture
+            if (window.location.href.indexOf("ControlPanel.aspx") == -1) {
+                var localStorageKeyOfUserPic = "UserProfilePic" + "_" + _userId;
+                
+                var profilePicDataOnMaster = loadDataFromLocalStorage(localStorageKeyOfUserPic);
+                if (profilePicDataOnMaster != null && profilePicDataOnMaster.length != 0 && profilePicDataOnMaster[0].ProfilePicture != null && profilePicDataOnMaster[0].ProfilePicture != "") {
+                    var userImage = "data:image/png;base64," + profilePicDataOnMaster[0].ProfilePicture;
+                    $("[id*='imgProfilePic']").attr("src", userImage);
+                }
+            }
+        });
+
+        // This function is use to check local is undefined, expire and empty storage.
+        function loadDataFromLocalStorage(key) {
+            try {
+                // If storage undefined return null
+                if (typeof (Storage) == "undefined") { return null; }
+
+                // Get data from local storage and check otherwise return null.
+                var record = JSON.parse(localStorage.getItem(key));
+                if (!record) { return null; }
+
+                if (record.hasOwnProperty('timestamp')) {
+                    // If time stamp expire then return null and clear local storage
+                    if (new Date().getTime() < record.timestamp) {
+                        return JSON.parse(record.value);
+                    }
+                    else {
+                        localStorage.removeItem(key);
+                        return null;
+                    }
+                } else {
+                    return JSON.parse(record.value);
+                }
+
+            }
+            catch (error) {
+                return null;
+            }
+        }
+
+        function DisablePage(btnObj) {
+            if (typeof (Page_IsValid) != "undefined") {
+                if (!Page_IsValid) {
+                    return;
+                }
+            }
+            var height = $(document).height() + 50;
+            var width = $(document).width();
+            $(btnObj).after("<div id='disablepage' style='height:" + height + "px;width:" + width + "px;'/>");
+        }
+
+    </script>
+    <%-- Above script section is moved from Head tag to body tag. Because of this if statement we were getting error on Trial Balance screen -
+         system.web.httpexception: the controls collection cannot be modified because the control contains code blocks (i.e. <% ... %>)
+         To resolve this issue we had to move this block in the body section. We have also moved subsequent JavaScript files as they are dependent on the JQuery.
+    --%>
+    <asp:ContentPlaceHolder ID="headContentPlaceholder" runat="server" />
+    <!-- Script to Open the Theme Pop Up -->
+    <script language="javascript" type="text/javascript">
+
+        $("[id*=lnkThemes]").live("click", function () {
+            $(".overlayInner").css("position", "fixed");
+            $(".overlayOuter").height($(document).height());
+            $(".overlayOuter").width($(document).width());
+//            $(".overlayInner").load("div#MainDiv",
+//            // the following is the callback   
+//                function () {
+//                    $(".overlayOuter").slideDown(300); $(".overlayInner").slideDown(300);
+//                    $("select[id*=ddlThemes]").focus();
+//                });
+        });
+
+        //               $("[id*=lnkLanguage]").live("click", function () {               	
+        //                $(".overlayInnerLanguage").css("position", "fixed");
+        //                $(".overlayOuterLanguage").height($(document).height());
+        //                $(".overlayOuterLanguage").width($(document).width());
+        //                $(".overlayInnerLanguage").load("div#MainDivLanguage",
+        //                // the following is the callback   
+        //                function () {
+        //                    $(".overlayOuterLanguage").slideDown(300);
+        //                    $(".overlayInnerLanguage").slideDown(300);
+        //                    $("select[id*=ddlLanguage]").focus();
+        //                });
+        //            });
+
+    </script>
+    <form id="form1" runat="server" style="margin: 0; width: 100%; height: 100%; position: absolute"
+    submitdisabledcontrols="true">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+        <div id="navbar-container" class="navbar-container">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-12 hidden-md hidden-sm hidden-xs">
+                    <div class="navbar-header pull-left">
+                        <asp:Image id="imgRITeschoolSchoolLogo" runat="server" CssClass="img-responsive" style="height: 45px;padding-left:5px;"  />
+                    </div>
+                    <!-- /.navbar-header -->
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-7 col-xs-8">
+                    <div class="schoolName">
+                        <div id="divLogoImage" style="display: inline; position: relative;">
+                            <img id="imgSchoolLogo" style="height: 40px; cursor: pointer;" runat="server" />
+                            <div id="divLogoHoverImage" class="hidden SchoolLogoHover" style="z-index: 1px;">
+                                <img id="imgSchoolLogoHover" style="height: auto;" runat="server" />
+                            </div>
+                        </div>
+                        <span style="display: inline-block; height: 40px; vertical-align: calc(-4px);">
+                            <span id="spnTrust" runat="server"></span> <%= Session[Utility.Constants.S_SESSION_SCHOOL_NAME]%></span> <span id="schoolLocation"
+                                runat="server" visible="true" style="margin-top: 1px; display: inline-block;
+                                height: 40px; font-size: 9pt; vertical-align: bottom; padding-top: 8px;">(<%= Session["Location"]%>)</span>
+                   </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-5 col-xs-4">
+                    <div class="navbar-header pull-right" role="navigation">
+						<ul class="nav ace-nav">
+                            <li class="green"><a data-toggle="dropdown" class="dropdown-toggle" href="#" id="profilePicContainer"
+                                runat="server">
+                                <img id="imgProfilePic" class="nav-user-photo" src="../images/empty-profile.jpg"/>
+                                <span class="user-info"><small>Welcome,</small>
+                                    <%= Session[Utility.Constants.S_SESSION_USER_NAME]%>
+                                </span><i class="fa fa-caret-down"></i></a>
+                                <ul class="user-menu pull-right profile dropdown-menu dropdown-yellow dropdown-caret dropdown-close"
+                                    style="">
+                                    <li id="lnkThemesList" runat="server" visible="false"><a id="lnkThemes" runat="server">
+                                        <i class="icon- fa fa-paint-brush"></i>
+                                        <asp:Label ID="lblThemes" runat="server" Text="<%$ Resources:LocalizedResources, Themes %>"></asp:Label>
+                                    </a></li>
+                                     <li id ="lnkMyProfile" runat= "server" >
+                                       <a href="../Common/MyProfile.aspx"><i class="icon- fa fa-user"></i>
+                                        <asp:Label ID="lblMyProfile" runat="server" Text="<%$ Resources:LocalizedResources, MyProfile %>"></asp:Label>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <asp:LinkButton ID="lnkFeedback" runat="server" OnClick="lnkFeedback_Click" CausesValidation="false">
+                                            <i class="icon- fa fa-bullhorn"></i>
+                                            <asp:Label ID="lblFeedBack" runat="server" Text="<%$ Resources:LocalizedResources, Feedback %>"></asp:Label>
+                                        </asp:LinkButton>
+                                    </li>
+                                    <li><a href="../Common/StudentChangePassword.aspx"><i class="icon- fa fa-key"></i>
+                                        <asp:Label ID="lblChangePassword" runat="server" Text="<%$ Resources:LocalizedResources, ChangePassword %>"></asp:Label>
+                                    </a></li>
+                                    <li id="lnkSiblingLoginList" runat="server">
+                                        <asp:LinkButton ID="lnkBtnSiblingLogin" runat="server" OnClick="lnkSiblingLogin_Click"
+                                            CausesValidation="false">
+                                             <i class="icon- fa fa-sign-in"></i>
+                                            <asp:Label ToolTip="Sibling Login" runat="server"  Text="<%$ Resources:LocalizedResources, SiblingLogin %>"></asp:Label>
+                                        </asp:LinkButton>
+                                  </li>
+                                  <li id="lnkParentLoginList" runat="server">
+                                        <asp:LinkButton ID="lnkParentLogin" runat="server" OnClick="lnkParentLogin_Click"
+                                            CausesValidation="false">
+                                             <i class="icon- fa fa-sign-in"></i>
+                                            <asp:Label ID="lblName" ToolTip="Sibling Login" runat="server"  Text="Login as Staff"></asp:Label>
+                                        </asp:LinkButton>
+                                  </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click" CausesValidation="false">
+                                            <i class="icon- fa fa-sign-out"></i>
+                                            <asp:Label ID="lbllogout" runat="server" Text="<%$ Resources:LocalizedResources, Logout %>"></asp:Label>
+                                        </asp:LinkButton>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- /.ace-nav -->
+                    </div>
+                    <!-- /.navbar-header -->
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <table style="width: 100%; height: 100%; border: solid 0px #ddd; margin-top: 45px;"
+        border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr valign="top" class="hide">
+            <td colspan="2" align="center" valign="top">
+                <table style="width: 100%;" border="0" align="left" cellpadding="0" cellspacing="0">
+                    <tr runat="server" id="tdTopNoAd">
+                        <td style="background-image: url(../images/subpgTopImgSml.jpg); background-repeat: no-repeat;
+                            width: 800px; height: 100px" align="right" valign="bottom">
+                        </td>
+                        <td align="center" valign="middle" style="width: 20%; border-left: 1px solid #ddd;
+                            padding-right: 5px" class="HilightBGGraySchoolName">
+                            <span style="font-family: Verdana; font-size: 12pt; color: navy">
+                                <%= Session[Utility.Constants.S_SESSION_SCHOOL_NAME]%></span><br />
+                            <span id="spanLocation" runat="server" visible="False" style="font-family: Verdana;
+                                font-size: 9pt; color: navy">(<%= Session["Location"]%>)</span>
+                            <br />
+                            <hr />
+                            <span style="font-weight: normal; font-family: Verdana; font-size: 8pt">Welcome</span>
+                            <%= Session[Utility.Constants.S_SESSION_USER_NAME]%>
+                            <!-- Begin : This condion is used to show sibling details link -->
+                            <div style="clear: both;" id="lnkSiblingLogin" runat="server">
+                                <%--<br />--%>
+                                <div style="padding-top: 8px;">
+                                    <img src="../../images/newLink.gif" />
+                                    <asp:LinkButton ID="lnkSiblingLogin1" runat="server" CssClass="ClsLogoutNew" Style="font-weight: bold;
+                                        color: blue; font-size: 12px;" ToolTip="Sibling Login" CausesValidation="false"
+                                        OnClick="lnkSiblingLogin_Click" Text="<%$ Resources:LocalizedResources, SiblingLogin %>"></asp:LinkButton>
+                                </div>
+                            </div>
+                            <!-- End : This condion is used to show sibling details link -->
+                        </td>
+                    </tr>
+                    <tr align="center" bgcolor="white" style="background-image: url(../images/LogoSmallBG.jpg)"
+                        runat="server" id="tdTopAd">
+                        <td valign="top" align="left" width="10%">
+                            <img src="../images/LogoSmall.jpg" />
+                        </td>
+                        <td valign="top" align="left" width="90%">
+                            <script type="text/javascript"> 
+                            </script>
+                            <script type="text/javascript" src="http://www.assoc-amazon.com/s/ads.js"></script>
+                        </td>
+                        <td align="right" valign="middle" style="border-left: 1px solid #ddd; width: 20%;
+                            padding-right: 5px" class="HilightBGGray">
+                            <span style="font-weight: normal; font-family: Verdana; font-size: 8pt">Welcome</span>
+                            <%= Session[Utility.Constants.S_SESSION_USER_NAME]%>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr align="center" valign="top">
+            <td colspan="3" align="center" class="SchoolNameBG" valign="top">
+                <table border="0" id="tblSitemap" runat="server" cellpadding="1" cellspacing="1"
+                    style="width: 100%">                   
+                    <tr runat="server" id="trMenu">
+                        <td valign="top" colspan="3" style="width: 100%;" class="MenuHeader">
+                            <div class="hor-menu">
+                                <ul id="ulMenus" runat="server" class="nav navbar-nav">                                  
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!-- SiteMap Navigator Start-->
+                            <div id="DivSiteMap" style="min-width: 50px; padding-right: 0;">
+                                <span id="spanMenuIcon" class="leftbar-action" data-placement="bottom" data-rel="auto" data-content="Click here to see menus"><i class="fa fa-bars animate" data-animattion="bounce"></i></span>
+                                <asp:SiteMapPath ID="SiteMapPath1" runat="server" PathSeparator="" CssClass="ClsRoot"
+                                    RenderCurrentNodeAsLink="False" SiteMapProvider="Admin">
+                                    <PathSeparatorStyle></PathSeparatorStyle>
+                                    <RootNodeStyle CssClass="ClsSiteMapMain hide"></RootNodeStyle>
+                                    <NodeStyle CssClass="SMPrvNode"></NodeStyle>
+                                    <CurrentNodeStyle CssClass="SMCurentNode hide" />
+                                </asp:SiteMapPath>
+                                <!-- SiteMap Navigator End-->
+                                <div>                               
+                            </div>
+                            </div>
+                        </td>
+                        <td id="tdNoticeBoardMessage" style="padding-right: 15px; padding-left: 0px;">
+                            <div id="divSchoolNoticeBoard" class="schoolNotice marquee-align-center" runat="server" style="display:none;">
+                                <marquee style="border-top-width: thin; vertical-align: bottom;
+                                    border-top-color: blue;" behavior="scroll" direction="left" scrollamount="2"
+                                    scrolldelay="2" onmouseover="javascript:this.setAttribute('scrollamount','0');"
+                                    onmouseout="javascript:this.setAttribute('scrollamount','2 ');">
+														<asp:Label ID="LabelNoticeBoardMsg" runat="server"></asp:Label></marquee>
+                            </div>
+                        </td>
+                        <td align="right" style="padding-right: 0px; width:1%; white-space:nowrap;">
+                            <table cellpadding="0" cellspacing="0" runat="server" id="tblMainMenu" style="padding-left: 0px;">
+                                <tr id="Tr1" runat="server">
+                                    <td>
+                                        <% if (Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != null &&
+                                                (Utility.Constants.UserRoles)Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != Utility.Constants.UserRoles.Student)
+                                           { %>
+                                        <asp:HyperLink ID="hlnkEmail" runat="server" Target="_blank" CssClass="btn btn-success"
+                                            data-placement="bottom" data-trigger="hover" data-rel="popover" data-content="<%$ Resources:LocalizedResources, Email %>">
+								            <i class="fa fa-envelope width-20"></i>
+                                        </asp:HyperLink>
+                                        <% } %>
+                                        <% else
+                                           { %>
+                                                <asp:HyperLink ID="hlnkStore" runat="server" Target="_blank" CssClass="btn btn-success bx-store-link"
+                                                    data-placement="bottom" data-trigger="hover" data-rel="popover" data-content="Go to RITeStore">
+								                    <i class="fa fa-shopping-bag width-20"></i>
+                                                </asp:HyperLink>
+                                        <% } %>
+                                    </td>
+                                    <td runat="server" id="tdTooltip">
+                                        <a href="#" class="tt" style="display: none;"><span class="tooltip"><span class="top">
+                                        </span><span class="middle" id="sp1" runat="server"></span><span class="bottom"></span>
+                                        </span>
+                                            <img id="Img1" src="../images/HelpIcon.gif" runat="server" data-rel="tooltip" border="0"
+                                                tooltip="<%$ Resources:LocalizedResources, Help %>" />
+                                        </a><a id="lnkHelp" class="btn btn-info" runat="server" data-rel="popover" data-placement="bottom"
+                                            data-trigger="hover" data-original-title="Help" data-content="<%$ Resources:LocalizedResources, Help %>">
+                                            <i class="fa fa-question width-20"></i></a>
+                                    </td>
+                                    <td>
+                                        <%if (!SchoolBase.Settings.IsMiniSite) %>
+                                        <%{ %>
+                                        <asp:HyperLink ID="hlnkSupport" runat="server" onclick="SetSupportURL()" data-rel="popover"
+                                            title="" data-trigger="hover" data-placement="bottom" data-content="<%$ Resources:LocalizedResources, Support %>"
+                                            CssClass="btn btn-warning">
+											<i class="fa fa-wrench width-20"></i>
+                                        </asp:HyperLink>
+                                        <%} %>
+                                    </td>
+                                    <td valign="middle" style="display: none;">
+                                    </td>
+                                    <td runat="server" id="tdParentGuide">
+                                        <% if (Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != null &&
+                                           (Utility.Constants.UserRoles)Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] == Utility.Constants.UserRoles.Student)
+                                           { %>
+                                        <asp:HyperLink ID="hlnkParentGuide" CssClass="btn btn-danger" NavigateUrl=""
+                                            data-trigger="hover" data-rel="popover" data-placement="bottom" data-content="User Guide"
+                                            runat="server">
+                                                <i class="fa fa-file-text width-20"></i>
+                                        </asp:HyperLink>
+                                        <%}
+                                           else if (Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != null &&
+                                                   (Utility.Constants.UserRoles)Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] == Utility.Constants.UserRoles.Teacher)
+                                           {%>
+                                        <asp:HyperLink ID="hlnkTeacherGuide" CssClass="btn btn-danger" NavigateUrl=""
+                                            data-trigger="hover" data-rel="popover" data-placement="bottom" data-content="User Guide"
+                                            runat="server">
+                                                <i class="fa fa-file-text width-20"></i>
+                                        </asp:HyperLink>
+                                        <% } %>
+                                    </td>
+                                    <td valign="middle" id="tdThemes" runat="server" style="display: none;">
+                                    </td>
+                                    <td>
+                                        <%if (SchoolBase.Settings.IsMiniSite && Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != null && (Utility.Constants.UserRoles)Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] == Utility.Constants.UserRoles.Admin) %>
+                                        <%{ %>
+                                        <asp:HyperLink ID="hlnkReadMe" CssClass="btn btn-inverse" NavigateUrl="../DOWNLOADS/ReadMe.txt"
+                                            Visible="false" ToolTip="<%$ Resources:LocalizedResources, ReadMeLink %>" runat="server">
+								                <i class="icon-cogs width-20"></i>
+                                        </asp:HyperLink>
+                                        <%} %>
+                                    </td>
+                                    <td runat="server" id="tdKnowledgeBase">
+                                        <% if (Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != null &&
+                                           (Utility.Constants.UserRoles)Session[Utility.Constants.S_SESSION_USER_LOGIN_ROLE_ID] != Utility.Constants.UserRoles.Student)
+                                           { %>
+                                        <asp:HyperLink ID="hlnkKnowledgebase" CssClass="btn btn-inverse" NavigateUrl=""
+                                            data-rel="popover" data-placement="left" data-trigger="hover" runat="server"
+                                            data-content="<%$ Resources:LocalizedResources, KnowledgeBase %>">
+								                    <i class="fa fa-book width-20"></i>
+                                        </asp:HyperLink>
+                                        <%} %>
+                                    </td>
+                                    <td valign="middle">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td width="5%" valign="top" runat="server" id="tdLeftAd" visible="false">
+                <% if (hidShowAds.Value == "Y")
+                   { %>
+                <script type="text/javascript">
+                </script>
+                <script type="text/javascript" src="http://www.assoc-amazon.com/s/ads.js"></script>
+                <% }
+                   else
+                   { %>
+                <img src="../images/eSchoolImg_VAd.gif" />
+                <% } %>
+            </td>
+            <td valign="top">
+                <table style="width: 100%; height: 100%;" border="0" align="center" cellpadding="0"
+                    cellspacing="0">
+                    <tr>
+                        <td valign="top">
+                            <table style="width: 100%" cellpadding="0" cellspacing="0" class="table-spacing">
+                                <tr valign="top" width="80%">
+                                    <td align="center" colspan="2" style="padding-top: 2px;">
+                                        <asp:UpdateProgress ID="updateProgressMaster" runat="server">
+                                            <ProgressTemplate>
+                                                <div style="width: 250px; margin: 5px">
+                                                    <table>
+                                                         <tr>
+                                                            <td>
+                                                                <i class="fa fa-spinner fa-spin progress-spinner"></i>
+                                                            </td>
+                                                            <td valign="middle">
+                                                                <span class="progress-text">Processing...</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr id="trYearStatus" runat="server" visible="false">
+                        <td align="center" style="padding-bottom: 5px;">
+                            <marquee style="cursor: progress; border-top-width: thin; vertical-align: bottom;
+                                color: MediumVioletRed; border-top-color: blue;" scrollamount="1" scrolldelay="2"
+                                onmouseover="this.stop()" onmouseout="this.start()">                                                
+                                <table>
+                                    <tr>                    
+                                        <td class="" style="background-color:#fff" align="center">                                        
+                                            <asp:Label ID="lblYearStatus" runat="server"  style="font-style:italic"
+                                               Font-Bold="True" Font-Size="15px" ForeColor="darkred" font-weight="bold" ></asp:Label>                                        
+                                        </td>
+                                    </tr>
+                                </table></marquee>
+                        </td>
+                    </tr>
+                    <tr align="center" style="height: 98%" valign="top">
+                        <td id="tdMainContentplaceHolder" valign="top" align="center">
+                            <asp:ContentPlaceHolder ID="MainBody" runat="server" />
+                            <asp:ContentPlaceHolder ID="PopupMainBody" runat="server" />
+                            <asp:HiddenField runat="server" ID="hidSchoolId" />
+                            <asp:HiddenField runat="server" ID="hidAcademicYearId" />
+                            <asp:HiddenField runat="server" ID="hidOrgColor" />
+                            <asp:HiddenField runat="server" ID="hidOrgCSS" />
+                            <asp:HiddenField runat="server" ID="hidShowAds" />
+                            <asp:HiddenField runat="server" ID="hidServerDate" />
+                            <asp:HiddenField runat="server" ID="hidServerFullDate" />
+                            <asp:HiddenField runat="server" ID="hidSessionUserId" Value="0" />
+                            <asp:HiddenField runat="server" ID="hidSupportURL" Value="0" />
+                            <asp:HiddenField runat="server" ID="hidSessionUserRoleId" Value="0" />
+                            <asp:HiddenField runat="server" ID="hidUserFullName" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td id="Td1" runat="server" align="center" colspan="2" valign="bottom">
+                <table style="width: 100%" class="ClsBottomAlign">
+                    <tr>
+                        <td align="left" style="width: 75%">
+                            <div id="footernote" style="color: black; font-size: 8pt">
+                            </div>
+                        </td>
+                        <td align="right" style="width: 25%">
+                            <div style="color: black; font-size: 8pt">
+                                <asp:Label runat="server" ID="lblBestViewIn" Text="<%$ Resources:LocalizedResources, BestViewIn %>"></asp:Label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <!-- Start :  WOW Factor - Themes Implementation -->
+    <div class="overlayOuter">
+    </div>
+    <div class="overlayInner" style="display:none;">
+        <div id="MainDiv" class="ThemeDiv">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <span class="ThemeLabel">Select Theme</span>
+                    <asp:DropDownList ID="ddlThemes" runat="server" CssClass="themeCombo" OnSelectedIndexChanged="ddlThemes_SelectedIndexChanged"
+                        ViewStateMode="Enabled">
+                        <asp:ListItem Value="">Default</asp:ListItem>
+                        <asp:ListItem Value="Blue">Blue</asp:ListItem>
+                        <asp:ListItem Value="Gray">Gray</asp:ListItem>
+                        <asp:ListItem Value="Maroon">Maroon</asp:ListItem>
+                        <asp:ListItem Value="Pink">Pink</asp:ListItem>
+                    </asp:DropDownList>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="ddlThemes" EventName="SelectedIndexChanged" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </div>
+        <div align="center" style="margin-top: 6px; margin-bottom: 6px;">
+            <asp:Button ID="btnCancel" runat="server" Text="Save" Style="margin-left: 10px; background-color: transparent"
+                UseSubmitBehavior="false" Width="80px" CssClass="ClsBtnMid" OnClick="btnCancel_Click"
+                CausesValidation="False" />
+            <asp:Button ID="btnClose" runat="server" Text="Close" Width="80px" CssClass="ClsBtnMid"
+                CausesValidation="False" OnClick="btnClose_Click" UseSubmitBehavior="false" />
+        </div>
+        <asp:HiddenField runat="server" ID="HidTheme" />
+    </div>
+    <div class="overlayOuterLanguage">
+    </div>
+    <div class="overlayInnerLanguage" style="display:none;">
+        <div id="MainDivLanguage" class="ThemeDiv">
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <ContentTemplate>
+                    <span class="ThemeLabel">Select Language</span>
+                    <asp:DropDownList ID="ddlLanguage" runat="server" CssClass="themeCombo" OnSelectedIndexChanged="ddlLanguage_SelectedIndexChanged"
+                        ViewStateMode="Enabled" AutoPostBack="True">
+                        <asp:ListItem Value="en">English</asp:ListItem>
+                        <asp:ListItem Value="mr" Selected="True">Marathi</asp:ListItem>
+                    </asp:DropDownList>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="ddlLanguage" EventName="SelectedIndexChanged" />
+                </Triggers>
+            </asp:UpdatePanel>
+        </div>
+        <div align="center" style="margin-top: 6px; margin-bottom: 6px;">
+            <asp:Button ID="btnProceed" runat="server" Text="Proceed" Width="80px" CausesValidation="false"
+                CssClass="ClsBtnMid" />
+        </div>
+    </div>
+    <asp:HiddenField ID="hidRightsReserved" runat="server" />
+    <asp:HiddenField ID="hidRIT" runat="server" />
+    <asp:HiddenField ID="hidMiniSite" runat="server" />
+    <asp:HiddenField ID="hidUserHasFullAccess" runat="server" Value="False" />
+    <!-- End :  WOW Factor - Themes Implementation -->
+    </form>
+</body>
+<script language="javascript" type="text/javascript">
+    var pageUrl = window.location.href
+    pageUrl = pageUrl.substring(0, pageUrl.indexOf(document.location.pathname));
+    var serviceUrl = pageUrl + "/RITeSchool/Dashboard/DashboardService.svc/";
+
+    _clienthidOrgColorId = "<%=this.hidOrgColor.ClientID %>";
+    _clienthidOrgCSSId = "<%=this.hidOrgCSS.ClientID %>";
+    _clienthidServerDate = "<%=this.hidServerDate.ClientID %>";    
+    _clienthidSupportURL = "<%=this.hidSupportURL.ClientID %>";
+    _clienthidMiniSite = "<%=this.hidMiniSite.ClientID %>";
+
+    var _schoolId = $get("<%=this.hidSchoolId.ClientID %>").value;
+    var _userId = $get("<%=this.hidSessionUserId.ClientID %>").value;
+    var _userRoleId = $get("<%=this.hidSessionUserRoleId.ClientID %>").value;
+    var _academicYearId = $get("<%=this.hidAcademicYearId.ClientID %>").value;
+    var _constPrincipalDesignation = "<%=Utility.Constants.S_PRINCIPAL_DESIGNATION_ID%>";
+    var _constAdminStaff = "<%=Convert.ToInt32(Utility.Constants.UserRoles.Supervisor)%>";
+    var _constAdminRole = "<%=Convert.ToInt32(Utility.Constants.UserRoles.Admin)%>";
+    var _constStudentRole = "<%=Convert.ToInt32(Utility.Constants.UserRoles.Student)%>";
+    var _errorOcuredMessage = "<%=Utility.Constants.S_ERROR_OCCURED_MESSAGE%>";
+    var _isFullScreenAccess = $get("<%=this.hidUserHasFullAccess.ClientID %>").value;
+    var _constSuperviserDesignationName = "<%=Utility.Constants.S_SUPERVISOR_DESIGNATION_NAME%>";
+    var _constDirectorDesignationName = "<%=Utility.Constants.S_DIRECTOR_DESIGNATION_NAME%>";
+    var _constSeniorAdministrativeOfficerDesignationName = "<%=Utility.Constants.S_SENIOR_ADMINISTRATIVE_OFFICER%>";
+    var _constUserFullName = $get("<%=this.hidUserFullName.ClientID %>").value;
+    
+    function SetSupportURL() {
+        if ($get(_clienthidSupportURL).value.trim() == '')
+            window.open("../Common/SupportUI.aspx", "_self")
+        else
+            window.open($get(_clienthidSupportURL).value, '_new');
+        return false;
+    }
+
+    function fnover(varname, doc) {
+        var objTXT = document.getElementById(varname)
+        document.getElementById(_clienthidOrgCSSId).value = objTXT.className;
+        objTXT.style.borderWidth = "1";
+        objTXT.style.borderColor = "maroon";
+        objTXT.style.backgroundImage = "url(../images/BtnBGRollNew.jpg)";
+    }
+
+    function fnout(varname, doc) {
+        var objTXT = document.getElementById(varname)
+        objTXT.style.borderWidth = '';
+        objTXT.style.borderColor = '';
+        objTXT.className = document.getElementById(_clienthidOrgCSSId).value;
+        objTXT.style.backgroundImage = '';
+    }
+
+    function fnTXTFocus(varname) {
+        var objTXT = document.getElementById(varname)
+        document.getElementById(_clienthidOrgColorId).value = objTXT.style.backgroundColor;
+
+        objTXT.style.backgroundColor = "PapayaWhip";
+    }
+
+    function fnTXTLostFocus(varname) {
+        var objTXT = document.getElementById(varname)
+        objTXT.style.backgroundColor = document.getElementById(_clienthidOrgColorId).value;
+    }
+
+    function fnOnLoad() {
+        var t = document.getElementsByTagName('INPUT');
+        var i;
+        for (i = 0; i < t.length; i++) {
+            if (t[i].type == "text" || t[i].type == "password") {
+                if (document.addEventListener) {
+                    // as Timo suggested
+                    t[i].addEventListener('focus', new Function("fnTXTFocus('" + t[i].id + "')"), true);
+                    t[i].addEventListener('blur', new Function("fnTXTLostFocus('" + t[i].id + "')"), true);
+                }
+                else if (document.attachEvent) {
+                    // IE style
+                    t[i].attachEvent('onfocus', new Function("fnTXTFocus('" + t[i].id + "')"));
+                    t[i].attachEvent('onblur', new Function("fnTXTLostFocus('" + t[i].id + "')"));
+                }
+            }
+            else if (t[i].type == "submit" || t[i].type == "button") {
+                if (document.addEventListener) {
+                    t[i].addEventListener('mouseOver', new Function("fnover('" + t[i].id + "')"), true);
+                    t[i].addEventListener('mouseOut', new Function("fnout('" + t[i].id + "')"), true);
+                }
+                else {
+                    t[i].attachEvent('onmouseover', new Function("fnover('" + t[i].id + "')"));
+                    t[i].attachEvent('onmouseout', new Function("fnout('" + t[i].id + "')"));
+                }
+            }
+        }
+        var t = document.getElementsByTagName('textarea');
+        for (i = 0; i < t.length; i++) {
+            if (document.addEventListener) {
+                // as Timo suggested
+                t[i].addEventListener('focus', new Function("fnTXTFocus('" + t[i].id + "')"), true);
+                t[i].addEventListener('blur', new Function("fnTXTLostFocus('" + t[i].id + "')"), true);
+            }
+            else if (document.attachEvent) {
+                // IE style
+                t[i].attachEvent('onfocus', new Function("fnTXTFocus('" + t[i].id + "')"));
+                t[i].attachEvent('onblur', new Function("fnTXTLostFocus('" + t[i].id + "')"));
+            }
+        }
+    }
+</script>
+<script type="text/javascript">
+    window.onload = AddClickEvent;
+    var _loadDashboardDetails = true;
+    //Get previous page url.
+    var referrerUrl = document.referrer.toString().toLowerCase();
+
+    /* If we are redirected from following screens and logged in user is Administrator then consider this as first visit:
+    1. eschoolLogin.aspx - All school login screen except RITeSchool.
+    2. screensui.aspx and studentchangepassword.aspx- All school superadmin screen.
+    3. home.aspx- Login screen only for RITeSchool
+    4. when referrerUrl is - This case only for IE browser.*/
+    var _firstVisitForAdmin = (referrerUrl.indexOf("/eschoollogin.aspx") > 0
+                                 || referrerUrl.indexOf("/screensui.aspx") > 0
+                                 || referrerUrl.indexOf("/home.aspx") > 0
+                                 || referrerUrl.indexOf("/studentchangepassword.aspx") > 0
+                                 || referrerUrl == "")
+                                 && _userRoleId == _constAdminRole;
+
+    function AddClickEvent() {
+        try {
+            $("table.static-menu:first").css('border', 'none');
+
+            var year = document.getElementById(_clienthidServerDate).value;
+            if ($("#" + _clienthidMiniSite).val() == 'true') {
+                if (year == 2013)
+                    document.getElementById('footernote').innerHTML = document.getElementById("<%= this.hidRightsReserved.ClientID %>").value + " 2013 " + document.getElementById("<%= this.hidRIT.ClientID %>").value;
+                else
+                    document.getElementById('footernote').innerHTML = document.getElementById("<%= this.hidRightsReserved.ClientID %>").value + " 2013 " + " - " + year + ", " + document.getElementById("<%= this.hidRIT.ClientID %>").value;
+            }
+            else
+                document.getElementById('footernote').innerHTML = document.getElementById("<%= this.hidRightsReserved.ClientID %>").value + " 2007 " + " - " + year + ", " + document.getElementById("<%= this.hidRIT.ClientID %>").value;
+
+            fnOnLoad();
+            ChangeCursorForHyperlink();
+
+            // Set local storage html on controlpanel page 
+            if (_userRoleId != '1' && document.location.pathname.toLowerCase().indexOf("/controlpanel.aspx") != -1) {
+                var sideBarContent = '<td valign="top" align="center" class="col-lg-2 col-md-3 col-sm-3 col-xs-3 CPanelSpace hide" id="ctl00_MainBody_tdSidebar" style="overflow-y: auto; height: 415px;">' + $("[id$=tdSidebar]").html().replace(/\t/g, '').replace(/(\r\n|\n|\r)/gm, "").trim() + "</td>";
+                localStorage.setItem('SideBarContent', sideBarContent);
+            }
+
+            if (_userRoleId != '1' && document.location.pathname.toLowerCase().indexOf("/controlpanel.aspx") == -1) {
+                $("#DivSiteMap").append(localStorage.getItem('SideBarContent'));
+                // This code is used to remove "Missing Attendance" link from the sidebar content on screens other than Control Panel.
+                $("[id$=trAdminMissingAttendance],[id$=TrclassteacherMissingAttendsAlert],[id$=TrteacherMissingAttendsAlert]").remove();
+                $("[id$=trMissingAttendance],[id$=TrClassTeacherAbsentStudents],[id$=TrAbsentStudentPopup],[id$=trAbsentNotification]").remove();
+                
+            }
+
+            if (_userRoleId == '1') {
+                if (_constUserFullName == "Software Coordinator") {
+                    if(document.location.pathname.toLowerCase().indexOf("/controlpanel.aspx") != -1){
+                        var sideBarContent = '<td valign="top" align="center" class="col-lg-2 col-md-3 col-sm-3 col-xs-3 CPanelSpace hide" id="ctl00_MainBody_tdSidebar" style="overflow-y: auto; height: 415px;">' + $("[id$=tdSidebar]").html().replace(/\t/g, '').replace(/(\r\n|\n|\r)/gm, "").trim() + "</td>";
+                        localStorage.setItem('SideBarContent', sideBarContent);
+                    }
+                    if (document.location.pathname.toLowerCase().indexOf("/controlpanel.aspx") == -1) {
+                        $("#DivSiteMap").append(localStorage.getItem('SideBarContent'));
+                        $("[id$=trAdminMissingAttendance],[id$=TrclassteacherMissingAttendsAlert],[id$=TrteacherMissingAttendsAlert]").remove();
+                        $("[id$=trMissingAttendance],[id$=TrClassTeacherAbsentStudents],[id$=TrAbsentStudentPopup],[id$=trAbsentNotification]").remove();
+                    }
+                    if ($(".SMCurentNode").text() != "Dashboard") {
+                        $(".SMCurentNode").removeClass('hide');
+                        $("#DivSiteMap .ClsSiteMapMain").removeClass('hide');
+                        $("#DivSiteMap .leftbar-action").hide();
+                    }
+                } else {
+                    if ($(".SMCurentNode").text() != "Dashboard") {
+                        // Remove menu icon and show dashboard/old functionality of admin
+                        $(".SMCurentNode").removeClass('hide');
+                        $("#DivSiteMap .ClsSiteMapMain").removeClass('hide');
+                        $("#DivSiteMap .leftbar-action").hide();
+                    }
+                }
+            } else {
+                if (localStorage.getItem('SideBarContent') != null) {
+                    if ($("#DivSiteMap span span").text() != "Dashboard") {
+                        $(".SMCurentNode").removeClass('hide');
+                    }
+                } else {
+                    $("#DivSiteMap .ClsSiteMapMain").removeClass('hide');
+                    $(".SMCurentNode").removeClass('hide');
+                    $("#DivSiteMap .leftbar-action").hide();
+                }
+            }
+
+            /*This block of code execute only when current screen is ControlPanel.aspx(Dashboard)*/
+            $(".leftbar-action").click(function () {
+                /* Here we are loading dashboardetails in case of is not a first visit on dashboard and 
+                loadDashboardDetails is true  after load dashboard details this variable value set to false*/
+                if (_firstVisitForAdmin == false && _loadDashboardDetails == true && _userRoleId == _constAdminRole) {
+                    loadPrincipalAdminDashboard();
+                }
+                showHideSidebarMenu();
+            });
+
+            var screenWidth = $(window).width();
+            if (_userRoleId != '1' && screenWidth <= 1200) {
+                showHideSidebarMenu();
+                $("[id*=tdSidebar]").addClass('hide');
+            }
+
+            $("div[id$=divDashboardContainer]").show();
+
+            /*Need to show admin new dashboard when user come from the login 
+            screen or Superadmin screen and role is admin role*/
+            if (_userRoleId == _constAdminRole) {
+
+                /* When admin user first visit then set show new dashboard variable to true otherwise it will be false*/
+                if (_firstVisitForAdmin || readCookie("showNewDashboard") == undefined || readCookie("showNewDashboard") == "true") {
+                    showNewDashboard = true;
+                } else {
+                    showNewDashboard = false;
+                    if(!document.referrer.match("ControlPanel.aspx"))
+                     {
+                    var localStorageKeyOfUserPic = "UserProfilePic" + "_" + _userId;
+                    var profilePicDataOnMaster = loadDataFromLocalStorage(localStorageKeyOfUserPic);
+                    if (profilePicDataOnMaster != null && profilePicDataOnMaster.length != 0 && profilePicDataOnMaster[0].ProfilePicture != null && profilePicDataOnMaster[0].ProfilePicture != "") {
+                        var userImage = "data:image/png;base64," + profilePicDataOnMaster[0].ProfilePicture;
+                        $("[id*='imgProfilePic']").attr("src", userImage);
+                    }
+                }
+                }   
+                showHideNewDashBoard();
+            }
+
+            setSettingsToolBoxToolTip();
+
+			// Show tooltip on navigation menu
+            if (_userRoleId != '1') {
+                $('.fa.fa-bars.animate').css("visibility", "visible");
+                $('#spanMenuIcon').popover("show");
+
+                setTimeout(function () {
+                    $("#spanMenuIcon").popover("hide");
+                }, 6000);
+            }
+        } catch (e) {
+            SaveErrorLog(e, 'MasterPage.master :- AddClickEvent', _userId);
+        }
+    }
+
+    // Hide/Show sidebar on scroll
+    $(window).on("scroll", function (e) {
+        if ($(window).scrollTop() > 0) {
+            $("[id*=tdSidebar] .dashboard-link").closest('tr').remove();
+            $("[id*=tdSidebar]").removeClass("fixed-sidebar");
+            $("[id*=tdSidebar]").addClass('hide');
+            $("[id*=tdSidebar] table").addClass('margin-bottom-5');
+            $("[id*=tdSidebar] table").removeClass('remove-margin-bottom');
+        }
+    });
+
+    function setSettingsToolBoxToolTip() {
+        var toolTip = '';
+        if ($("[id$=trAcademicCmb]").length > 0)
+            toolTip = 'academic year';
+
+        if ($("[id$=trFinancialYearCombo]").length > 0)
+            toolTip += (toolTip == '' ? '' : ' & ') + 'financial year';
+
+        if (toolTip != '')
+            $("#ace-settings-btn").attr('data-content', 'Choose different ' + toolTip);
+    }
+
+    function showHideSidebarMenu() {
+        try {
+            // show appropriate table according to logged in user role id
+            if (_userRoleId == '1')
+            {
+                if (_constUserFullName == "Software Coordinator")
+                    showHideDashboard();
+                else
+                    showAdminDashboard();
+            }
+            else if (_userRoleId == '2' || _userRoleId == '3' || _userRoleId == '6' || _userRoleId == '7')
+                showHideDashboard();
+
+            if ($("div[id$=divDashboardContainer]").length > 0) {
+                if ($("div[id$=divDashboardContainer]").is(":visible")) {
+                    reloadBirthdaySlider($("#divBirthday ul li").length > 0 ? true : false, true);
+                    reloadphotoGallerySlider($("#divPhotoGallery ul li").length > 0 ? true : false);
+                    refreshWidgets();
+                }
+            }
+        } catch (e) {
+            SaveErrorLog(e, 'MasterPage.master :- showHideSidebarMenu', _userId);
+        }
+    }
+
+    function showHideDashboard() {
+        try {
+            $("[id$=divDashboardContainer]").show();
+            if ($("[id$=tdSidebar]").length > 0) {
+                var screenWidth = $(window).width();
+                var showFullScreen = false;
+
+                if ($("[id$=tdSidebar]").hasClass('fixed-sidebar') == false)
+                    showFullScreen = true;
+                else
+                    showFullScreen = false;
+
+                if (showFullScreen) {
+                    // Minus menu height from window height
+                    var menuHeight = $("#navbar-container").height() + $("[id$=tblSitemap]").height();
+
+                    $("[id$=tdDashboardContent]").attr('class', 'col-xs-12');
+
+                    $("[id*=tdSidebar]").removeClass('hide');
+                    $("[id*=tdSidebar]").addClass("fixed-sidebar");
+                    var dashboardLinkHTML = '<tr><td align="left" class="ClsBorderlight dashboard-link" colspan="1"><a href="/RITeSchool/Common/ControlPanel.aspx" class="SubTitleMenu" id="hlnkDashboard">Dashboard</a></td></tr>';
+                    if (_userRoleId == '2')
+                        $("[id*=tdSidebar] [id$=tblClassTeacher], [id*=tdSidebar] [id$=tblTeacher]").prepend(dashboardLinkHTML);
+                    else if (_userRoleId == '3')
+                        $("[id*=tdSidebar] [id$=tblStudentMenu]").prepend(dashboardLinkHTML);
+                    else if (_userRoleId == '6' || _userRoleId == '7')
+                        $("[id*=tdSidebar] [id$=tblSuperLeft]").prepend(dashboardLinkHTML);
+                    else if (_userRoleId == '1' && _constUserFullName == "Software Coordinator") {
+                        $('[id*=tblStudentMenu] tr').each(function () {
+                            if (!$.trim($(this).text())) $(this).remove();
+                        });
+                    }
+
+                    $("[id*=tdSidebar]").css('overflow-y', 'auto');
+                    $("[id*=tdSidebar]").css('height', $(window).height() - menuHeight);
+                    $("[id*=tdSidebar]").css('top', menuHeight - $(window).scrollTop());
+                    $("[id*=tdSidebar] table").removeClass('margin-bottom-5');
+                    $("[id*=tdSidebar] table").addClass('remove-margin-bottom');
+                    $("[id*=tdSidebar]").show();
+                }
+                else {
+                    $("[id*=tdSidebar] .dashboard-link").closest('tr').remove();
+                    $("[id*=tdSidebar]").removeClass("fixed-sidebar");
+                    $("[id*=tdSidebar]").addClass('hide');
+                    $("[id*=tdSidebar] table").addClass('margin-bottom-5');
+                    $("[id*=tdSidebar] table").removeClass('remove-margin-bottom');
+                }
+            }
+        } catch (e) {
+            SaveErrorLog(e, 'MasterPage.master :- showHideSidebarMenu', _userId);
+        }
+    }
+
+    function showAdminDashboard() {
+        if ($("[id$=tblAdmin]").length > 0) {
+            showHideNewDashBoard();
+        }
+    }
+
+    var showNewDashboard = true;
+    /* This function is used to show or hide new dashboard*/
+    function showHideNewDashBoard() {
+        if (showNewDashboard == true) {
+            $("[id$=tblAdmin]").hide();
+            $("[id$=tdDashboardContent]").attr('class', 'col-lg-12 col-md-12 col-sm-12 col-xs-12');
+            $("[id$=tdDashboardContent]").show();
+            showNewDashboard = false;
+            createCookie("showNewDashboard", true, 1);
+        }
+        else {
+            $("[id$=tdDashboardContent]").hide();
+            $("[id$=tblAdmin]").show();
+            showNewDashboard = true;
+            createCookie("showNewDashboard", false, 1);
+        }
+    }
+
+    function ChangeCursorForHyperlink() {
+        try {
+            var elements = document.getElementsByTagName('*');
+            var iCount = elements.length;
+            var i = 0;
+            for (i = 0; i < iCount; i++) {
+                if (elements[i].tagName == "A") {
+                    if (elements[i].outerHTML != undefined) {
+                        if (elements[i].href.indexOf("__doPostBack") == -1 &&
+                        elements[i].href.indexOf("ToUserId()") == -1 &&
+                        elements[i].href.indexOf("mail.google.com") == -1 &&
+                        elements[i].href.indexOf("get.adobe.com") == -1 &&
+                        elements[i].className.indexOf("node") == -1 &&
+                        elements[i].innerHTML.indexOf("Expand") == -1 &&
+                        elements[i].innerHTML.indexOf("Collapse") == -1 &&
+                        elements[i].innerHTML.indexOf("minusbottom.gif") == -1 &&
+                        elements[i].innerHTML.indexOf("plusbottom.gif") == -1 &&
+                        elements[i].innerHTML.indexOf("minus.gif") == -1 &&
+                        elements[i].innerHTML.indexOf("plus.gif") == -1 &&
+                        elements[i].outerHTML.indexOf("disabled") == -1 &&
+                        elements[i].href != undefined &&
+                        elements[i].href != "" &&
+                        elements[i].href.indexOf("#") == -1 &&
+                        elements[i].className.indexOf('group') == -1 && /// photo gallery links
+                        elements[i].className.indexOf('bx-next') == -1 &&
+                        elements[i].className.indexOf('bx-prev') == -1 &&
+                        elements[i].className.indexOf('bx-pager-link') == -1 &&
+                        elements[i].className.indexOf('bx-store-link') == -1 /// remove busy cursor of store link 
+                        ) {
+                            if (elements[i].onclick == null) {
+                                elements[i].onclick = function () { ChangeCursor(); };
+                            }
+                        }
+                    } else {
+                        if (elements[i].href.indexOf("__doPostBack") == -1 &&
+                        elements[i].href.indexOf("ToUserId()") == -1 &&
+                        elements[i].href.indexOf("mail.google.com") == -1 &&
+                        elements[i].href.indexOf("get.adobe.com") == -1 &&
+                        elements[i].className.indexOf("node") == -1 &&
+                        elements[i].innerHTML.indexOf("Expand") == -1 &&
+                        elements[i].innerHTML.indexOf("Collapse") == -1 &&
+                        elements[i].innerHTML.indexOf("minusbottom.gif") == -1 &&
+                        elements[i].innerHTML.indexOf("plusbottom.gif") == -1 &&
+                        elements[i].innerHTML.indexOf("minus.gif") == -1 &&
+                        elements[i].innerHTML.indexOf("plus.gif") == -1 &&
+                        elements[i].href != undefined &&
+                        elements[i].href != "" &&
+                        elements[i].href.indexOf("#") == -1 &&
+                         elements[i].className.indexOf('group') == -1 && /// photo gallery links
+                        elements[i].className.indexOf('bx-next') == -1 &&
+                        elements[i].className.indexOf('bx-prev') == -1 &&
+                        elements[i].className.indexOf('bx-pager-link') == -1
+                        ) {
+                            if (elements[i].onclick == null) {
+                                elements[i].onclick = function () { ChangeCursor(); };
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            SaveErrorLog(e, 'MasterPage.master :- ChangeCursorForHyperlink', _userId);
+        }
+    }
+
+
+    function ChangeCursor() {
+        document.forms[0].style.cursor = "wait";
+    }
+
+    function blinkIt() {
+        if (!document.all) return;
+        else {
+            for (i = 0; i < document.all.tags('blink').length; i++) {
+                s = document.all.tags('blink')[i];
+                s.style.visibility = (s.style.visibility == 'visible') ? 'hidden' : 'visible';
+            }
+        }
+    }
+       
+    function setHelpIconToolTip() {
+        _clientSp1 = "<%=this.sp1.ClientID%>";
+        _clientlnkHelp = "<%=this.lnkHelp.ClientID%>";
+        $("#" + _clientlnkHelp).attr("data-content", $("#" + _clientSp1).text());
+        $('[data-rel=popover]').popover({ container: 'body' });
+    }
+    setHelpIconToolTip();
+
+     /*This code is used to hide image on mouse leave*/
+    $("img[id*=imgSchoolLogo]").on("mouseout", function () {
+        $("#divLogoHoverImage").addClass("hidden");
+    });
+
+    
+    /*This code is used to show image on mouse over*/
+    $("img[id*=imgSchoolLogo]").on("mouseover", function () {
+        $("[id*='imgSchoolLogoHover']").attr("src", $("[id *= 'imgSchoolLogo']").attr("src"));
+        $("#divLogoHoverImage").removeClass("hidden");
+    });
+
+
+</script>
+<% if (SchoolBase.Settings.AddIntGoogleAnalytics)
+   { %>
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    var pageTracker = _gat._getTracker("UA-4752582-2");
+    pageTracker._trackPageview();
+</script>
+<% } %>
+</html>

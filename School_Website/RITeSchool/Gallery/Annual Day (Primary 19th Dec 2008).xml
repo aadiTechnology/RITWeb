@@ -1,0 +1,23 @@
+<gallery base="" background="#ffffff" banner="#ffffff" text="#cc3366" link="#1313A2" alink="#8F6F6F" vlink="#550080" date="Gallery Name : Annual Day (Primary 19th Dec 2008)">
+  <banner font="Verdana" fontsize="5" color="#F0F0F0" />
+  <thumbnail base="../images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" rows="0" col="0" />
+  <large base="../images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" />
+  <images id="images">
+    <image path="DSC_2624111512.JPG" width="800" height="500" thumbpath="DSC_2624111512.JPG" />
+    <image path="DSC_2658111743.JPG" width="800" height="500" thumbpath="DSC_2658111743.JPG" />
+    <image path="DSC_2659111743.JPG" width="800" height="500" thumbpath="DSC_2659111743.JPG" />
+    <image path="DSC_2671111743.JPG" width="800" height="500" thumbpath="DSC_2671111743.JPG" />
+    <image path="DSC_2677111743.JPG" width="800" height="500" thumbpath="DSC_2677111743.JPG" />
+    <image path="DSC_2701111743.JPG" width="800" height="500" thumbpath="DSC_2701111743.JPG" />
+    <image path="DSC_2719112857.JPG" width="800" height="500" thumbpath="DSC_2719112857.JPG" />
+    <image path="DSC_2734112857.JPG" width="800" height="500" thumbpath="DSC_2734112857.JPG" />
+    <image path="DSC_2741112857.JPG" width="800" height="500" thumbpath="DSC_2741112857.JPG" />
+    <image path="DSC_2744112857.JPG" width="800" height="500" thumbpath="DSC_2744112857.JPG" />
+    <image path="DSC_2762112857.JPG" width="800" height="500" thumbpath="DSC_2762112857.JPG" />
+    <image path="DSC_2771113716.JPG" width="800" height="500" thumbpath="DSC_2771113716.JPG" />
+    <image path="DSC_2787113716.JPG" width="800" height="500" thumbpath="DSC_2787113716.JPG" />
+    <image path="DSC_2795113716.JPG" width="800" height="500" thumbpath="DSC_2795113716.JPG" />
+    <image path="DSC_2877113716.JPG" width="800" height="500" thumbpath="DSC_2877113716.JPG" />
+    <image path="Blue hills172538.jpg" width="800" height="500" thumbpath="Blue hills172538.jpg" />
+  </images>
+</gallery>

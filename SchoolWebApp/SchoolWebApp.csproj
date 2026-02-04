@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{669F30F9-186A-45C4-AEA5-FB674C302B6F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SchoolWebApp</RootNamespace>
+    <AssemblyName>SchoolWebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLLS\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLLS\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLLS\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DLLS\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\School_Website\bin\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RJS.Web.WebControl.PopCalendar.Net.2008">
+      <HintPath>..\School_Website\bin\RJS.Web.WebControl.PopCalendar.Net.2008.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\SchoolResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SchoolResource.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\Accounts\Accounts.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\Accounts\SchoolBusinessServiceClient.cs" />
+    <Compile Include="App_Data\BaseMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\BusinessSMS\BusinessSMSBalanceService.cs" />
+    <Compile Include="App_Data\BusinessSMS\BusinessSMSService.cs" />
+    <Compile Include="App_Data\Dashboard\Service\DashboradService.cs" />
+    <Compile Include="App_Data\Dashboard\Service\IDashboradService.cs" />
+    <Compile Include="App_Data\ExportDataTable.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\ExportToExcel.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\ImageDetails.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\InvestmentAndIncomeBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\Management\Client\ManagementServiceClient.cs" />
+    <Compile Include="App_Data\Management\MISServiceClientUtility.cs" />
+    <Compile Include="App_Data\Management\Service\IManagementService.cs" />
+    <Compile Include="App_Data\Management\Service\ManagementService.cs" />
+    <Compile Include="App_Data\Message.cs" />
+    <Compile Include="App_Data\MobileExportService\IMobileExportService.cs" />
+    <Compile Include="App_Data\MobileExportService\MobileExportService.cs" />
+    <Compile Include="App_Data\PaymentClearanceUC.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\Payroll.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\PrePrimaryStudentProgress.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\ProgressReportDataSets\PrePrimaryProgressReportVP.Designer.cs" />
+    <Compile Include="App_Data\ProgressSheet.cs" />
+    <Compile Include="App_Data\ProgressSheetBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\PushNotificationService\PushNotificationService.cs" />
+    <Compile Include="App_Data\ReportDisplay.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\SchoolAutoSearchService\Client\SchoolAutoSearchServiceClient.cs" />
+    <Compile Include="App_Data\SchoolAutoSearchService\Service\AutoSearchService.cs" />
+    <Compile Include="App_Data\SchoolAutoSearchService\Service\IAutoSearchService .cs" />
+    <Compile Include="App_Data\SchoolBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\SchoolTransportService\Service\ITransportService.cs" />
+    <Compile Include="App_Data\SchoolTransportService\Service\TransportService.cs" />
+    <Compile Include="App_Data\SchoolwiseBankMaster.cs" />
+    <Compile Include="App_Data\SMS.cs" />
+    <Compile Include="App_Data\StudentProgress.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\StudentResult.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\StudentResultGrace.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\TeacherTransferBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\Timetable.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\UserAuthentication.cs" />
+    <Compile Include="App_Data\UserControlBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_Data\XseedProgressReport.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_GlobalResources\SchoolResource.designer.cs">
+      <DependentUpon>SchoolResource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{EA6874E7-CC73-4D7B-8D4E-3A4634ADA345}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataCommunicator\DataCommunicator.csproj">
+      <Project>{3E0B1133-70D4-4693-AB21-47CF27590C59}</Project>
+      <Name>DataCommunicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchoolEntities\SchoolEntities.csproj">
+      <Project>{482E90CC-E31F-4E8F-BCEA-DD38CFE97FC0}</Project>
+      <Name>SchoolEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{A8F9A48A-AD95-4E8E-BD13-9D398527F0A4}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App_Data\Fee\FeeReciept.xsc">
+      <DependentUpon>FeeReciept.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\Fee\FeeReciept.xsd" />
+    <None Include="App_Data\Fee\FeeReciept.xss">
+      <DependentUpon>FeeReciept.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\FBS\GradingSystemProgressReport.xsd" />
+    <None Include="App_Data\ProgressReportDataSets\FBS\GradingSystemProgressReport.xss">
+      <DependentUpon>GradingSystemProgressReport.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\FinalResult.xsc">
+      <DependentUpon>FinalResult.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\FinalResult.xsd" />
+    <None Include="App_Data\ProgressReportDataSets\FinalResult.xss">
+      <DependentUpon>FinalResult.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\GradingSystemProgressReport.xsd" />
+    <None Include="App_Data\ProgressReportDataSets\GradingSystemProgressReport.xss">
+      <DependentUpon>GradingSystemProgressReport.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\MarkingSystemProgressReport.xsd" />
+    <None Include="App_Data\ProgressReportDataSets\MarkingSystemProgressReport.xss">
+      <DependentUpon>MarkingSystemProgressReport.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\PrePrimaryProgressReportVP.xsc">
+      <DependentUpon>PrePrimaryProgressReportVP.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\PrePrimaryProgressReportVP.xsd" />
+    <None Include="App_Data\ProgressReportDataSets\PrePrimaryProgressReportVP.xss">
+      <DependentUpon>PrePrimaryProgressReportVP.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\Term1ProgressReportPP.xsc">
+      <DependentUpon>Term1ProgressReportPP.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\ProgressReportDataSets\Term1ProgressReportPP.xsd" />
+    <None Include="App_Data\ProgressReportDataSets\Term1ProgressReportPP.xss">
+      <DependentUpon>Term1ProgressReportPP.xsd</DependentUpon>
+    </None>
+    <None Include="App_Data\SchoolAutoSearchService\Client\vssver.scc" />
+    <None Include="App_Data\SchoolAutoSearchService\Service\vssver.scc" />
+    <None Include="App_Data\SchoolAutoSearchService\vssver.scc" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\SchoolTransportService\Client\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56948</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

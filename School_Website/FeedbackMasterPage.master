@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="FeedbackMasterPage.master.cs" Inherits="FeedbackMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+         
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+             <table align="center" style="height:100%; width:100%;">
+                <tr align="center" style="margin:0px auto;">
+                    <td align="center">
+                        <table align="center" style="height:5%; width:70%;" >
+                            <tr align="center">
+                                <td align="center">
+                                    <asp:Image ID="imgFeedback" ImageUrl="~/images/RIT_Logo_Sml.gif.png" Height="100%" Width="100%" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>      
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3E0B1133-70D4-4693-AB21-47CF27590C59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataCommunicator</RootNamespace>
+    <AssemblyName>DataCommunicator</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccountsDC\AccountsDC.cs" />
+    <Compile Include="AccountsDC\ApprovalConfigDC.cs" />
+    <Compile Include="AccountsDC\BankDetailsDC.cs" />
+    <Compile Include="AccountsDC\GroupMasterDC.cs" />
+    <Compile Include="AccountsDC\LedgerDC.cs" />
+    <Compile Include="AccountsDC\TrialBalanceReportDC.cs" />
+    <Compile Include="AccountsDC\VoucherDC.cs" />
+    <Compile Include="Activation.cs" />
+    <Compile Include="ActivityAssignmentDC.cs" />
+    <Compile Include="ActivityLoggingDC.cs" />
+    <Compile Include="AdditionalFieldsDC.cs" />
+    <Compile Include="AdmissionProcessDetailsDC.cs" />
+    <Compile Include="AlumniStudentDC.cs" />
+    <Compile Include="AskMeQuestionMasterDC.cs" />
+    <Compile Include="AssemblyDetailsDC.cs" />
+    <Compile Include="AssignSummaryGradesDC.cs" />
+    <Compile Include="AttendanceAlertConfigDC.cs" />
+    <Compile Include="AttendanceDetailsDC.cs" />
+    <Compile Include="AutoSuggestDC.cs" />
+    <Compile Include="BirthDaySMSDC.cs" />
+    <Compile Include="CancellationFormDC.cs" />
+    <Compile Include="CareerDC\CareerDetailsDC.cs" />
+    <Compile Include="CashClearanceListDC.cs" />
+    <Compile Include="ClasswiseOptionalSubjectDC.cs" />
+    <Compile Include="ConfigurationSchoolMasterDC.cs" />
+    <Compile Include="ConfigureMenuDC.cs" />
+    <Compile Include="ConfigurePeerDC.cs" />
+    <Compile Include="DashboardServiceDC.cs" />
+    <Compile Include="DescriptiveIndicatorDC.cs" />
+    <Compile Include="DesignationMasterDC.cs" />
+    <Compile Include="DownloadFileDC.cs" />
+    <Compile Include="DynamicReportDC.cs" />
+    <Compile Include="EditStudentPaidFeeDC.cs" />
+    <Compile Include="EmployeeDetailsDC.cs" />
+    <Compile Include="eStoreDC\StoreItemDC.cs" />
+    <Compile Include="eStoreDC\StoreItemDetailsDC.cs" />
+    <Compile Include="eStoreDC\StoreItemStockDetailsDC.cs" />
+    <Compile Include="eStoreDC\StoreItemVariationDC.cs" />
+    <Compile Include="ExamReporstDC.cs" />
+    <Compile Include="ExamTypesConfigurationDC.cs" />
+    <Compile Include="ExportReportDC.cs" />
+    <Compile Include="ExternalLecturesDC.cs" />
+    <Compile Include="ExternalStudentFeeDC.cs" />
+    <Compile Include="FeeReportDC.cs" />
+    <Compile Include="FeeStructureLinkDC.cs" />
+    <Compile Include="FinancialYearDC.cs" />
+    <Compile Include="FranchiseRequestDetailsDC.cs" />
+    <Compile Include="GuestDetailsDC.cs" />
+    <Compile Include="HealthDetailsDC.cs" />
+    <Compile Include="HealthDetails\HealthComponentDC.cs" />
+    <Compile Include="HealthDetails\HealthParameterDC.cs" />
+    <Compile Include="HealthDetails\ParentHealthDetailsDC.cs" />
+    <Compile Include="HomeworkDailyLogDC.cs" />
+    <Compile Include="HomeworkDC.cs" />
+    <Compile Include="HouseCofigurationDC.cs" />
+    <Compile Include="HouseConfigurationDetailsDC.cs" />
+    <Compile Include="ImportFeeByChallanDC.cs" />
+    <Compile Include="InternalFeeDetailsDC.cs" />
+    <Compile Include="InventoryDC\CategoriesOrUOMDC.cs" />
+    <Compile Include="InventoryDC\DepositeBankDetailsDC.cs" />
+    <Compile Include="InventoryDC\GSTInvoiceDetailsDC.cs" />
+    <Compile Include="InventoryDC\ItemCategoryMasterDC.cs" />
+    <Compile Include="InventoryDC\ItemSpecificationDC.cs" />
+    <Compile Include="InventoryDC\PODetailsDC.cs" />
+    <Compile Include="InventoryDC\POUserDetailsDC.cs" />
+    <Compile Include="InventoryDC\ServiceReceiverDetailsDC.cs" />
+    <Compile Include="InventoryDC\StockDetailsDC.cs" />
+    <Compile Include="InventoryDC\UOMMasterDC.cs" />
+    <Compile Include="InventoryDC\VendorDetailsDC.cs" />
+    <Compile Include="JobDetailsDC.cs" />
+    <Compile Include="LeavingCertificateConfigDC.cs" />
+    <Compile Include="LectureWiseAttendanceDetailsDC.cs" />
+    <Compile Include="LeftStudentsDetailsDC.cs" />
+    <Compile Include="LessonPlan\LessionPlanDetailsDC.cs" />
+    <Compile Include="LessonPlan\LessonPlanParameterDC.cs" />
+    <Compile Include="LessonPlan\LessonPlanReportingConfigDC.cs" />
+    <Compile Include="LessonPlan\LessonPlanStdSubjectDC.cs" />
+    <Compile Include="LibraryDC\LibraryRecordsDC.cs" />
+    <Compile Include="LibraryDC\LibraryVendorDC.cs" />
+    <Compile Include="MailingGroupDC.cs" />
+    <Compile Include="ManagementFileSharingDC.cs" />
+    <Compile Include="ManagementServiceConfigDC.cs" />
+    <Compile Include="MenuFileDetailsDC.cs" />
+    <Compile Include="MusterRollDetailsDC.cs" />
+    <Compile Include="NetBankingPaymentTransactionsDC.cs" />
+    <Compile Include="NoticeDetailsDC.cs" />
+    <Compile Include="ObservationDetailsDC.cs" />
+    <Compile Include="ObservationParametersDC.cs" />
+    <Compile Include="ObservationSkillConfigDC.cs" />
+    <Compile Include="OldYearPendingFeeStudentsDC.cs" />
+    <Compile Include="OnlineExamDC\OnlineExamConfigurationDC.cs" />
+    <Compile Include="OnlineExamDC\OnlineExamProgressReportDC.cs" />
+    <Compile Include="OnlineExamDC\OnlineExamQuestionConfigurationDC.cs" />
+    <Compile Include="OnlineExamDC\OnlineExamWiseQueConfigDC.cs" />
+    <Compile Include="OnlineExamDC\PublishOnlineExamDC.cs" />
+    <Compile Include="OnlinePaymentTermsDC.cs" />
+    <Compile Include="PanAttachmentDC.cs" />
+    <Compile Include="ParentFeedbackDC.cs" />
+    <Compile Include="ParentTeacherAssociationDetailsDC.cs" />
+    <Compile Include="PaymentGatewayDC.cs" />
+    <Compile Include="PayrollDC\AdditionalPaymentDC.cs" />
+    <Compile Include="PayrollDC\AmountRangeDC.cs" />
+    <Compile Include="PayrollDC\DatewiseStaffLeavesDC.cs" />
+    <Compile Include="PayrollDC\EarningDeductionFormulaDC.cs" />
+    <Compile Include="PayrollDC\EarningsDeductionsDC.cs" />
+    <Compile Include="PayrollDC\IncomeDeclarationDC.cs" />
+    <Compile Include="PayrollDC\IncomeTaxDetailsDC.cs" />
+    <Compile Include="PayrollDC\IncomeTaxSlabsDC.cs" />
+    <Compile Include="PayrollDC\InvestmentDeclarationDC.cs" />
+    <Compile Include="PayrollDC\InvestmentMethodDC.cs" />
+    <Compile Include="PayrollDC\LateMarkConfigurationDC.cs" />
+    <Compile Include="PayrollDC\LeaveApprovalConfigurationDC.cs" />
+    <Compile Include="PayrollDC\MonthwiseProfessionalTaxDetailsDC.cs" />
+    <Compile Include="PayrollDC\ODDetailsDC.cs" />
+    <Compile Include="PayrollDC\OtherStaffDC.cs" />
+    <Compile Include="PayrollDC\PaymentCategoryDC.cs" />
+    <Compile Include="PayrollDC\PaymentGroupDC.cs" />
+    <Compile Include="PayrollDC\PaymentParameterDC.cs" />
+    <Compile Include="PayrollDC\ReportingUserConfigureDC.cs" />
+    <Compile Include="PayrollDC\RetirementNoticeConfigDC.cs" />
+    <Compile Include="PayrollDC\SalaryDetailsDC.cs" />
+    <Compile Include="PayrollDC\SalaryDifferenceDC.cs" />
+    <Compile Include="PayrollDC\SectionDetailDC.cs" />
+    <Compile Include="PayrollDC\ShiftDetailsDC.cs" />
+    <Compile Include="PayrollDC\StaffAttendanceDC.cs" />
+    <Compile Include="PayrollDC\StaffGroupsAndEarningsDeductionsAssociationDC.cs" />
+    <Compile Include="PayrollDC\StaffGroupsDC.cs" />
+    <Compile Include="PayrollDC\StaffHolidaysSalaryDeductionDC.cs" />
+    <Compile Include="PayrollDC\StaffLeaveDetailsDC.cs" />
+    <Compile Include="PayrollDC\StaffLeavesDC.cs" />
+    <Compile Include="PayrollDC\StaffStatusDC.cs" />
+    <Compile Include="PayrollDC\TaxDeductionDC.cs" />
+    <Compile Include="PayrollDC\UserApplyLeaveDetailsDC.cs" />
+    <Compile Include="PayrollDC\UserAppointmentDetailsDC.cs" />
+    <Compile Include="PayrollDC\UserLeavesYearwiseConfigurationDC.cs" />
+    <Compile Include="PayrollDC\UserPaymentCategoryAssoDC.cs" />
+    <Compile Include="PayrollDC\UserRejoinigDetailsDC.cs" />
+    <Compile Include="PayrollDC\UsersEarningsDeductionsDC.cs" />
+    <Compile Include="PayrollDC\UserShiftAssociationDC.cs" />
+    <Compile Include="PayrollDC\UsersStaffGroupsAssociationDC.cs" />
+    <Compile Include="PersonalAddressBookDC.cs" />
+    <Compile Include="PrePrimaryProgressReportMonthsDC.cs" />
+    <Compile Include="PrePrimaryProgressReportRemarksDC.cs" />
+    <Compile Include="PrePrimaryProgressReportSubjectConfigListDC.cs" />
+    <Compile Include="ProductDemoDetailsDC.cs" />
+    <Compile Include="ProgressReportDC.cs" />
+    <Compile Include="QualificationDC.cs" />
+    <Compile Include="ResultDetailsDC.cs" />
+    <Compile Include="RiteSchoolUsageDC.cs" />
+    <Compile Include="SchoolEnquiryDC.cs" />
+    <Compile Include="SchoolNewsDC.cs" />
+    <Compile Include="SchoolwiseBankAccountDetailsDC.cs" />
+    <Compile Include="SchoolwiseTermConfigurationMasterDC.cs" />
+    <Compile Include="SchoolWorkingDetailsDC.cs" />
+    <Compile Include="SecondLanguageDC.cs" />
+    <Compile Include="SmsTemplateDC.cs" />
+    <Compile Include="SQLServerDbUtility.cs" />
+    <Compile Include="DivisionMasterDC.cs" />
+    <Compile Include="ErrorLogDC.cs" />
+    <Compile Include="FeedbackDetailsDC.cs" />
+    <Compile Include="HolidaysMasterDC.cs" />
+    <Compile Include="ImageGalleryDC.cs" />
+    <Compile Include="InventoryDC\ApprovalLevelConfigurationDC.cs" />
+    <Compile Include="InventoryDC\GRNDetailsDC.cs" />
+    <Compile Include="InventoryDC\ItemsMasterDC.cs" />
+    <Compile Include="InventoryDC\PurchaseOrderDC.cs" />
+    <Compile Include="InventoryDC\RequisitionDC.cs" />
+    <Compile Include="InventoryDC\RequisitionDetailsDC.cs" />
+    <Compile Include="InventoryDC\StockBalancesDetailsDC.cs" />
+    <Compile Include="InventoryDC\StockIssueDetailsDC.cs" />
+    <Compile Include="LCDetailsDC.cs" />
+    <Compile Include="LecturesPerStandardDC.cs" />
+    <Compile Include="LecturesPerStandardSubjectWeekDC.cs" />
+    <Compile Include="LectureTimingDC.cs" />
+    <Compile Include="LibraryDC\AuthorDC.cs" />
+    <Compile Include="LibraryDC\BookDC.cs" />
+    <Compile Include="LibraryDC\CategoryDC.cs" />
+    <Compile Include="LibraryDC\IssueReturnBookDC.cs" />
+    <Compile Include="LibraryDC\LibraryConfigurationDC.cs" />
+    <Compile Include="LibraryDC\PublisherDC.cs" />
+    <Compile Include="LibraryDC\SchoolWiseLibraryFeeDC.cs" />
+    <Compile Include="MarksGradesConfigurationDC.cs" />
+    <Compile Include="MessageDetailsDC.cs" />
+    <Compile Include="MessageReceiverDetailsDC.cs" />
+    <Compile Include="NoticeBoardDC.cs" />
+    <Compile Include="PassFailCriteriaDC.cs" />
+    <Compile Include="PrePrimaryProgressSheetConfigDC.cs" />
+    <Compile Include="ReferenceDC.cs" />
+    <Compile Include="ReportsDC.cs" />
+    <Compile Include="SchoolDC.cs" />
+    <Compile Include="SchoolTimeTableMasterDC.cs" />
+    <Compile Include="SchoolUserDC.cs" />
+    <Compile Include="DataCommunicatorBaseDC.cs" />
+    <Compile Include="MasterDataDC.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchoolWisdeAnnualResultPublishDC.cs" />
+    <Compile Include="SchoolWiseAcademicYearMasterDC.cs" />
+    <Compile Include="SchoolwiseBankMasterDC.cs" />
+    <Compile Include="SchoolwiseDivisionSubjectMasterDC.cs" />
+    <Compile Include="SchoolwiseEventDescriptionDC.cs" />
+    <Compile Include="SchoolwiseFeeSubTypeConfigurationDC.cs" />
+    <Compile Include="SchoolwiseFeeTypeConfigurationDC.cs" />
+    <Compile Include="SchoolWiseStandardDivisionTeacherAssignmentMasterDC.cs" />
+    <Compile Include="SchoolwiseStandardExamScheduleMasterDC.cs" />
+    <Compile Include="SchoolwiseStandardFeeConfigurationDetailsDC.cs" />
+    <Compile Include="SchoolwiseStandardFeeConfigurationMasterDC.cs" />
+    <Compile Include="SchoolwiseStandardFeeTypeMasterDC.cs" />
+    <Compile Include="SchoolWiseStandardLateFeeDueDatesMasterDC.cs" />
+    <Compile Include="SchoolWiseStandardSubjectMasterDC.cs" />
+    <Compile Include="SchoolwiseStandardTestMasterDC.cs" />
+    <Compile Include="SchoolWiseStanderedDivisionTestMasterDC.cs" />
+    <Compile Include="SchoolwiseStudentFeeDetailsDC.cs" />
+    <Compile Include="SchoolwiseStudentFeeMasterDC.cs" />
+    <Compile Include="SchoolwiseStudentPostDatedChequesDC.cs" />
+    <Compile Include="SchoolWiseSupervisorMasterDC.cs" />
+    <Compile Include="SchoolWiseTeacherMasterDC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SchoolWiseTestMasterDC.cs" />
+    <Compile Include="SMSMasterDC.cs" />
+    <Compile Include="SMSReceiverDetailsDC.cs" />
+    <Compile Include="StaffPerformance\PerformanceGradeDC.cs" />
+    <Compile Include="StaffPerformance\PerformanceParameterDC.cs" />
+    <Compile Include="StaffPerformance\PerformanceSkillDC.cs" />
+    <Compile Include="StaffPerformance\ReportingConfigurationDC.cs" />
+    <Compile Include="StaffPerformance\StaffPerformanceEvaluationDC.cs" />
+    <Compile Include="StandardDivisionDC.cs" />
+    <Compile Include="StandardMasterDC.cs" />
+    <Compile Include="StandardWiseDivisionListDC.cs" />
+    <Compile Include="StandardwiseDocumentMasterDC.cs" />
+    <Compile Include="SteppingStone\RemarksConfigurationDC.cs" />
+    <Compile Include="SteppingStone\StandardWiseExamConfigurationDC.cs" />
+    <Compile Include="StudentAchievementDC.cs" />
+    <Compile Include="StudentAdmissionsDC.cs" />
+    <Compile Include="StudentAssessmentDC.cs" />
+    <Compile Include="StudentCautionMoneyChequeDetailsDC.cs" />
+    <Compile Include="StudentCautionMoneyDetailsDC.cs" />
+    <Compile Include="StudentDC.cs" />
+    <Compile Include="StudentExamWiseSubjectMarksDetailsDC.cs" />
+    <Compile Include="StudentLCUploadDC.cs" />
+    <Compile Include="StudentListForAssessmentDC.cs" />
+    <Compile Include="StudentListForNoteDetailsDC.cs" />
+    <Compile Include="StudentMarksDC.cs" />
+    <Compile Include="StudentPaidFeeDetailsReportDC.cs" />
+    <Compile Include="StudentRecordDC.cs" />
+    <Compile Include="StudentSanctionedLeaveDetailsDC.cs" />
+    <Compile Include="StudentSiblingDetailsDC.cs" />
+    <Compile Include="StudentsMonthlyStatusDetailsDC.cs" />
+    <Compile Include="StudentSubjectMarksDC.cs" />
+    <Compile Include="StudentwiseRemarkMasterDC.cs" />
+    <Compile Include="SubjectGroupsDC.cs" />
+    <Compile Include="SubjectMasterDC.cs" />
+    <Compile Include="SubjectTestConfigurationDC.cs" />
+    <Compile Include="SubjectTestTypeConfigurationDC.cs" />
+    <Compile Include="SubjectwiseStandardExamScheduleDC.cs" />
+    <Compile Include="SuperAdminDC.cs" />
+    <Compile Include="SuperAdmin\AllSchoolStudentCountDC.cs" />
+    <Compile Include="SuperAdmin\SuperAdminDetailsDC.cs" />
+    <Compile Include="SupportDC.cs" />
+    <Compile Include="Survey\GuestDetailsDC.cs" />
+    <Compile Include="Survey\SurveyFeedbackDC.cs" />
+    <Compile Include="Survey\SurveySchoolDetailsDC.cs" />
+    <Compile Include="Survey\SurveyStudentDC.cs" />
+    <Compile Include="Survey\UserSurveyDC.cs" />
+    <Compile Include="TaskManagementDC\TaskListDC.cs" />
+    <Compile Include="TaskManagementDC\TaskManagementDC.cs" />
+    <Compile Include="TaskManagementDC\WorkFlowRoleConfigurationDetailDC.cs" />
+    <Compile Include="TeacherAdditionalDetailsDC.cs" />
+    <Compile Include="TeacherEducationDetailsDC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TeacherExperienceDetailsDC.cs" />
+    <Compile Include="TeacherStandardDetailsDC.cs" />
+    <Compile Include="TeacherSubjectAssignmentDC.cs" />
+    <Compile Include="TeacherSubjectDetailsDC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TeacherTransferDC.cs" />
+    <Compile Include="TermwiseStudentHeightWeightMasterDC.cs" />
+    <Compile Include="TransportDC\BulkDocumentDetailsDC.cs" />
+    <Compile Include="TransportDC\PrivateTransportDetailsDC.cs" />
+    <Compile Include="TransportDC\RFIDDetailsDC.cs" />
+    <Compile Include="TransportDC\RouteDetailsDC.cs" />
+    <Compile Include="TransportDC\RouteShiftTimingDetailsDC.cs" />
+    <Compile Include="TransportDC\RouteStopAssignmentDC.cs" />
+    <Compile Include="TransportDC\ShiftMasterDC.cs" />
+    <Compile Include="TransportDC\StopMasterDC.cs" />
+    <Compile Include="TransportDC\StudentTransportDetailsDC.cs" />
+    <Compile Include="TransportDC\TransferTransportDetailsDC.cs" />
+    <Compile Include="TransportDC\TransportCapacityDetailsDC.cs" />
+    <Compile Include="TransportDC\TransportChargesDC.cs" />
+    <Compile Include="TransportDC\TransportLateFeeSettingsDC.cs" />
+    <Compile Include="TransportDC\TransportNotificationDC.cs" />
+    <Compile Include="TransportDC\TransportNotificationDetailsDC.cs" />
+    <Compile Include="TransportDC\TransportOverrideConfigDetailsDC.cs" />
+    <Compile Include="TransportDC\TransportOverrideDetailsDC.cs" />
+    <Compile Include="TransportDC\TransportServiceDC.cs" />
+    <Compile Include="TransportDC\TransportStaffDC.cs" />
+    <Compile Include="TransportDC\TravelerTransportDetailsDC.cs" />
+    <Compile Include="TransportDC\UserAttendanceInBusDC.cs" />
+    <Compile Include="TransportDC\VehicleDetailsDC.cs" />
+    <Compile Include="TransportDC\VehicleDocumentDC.cs" />
+    <Compile Include="TransportDC\VehicleMaintenanceExpensesDC.cs" />
+    <Compile Include="TransportDC\VehiclePUCDetailsDC.cs" />
+    <Compile Include="TransportDC\VehicleReadingAllocationDC.cs" />
+    <Compile Include="TransportDC\VehicleServicingDetailsDC.cs" />
+    <Compile Include="UpdateStudentDetailsInBulkDC.cs" />
+    <Compile Include="UploadStudentPhotoDC.cs" />
+    <Compile Include="UploadUserDocumentDC.cs" />
+    <Compile Include="UserAuthenticationDC.cs" />
+    <Compile Include="UserDetailsDC.cs" />
+    <Compile Include="UserRolewisePhotoUploadDC.cs" />
+    <Compile Include="UserWeekendAssociationDC.cs" />
+    <Compile Include="VideoGalleryDC.cs" />
+    <Compile Include="WeekDaysMasterDC.cs" />
+    <Compile Include="WeekEndMasterDC.cs" />
+    <Compile Include="WorkinghoursDC.cs" />
+    <Compile Include="WorkinghrsDC.cs" />
+    <Compile Include="Xseed\AssessmentMasterDC.cs" />
+    <Compile Include="Xseed\AssignXseedGradesDC.cs" />
+    <Compile Include="Xseed\GradeMasterDC.cs" />
+    <Compile Include="Xseed\LearningOutcomeConfigMasterDC.cs" />
+    <Compile Include="Xseed\StandardwiseAssessmentMasterDC.cs" />
+    <Compile Include="Xseed\StudentXseedGradeAssignmentDC.cs" />
+    <Compile Include="Xseed\SubjectSectionConfigurationMasterDC.cs" />
+    <Compile Include="Xseed\XseedProgressReportDC.cs" />
+    <Compile Include="Xseed\XseedThemesDC.cs" />
+    <Compile Include="YearWiseStudentsDC.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolEntities\SchoolEntities.csproj">
+      <Project>{5ED170A4-4E8F-45EC-996C-11558260BBC2}</Project>
+      <Name>SchoolEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{A8F9A48A-AD95-4E8E-BD13-9D398527F0A4}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AccountsDC\vssver.scc" />
+    <None Include="CareerDC\vssver.scc" />
+    <None Include="packages.config" />
+    <None Include="StaffPerformance\vssver.scc" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

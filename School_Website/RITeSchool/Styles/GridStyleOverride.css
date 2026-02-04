@@ -1,0 +1,259 @@
+﻿
+/*----------------Start - Grid color changes-----------------------------*/
+.ClsGridHeader {
+    background-image: none;
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    color: #333;
+    font-size: 10pt;
+    font-weight: 700;
+    height: 35px !important;
+    margin-left: 5px;
+    padding-right: 5px;
+    text-decoration: none;
+    /*background-color:#C9E7E9 !important;*/
+    /*background:rgba(0, 0, 0, 0) linear-gradient(to bottom, #4cbfb7 0%, #4cbfb7 100%) repeat scroll 0 0 !important; - old color*/
+    background-color:#bcdbca !important;
+}
+
+
+.ClsGridRow {
+    background-color: #fff !important;
+    font-size: 9pt;
+    height: 20px;
+    margin-left: 5px;
+    /*color: #0f6d5a !important;*/
+    color: #333;
+}
+
+.ClsGridAltRow {
+    background-color: #F5FBFB !important;
+    font-size: 9pt;
+    height: 20px;
+    margin-left: 5px;
+    color: #333;/*important removed as found issue on attendance screen*/
+}
+
+
+.ClsGridAltRow > td, .ClsGridRow > td  {
+    border-top: 1px solid #bedcde;
+}
+
+.ClsHilightBGB td
+{
+    border-top: 1px solid #bf8c8c;
+}
+
+.GridBorder {
+    border: 1px solid #c9e7e9;
+    margin-top: 0;
+    /*border-spacing: 0 !important;*/
+}
+
+.ClsHilightBGB td, .ClsGridRow td, .ClsGridAltRow td {
+    /*padding: 5px 5px 5px 15px !important;*/
+    height:30px;
+}
+
+.ClsBorderPager {
+    background-color: #bcdbca;
+}
+/* - Tmporary removed as border not displayed on Refund screen
+table.GridBorder tr:last-child table {
+    border-spacing: 0;
+}
+*/
+A.GridLinks
+{
+    font-size:13px !important;    
+    font-family:Open Sans;
+}
+
+A.GridLinks:hover
+{
+    color:#28A19E;    
+    font-family:Open Sans
+}
+
+.ClsGridBG
+{
+    background-color: #8fc6a6;    
+}
+
+/*
+.ClsGridHeader th {
+    border-bottom: 1px solid #16a085;
+}*/
+
+/*----------------End - Grid color changes-----------------------------*/
+/*----------------------------------------Start - Button changes----------------------------------*/
+
+/*
+input[type='submit'][value='Save'],input[type='button'][value='Save']
+{
+    background: #77a809 linear-gradient(to bottom, #4bdcba 5%, #177d5b 100%) repeat scroll 0 0 !important;
+    border: 1px solid #007c3e !important;
+    color: #fff !important;
+}
+
+input[type='submit'][value='Save']:hover ,input[type='button'][value='Save']:hover {
+   background: #77a809 linear-gradient(to bottom, #177d5b 5%, #4bdcba 100%) repeat scroll 0 0 !important;
+   border: 1px solid #4bdcba !important;
+}
+
+input[type='submit'][value='Add'],input[type='button'][value='Add']
+{
+    background: #00af57 linear-gradient(to bottom, #03bf61 5%, #007c3e 100%) repeat scroll 0 0 !important;
+    border: 1px solid #007c3e !important;
+    color: #fff !important;
+}
+
+input[type='submit'][value='Add']:hover ,input[type='button'][value='Add']:hover {
+   background: #00af57 linear-gradient(to bottom, #007c3e 5%, #03bf61 100%) repeat scroll 0 0 !important;
+   border: 1px solid #03bf61  !important;
+}
+
+input[type='submit'][value='Cancel'],input[type='button'][value='Cancel'],input[type='reset'][value='Cancel'],
+input[type='submit'][value='Delete'],input[type='button'][value='Delete'],input[type='reset'][value='Delete'] 
+{
+    background: #c62d1f linear-gradient(to bottom, #ff623f 5%, #c4221f 100%) repeat scroll 0 0 !important;
+    border: 1px solid #c62d1f  !important;
+    color: white !important;    
+}
+
+input[type='submit'][value='Cancel']:hover ,input[type='button'][value='Cancel']:hover,input[type='reset'][value='Cancel']:hover,
+input[type='submit'][value='Delete']:hover ,input[type='button'][value='Delete']:hover,input[type='reset'][value='Delete']:hover {
+     background: #00bfff linear-gradient(to bottom, #c4221f 5%, #ff623f 100%) repeat scroll 0 0 !important;
+    border: 1px solid #ff623f  !important;
+    color: #fff !important;
+}
+
+input[type='submit'][value='Back'],input[type='button'][value='Back'],input[type='reset'][value='Back']
+{
+   background: #00bfff linear-gradient(to bottom, #00bfff 5%, #0089b7 100%) repeat scroll 0 0 !important;
+    border: 1px solid #0089b7  !important;
+    color: #fff !important;
+}
+
+input[type='submit'][value='Back']:hover ,input[type='button'][value='Back']:hover,input[type='reset'][value='Back']:hover {
+     background: rgb(0, 125, 193) linear-gradient(to bottom, #0089b7 5%, #00bfff 100%) repeat scroll 0 0 !important;
+    border: 1px solid #0089b7 !important;
+}
+
+input[type='submit'][value='Search'],input[type='button'][value='Search'],input[type='reset'][value='Search'],
+input[type='submit'][value='Show'],input[type='button'][value='Show'],input[type='reset'][value='Show']{
+    background: #77a809 linear-gradient(to bottom, #b0d5d5 5%, #1c756e 100%) repeat scroll 0 0 !important;
+    border: 1px solid #1c756e !important;
+}
+input[type='submit'][value='Search']:hover ,input[type='button'][value='Search']:hover,input[type='reset'][value='Search']:hover,
+input[type='submit'][value='Show']:hover,input[type='button'][value='Show']:hover,input[type='reset'][value='Show']:hover {
+    background: #77a809 linear-gradient(to bottom, #1c756e 5%, #b0d5d5 100%) repeat scroll 0 0 !important;
+    border: 1px solid #1f7871 #b0d5d5 !important;
+}
+
+
+input[type='submit'],input[type='button'],input[type='reset']
+{
+    background: #89c403 linear-gradient(to bottom, #89c403 5%, #77a809 100%) repeat scroll 0 0 !important;
+    border: 1px solid #77a809;
+    color: white !important;
+}
+
+input[type='submit']:hover ,input[type='button']:hover,input[type='reset']:hover {
+    background: #77a809 linear-gradient(to bottom, #77a809 5%, #89c403 100%) repeat scroll 0 0 !important;
+    border: 1px solid #77a809 !important;
+}
+*/
+
+/* - Dark red and Green
+input[type='submit'],input[type='button'],input[type='reset']
+{
+    background: #00af57 linear-gradient(to bottom, #03bf61 5%, #007c3e 100%) repeat scroll 0 0 !important;
+    border: 1px solid #007c3e !important;
+    color: #fff !important;
+    border-radius:5px;
+}
+
+input[type='submit']:hover ,input[type='button']:hover,input[type='reset']:hover {
+      background: #00af57 linear-gradient(to bottom, #007c3e 5%, #03bf61 100%) repeat scroll 0 0 !important;
+   border: 1px solid #03bf61  !important;
+}
+
+
+input[type='submit'][value='Cancel'],input[type='button'][value='Cancel'],input[type='reset'][value='Cancel'],
+input[type='submit'][value='Delete'],input[type='button'][value='Delete'],input[type='reset'][value='Delete'],
+input[type='submit'][value='Back'],input[type='button'][value='Back'],input[type='reset'][value='Back']
+{
+    background: #c62d1f linear-gradient(to bottom, #ff623f 5%, #c4221f 100%) repeat scroll 0 0 !important;
+    border: 1px solid #c62d1f  !important;
+    color: white !important;    
+}
+
+input[type='submit'][value='Cancel']:hover ,input[type='button'][value='Cancel']:hover,input[type='reset'][value='Cancel']:hover,
+input[type='submit'][value='Delete']:hover ,input[type='button'][value='Delete']:hover,input[type='reset'][value='Delete']:hover,
+input[type='submit'][value='Back']:hover ,input[type='button'][value='Back']:hover,input[type='reset'][value='Back']:hover {
+     background: #00bfff linear-gradient(to bottom, #c4221f 5%, #ff623f 100%) repeat scroll 0 0 !important;
+    border: 1px solid #ff623f  !important;
+    color: #fff !important;
+}
+*/
+/*
+input[type='submit'],input[type='button'],input[type='reset']
+{
+    background: #77a809 linear-gradient(to bottom, #4bdcba 5%, #177d5b 100%) repeat scroll 0 0 !important;
+    border: 1px solid #007c3e !important;
+    color: #fff !important;
+    border-radius:5px;
+}
+
+input[type='submit']:hover ,input[type='button']:hover,input[type='reset']:hover {
+   background: #77a809 linear-gradient(to bottom, #177d5b 5%, #4bdcba 100%) repeat scroll 0 0 !important;
+   border: 1px solid #4bdcba !important;
+}
+
+/*----------------------------------------End - Button changes----------------------------------*/
+
+/* textbox height related change  */
+.ClsBorderPager td input[type="text"], th input[type="text"], .ClsGridRow td input[type="text"], .ClsGridAltRow td input[type="text"]{
+    height: 25px!important
+}
+ 
+
+
+.ClsBorderPager td > select, th > select, .ClsGridRow td >select, .ClsGridAltRow td > select{
+    height: 25px!important;
+    padding: 0 4px;
+}
+
+.ClsGridHeader th > span > label[for], .ClsGridHeader th > label[for] {
+    color: #333333 !important;
+    font-size : 10pt;
+    font-family :'Open Sans';
+    color:black;
+}
+
+/*.ClsGridHeader th > span{
+    font-family :'Open Sans';
+     color:black;
+
+}*/
+
+.ClsGridHeader > th > span{
+    color:#333333 !important
+}
+
+/* SMS Center - Send SMS and Clear button - overlapping issue  */
+.SMSDisplay{
+    height :313px;
+}
+
+
+/* Kendo grid vertical line issue */
+.k-grid td {
+    padding:1px 5px!important;
+    border-right:1px solid white !important;
+}
+
+.k-grid th.k-header{
+    border-color:white!important;
+}

@@ -1,0 +1,2808 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="postdated_cheque_entry_popup_1" xml:space="preserve">
+    <value>Add/Edit/Delete post dated cheque details.</value>
+  </data>
+  <data name="allstudentsui_1" xml:space="preserve">
+    <value>View summarised information of all students for each class. Click on the links to add, view and update roll numbers of students in the class.</value>
+  </data>
+  <data name="annualeventplanner_1" xml:space="preserve">
+    <value>Annual planner with detailed event description of your school. Click on date in the calendar to add new event for the date.</value>
+  </data>
+  <data name="annualeventplanner_2" xml:space="preserve">
+    <value>Annual planner with detailed event description of your school.</value>
+  </data>
+  <data name="annualeventplanner_3" xml:space="preserve">
+    <value>Annual planner with detailed event description of your school.</value>
+  </data>
+  <data name="assignclassteacherfordivisionpopup_1" xml:space="preserve">
+    <value>Assign class-teacher for the selected class. To remove the association select "Remove Assignment" from list and click on "Save".</value>
+  </data>
+  <data name="changepasswordpopup_1" xml:space="preserve">
+    <value>Change password for the selected user.</value>
+  </data>
+  <data name="changestudentdivision_1" xml:space="preserve">
+    <value>Change selected student's standard / division.</value>
+  </data>
+  <data name="classteachertestmarksui_1" xml:space="preserve">
+    <value>View the summarised results of your class for the selected exam. Click the subject name link to view the marks/grades scored by each student in the  subject. Exam result can be publish on be clicking Publish button and unpublish by clicking Unpublish button.</value>
+  </data>
+  <data name="classteachertestmarksui_2" xml:space="preserve">
+    <value>View the summarised results of your class for the selected exam. Click the subject name link to view the marks/grades scored by each student in the  subject. Exam result can be publish on be clicking Publish button and unpublish by clicking Unpublish button.</value>
+  </data>
+  <data name="configuremenu_1" xml:space="preserve">
+    <value>Configure menus to be displayed to your staff and parents.</value>
+  </data>
+  <data name="controlpanel_1" xml:space="preserve">
+    <value>Displays dashboard for users. Lists available features of the application.</value>
+  </data>
+  <data name="controlpanel_2" xml:space="preserve">
+    <value>Displays dashboard for users. Lists available features of the application.</value>
+  </data>
+  <data name="controlpanel_3" xml:space="preserve">
+    <value>Displays dashboard for users. Lists available features of the application.</value>
+  </data>
+  <data name="controlpanel_6" xml:space="preserve">
+    <value>Displays dashboard for users. Lists available features of the application.</value>
+  </data>
+  <data name="copytestconfigurationpopup_1" xml:space="preserve">
+    <value>Check the checkboxes to which the exam configuration should be copied and click on "Copy" to apply the same configuration to selected class-subjects.</value>
+  </data>
+  <data name="displayassignedclassteacherui_1" xml:space="preserve">
+    <value>View class teachers assigned to the class. Click on the links to change  class teacher for the class. No teacher can be assigned to more than 1 class.</value>
+  </data>
+  <data name="divisionslist_1" xml:space="preserve">
+    <value>Set divisions applicable for your school. Select divisions and click on Save.</value>
+  </data>
+  <data name="divisionsubjectassignmentui_1" xml:space="preserve">
+    <value>Set subjects applicable for the class. Select association and click on Save.</value>
+  </data>
+  <data name="error" xml:space="preserve">
+    <value>Your session has been timed out. Please click on Login button to login to the application.</value>
+  </data>
+  <data name="failcriteriaui_1" xml:space="preserve">
+    <value>Define fail criteria for each standard. If selected grade is scored by student for specified number of subjects then he/she will be treated as a "Fail" student.</value>
+  </data>
+  <data name="feesubtypeconfiguration_1" xml:space="preserve">
+    <value>Set fee sub types applicable to your school with the applicable option All/New Student/Old Student from the "To Be Collected From" column prior to any student admission.</value>
+  </data>
+  <data name="feetypeconfiguration_1" xml:space="preserve">
+    <value>Set fee types applicable for your school. Select fee types and click on Save. Select 'Consider For IT Reconciliation' checkbox to consider fee type for IT Reconciliation.</value>
+  </data>
+  <data name="holidayconfigurationpopup_1" xml:space="preserve">
+    <value>Declare a new classwise holiday for your school.</value>
+  </data>
+  <data name="holidaylistui_1" xml:space="preserve">
+    <value>Holiday list for the current year declared by your school. Declare new holiday for current academic year by clicking on "Add" button.</value>
+  </data>
+  <data name="holidaylistui_2" xml:space="preserve">
+    <value>Holiday list for the current year declared by your school.</value>
+  </data>
+  <data name="holidaylistui_3" xml:space="preserve">
+    <value>Holiday list for the current year declared by your school.</value>
+  </data>
+  <data name="importstudentui_1" xml:space="preserve">
+    <value>Import multiple students at a time for selected standard and division. Download the template from the link "Download Template", fill the students details. Specify the path of same excel sheet filled and click on "Import Students". This will add all those students in the system</value>
+  </data>
+  <data name="latefeesetting_1" xml:space="preserve">
+    <value>View late fees set for each standard.</value>
+  </data>
+  <data name="latefeesettingdetails_1" xml:space="preserve">
+    <value>Set late fees, late fee period and payment due date for each fee type for the selected standard. If student pays fees after due date then only late fees will be applicable. Also allows configuring deactivation settings for each fee type.</value>
+  </data>
+  <data name="leavingcertificateui_1" xml:space="preserve">
+    <value>Add/Edit student's leaving certificate details.</value>
+  </data>
+  <data name="leavingcertificateui_2" xml:space="preserve">
+    <value>Add/Edit student's leaving certificate details.</value>
+  </data>
+  <data name="lecturesperstandardweekday_1" xml:space="preserve">
+    <value>Define maximum lectures per standard.</value>
+  </data>
+  <data name="lockinguser_1" xml:space="preserve">
+    <value>Lists user's available to the school. Click on "Lock" to restrict access your school's data to particular user. To change password click on "Change Password" link. Click on “Send SMS/Message” to add or remove user from SMS/Message list.  To search user, enter Name / Reg. No / User Login and click on "Search" button.</value>
+  </data>
+  <data name="marksgradeconfiguration_1" xml:space="preserve">
+    <value>Define grades per standard for percentage ranges to be displayed on student's mark-sheet.</value>
+  </data>
+  <data name="messageinbox_1" xml:space="preserve">
+    <value>Inbox - List of messages Received. Select message(s) and click on "Trash" to send the message to trash box. Trash - List of Trash(deleted messages) messages. Select message and click on "Un-Delete" to move the message back to inbox. To permanently delete the message click on "Delete". Sent Items - List of messages which you have sent. Select message(s) and click on "Trash" to send the message to trash box.</value>
+  </data>
+  <data name="messageinbox_2" xml:space="preserve">
+    <value>Inbox - List of messages Received. Select message(s) and click on "Trash" to send the message to trash box. Trash - List of Trash(deleted messages) messages. Select message and click on "Un-Delete" to move the message back to inbox. To permanently delete the message click on "Delete". Sent Items - List of messages which you have sent. Select message(s) and click on "Trash" to send the message to trash box.</value>
+  </data>
+  <data name="messageinbox_3" xml:space="preserve">
+    <value>Inbox - List of messages Received. Select message(s) and click on "Trash" to send the message to trash box. Trash - List of Trash(deleted messages) messages. Select message and click on "Un-Delete" to move the message back to inbox. To permanently delete the message click on "Delete". Sent Items - List of messages which you have sent. Select message(s) and click on "Trash" to send the message to trash box.</value>
+  </data>
+  <data name="messageviewui_1" xml:space="preserve">
+    <value>View detailed message Received to you. To reply the sender click on "Reply" and to send reply to all the receipients click on "Reply to All".</value>
+  </data>
+  <data name="messageviewui_2" xml:space="preserve">
+    <value>View detailed message Received to you. To reply the sender click on "Reply" and to send reply to all the receipients click on "Reply to All".</value>
+  </data>
+  <data name="messageviewui_3" xml:space="preserve">
+    <value>View detailed message Received to you. To reply the sender click on "Reply" and to send reply to all the receipients click on "Reply to All".</value>
+  </data>
+  <data name="schoolconfigurationcontrolpanel_1" xml:space="preserve">
+    <value>Configure your school details.</value>
+  </data>
+  <data name="schoolreportui_1" xml:space="preserve">
+    <value>Displays report list in tree structure. Click on the links to get particular report's parameters. Select parameters and click on 'Display Report' button.</value>
+  </data>
+  <data name="schoolreportui_2" xml:space="preserve">
+    <value>Displays report list in tree structure. Click on the links to get particular report's parameters. Select parameters and click on 'Display Report' button.</value>
+  </data>
+  <data name="schoolreportui_3" xml:space="preserve">
+    <value>Displays report list in tree structure. Click on the links to get particular report's parameters. Select parameters and click on 'Display Report' button.</value>
+  </data>
+  <data name="schooltimetable_1" xml:space="preserve">
+    <value>Entire timetable defined for your shcool.</value>
+  </data>
+  <data name="schoolwise_events_pop_up_1" xml:space="preserve">
+    <value>Event management for your school. Add events to be held in your school for the current academic year.</value>
+  </data>
+  <data name="schoolwiseacademicyearpopup_1" xml:space="preserve">
+    <value>Here you can edit information of existing year, edit start date, end date and school reopening date for standards and also display the report of students, those are out of academic year.</value>
+  </data>
+  <data name="schoolwiseacademicyearui_1" xml:space="preserve">
+    <value>List of academic years defined till date. There can be only one current academic year for your school.</value>
+  </data>
+  <data name="schoolwiseattendancedetails_1" xml:space="preserve">
+    <value>Mark attendance of each student from selected teacher's class for the selected date. Click on "Delete" button to delete attendance of selected date.</value>
+  </data>
+  <data name="schoolwiseattendancedetails_2" xml:space="preserve">
+    <value>Mark attendance of each student from your class for the selected date. Click on "Delete" button to delete attendance of selected date. Delete facility will be available only if user have "Edit" facility.</value>
+  </data>
+  <data name="selectusername_1" xml:space="preserve">
+    <value>Select name of the teacher / student / admin staff / other staff and click on "Ok" button.</value>
+  </data>
+  <data name="selectusername_2" xml:space="preserve">
+    <value>Select name of the teacher / student / admin staff / other staff and click on "Ok" button.</value>
+  </data>
+  <data name="selectusername_3" xml:space="preserve">
+    <value>Select name of the teacher / admin staff / other staff and click on "Ok" button.</value>
+  </data>
+  <data name="sendmessagefrominbox_1" xml:space="preserve">
+    <value>Write a new message/send reply to the message Received. Select "Entire School" to send message to all the users in your school.</value>
+  </data>
+  <data name="sendmessagefrominbox_2" xml:space="preserve">
+    <value>Write a new message/send reply to the message Received.</value>
+  </data>
+  <data name="sendmessagefrominbox_3" xml:space="preserve">
+    <value>Write a new message/send reply to the message Received.</value>
+  </data>
+  <data name="smshistoryui_1" xml:space="preserve">
+    <value>Displays sent / scheduled / received SMS list.</value>
+  </data>
+  <data name="smshistoryui_11" xml:space="preserve">
+    <value>Displays Sent SMS List. Click on "New SMS" to create and send.</value>
+  </data>
+  <data name="smshistoryui_12" xml:space="preserve">
+    <value>Displays sent / scheduled / received SMS list.</value>
+  </data>
+  <data name="smshistoryui_6" xml:space="preserve">
+    <value>Displays sent / scheduled / received SMS list.</value>
+  </data>
+  <data name="smshistoryui_61" xml:space="preserve">
+    <value>Displays Sent SMS List. Click on "New SMS" to create and send.</value>
+  </data>
+  <data name="smshistoryui_62" xml:space="preserve">
+    <value>Displays sent / scheduled / received SMS list.</value>
+  </data>
+  <data name="smshistoryui_2" xml:space="preserve">
+    <value>Displays Received SMS List.</value>
+  </data>
+  <data name="smshistoryui_21" xml:space="preserve">
+    <value>Displays Sent SMS List. Click on "New SMS" to create and send.</value>
+  </data>
+  <data name="smshistoryui_22" xml:space="preserve">
+    <value>Displays Received SMS List</value>
+  </data>
+  <data name="smshistoryui_3" xml:space="preserve">
+    <value>Displays Received SMS List.</value>
+  </data>
+  <data name="smsui_1" xml:space="preserve">
+    <value>Send SMS to individual student / teacher or the entire school. To send sms to other mobile numbers check 'Add Mobile Numbers Manually' checkbox and 
+enter mobile numbers separated by comma.</value>
+  </data>
+  <data name="smsui_11" xml:space="preserve">
+    <value>View Send/Received Messages.</value>
+  </data>
+  <data name="smsui_12" xml:space="preserve">
+    <value>View Send/Received Messages.</value>
+  </data>
+  <data name="smsui_6" xml:space="preserve">
+    <value>Send SMS to individual student / teacher or the entire school. To send sms to other mobile numbers check 'Add Mobile Numbers Manually' checkbox and 
+enter mobile numbers separated by comma.</value>
+  </data>
+  <data name="smsui_61" xml:space="preserve">
+    <value>View Send/Received Messages.</value>
+  </data>
+  <data name="smsui_62" xml:space="preserve">
+    <value>View Send/Received Messages.</value>
+  </data>
+  <data name="smsui_2" xml:space="preserve">
+    <value>Send SMS to individual student / teacher or the entire school. To send sms to other mobile numbers check 'Add Mobile Numbers Manually' checkbox and 
+enter mobile numbers separated by comma.</value>
+  </data>
+  <data name="smsui_21" xml:space="preserve">
+    <value>View Send/Received Messages.</value>
+  </data>
+  <data name="smsui_22" xml:space="preserve">
+    <value>View Send/Received Messages.</value>
+  </data>
+  <data name="smsui_3" xml:space="preserve">
+    <value>Displays Received SMS List.</value>
+  </data>
+  <data name="smsui_32" xml:space="preserve">
+    <value>View Received SMS List.</value>
+  </data>
+  <data name="standardexamscheduleconfigurationui_1" xml:space="preserve">
+    <value>View exam dates for each exam associated for standards.</value>
+  </data>
+  <data name="standardslist_1" xml:space="preserve">
+    <value>Set standards, max student strength and threshold applicable for your school. Select the standards and click on Save.</value>
+  </data>
+  <data name="standardsubjectassignmentui_1" xml:space="preserve">
+    <value>Set subjects applicable for the standards. Select association and click on Save.</value>
+  </data>
+  <data name="standardsubjectwiselectures_1" xml:space="preserve">
+    <value>Define weekly maximum lectures allotted for each subject for standard.</value>
+  </data>
+  <data name="standardwisedivisionlistui_1" xml:space="preserve">
+    <value>Set divisions and display name for the divisions applicable for the standards. Select association, add / update  / remove display name and click on Save.</value>
+  </data>
+  <data name="standardwiseexamschedulelist_1" xml:space="preserve">
+    <value>Examination schedule for your class.</value>
+  </data>
+  <data name="standardwiseexamschedulelist_2" xml:space="preserve">
+    <value>Examination schedule for your class.</value>
+  </data>
+  <data name="standardwiseexamschedulelist_3" xml:space="preserve">
+    <value>Examination schedule for your class.</value>
+  </data>
+  <data name="standardwiseexamschedulepopup_1" xml:space="preserve">
+    <value>Define the exam timetable for each subject with multiple exam type, exam date, start time and end time. Specific information like syllabus can be given to students using the description field and user can copy exam schedule from one standard to other standards.</value>
+  </data>
+  <data name="standardwisefeeconfigurationdetails_1" xml:space="preserve">
+    <value>Set fee amount to be paid by each student of selected standard.</value>
+  </data>
+  <data name="standardwisefeeconfigurationui_1" xml:space="preserve">
+    <value>Set total fees applicable for each standard.</value>
+  </data>
+  <data name="standardwisefeetypeassignment_1" xml:space="preserve">
+    <value>Associate fee types for each standard.</value>
+  </data>
+  <data name="standardwisetestassignment_1" xml:space="preserve">
+    <value>Associate exams for each standard.</value>
+  </data>
+  <data name="startnextacademic_1" xml:space="preserve">
+    <value>Start Mid/Final academic year. This will migrate all selected configuration  data to new academic year. In case of final academic year generation student having pass in result will migrate to next class.</value>
+  </data>
+  <data name="studentannualresult_1" xml:space="preserve">
+    <value>View result of all/selected student.</value>
+  </data>
+  <data name="studentannualresult_2" xml:space="preserve">
+    <value>View result of all/selected student.</value>
+  </data>
+  <data name="studentannualresult_3" xml:space="preserve">
+    <value>View your final result. You can also check class toppers / your standard toppers here.</value>
+  </data>
+  <data name="studentattendance_3" xml:space="preserve">
+    <value>Your attendance for the current month with summary. You can change the month by clicking on month link on the top corners of the calender.</value>
+  </data>
+  <data name="studentchangepassword_1" xml:space="preserve">
+    <value>Change your existing password. You will have to use the same while loging into the site.</value>
+  </data>
+  <data name="studentchangepassword_2" xml:space="preserve">
+    <value>Change your existing password. You will have to use the same while loging into the site.</value>
+  </data>
+  <data name="studentchangepassword_3" xml:space="preserve">
+    <value>Change your existing password. You will have to use the same while loging into the site.</value>
+  </data>
+  <data name="studentfeessubmission_1" xml:space="preserve">
+    <value>Enter fee details for the student. Also view fees paid till date along with the pending fees and late fees(if applicable) for the specified student.</value>
+  </data>
+  <data name="studentfeessubmission_2" xml:space="preserve">
+    <value>Select student from your class to view fees paid till date along with the pending fees and late fees(if applicable) for the selected student.</value>
+  </data>
+  <data name="studentfeessubmission_3" xml:space="preserve">
+    <value>Fees paid till date along with the pending fees and late fees(if applicable).</value>
+  </data>
+  <data name="studentmarksassignment_1" xml:space="preserve">
+    <value>Assign marks to each student in the class for the selected subject and click on "Save". Once marks are submitted to class-teacher you can modify it from exam results.</value>
+  </data>
+  <data name="studentmarksassignment_2" xml:space="preserve">
+    <value>Assign marks to each student in the class for the selected subject and click on "Save". Once marks are submitted to class-teacher you cannot modify it.</value>
+  </data>
+  <data name="studentprogresssheet_1" xml:space="preserve">
+    <value>Displays progress report of published exams of selected/all students.</value>
+  </data>
+  <data name="studentprogresssheet_2" xml:space="preserve">
+    <value>Displays progress report of published exams of selected/all students.</value>
+  </data>
+  <data name="studentprogresssheet_3" xml:space="preserve">
+    <value>Displays progress report of published exam. To see class/standard toppers click on “Toppers” link.</value>
+  </data>
+  <data name="studentprogresssheetedit_1" xml:space="preserve">
+    <value>Edit marks of individual student and click on "Save".</value>
+  </data>
+  <data name="studentprogresssheetedit_2" xml:space="preserve">
+    <value>Edit marks of individual student and click on "Save".</value>
+  </data>
+  <data name="studentresultlist_1" xml:space="preserve">
+    <value>Display student list for their result generation. Click on "Generate All" to generate final result for all the students in selected class.  Click on "Publish" to publish final result of selected class. Click on “Publish All” to publish final results of all the classes in your school.</value>
+  </data>
+  <data name="studentresultlist_2" xml:space="preserve">
+    <value>Display student list for their result genearation.  Click on "Publish" to publish final result of your class.</value>
+  </data>
+  <data name="studentslistui_1" xml:space="preserve">
+    <value>Student's list for selected class. Click on "Edit" button to change details of individual student. To add a new student, click on "Add".</value>
+  </data>
+  <data name="studentslistui_2" xml:space="preserve">
+    <value>Student's list from your class. Click on "Edit" button to change details of individual student.</value>
+  </data>
+  <data name="studentui_1" xml:space="preserve">
+    <value>Add/Edit student details and click on "Save".</value>
+  </data>
+  <data name="studentui_2" xml:space="preserve">
+    <value>Add/Edit student details and click on "Save".</value>
+  </data>
+  <data name="subjectgroupslistui_1" xml:space="preserve">
+    <value>List of subject-groups for class. Select class and click on "Add" to define a new group. To delete, select the group and click on "Delete".</value>
+  </data>
+  <data name="subjectgroupui_1" xml:space="preserve">
+    <value>Select as many as group subjects for the parent subject by clicking on "Add Subject To Group" and finally click on "Save".</value>
+  </data>
+  <data name="subjectmarkslist_1" xml:space="preserve">
+    <value>View the marks/grade scored by each student in the selected class.</value>
+  </data>
+  <data name="subjectmarkslist_2" xml:space="preserve">
+    <value>View the marks/grade scored by each student in your class.</value>
+  </data>
+  <data name="subjectslist_1" xml:space="preserve">
+    <value>Set subjects applicable for your school. Select subjects and click on Save.</value>
+  </data>
+  <data name="subjecttestconfigurationdetails_1" xml:space="preserve">
+    <value>Select marking system or grading system for the selected class-subject-exam. Associate total and passing marks or passing grade for it. Click on "Copy Subject Exam Configuration" will allow you to copy the same details to other subjects/exams also.</value>
+  </data>
+  <data name="subjecttestconfigurationui_1" xml:space="preserve">
+    <value>View the status of exam configuration of each class-subject. Click on the links to configure the exams of respective class-subject.</value>
+  </data>
+  <data name="supportthankyouui_1" xml:space="preserve">
+    <value>Thank you.</value>
+  </data>
+  <data name="supportthankyouui_2" xml:space="preserve">
+    <value>Thank you.</value>
+  </data>
+  <data name="supportthankyouui_3" xml:space="preserve">
+    <value>Thank you.</value>
+  </data>
+  <data name="supportui_1" xml:space="preserve">
+    <value>Please write us your queries/ problem. We will try our level best to assist you.</value>
+  </data>
+  <data name="supportui_2" xml:space="preserve">
+    <value>Please write us your queries/ problem. We will try our level best to assist you.</value>
+  </data>
+  <data name="supportui_3" xml:space="preserve">
+    <value>Please write us your queries/ problem. We will try our level best to assist you.</value>
+  </data>
+  <data name="teacherdetailspopup_1" xml:space="preserve">
+    <value>View detail information of selected teacher.</value>
+  </data>
+  <data name="teacherinfoui_1" xml:space="preserve">
+    <value>View brief information of all the teachers in the school. Class assigned to class-teachers is displayed as "Assigned Class". To view subjects assigned to the teacher click on "Class-Subjects". Click on "Edit" will allow you to modify the teacher details. Click on  "Std-Sub Assignment" will allow you to assign standard and subject to teacher. Click on "Upload Photo" will allow you to save photo for teacher. To generate identity card for teachers click on "Identity Card".</value>
+  </data>
+  <data name="teachersubjectassignmentpopup_1" xml:space="preserve">
+    <value>Assign teacher for the selected class-subject. Select teacher click on "Add Teacher". Once all the association is done, click on "Submit".</value>
+  </data>
+  <data name="teachersubjectassignmentui_1" xml:space="preserve">
+    <value>View teachers assigned to each subject for class.</value>
+  </data>
+  <data name="teachersubjectlistui_3" xml:space="preserve">
+    <value>List of teachers and their subjects who will be teaching you this year.</value>
+  </data>
+  <data name="teachertimetable_1" xml:space="preserve">
+    <value>Define timetable for the selected teacher/class.</value>
+  </data>
+  <data name="teachertosubjectsassignmentui_1" xml:space="preserve">
+    <value>Assign class-subject to selected teacher. Select class, subject and click on "Add Subjects". Once all the association is done, click on "Save".</value>
+  </data>
+  <data name="teachertransfer_1" xml:space="preserve">
+    <value>Transfer the selected source class /subject teacher and/or his individual subjects to the selected target teacher. Also to remove the subjects of the target teacher check the “Remove” check boxes and view the modified timetable after the actual changes.</value>
+  </data>
+  <data name="teacherui_1" xml:space="preserve">
+    <value>Wizard to add/edit teacher details. This wizard will take you through personal details, address details, qualification details, subjects-standards and lastly login details.</value>
+  </data>
+  <data name="testmarksconfigurationui_1" xml:space="preserve">
+    <value>View all subjects assigned with the current status of marks given to students. 
+Once marks for all the students are allotted you have to submit these marks to the class-teacher by clicking on "Submit" button.
+Pre-primary teachers to add and submit progress report entries of his class.</value>
+  </data>
+  <data name="testmarksconfigurationui_2" xml:space="preserve">
+    <value>View all subjects assigned with the current status of marks given to students. 
+Once marks for all the students are allotted you have to submit these marks to the class-teacher by clicking on "Submit" button.
+Pre-primary teachers to add and submit progress report entries of his class.</value>
+  </data>
+  <data name="testnameslist_1" xml:space="preserve">
+    <value>Set exam names applicable for your school. Select exam names and click on Save.</value>
+  </data>
+  <data name="timetable_1" xml:space="preserve">
+    <value>Displays lecture timings including breaks.</value>
+  </data>
+  <data name="timetable_2" xml:space="preserve">
+    <value>Displays lecture timings including breaks.</value>
+  </data>
+  <data name="timetable_3" xml:space="preserve">
+    <value>Displays lecture timings including breaks.</value>
+  </data>
+  <data name="transferpreview_1" xml:space="preserve">
+    <value>Preview of the changes you have made for teacher transfer.</value>
+  </data>
+  <data name="usertimetable_2" xml:space="preserve">
+    <value>Your timetable for the week.</value>
+  </data>
+  <data name="usertimetable_3" xml:space="preserve">
+    <value>Your timetable for the week.</value>
+  </data>
+  <data name="weekdaysconfiguration_1" xml:space="preserve">
+    <value>Set weekdays applicable for your school. Select weekdays and click on Save.</value>
+  </data>
+  <data name="weekdaytimetable_1" xml:space="preserve">
+    <value>Define timetable of each teacher for the selected weekday.</value>
+  </data>
+  <data name="importfeeui_1" xml:space="preserve">
+    <value>Import students fee data for the provided XML file.</value>
+  </data>
+  <data name="error_1" xml:space="preserve">
+    <value>Your session has been timed out. Please click on Login button to login to the application.</value>
+  </data>
+  <data name="error_2" xml:space="preserve">
+    <value>Your session has been timed out. Please click on Login button to login to the application.</value>
+  </data>
+  <data name="error_3" xml:space="preserve">
+    <value>Your session has been timed out. Please click on Login button to login to the application.</value>
+  </data>
+  <data name="debitentryui_1" xml:space="preserve">
+    <value>You can choose to send SMS and/or Message on add/edit/delete fee  for selected students.</value>
+  </data>
+  <data name="studentpayfeeui_1" xml:space="preserve">
+    <value>Here you can see fee details as well pay fee and caution money and also refund paid fee.</value>
+  </data>
+  <data name="studentpayfeeui_2" xml:space="preserve">
+    <value>Here you can see fee details as well pay fee and also refund paid fee.</value>
+  </data>
+  <data name="studentpayfeeui_3" xml:space="preserve">
+    <value>Here you can see paid fee details as well as pending fee details.</value>
+  </data>
+  <data name="payfeepopup_1" xml:space="preserve">
+    <value>Here you can pay fee by Cash, Cheque, PDC, Swipe Card or by Electronic (NEFT/RTGS).</value>
+  </data>
+  <data name="examtoppersui_1" xml:space="preserve">
+    <value>Displays first three class/standard toppers as well as subject toppers of selected class/standard for the selected exam.</value>
+  </data>
+  <data name="examtoppersui_2" xml:space="preserve">
+    <value>Displays first three class/standard toppers as well as subject toppers of your class/standard for the selected exam.</value>
+  </data>
+  <data name="examtoppersui_3" xml:space="preserve">
+    <value>Displays first three class/standard toppers as well as subject toppers of your class/standard for the selected exam.</value>
+  </data>
+  <data name="bankdetailspopup_1" xml:space="preserve">
+    <value>Displays all bank names. Click on "Save" button after typing new bank name or modifying existing bank name. Click on Edit/Delete button to modify/delete existing bank name.</value>
+  </data>
+  <data name="bankdetailspopup_2" xml:space="preserve">
+    <value>Displays all bank names. Click on "Save" button after typing new bank name or modifying existing bank name. Click on Edit/Delete button to modify/delete existing bank name.</value>
+  </data>
+  <data name="bookui_1" xml:space="preserve">
+    <value>Wizard to add/edit book details.In this wizard, you will Add/Edit book title, media type, category details, author(s), publisher and lastly accession number details.</value>
+  </data>
+  <data name="categoryui_1" xml:space="preserve">
+    <value>Add/Edit/Delete category details. Click on "Save" to add new Category. To modify the category, select the category on tree veiw and then click on "Save" button. To delete, select the category on tree veiw and click on "Delete" button.</value>
+  </data>
+  <data name="issuebookpopup_1" xml:space="preserve">
+    <value>Select user to issue Book.</value>
+  </data>
+  <data name="issuebookui_1" xml:space="preserve">
+    <value>Select the user and click on "Issue" button to issue book.</value>
+  </data>
+  <data name="libraryconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit Library settings which is applicable for your school.</value>
+  </data>
+  <data name="librarymanagementui_1" xml:space="preserve">
+    <value>Search the book(s) and user(s) as per entered criteria. To Add/Issue/Edit/Remove/Add Copy of book, click on Add/Issue/Edit/Remove/Add Copy button.</value>
+  </data>
+  <data name="librarymanagementui_2" xml:space="preserve">
+    <value>Search the book(s) as per entered criteria.</value>
+  </data>
+  <data name="librarymanagementui_3" xml:space="preserve">
+    <value>Search the book(s) as per entered criteria.</value>
+  </data>
+  <data name="removebookpopupui_1" xml:space="preserve">
+    <value>To permanently remove/write off the book. Click on "Remove"/"Write Off" button.</value>
+  </data>
+  <data name="returnrenewui_1" xml:space="preserve">
+    <value>Accession Number/User Name used to search issued book. Return/Renew issued book, Click on Return/Renew button. If Book is lost, Click on lost book button.</value>
+  </data>
+  <data name="preprimaryprogressreportconfig_1" xml:space="preserve">
+    <value>Add and edit development area or skill. In case of development area, check the checkbox if comment is applicable to it and select the exam for which it is applicable.</value>
+  </data>
+  <data name="preprimaryprogressreportconfiglist_1" xml:space="preserve">
+    <value>Select standard, view and delete development area or skill.</value>
+  </data>
+  <data name="preprimaryprogresssheetentry_1" xml:space="preserve">
+    <value>Assign grade to each skill for the selected student and click on "Save".</value>
+  </data>
+  <data name="preprimaryprogresssheetentry_2" xml:space="preserve">
+    <value>Assign grade to each skill for the selected student and click on "Save".</value>
+  </data>
+  <data name="preprimarystudentprogresslist_1" xml:space="preserve">
+    <value>List of student for progress report entry.</value>
+  </data>
+  <data name="preprimarystudentprogresslist_2" xml:space="preserve">
+    <value>List of student for progress report entry.</value>
+  </data>
+  <data name="testunpublishpopup_1" xml:space="preserve">
+    <value>Enter the reason for exam unpublish.</value>
+  </data>
+  <data name="noticeboardui_1" xml:space="preserve">
+    <value>Add/Edit/Delete notice board messages. Click on "Add" button to add new message.Click on Edit/Delete button to modify/delete message.</value>
+  </data>
+  <data name="showimagegallery_1" xml:space="preserve">
+    <value>View photo gallery as well as video gallery of your school.</value>
+  </data>
+  <data name="showimagegallery_2" xml:space="preserve">
+    <value>View photo gallery as well as video gallery of your school.</value>
+  </data>
+  <data name="showimagegallery_3" xml:space="preserve">
+    <value>View photo gallery as well as video gallery of your school.</value>
+  </data>
+  <data name="uploadphotoui_1" xml:space="preserve">
+    <value>Create new photo galleries or add photos to existing gallery. You can also view all gallery photos by clicking on SlideShow.You can also add or view videos into gallery.</value>
+  </data>
+  <data name="studentsmonthwiseattendancelistuipopup_1" xml:space="preserve">
+    <value>Displays list of student along with their month wise attendance. Attendance is given in format  number of days present / total attendance days.</value>
+  </data>
+  <data name="studentsmonthwiseattendancelistuipopup_2" xml:space="preserve">
+    <value>Displays list of student along with their month wise attendance. Attendance is given in format  number of days present / total attendance days.</value>
+  </data>
+  <data name="lecturetimingui_1" xml:space="preserve">
+    <value>Add/Edit/Delete lecture timings. Click on "Add" button to add new lecture timing. Click on Edit/Delete button to modify/delete lecture timing.</value>
+  </data>
+  <data name="subjectssortorderpopup_1" xml:space="preserve">
+    <value>Select standard and define the sort order for standard subjects.</value>
+  </data>
+  <data name="testssortorderpopup_1" xml:space="preserve">
+    <value>Select standard and define the sort order for standard exams.</value>
+  </data>
+  <data name="chequeclearancepopup_1" xml:space="preserve">
+    <value>Set the cheque clearance date in respective bank.</value>
+  </data>
+  <data name="supervisordetailsui_1" xml:space="preserve">
+    <value>Add/Edit Admin Staff's details. Select checkbox to assign the screen/report to the selected Admin Staff. Uncheck "Can Edit" checkbox to give read only access of the screen.</value>
+  </data>
+  <data name="supervisoruserlistui_1" xml:space="preserve">
+    <value>List of Admin Staff in your school. Click on "Add" to add new Admin Staff. To modify the details click on "Edit" in the row. To delete, select the Admin Staff and click on "Delete".</value>
+  </data>
+  <data name="chequeclearancelist_1" xml:space="preserve">
+    <value>List of all cheque payments to set the cheque clearance date.</value>
+  </data>
+  <data name="registrationwizard_step1_1" xml:space="preserve">
+    <value>Update school information. Click on "Save" button to save school information.</value>
+  </data>
+  <data name="cautionmoneychequepopup_1" xml:space="preserve">
+    <value>Paid/Return caution money by cheque or cash.</value>
+  </data>
+  <data name="studentcautionmoney_1" xml:space="preserve">
+    <value>Display the status of caution money not paid or paid and refund to the student.</value>
+  </data>
+  <data name="studmonthlyattendanceuipopup_1" xml:space="preserve">
+    <value>Mark monthly attendance of individual student.</value>
+  </data>
+  <data name="studmonthlyattendanceuipopup_2" xml:space="preserve">
+    <value>Mark monthly attendance of individual student.</value>
+  </data>
+  <data name="studattendancerankerslistuipopup_3" xml:space="preserve">
+    <value>Displays your monthly attendance as well as top three attendance rankers of current year.</value>
+  </data>
+  <data name="uploadphotoviewui_1" xml:space="preserve">
+    <value>Displays photos of selected gallery. To delete photo click on delete button.</value>
+  </data>
+  <data name="examscheduleinstructionspopup_1" xml:space="preserve">
+    <value>Add or update Instruction for exam.</value>
+  </data>
+  <data name="feedbackui_1" xml:space="preserve">
+    <value>Please write us your feedback about school/software.</value>
+  </data>
+  <data name="feedbackui_2" xml:space="preserve">
+    <value>Please write us your feedback about school/software.</value>
+  </data>
+  <data name="feedbackui_3" xml:space="preserve">
+    <value>Please write us your feedback about school/software.</value>
+  </data>
+  <data name="pendingfeestudentlist_1" xml:space="preserve">
+    <value>Send SMS or Message to students whose pending fee due date is passed.</value>
+  </data>
+  <data name="studentannualresultedit_1" xml:space="preserve">
+    <value>Set grace marks and click on "Save &amp; Generate Result" to save changes.</value>
+  </data>
+  <data name="studentannualresultedit_2" xml:space="preserve">
+    <value>Set grace marks and click on "Save &amp; Generate Result" to save changes.</value>
+  </data>
+  <data name="staffbirthday_1" xml:space="preserve">
+    <value>List of the school staff birthdays.</value>
+  </data>
+  <data name="staffbirthday_2" xml:space="preserve">
+    <value>List of the school staff birthdays.</value>
+  </data>
+  <data name="bookui_2" xml:space="preserve">
+    <value>Wizard to add/edit book details.In this wizard, you will Add/Edit book title, media type, category details, author(s), publisher and lastly accession number details.</value>
+  </data>
+  <data name="categoryui_2" xml:space="preserve">
+    <value>Add/Edit/Delete category details. Click on "Save" to add new Category. To modify the category, select the category on tree veiw and then click on "Save" button. To delete, select the category on tree veiw and click on "Delete" button.</value>
+  </data>
+  <data name="cautionmoneychequepopup_2" xml:space="preserve">
+    <value>Paid/Return caution money by cheque or cash.</value>
+  </data>
+  <data name="changepasswordpopup_2" xml:space="preserve">
+    <value>Change password for the selected user.</value>
+  </data>
+  <data name="changestudentdivision_2" xml:space="preserve">
+    <value>Change selected student's standard / division.</value>
+  </data>
+  <data name="chequeclearancelist_2" xml:space="preserve">
+    <value>List of all cheque payments to set the cheque clearance date.</value>
+  </data>
+  <data name="chequeclearancepopup_2" xml:space="preserve">
+    <value>Set the cheque clearance date in respective bank.</value>
+  </data>
+  <data name="configuremenu_2" xml:space="preserve">
+    <value>Configure menus to be displayed to your staff and parents.</value>
+  </data>
+  <data name="copytestconfigurationpopup_2" xml:space="preserve">
+    <value>Check the checkboxes to which the exam configuration should be copied and click on "Copy" to apply the same configuration to selected class-subjects.</value>
+  </data>
+  <data name="debitentryui_2" xml:space="preserve">
+    <value>You can choose to send SMS and/or Message on add/edit/delete fee  for selected students.</value>
+  </data>
+  <data name="displayassignedclassteacherui_2" xml:space="preserve">
+    <value>View class teachers assigned to the class. Click on the links to change  class teacher for the class. No teacher can be assigned to more than 1 class.</value>
+  </data>
+  <data name="divisionslist_2" xml:space="preserve">
+    <value>Set divisions applicable for your school. Select divisions and click on Save.</value>
+  </data>
+  <data name="divisionsubjectassignmentui_2" xml:space="preserve">
+    <value>Set subjects applicable for the class. Select association and click on Save.</value>
+  </data>
+  <data name="examscheduleinstructionspopup_2" xml:space="preserve">
+    <value>Add or update Instruction for exam.</value>
+  </data>
+  <data name="failcriteriaui_2" xml:space="preserve">
+    <value>Define fail criteria for each standard. If selected grade is scored by student for specified number of subjects then he/she will be treated as a "Fail" student.</value>
+  </data>
+  <data name="feesubtypeconfiguration_2" xml:space="preserve">
+    <value>Set fee sub types applicable to your school with the applicable option All/New Student/Old Student from the "To Be Collected From" column prior to any student admission.</value>
+  </data>
+  <data name="feetypeconfiguration_2" xml:space="preserve">
+    <value>Set fee types applicable for your school. Select fee types and click on Save. Select 'Consider For IT Reconciliation' checkbox to consider fee type for IT Reconciliation.</value>
+  </data>
+  <data name="holidayconfigurationpopup_2" xml:space="preserve">
+    <value>Declare a new classwise holiday for your school.</value>
+  </data>
+  <data name="importstudentui_2" xml:space="preserve">
+    <value>Import multiple students at a time for selected standard and division. Download the template from the link "Download Template", fill the students details. Specify the path of same excel sheet filled and click on "Import Students". This will add all those students in the system</value>
+  </data>
+  <data name="issuebookpopup_2" xml:space="preserve">
+    <value>Select user to issue Book.</value>
+  </data>
+  <data name="issuebookui_2" xml:space="preserve">
+    <value>Select the user and click on "Issue" button to issue book.</value>
+  </data>
+  <data name="latefeesettingdetails_2" xml:space="preserve">
+    <value>Set late fees, late fee period and payment due date for each fee type for the selected standard. If student pays fees after due date then only late fees will be applicable. Also allows configuring deactivation settings for each fee type.</value>
+  </data>
+  <data name="latefeesetting_2" xml:space="preserve">
+    <value>View late fees set for each standard.</value>
+  </data>
+  <data name="lecturesperstandardweekday_2" xml:space="preserve">
+    <value>Define maximum lectures per standard.</value>
+  </data>
+  <data name="lecturetimingui_2" xml:space="preserve">
+    <value>Add/Edit/Delete lecture timings. Click on "Add" button to add new lecture timing. Click on Edit/Delete button to modify/delete lecture timing.</value>
+  </data>
+  <data name="libraryconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit Library settings which is applicable for your school.</value>
+  </data>
+  <data name="testnameslist_2" xml:space="preserve">
+    <value>Set exam names applicable for your school. Select exam names and click on Save.</value>
+  </data>
+  <data name="testssortorderpopup_2" xml:space="preserve">
+    <value>Select standard and define the sort order for standard exams.</value>
+  </data>
+  <data name="testunpublishpopup_2" xml:space="preserve">
+    <value>Enter the reason for exam unpublish.</value>
+  </data>
+  <data name="transferpreview_2" xml:space="preserve">
+    <value>Preview of the changes you have made for teacher transfer.</value>
+  </data>
+  <data name="uploadphotoui_2" xml:space="preserve">
+    <value>Create new photo galleries or add photos to existing gallery. You can also view all gallery photos by clicking on SlideShow.You can also add or view videos into gallery.</value>
+  </data>
+  <data name="uploadphotoviewui_2" xml:space="preserve">
+    <value>Displays photos of selected gallery. To delete photo click on delete button.</value>
+  </data>
+  <data name="weekdaysconfiguration_2" xml:space="preserve">
+    <value>Set weekdays applicable for your school. Select weekdays and click on Save.</value>
+  </data>
+  <data name="weekdaytimetable_2" xml:space="preserve">
+    <value>Define timetable of each teacher for the selected weekday.</value>
+  </data>
+  <data name="allstudentsui_2" xml:space="preserve">
+    <value>View summarised information of all students for each class. Click on the links to add, view and update roll numbers of students in the class.</value>
+  </data>
+  <data name="teacherscreenaccessui_1" xml:space="preserve">
+    <value>Assign extra screens and reports to teacher.</value>
+  </data>
+  <data name="teacherscreenaccessui_2" xml:space="preserve">
+    <value>Assign extra screens and reports to teacher.</value>
+  </data>
+  <data name="subjectslist_2" xml:space="preserve">
+    <value>Set subjects applicable for your school. Select subjects and click on Save.</value>
+  </data>
+  <data name="subjectssortorderpopup_2" xml:space="preserve">
+    <value>Select standard and define the sort order for standard subjects.</value>
+  </data>
+  <data name="subjecttestconfigurationdetails_2" xml:space="preserve">
+    <value>Select marking system or grading system for the selected class-subject-exam. Associate total and passing marks or passing grade for it. Click on "Copy Subject Exam Configuration" will allow you to copy the same details to other subjects/exams also.</value>
+  </data>
+  <data name="subjecttestconfigurationui_2" xml:space="preserve">
+    <value>View the status of exam configuration of each class-subject. Click on the links to configure the exams of respective class-subject.</value>
+  </data>
+  <data name="supervisordetailsui_2" xml:space="preserve">
+    <value>Add/Edit Admin Staff's details. Select checkbox to assign the screen/report to the selected Admin Staff. Uncheck "Can Edit" checkbox to give read only access of the screen.</value>
+  </data>
+  <data name="supervisoruserlistui_2" xml:space="preserve">
+    <value>List of Admin Staff in your school. Click on "Add" to add new Admin Staff. To modify the details click on "Edit" in the row. To delete, select the Admin Staff and click on "Delete".</value>
+  </data>
+  <data name="additionalclassesintimetablepopup_2" xml:space="preserve">
+    <value>Add additional / optional subject lectures.</value>
+  </data>
+  <data name="adminprofileui_1" xml:space="preserve">
+    <value>Change profile and click on "Save" button.</value>
+  </data>
+  <data name="studentrollnosgeneration_1" xml:space="preserve">
+    <value>Select standard and division and change the roll numbers from displayed student's list and click on save to save new roll numbers.</value>
+  </data>
+  <data name="studentrollnosgeneration_2" xml:space="preserve">
+    <value>Select standard and division and change the roll numbers from displayed student's list and click on save to save new roll numbers.</value>
+  </data>
+  <data name="approvallevelconfigurationui_1" xml:space="preserve">
+    <value>Displays list of approval level configuration. User can add, delete or change approval levels. To Define final approvers check checkboxes and select designations who can final approve requisitions.</value>
+  </data>
+  <data name="approvallevelconfigurationui_2" xml:space="preserve">
+    <value>Displays list of approval level configuration. User can add, delete or change approval levels. To Define final approvers check checkboxes and select designations who can final approve requisitions.</value>
+  </data>
+  <data name="itemdetailsui_1" xml:space="preserve">
+    <value>You will add/edit item name, code, unit of measurement, category, re-order level and make.</value>
+  </data>
+  <data name="itemmanagementui_1" xml:space="preserve">
+    <value>Search the item(s) as per entered criteria.To Add/Edit/Remove item, click on Add Item/Edit/Remove button.</value>
+  </data>
+  <data name="itemissueui_1" xml:space="preserve">
+    <value>Issue items for requisition.</value>
+  </data>
+  <data name="stockbalanceui_1" xml:space="preserve">
+    <value>Here you can balance the stock of item.</value>
+  </data>
+  <data name="displaymenucontents_1" xml:space="preserve">
+    <value>Displays selected menu in details.</value>
+  </data>
+  <data name="displaymenucontents_2" xml:space="preserve">
+    <value>Displays selected menu in details.</value>
+  </data>
+  <data name="displaymenucontents_3" xml:space="preserve">
+    <value>Displays selected menu in details.</value>
+  </data>
+  <data name="feerefundui_1" xml:space="preserve">
+    <value>Here you can refund fee. You can refund fee by cash or by cheque.</value>
+  </data>
+  <data name="feerefundui_2" xml:space="preserve">
+    <value>Here you can refund fee. You can refund fee by cash or by cheque.</value>
+  </data>
+  <data name="feerefundui_6" xml:space="preserve">
+    <value>Here you can refund fee. You can refund fee by cash or by cheque.</value>
+  </data>
+  <data name="grndetailsui_1" xml:space="preserve">
+    <value>You can create new GRN. Also modify GRN.</value>
+  </data>
+  <data name="grnlistui_1" xml:space="preserve">
+    <value>Displays all GRNs. You can also edit,delete GRN.</value>
+  </data>
+  <data name="importitemui_1" xml:space="preserve">
+    <value>Import multiple items. Download the template from the link "Download Template", fill the item details. Specify the path of same excel sheet filled and click on "Import Items". This will add all those items in inventory.</value>
+  </data>
+  <data name="purchaseorderdetailsui_1" xml:space="preserve">
+    <value>Here you can create,view and modify purchase order.</value>
+  </data>
+  <data name="purchaseorderdetailsui_2" xml:space="preserve">
+    <value>Here you can create,view and modify purchase order.</value>
+  </data>
+  <data name="purchaseorderdetailsui_6" xml:space="preserve">
+    <value>Here you can create,view and modify purchase order.</value>
+  </data>
+  <data name="purchaseorderlistui_1" xml:space="preserve">
+    <value>List of existing purchase order.</value>
+  </data>
+  <data name="purchaseorderlistui_2" xml:space="preserve">
+    <value>List of existing purchase order.</value>
+  </data>
+  <data name="purchaseorderlistui_6" xml:space="preserve">
+    <value>List of existing purchase order.</value>
+  </data>
+  <data name="pesonaladdressbookui_1" xml:space="preserve">
+    <value>Personalise your phone book and select name and click on OK button. Also you can create groups of selected users.</value>
+  </data>
+  <data name="pesonaladdressbookui_2" xml:space="preserve">
+    <value>Personalise your phone book and select name and click on OK button.  Also you can create groups of selected users.</value>
+  </data>
+  <data name="addrequisitionui_1" xml:space="preserve">
+    <value>Here you can create/ modify/ view/ approve/ denied requisition.</value>
+  </data>
+  <data name="addrequisitionui_2" xml:space="preserve">
+    <value>Here you can create/ modify/ view/ approve/ denied requisition.</value>
+  </data>
+  <data name="addrequisitionui_6" xml:space="preserve">
+    <value>Here you can create/ modify/ view/ approve/ denied requisition.</value>
+  </data>
+  <data name="requisitionlistui_1" xml:space="preserve">
+    <value>Here you can see list of exisiting requisition according to status.</value>
+  </data>
+  <data name="requisitionlistui_2" xml:space="preserve">
+    <value>Here you can see list of exisiting requisition according to status.</value>
+  </data>
+  <data name="requisitionlistui_6" xml:space="preserve">
+    <value>Here you can see list of exisiting requisition according to status.</value>
+  </data>
+  <data name="studentphotouploadui_1" xml:space="preserve">
+    <value>Here you can upload photo for multiple students.</value>
+  </data>
+  <data name="studentphotouploadui_2" xml:space="preserve">
+    <value>Here you can upload photo for multiple students. </value>
+  </data>
+  <data name="studentphotouploadui_6" xml:space="preserve">
+    <value>Here you can upload photo for multiple students. </value>
+  </data>
+  <data name="standardwiseexamschedulepopup_2" xml:space="preserve">
+    <value>Define the exam timetable for each subject with multiple exam type, exam date, start time and end time. Specific information like syllabus can be given to students using the description field and and user can copy exam schedule from one standard to other standards.</value>
+  </data>
+  <data name="standardexamscheduleconfigurationui_2" xml:space="preserve">
+    <value>View exam dates for each exam associated for standards.</value>
+  </data>
+  <data name="regnoreassignui_1" xml:space="preserve">
+    <value>Here you can update the registration number of students.</value>
+  </data>
+  <data name="regnoreassignui_2" xml:space="preserve">
+    <value>Here you can update the registration number of students.</value>
+  </data>
+  <data name="regnoreassignui_3" xml:space="preserve">
+    <value>Here you can update the registration number of students.</value>
+  </data>
+  <data name="importbookui_1" xml:space="preserve">
+    <value>Import multiple books. Download the template from the link "Download Template", fill the book details. Specify the path of same excel sheet filled and click on "Import Books". This will add all those books in library.</value>
+  </data>
+  <data name="examschedulelist_2" xml:space="preserve">
+    <value>Displays standardwise exam schedule.</value>
+  </data>
+  <data name="pendingfeestudentlist_2" xml:space="preserve">
+    <value>Send SMS or Message to students whose pending fee due date is passed.</value>
+  </data>
+  <data name="postdated_cheque_entry_popup_2" xml:space="preserve">
+    <value>Add/Edit/Delete post dated cheque details.</value>
+  </data>
+  <data name="payfeepopup_2" xml:space="preserve">
+    <value>Here you can pay fee by Cash, Cheque, PDC, Swipe Card or by Electronic (NEFT/RTGS).</value>
+  </data>
+  <data name="staffgroups_1" xml:space="preserve">
+    <value>Displays all the staff groups. Select required group and click on "Save" button.</value>
+  </data>
+  <data name="earningsanddeductions_1" xml:space="preserve">
+    <value>Displays all the earnings and deductions. Select required earnings and deductions. Check the checkbox "Is Attendance Dependent?" if it depends on the users attendance, check the checkbox "Include In Salary Difference?" to display it on salary difference screen and then click on the "Save" button.</value>
+  </data>
+  <data name="staffgroupsandearningsdeductionsasso_1" xml:space="preserve">
+    <value>Set earnings and deductions applicable for the staff groups. Select association and click on "Save" button.</value>
+  </data>
+  <data name="earninganddeductionformula_1" xml:space="preserve">
+    <value>Displays formula/range, Add/modify formula/range and click on "Save" button. To delete formula/range click on "Delete" button.</value>
+  </data>
+  <data name="configureleavetypesui_1" xml:space="preserve">
+    <value>Displays all of the staff leaves, minimim leaves and color code. Select required leaves, color code, set minimum balance and then click on the "Save" button.</value>
+  </data>
+  <data name="usersandstaffgroupsasso_1" xml:space="preserve">
+    <value>Select staff group, set  Employee No., Account No., P.F.No. and click on "Save" button. Also display link to users earning and deduction configuration and users year wise leaves configuration.</value>
+  </data>
+  <data name="usersearningsanddeductions_1" xml:space="preserve">
+    <value>Assign values to each earning/deduction and click on the "Save" button to save this Earnings and deductions configuration for the respective user and pay scale.</value>
+  </data>
+  <data name="admisionlotteryui_1" xml:space="preserve">
+    <value>Select the living location and enter main list count, waiting list count and withdraw a lottery by clicking on button Generate. Check the confirm checkbox and confirm the admission of student by clicking on "Confirm" button. To send login id and password to selected student, check "Send SMS to Confirmed Student" checkbox.</value>
+  </data>
+  <data name="admisionlotteryui_2" xml:space="preserve">
+    <value>Select the living location and enter main list count, waiting list count and withdraw a lottery by clicking on button Generate. Check the confirm checkbox and confirm the admission of student by clicking on "Confirm" button. To send login id and password to selected student, check "Send SMS to Confirmed Student" checkbox.</value>
+  </data>
+  <data name="feethankyouui_2" xml:space="preserve">
+    <value>This page displays details about your transaction status.</value>
+  </data>
+  <data name="feethankyouui_3" xml:space="preserve">
+    <value>This page displays details about your transaction status.</value>
+  </data>
+  <data name="netbankingui_2" xml:space="preserve">
+    <value>For paying fee online select your bank here.</value>
+  </data>
+  <data name="netbankingui_3" xml:space="preserve">
+    <value>For paying fee online select your bank here.</value>
+  </data>
+  <data name="payfeeonline_2" xml:space="preserve">
+    <value>For paying fee online verify your fee amount here.</value>
+  </data>
+  <data name="payfeeonline_3" xml:space="preserve">
+    <value>For paying fee online verify your fee amount here.</value>
+  </data>
+  <data name="paymentconfirmationui_2" xml:space="preserve">
+    <value>For paying fee online confirm your fee amount and bank here.</value>
+  </data>
+  <data name="paymentconfirmationui_3" xml:space="preserve">
+    <value>For paying fee online confirm your fee amount and bank here.</value>
+  </data>
+  <data name="onlinebankdetails_2" xml:space="preserve">
+    <value>Details of Banks for online fees.</value>
+  </data>
+  <data name="onlinebankdetails_3" xml:space="preserve">
+    <value>Details of Banks for online fees.</value>
+  </data>
+  <data name="otherstaffui_1" xml:space="preserve">
+    <value>Add/Edit/Delete other staff details.</value>
+  </data>
+  <data name="staffattendanceui_1" xml:space="preserve">
+    <value>Save/Delete staff attendance and leave details.Select Staff Group, Month, Year form dropdown list. Check the checkbox for adding attendance, uncheck for deleting and click Leave link to save leaves.</value>
+  </data>
+  <data name="salarydetailsui_1" xml:space="preserve">
+    <value>Displays/Save/Unpublish salary details of the staff members as per the Staff Group, Month and Year. Open Form No 16 report for selected financial year and staff member.</value>
+  </data>
+  <data name="itemissuehistory_1" xml:space="preserve">
+    <value>Here you can see item issue history.</value>
+  </data>
+  <data name="itemissuehistory_2" xml:space="preserve">
+    <value>Here you can see item issue history.</value>
+  </data>
+  <data name="itemissuehistory_3" xml:space="preserve">
+    <value>Here you can see item issue history.</value>
+  </data>
+  <data name="admissionformparentdetails_1" xml:space="preserve">
+    <value>Fill all details of parents for student admission.</value>
+  </data>
+  <data name="admissionformstudentdetails_1" xml:space="preserve">
+    <value>Fill all details of student for student admission.</value>
+  </data>
+  <data name="newstudentadmisionslistui_1" xml:space="preserve">
+    <value>View / Confirm new student admission list.</value>
+  </data>
+  <data name="paysalaryui_1" xml:space="preserve">
+    <value>Here you can pay salary, export to excel sheet and see salary slip. To pay salary you will have to check whether given menus are configured.</value>
+  </data>
+  <data name="allowedyearwiseleavespopup_1" xml:space="preserve">
+    <value>Select year from the year combo box and enter leaves for that year in the list. Click on the "Save” button to save this leave configuration for the respective user.</value>
+  </data>
+  <data name="schoolconfigurationcontrolpanel_2" xml:space="preserve">
+    <value>Configure your school details.</value>
+  </data>
+  <data name="schooltimetable_2" xml:space="preserve">
+    <value>Entire timetable defined for your shcool.</value>
+  </data>
+  <data name="standardwisefeetypeassignment_2" xml:space="preserve">
+    <value>Associate fee types for each standard.</value>
+  </data>
+  <data name="standardwisefeeconfigurationui_2" xml:space="preserve">
+    <value>Set total fees applicable for each standard.</value>
+  </data>
+  <data name="teacherdetailspopup_2" xml:space="preserve">
+    <value>View detail information of selected teacher.</value>
+  </data>
+  <data name="teacherinfoui_2" xml:space="preserve">
+    <value>View brief information of all the teachers in the school. Class assigned to class-teachers is displayed as "Assigned Class". To view subjects assigned to the teacher click on "Class-Subjects". Click on "Edit" will allow you to modify the teacher details. Click on  "Std-Sub Assignment" will allow you to assign standard and subject to teacher. Click on "Upload Photo" will allow you to save photo for teacher. To generate identity card for teachers click on "Identity Card".</value>
+  </data>
+  <data name="teachersubjectassignmentpopup_2" xml:space="preserve">
+    <value>Assign teacher for the selected class-subject. Select teacher click on "Add Teacher". Once all the association is done, click on "Submit".</value>
+  </data>
+  <data name="teachertimetable_2" xml:space="preserve">
+    <value>Define timetable for the selected teacher/class.</value>
+  </data>
+  <data name="teachertosubjectsassignmentui_2" xml:space="preserve">
+    <value>Assign class-subject to selected teacher. Select class, subject and click on "Add Subjects". Once all the association is done, click on "Save".</value>
+  </data>
+  <data name="preprimaryprogressreportconfiglist_2" xml:space="preserve">
+    <value>Select standard, view and delete development area or skill.</value>
+  </data>
+  <data name="standardsubjectassignmentui_2" xml:space="preserve">
+    <value>Set subjects applicable for the standards. Select association and click on Save.</value>
+  </data>
+  <data name="standardsubjectwiselectures_2" xml:space="preserve">
+    <value>Define weekly maximum lectures allotted for each subject for standard.</value>
+  </data>
+  <data name="teachersubjectassignmentui_2" xml:space="preserve">
+    <value>View teachers assigned to each subject for class.</value>
+  </data>
+  <data name="teachertransfer_2" xml:space="preserve">
+    <value>Transfer the selected source class /subject teacher and/or his individual subjects to the selected target teacher. Also to remove the subjects of the target teacher check the “Remove” check boxes and view the modified timetable after the actual changes.</value>
+  </data>
+  <data name="admissionformparentdetails_2" xml:space="preserve">
+    <value>Fill all details of parents for student admission.</value>
+  </data>
+  <data name="admissionformstudentdetails_2" xml:space="preserve">
+    <value>Fill all details of student for student admission.</value>
+  </data>
+  <data name="subjectgroupslistui_2" xml:space="preserve">
+    <value>List of subject-groups for class. Select class and click on "Add" to define a new group. To delete, select the group and click on "Delete".</value>
+  </data>
+  <data name="subjectgroupui_2" xml:space="preserve">
+    <value>Select as many as group subjects for the parent subject by clicking on "Add Subject To Group" and finally click on "Save".</value>
+  </data>
+  <data name="grndetailsui_2" xml:space="preserve">
+    <value>You can create new GRN. Also modify GRN.</value>
+  </data>
+  <data name="grnlistui_2" xml:space="preserve">
+    <value>Displays all GRNs. You can also edit,delete GRN.</value>
+  </data>
+  <data name="itemdetailsui_2" xml:space="preserve">
+    <value>You will add/edit item name, code, unit of measurement, category, re-order level and make.</value>
+  </data>
+  <data name="itemissueui_2" xml:space="preserve">
+    <value>Issue items for requisition.</value>
+  </data>
+  <data name="itemmanagementui_2" xml:space="preserve">
+    <value>Search the item(s) as per entered criteria.To Add/Edit/Remove item, click on Add Item/Edit/Remove button.</value>
+  </data>
+  <data name="marksgradeconfiguration_2" xml:space="preserve">
+    <value>Define grades per standard for percentage ranges to be displayed on student's mark-sheet.</value>
+  </data>
+  <data name="newstudentadmisionslistui_2" xml:space="preserve">
+    <value>View / Confirm new student admission list.</value>
+  </data>
+  <data name="noticeboardui_2" xml:space="preserve">
+    <value>Add/Edit/Delete notice board messages. Click on "Add" button to add new message.Click on Edit/Delete button to modify/delete message.</value>
+  </data>
+  <data name="paysalaryui_2" xml:space="preserve">
+    <value>Here you can pay salary, export to excel sheet and see salary slip. To pay salary you will have to check whether given menus are configured.</value>
+  </data>
+  <data name="preprimaryprogressreportconfig_2" xml:space="preserve">
+    <value>Add and edit development area or skill. In case of development area, check the checkbox if comment is applicable to it and select the exam for which it is applicable.</value>
+  </data>
+  <data name="returnrenewui_2" xml:space="preserve">
+    <value>Accession Number/User Name used to search issued book. Return/Renew issued book, Click on Return/Renew button. If Book is lost, Click on lost book button.</value>
+  </data>
+  <data name="salarydetailsui_2" xml:space="preserve">
+    <value>Displays/Save/Unpublish salary details of the staff members as per the Staff Group, Month and Year. Open Form No 16 report for selected financial year and staff member.</value>
+  </data>
+  <data name="lockinguser_2" xml:space="preserve">
+    <value>Lists user's available to the school. Click on "Lock" to restrict access your school's data to particular user. To change password click on "Change Password" link. Click on “Send SMS/Message” to add or remove user from SMS/Message list.  To search user, enter Name / Reg. No / User Login and click on "Search" button.</value>
+  </data>
+  <data name="registrationwizard_step1_2" xml:space="preserve">
+    <value>Update school information. Click on "Save" button to save school information.</value>
+  </data>
+  <data name="studentcautionmoney_2" xml:space="preserve">
+    <value>Display the status of caution money not paid or paid and refund to the student.</value>
+  </data>
+  <data name="allowedyearwiseleavespopup_2" xml:space="preserve">
+    <value>Select year from the year combo box and enter leaves for that year in the list. Click on the "Save” button to save this leave configuration for the respective user.</value>
+  </data>
+  <data name="assignclassteacherfordivisionpopup_2" xml:space="preserve">
+    <value>Assign class-teacher for the selected class. To remove the association select "Remove Assignment" from list and click on "Save".</value>
+  </data>
+  <data name="configureleavetypesui_2" xml:space="preserve">
+    <value>Displays all of the staff leaves, minimim leaves and color code. Select required leaves, color code, set minimum balance and then click on the "Save" button.</value>
+  </data>
+  <data name="earninganddeductionformula_2" xml:space="preserve">
+    <value>Displays formula/range, Add/modify formula/range and click on "Save" button. To delete formula/range click on "Delete" button.</value>
+  </data>
+  <data name="earningsanddeductions_2" xml:space="preserve">
+    <value>Displays all the earnings and deductions. Select required earnings and deductions. Check the checkbox "Is Attendance Dependent?" if it depends on the users attendance, check the checkbox "Include In Salary Difference?" to display it on salary difference screen and then click on the "Save" button.</value>
+  </data>
+  <data name="importbookui_2" xml:space="preserve">
+    <value>Import multiple books. Download the template from the link "Download Template", fill the book details. Specify the path of same excel sheet filled and click on "Import Books". This will add all those books in library.</value>
+  </data>
+  <data name="importfeeui_2" xml:space="preserve">
+    <value>Import students fee data for the provided XML file.</value>
+  </data>
+  <data name="importitemui_2" xml:space="preserve">
+    <value>Import multiple items. Download the template from the link "Download Template", fill the item details. Specify the path of same excel sheet filled and click on "Import Items". This will add all those items in inventory.</value>
+  </data>
+  <data name="otherstaffui_2" xml:space="preserve">
+    <value>Add/Edit/Delete other staff details.</value>
+  </data>
+  <data name="staffattendanceui_2" xml:space="preserve">
+    <value>Save/Delete staff attendance and leave details.Select Staff Group, Month, Year form dropdown list. Check the checkbox for adding attendance, uncheck for deleting and click Leave link to save leaves.</value>
+  </data>
+  <data name="staffgroupsandearningsdeductionsasso_2" xml:space="preserve">
+    <value>Set earnings and deductions applicable for the staff groups. Select association and click on "Save" button.</value>
+  </data>
+  <data name="staffgroups_2" xml:space="preserve">
+    <value>Displays all the staff groups. Select required group and click on "Save" button.</value>
+  </data>
+  <data name="standardslist_2" xml:space="preserve">
+    <value>Set standards, max student strength and threshold applicable for your school. Select the standards and click on Save.</value>
+  </data>
+  <data name="standardwisedivisionlistui_2" xml:space="preserve">
+    <value>Set divisions and display name for the divisions applicable for the standards. Select association, add / update  / remove display name and click on Save.</value>
+  </data>
+  <data name="standardwisefeeconfigurationdetails_2" xml:space="preserve">
+    <value>Set fee amount to be paid by each student of selected standard.</value>
+  </data>
+  <data name="standardwisetestassignment_2" xml:space="preserve">
+    <value>Associate exams for each standard.</value>
+  </data>
+  <data name="teacherui_2" xml:space="preserve">
+    <value>Wizard to add/edit teacher details. This wizard will take you through personal details, address details, qualification details, subjects-standards and lastly login details.</value>
+  </data>
+  <data name="usersandstaffgroupsasso_2" xml:space="preserve">
+    <value>Select staff group, set  Employee No., Account No., P.F.No. and click on "Save" button. Also display link to users earning and deduction configuration and users year wise leaves configuration.</value>
+  </data>
+  <data name="usersearningsanddeductions_2" xml:space="preserve">
+    <value>Assign values to each earning/deduction and click on the "Save" button to save this Earnings and deductions configuration for the respective user and pay scale.</value>
+  </data>
+  <data name="payfeefornextacayear_1" xml:space="preserve">
+    <value>Pay/View fee of the student for next academic year.</value>
+  </data>
+  <data name="payfeefornextacayear_2" xml:space="preserve">
+    <value>Pay/View fee of the student for next academic year.</value>
+  </data>
+  <data name="payfeefornextacayear_3" xml:space="preserve">
+    <value>Pay/View fee of the student for next academic year.</value>
+  </data>
+  <data name="managecategoriesoruomui_1" xml:space="preserve">
+    <value>Add / Modify / Delete Item Category / Unit Of Measurement.</value>
+  </data>
+  <data name="ptchallandetails_1" xml:space="preserve">
+    <value>Add / Edit Professional Tax Challan Details.</value>
+  </data>
+  <data name="ptchallandetails_2" xml:space="preserve">
+    <value>Add / Edit Professional Tax Challan Details.</value>
+  </data>
+  <data name="feestructure_1" xml:space="preserve">
+    <value>Displays fee structure for students.</value>
+  </data>
+  <data name="feestructure_2" xml:space="preserve">
+    <value>Displays fee structure for students.</value>
+  </data>
+  <data name="feestructure_3" xml:space="preserve">
+    <value>Displays fee structure for students.</value>
+  </data>
+  <data name="userdeactivepopup_1" xml:space="preserve">
+    <value>You can activate or deactivate users and can send respective sms to user.</value>
+  </data>
+  <data name="payinternalfeepopup_1" xml:space="preserve">
+    <value>Here you can pay internal fees and also you can generate reciept.</value>
+  </data>
+  <data name="payinternalfeesui_1" xml:space="preserve">
+    <value>View the internal fees status, pay, and generate custom receipt for requried student(s).</value>
+  </data>
+  <data name="payinternalfeesui_2" xml:space="preserve">
+    <value>View the internal fees status, pay, and generate custom receipt for requried student(s).</value>
+  </data>
+  <data name="payinternalfeepopup_2" xml:space="preserve">
+    <value>Here you can pay internal fees and also you can generate reciept.</value>
+  </data>
+  <data name="teacherphotoui_1" xml:space="preserve">
+    <value>Here you can upload photo for multiple teachers.</value>
+  </data>
+  <data name="transportstaffui_1" xml:space="preserve">
+    <value>Add/Edit/Delete transport staff details.</value>
+  </data>
+  <data name="transportstaffui_2" xml:space="preserve">
+    <value>Add/Edit/Delete transport staff details.</value>
+  </data>
+  <data name="vehicledetailsui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Vehicle details. Check the checkbox to associate staff for vehicle and click on "Save" to save details. Click on "Edit" to edit vehicle details. Click on "Delete" to delete vehicle details. </value>
+  </data>
+  <data name="vehicledetailsui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Vehicle details. Check the checkbox to associate staff for vehicle and click on "Save" to save details. Click on "Edit" to edit vehicle details. Click on "Delete" to delete vehicle details.</value>
+  </data>
+  <data name="routedetailsui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Route details. Check the checkbox to associate stops for route and click on "Save" to save details. Click on "Edit" to edit route details. Click on "Delete" to delete route details.</value>
+  </data>
+  <data name="routedetailsui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Route details. Check the checkbox to associate stops for route and click on "Save" to save details. Click on "Edit" to edit route details. Click on "Delete" to delete route details.</value>
+  </data>
+  <data name="configurestopui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Stop Names and user rolewise charges.</value>
+  </data>
+  <data name="configurestopui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Stop Names and user rolewise charges.</value>
+  </data>
+  <data name="onlinetransactionclearancelist_1" xml:space="preserve">
+    <value>Displays the list of all successful online payments to set the transaction clearance date.</value>
+  </data>
+  <data name="onlinetransactionclearancelist_2" xml:space="preserve">
+    <value>Displays the list of all successful online payments to set the transaction clearance date.</value>
+  </data>
+  <data name="studenttransportdetailsui_1" xml:space="preserve">
+    <value>Here you can see the details of Vehicle that is assigned to you and all Staff names those are assigned to that Vehicle including their Mobile numbers. You can also get the details of Stop name, Pickup and Drop time of the Vehicle in your route in below List. Your Stop name, Pickup and Drop time details are shown in list as focused row.</value>
+  </data>
+  <data name="studenttransportdetailsui_2" xml:space="preserve">
+    <value>Here you can see the details of Vehicle that is assigned to you and all Staff names those are assigned to that Vehicle including their Mobile numbers. You can also get the details of Stop name, Pickup and Drop time of the Vehicle in your route in below List. Your Stop name, Pickup and Drop time details are shown in list as focused row.</value>
+  </data>
+  <data name="studenttransportdetailsui_3" xml:space="preserve">
+    <value>Here you can see the details of Vehicle that is assigned to you and all Staff names those are assigned to that Vehicle including their Mobile numbers. You can also get the details of Stop name, Pickup and Drop time of the Vehicle in your route in bellow List. Your Stop name, Pickup and Drop time details are shown in list as focused row.</value>
+  </data>
+  <data name="salarydifferenceui_1" xml:space="preserve">
+    <value>Displays salary difference of selected month and year with respective to selected base month's and year's configuration.</value>
+  </data>
+  <data name="paidsalarydifferenceui_1" xml:space="preserve">
+    <value>Displays paid salary difference of all the users.</value>
+  </data>
+  <data name="routeshifttimingui_1" xml:space="preserve">
+    <value>Here you can select route, shift, vehicle and save/delete  pickup and drop time for stops under selected route.</value>
+  </data>
+  <data name="routeshifttimingui_2" xml:space="preserve">
+    <value>Here you can select route, shift, vehicle and save/delete  pickup and drop time for stops under selected route.</value>
+  </data>
+  <data name="travelersmspopup_1" xml:space="preserve">
+    <value>Send sms to selected travelers.</value>
+  </data>
+  <data name="travelersmspopup_2" xml:space="preserve">
+    <value>Send sms to selected travelers.</value>
+  </data>
+  <data name="travelertransportdetailsui_1" xml:space="preserve">
+    <value>Here you can select travelers associated or not associated to perticular role, route, stop, shift. Also you can send sms to selected travelers.</value>
+  </data>
+  <data name="travelertransportdetailsui_2" xml:space="preserve">
+    <value>Here you can select travelers associated or not associated to perticular role, route, stop, shift. Also you can send sms to selected travelers.</value>
+  </data>
+  <data name="configureshiftui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Shift Names.</value>
+  </data>
+  <data name="configureshiftui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Shift Names.</value>
+  </data>
+  <data name="cashclearancelistui_1" xml:space="preserve">
+    <value>List of all cash payments to set the cash clearance date.</value>
+  </data>
+  <data name="cashclearancelistui_2" xml:space="preserve">
+    <value>List of all cash payments to set the cash clearance date.</value>
+  </data>
+  <data name="copyfeeconfigurationpopup_1" xml:space="preserve">
+    <value>You can choose to send SMS and/or Message on copy fee for selected students.</value>
+  </data>
+  <data name="privatetransportdetailsui_1" xml:space="preserve">
+    <value>Add/Edit/Delete private transport details for students.</value>
+  </data>
+  <data name="privatetransportdetailsui_2" xml:space="preserve">
+    <value>Add/Edit/Delete private transport details for students.</value>
+  </data>
+  <data name="datewisestaffleavespopup_1" xml:space="preserve">
+    <value>Displays datewise leaves. You can add / cancel leaves. Select checkbox to add half leave or late mark. You can change leave of all days by selecting a leave from top leave combobox.</value>
+  </data>
+  <data name="studentwiseremarkmasterui_1" xml:space="preserve">
+    <value>Add/Edit/Delete student progress remarks.</value>
+  </data>
+  <data name="studentwiseremarkmasterui_2" xml:space="preserve">
+    <value>Add/Edit/Delete student progress remarks.</value>
+  </data>
+  <data name="latemarkconfigurationui_1" xml:space="preserve">
+    <value>Configure late mark count and leave deduction along with sort order. Configure the sort order in which the leave deduction will be applied.</value>
+  </data>
+  <data name="latemarkconfigurationui_2" xml:space="preserve">
+    <value>Configure late mark count and leave deduction along with sort order. Configure the sort order in which the leave deduction will be applied.</value>
+  </data>
+  <data name="studentsiblingdetailsui_1" xml:space="preserve">
+    <value>Add/Delete student sibling details.</value>
+  </data>
+  <data name="cardclearancelistui_1" xml:space="preserve">
+    <value>List of all swipe card payments to set the swipe card clearance date.</value>
+  </data>
+  <data name="staffholidayssalarydeductionui_1" xml:space="preserve">
+    <value>Define staff holiday and percentage to consider unpaid leave if user consumes the leave according to selected type (attached or enclosed leave) to holiday.</value>
+  </data>
+  <data name="staffholidayssalarydeductionui_2" xml:space="preserve">
+    <value>Define staff holiday and percentage to consider unpaid leave if user consumes the leave according to selected type (attached or enclosed leave) to holiday.</value>
+  </data>
+  <data name="preprimaryprogressreportsubjectconfiglistui_1" xml:space="preserve">
+    <value>Set the subjects applicable for pre-primary classes. Select subject and click on Save button.</value>
+  </data>
+  <data name="preprimaryprogressreportsubjectconfiglistui_2" xml:space="preserve">
+    <value>Set the subjects applicable for pre-primary classes. Select subject and click on Save button.</value>
+  </data>
+  <data name="preprimaryprogressreportremarkconfiglistui_1" xml:space="preserve">
+    <value>Set the remarks applicable for pre-primary progress report. Select remark and click on Save button.</value>
+  </data>
+  <data name="preprimaryprogressreportremarkconfiglistui_2" xml:space="preserve">
+    <value>Set the remarks applicable for pre-primary progress report. Select remark and click on Save button.</value>
+  </data>
+  <data name="nfiglist_2" xml:space="preserve">
+    <value>Set the modules and respective subjects and sub-subjects. Association can be edited or deleted. To copy the configuration select standard and click on "Copy" button.</value>
+  </data>
+  <data name="preprimaryprogressreportsubsubjectsconfiglist_1" xml:space="preserve">
+    <value>Set the modules with respective subjects and Skills / Behaviour. Association can be edited or deleted. To copy the configuration select standard and click on "Copy" button.</value>
+  </data>
+  <data name="preprimaryprogressreportmonths_1" xml:space="preserve">
+    <value>Here you can save months and their abbreviations  for the standard to display on the progress report.</value>
+  </data>
+  <data name="preprimaryprogressreportmonths_2" xml:space="preserve">
+    <value>Here you can save months and their abbreviations  for the standard to display on the progress report.</value>
+  </data>
+  <data name="sortmonthspopup_1" xml:space="preserve">
+    <value>Here you can set the sort order of saved months.</value>
+  </data>
+  <data name="sortmonthspopup_2" xml:space="preserve">
+    <value>Here you can set the sort order of saved months.</value>
+  </data>
+  <data name="sortsubjectpopup_1" xml:space="preserve">
+    <value>Here you can set the sort order of subject.</value>
+  </data>
+  <data name="sortsubjectpopup_2" xml:space="preserve">
+    <value>Here you can set the sort order of sub-subject.</value>
+  </data>
+  <data name="sortsubsubjectpopup_1" xml:space="preserve">
+    <value>Here you can set the sort order of skills / behaviour.</value>
+  </data>
+  <data name="sortsubsubjectpopup_2" xml:space="preserve">
+    <value>Here you can set the sort order of skills / behaviour.</value>
+  </data>
+  <data name="sortremarkpopup_1" xml:space="preserve">
+    <value>Here you can set the sort order of remark.</value>
+  </data>
+  <data name="sortremarkpopup_2" xml:space="preserve">
+    <value>Here you can set the sort order of remark.</value>
+  </data>
+  <data name="studentprogressreportentry_1" xml:space="preserve">
+    <value>Assign grade to each skill for the selected student and click on "Save".</value>
+  </data>
+  <data name="studentprogressreportentry_2" xml:space="preserve">
+    <value>Assign grade to each skill for the selected student and click on "Save".</value>
+  </data>
+  <data name="submitprogreesreportresult_1" xml:space="preserve">
+    <value>Here you can submit/publish/unpublish result of class.</value>
+  </data>
+  <data name="submitprogreesreportresult_2" xml:space="preserve">
+    <value>Here you can submit/publish/unpublish result of class.</value>
+  </data>
+  <data name="preprimaryprogressreportsubsubjectsconfiglist_2" xml:space="preserve">
+    <value>Set the modules with respective subjects and Skills / Behaviour. Association can be edited or deleted. To copy the configuration select standard and click on "Copy" button.</value>
+  </data>
+  <data name="onlineadmissionfeeclearancelistui_1" xml:space="preserve">
+    <value>Displays the list of all successful online admission fee payments  to set the transaction clearance date.</value>
+  </data>
+  <data name="onlineadmissionfeeclearancelistui_2" xml:space="preserve">
+    <value>Displays the list of all successful online admission fee payments  to set the transaction clearance date.</value>
+  </data>
+  <data name="studentprogressreportentry_3" xml:space="preserve">
+    <value>Displays progress report of published exam.</value>
+  </data>
+  <data name="parentteacherassociationui_1" xml:space="preserve">
+    <value> Click on "Search" button to search Parent or Teacher  or Admin Staff details. And after searching Add/Edit/Delete Parent, Teacher and Admin Staff details.</value>
+  </data>
+  <data name="parentteacherassociationui_2" xml:space="preserve">
+    <value>Click on "Search" button to search Parent or Teacher  or Admin Staff details. And after searching Add/Edit/Delete Parent, Teacher and Admin Staff details.</value>
+  </data>
+  <data name="parentteacherassociationui_3" xml:space="preserve">
+    <value>Displays the Parent and Teacher Association Details.</value>
+  </data>
+  <data name="smstemplateui_1" xml:space="preserve">
+    <value>Add / Edit / Delete SMS Templates.</value>
+  </data>
+  <data name="libraryvendorui_1" xml:space="preserve">
+    <value>Add/Edit/Delete library vendor details.</value>
+  </data>
+  <data name="editfeepopup_1" xml:space="preserve">
+    <value>Here you can edit the paid fees.</value>
+  </data>
+  <data name="editfeepopup_2" xml:space="preserve">
+    <value>Here you can edit the paid fees.</value>
+  </data>
+  <data name="libraryvendorui_2" xml:space="preserve">
+    <value>Add/Edit/Delete library vendor details.</value>
+  </data>
+  <data name="bookbarcodeui_1" xml:space="preserve">
+    <value>Here you can search the book by using given criteria and generate barcode for the selected books.</value>
+  </data>
+  <data name="bookbarcodeui_2" xml:space="preserve">
+    <value>Here you can search the book by using given criteria and generate barcode for the selected books.</value>
+  </data>
+  <data name="bookbarcodeui_3" xml:space="preserve">
+    <value>Here you can search the book by using given criteria and generate barcode for the selected books.</value>
+  </data>
+  <data name="issuedbookdetails_1" xml:space="preserve">
+    <value>Here you can search the books and also you can see the issued book details. </value>
+  </data>
+  <data name="issuedbookdetails_2" xml:space="preserve">
+    <value>Here you can search the books and also you can see the issued book details.</value>
+  </data>
+  <data name="issuedbookdetails_3" xml:space="preserve">
+    <value>Here you can search the books and also you can see the issued book details.</value>
+  </data>
+  <data name="schoolwisetermconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit schoolwise term configuration details.</value>
+  </data>
+  <data name="schoolwisetermconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit schoolwise term configuration details.</value>
+  </data>
+  <data name="editfeepopupui_1" xml:space="preserve">
+    <value>Here you can edit the paid fees.</value>
+  </data>
+  <data name="editfeepopupui_2" xml:space="preserve">
+    <value>Here you can edit the paid fees.</value>
+  </data>
+  <data name="usersattendancepopup_1" xml:space="preserve">
+    <value>Set full attendance of the staff. Select the staff group and users and click on Save to set full attendance.</value>
+  </data>
+  <data name="usersattendancepopup_2" xml:space="preserve">
+    <value>Set full attendance of the staff. Select the staff group and users and click on Save to set full attendance.</value>
+  </data>
+  <data name="standardwisedocumentui_1" xml:space="preserve">
+    <value>Configure the documents as per the standards which are required at the time of admission.</value>
+  </data>
+  <data name="schoolbankaccountdetailspopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete bank account details.</value>
+  </data>
+  <data name="schoolbankaccountdetailspopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete bank account details.</value>
+  </data>
+  <data name="studentsanctionedleavedetailsui_1" xml:space="preserve">
+    <value>Here you can save / extend / cancel sanctioned leaves for students.</value>
+  </data>
+  <data name="studentsanctionedleavedetailsui_2" xml:space="preserve">
+    <value>Here you can save / extend / cancel sanctioned leaves for students.</value>
+  </data>
+  <data name="clearancelist_1" xml:space="preserve">
+    <value>List of all cash, cheque, card and online payments to set the clearance date.</value>
+  </data>
+  <data name="clearancelist_2" xml:space="preserve">
+    <value>List of all cash, cheque, card and online payments to set the clearance date.</value>
+  </data>
+  <data name="insurancedetails_1" xml:space="preserve">
+    <value>Here you can add/edit/delete the insurance details.</value>
+  </data>
+  <data name="insurancedetails_2" xml:space="preserve">
+    <value>Here you can add/edit/delete the insurance details.</value>
+  </data>
+  <data name="paymentclearanceui_1" xml:space="preserve">
+    <value>List of all cash, cheque, card and online payments to set the clearance date.</value>
+  </data>
+  <data name="paymentclearanceui_2" xml:space="preserve">
+    <value>List of all cash, cheque, card and online payments to set the clearance date.</value>
+  </data>
+  <data name="userrolewisephotouploadui_1" xml:space="preserve">
+    <value>Displays the users photo upload status. Upload photo as per the user role.</value>
+  </data>
+  <data name="userrolewisephotouploadui_2" xml:space="preserve">
+    <value>Displays the users photo upload status. Upload photo as per the user role.</value>
+  </data>
+  <data name="assessmentconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Assessment Details.</value>
+  </data>
+  <data name="assessmentconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Assessment Details.</value>
+  </data>
+  <data name="partialleavepopup_1" xml:space="preserve">
+    <value>Set partial leave(s) for existing half leave(s). Partial leave(s) will be saved on User Leaves popup.</value>
+  </data>
+  <data name="subjectsectionconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Subjectwise Subject Section Details.</value>
+  </data>
+  <data name="subjectsectionconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Subjectwise Subject Section Details.</value>
+  </data>
+  <data name="learningoutcomeconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Learning Outcome Details.</value>
+  </data>
+  <data name="learningoutcomeconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Learning Outcome Details.</value>
+  </data>
+  <data name="gradeconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Grade Configuration Details.</value>
+  </data>
+  <data name="gradeconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Grade Configuration Details.</value>
+  </data>
+  <data name="standardwiseassessmentconfigurationui_1" xml:space="preserve">
+    <value>Displays and Configure the Standardwise Assessment Configuration details.</value>
+  </data>
+  <data name="standardwiseassessmentconfigurationui_2" xml:space="preserve">
+    <value>Displays and Configure the Standardwise Assessment Configuration details.</value>
+  </data>
+  <data name="timetablegenerationui_1" xml:space="preserve">
+    <value>Generate auto timetable.</value>
+  </data>
+  <data name="timetablegenerationui_2" xml:space="preserve">
+    <value>Generate auto timetable.</value>
+  </data>
+  <data name="insurancedetailspopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete Insurance details.</value>
+  </data>
+  <data name="insurancedetailspopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete Insurance details.</value>
+  </data>
+  <data name="taskmanagementpopup_1" xml:space="preserve">
+    <value>Add/Edit task details. Assigned task to the users as per selection of designation. Set the task status and add comments for assigned task.</value>
+  </data>
+  <data name="taskmanagementpopup_2" xml:space="preserve">
+    <value>Add/Edit task details. Assigned task to the users as per selection of designation. Set the task status and add comments for assigned task.</value>
+  </data>
+  <data name="assignxseedgradesui_1" xml:space="preserve">
+    <value>View all subjects assigned with the current status of grades given to students. 
+Once grades for all the students are allotted you have to submit these grades to the class-teacher by clicking on "Submit" button.</value>
+  </data>
+  <data name="assignxseedgradesui_2" xml:space="preserve">
+    <value>View all subjects assigned with the current status of grades given to students. 
+Once grades for all the students are allotted you have to submit these grades to the class-teacher by clicking on "Submit" button.</value>
+  </data>
+  <data name="studentnonxseedgradeassignmentui_1" xml:space="preserve">
+    <value>Assign grades to each student in the class for the selected subject and click on "Save". Once grades are submitted to class-teacher you can modify it from xseed results.</value>
+  </data>
+  <data name="studentnonxseedgradeassignmentui_2" xml:space="preserve">
+    <value>Assign grades to each student in the class for the selected subject and click on "Save". Once grades are submitted to class-teacher you can modify it from xseed results.</value>
+  </data>
+  <data name="classteacherxseedgradesui_1" xml:space="preserve">
+    <value>View the summarised results of your class for the selected assessment. Assessment result can be publish on by clicking Publish button and unpublish by clicking Unpublish button.</value>
+  </data>
+  <data name="classteacherxseedgradesui_2" xml:space="preserve">
+    <value>View the summarised results of your class for the selected assessment. Assessment result can be publish on by clicking Publish button and unpublish by clicking Unpublish button.</value>
+  </data>
+  <data name="staybacklectureassignmentpopupui_1" xml:space="preserve">
+    <value>Assign Stay Back , Assembly &amp; MPT Lectures for class.</value>
+  </data>
+  <data name="staybacklectureassignmentpopupui_2" xml:space="preserve">
+    <value>Assign Stay Back , Assembly &amp; MPT Lectures for class.</value>
+  </data>
+  <data name="teacherexternallectureassignmentui_1" xml:space="preserve">
+    <value>Assign External Lectures for Teachers.</value>
+  </data>
+  <data name="teacherexternallectureassignmentui_2" xml:space="preserve">
+    <value>Assign External Lectures for Teachers.</value>
+  </data>
+  <data name="studentxseedgradeassignmentui_1" xml:space="preserve">
+    <value>Assign grades to each student in the class for the selected subject section and click on "Save". Once grades are submitted to class-teacher you can modify it from xseed results.</value>
+  </data>
+  <data name="studentxseedgradeassignmentui_2" xml:space="preserve">
+    <value>Assign grades to each student in the class for the selected subject section and click on "Save". Once grades are submitted to class-teacher you can modify it from xseed results.</value>
+  </data>
+  <data name="tasklistui_1" xml:space="preserve">
+    <value>Dispalys the task details assigned by user or assigned to user.</value>
+  </data>
+  <data name="tasklistui_2" xml:space="preserve">
+    <value>Dispalys the task details assigned by user or assigned to user.</value>
+  </data>
+  <data name="workflowroleconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Work Flow Configuration Details.</value>
+  </data>
+  <data name="workflowroleconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Work Flow Configuration Details.</value>
+  </data>
+  <data name="xseedprogressreportui_1" xml:space="preserve">
+    <value>Displays xseed progress report of selected assessment.</value>
+  </data>
+  <data name="xseedprogressreportui_2" xml:space="preserve">
+    <value>Displays xseed progress report of selected assessment.</value>
+  </data>
+  <data name="xseedprogressreportui_3" xml:space="preserve">
+    <value>Displays xseed progress report of selected assessment.</value>
+  </data>
+  <data name="xseedthemesui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Xseed theme. Assign new theme to all standards. Delete or edit previously assigned theme.</value>
+  </data>
+  <data name="xseedthemesui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Xseed theme. Assign new theme to all standards. Delete or edit previously assigned theme.</value>
+  </data>
+  <data name="classwiseoptionalsubjectsui_1" xml:space="preserve">
+    <value>Add/Edit/Delete optional subjects.</value>
+  </data>
+  <data name="classwiseoptionalsubjectsui_2" xml:space="preserve">
+    <value>Add/Edit/Delete optional subjects.</value>
+  </data>
+  <data name="secondlanguageui_1" xml:space="preserve">
+    <value>Set second / third language at student level.</value>
+  </data>
+  <data name="updatemenufilesui_1" xml:space="preserve">
+    <value>Update existing menu files.</value>
+  </data>
+  <data name="updatemenufilesui_2" xml:space="preserve">
+    <value>Update existing menu files.</value>
+  </data>
+  <data name="managementfilesharingui_1" xml:space="preserve">
+    <value>Upload files to share with users from the Management</value>
+  </data>
+  <data name="managementfilesharingui_2" xml:space="preserve">
+    <value>Upload files to share with users from the Management</value>
+  </data>
+  <data name="superadmindetailsui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Management User Details.</value>
+  </data>
+  <data name="superadmindetailsui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Management User Details.</value>
+  </data>
+  <data name="superadmindetailsui_3" xml:space="preserve">
+    <value>Add/Edit/Delete Management User Details.</value>
+  </data>
+  <data name="leavingcertificateconfigui_1" xml:space="preserve">
+    <value>You can configure what details will be visible on the Leaving Certificate report.</value>
+  </data>
+  <data name="leavingcertificateconfigui_2" xml:space="preserve">
+    <value>You can configure what details will be visible on the Leaving Certificate report.</value>
+  </data>
+  <data name="staffstatuspopup_1" xml:space="preserve">
+    <value>Displays and set the user service type as per the user role.</value>
+  </data>
+  <data name="staffstatuspopup_2" xml:space="preserve">
+    <value>Displays and set the user service type as per the user role.</value>
+  </data>
+  <data name="groupmasterui_1" xml:space="preserve">
+    <value>User can Add/ Edit/ Delete Groups and Select PAN Details Required checkbox to add PAN details for Group (If any).</value>
+  </data>
+  <data name="groupmasterui_2" xml:space="preserve">
+    <value>User can Add/ Edit/ Delete Groups and Select PAN Details Required checkbox to add PAN details for Group (If any).</value>
+  </data>
+  <data name="bankaccountdetailsui_1" xml:space="preserve">
+    <value>User can Add/Edit/Delete bank account details.</value>
+  </data>
+  <data name="bankaccountdetailsui_2" xml:space="preserve">
+    <value>User can Add/Edit/Delete bank account details.</value>
+  </data>
+  <data name="ledgermasterui_1" xml:space="preserve">
+    <value>User can Add/ Edit/ Delete Ledgers and can add PAN card details for ledgers (If any).</value>
+  </data>
+  <data name="ledgermasterui_2" xml:space="preserve">
+    <value>User can Add/ Edit/ Delete Ledgers and can add PAN card details for ledgers (If any).</value>
+  </data>
+  <data name="approvalconfigui_1" xml:space="preserve">
+    <value>Add/Edit Approval level configuration for accounting vouchers.</value>
+  </data>
+  <data name="approvalconfigui_2" xml:space="preserve">
+    <value>Add/Edit Approval level configuration for accounting vouchers.</value>
+  </data>
+  <data name="voucherlistui_1" xml:space="preserve">
+    <value>View vouchers created by you, or which are waiting for your approval.</value>
+  </data>
+  <data name="voucherlistui_2" xml:space="preserve">
+    <value>View vouchers created by you, or which are waiting for your approval.</value>
+  </data>
+  <data name="voucherpopup_1" xml:space="preserve">
+    <value>Add/Edit/View vouchers. Displays details about a voucher. Export voucher in Open Tally XML format.</value>
+  </data>
+  <data name="voucherpopup_2" xml:space="preserve">
+    <value>Add/Edit/View vouchers. Displays details about a voucher. Export voucher in Open Tally XML format.</value>
+  </data>
+  <data name="daybook_1" xml:space="preserve">
+    <value>Displays a list of vouchers for a given date or date range. Export vouchers in Open Tally XML format.</value>
+  </data>
+  <data name="daybook_2" xml:space="preserve">
+    <value>Displays a list of vouchers for a given date or date range. Export vouchers in Open Tally XML format.</value>
+  </data>
+  <data name="assignexamwisestudentmarksui_1" xml:space="preserve">
+    <value>Assign marks to student in the class for the all subjects and exams and click on "Save". Select exams and click on "Publish" to publish result for student. Click on "View Progress Report" to view students progress report.</value>
+  </data>
+  <data name="assignexamwisestudentmarksui_2" xml:space="preserve">
+    <value>Assign marks to student in the class for the all subjects and exams and click on "Save". Select exams and click on "Publish" to publish result for student. Click on "View Progress Report" to view students progress report.</value>
+  </data>
+  <data name="studentwiseprogreesreportui_1" xml:space="preserve">
+    <value>Select the class and edit any student for student wise marks assignment. </value>
+  </data>
+  <data name="studentwiseprogreesreportui_2" xml:space="preserve">
+    <value>Select the class and edit any student for student wise marks assignment.</value>
+  </data>
+  <data name="studentwiseprogresssheet_1" xml:space="preserve">
+    <value>Displays progress report of published/selected exams of selected student.</value>
+  </data>
+  <data name="studentwiseprogresssheet_2" xml:space="preserve">
+    <value>Displays progress report of published/selected exams of selected student.</value>
+  </data>
+  <data name="xssedstudentwiseprogressreportui_1" xml:space="preserve">
+    <value>Assign, publish student grades and view students progress report.</value>
+  </data>
+  <data name="xssedstudentwiseprogressreportui_2" xml:space="preserve">
+    <value>Assign, publish student grades and view students progress report.</value>
+  </data>
+  <data name="reservedbookdetailspopupui_1" xml:space="preserve">
+    <value>Displays the books claimed by user and user can cancel the book claim.</value>
+  </data>
+  <data name="reservedbookdetailspopupui_2" xml:space="preserve">
+    <value>Displays the books claimed by user and user can cancel the book claim.</value>
+  </data>
+  <data name="reservedbookdetailspopupui_3" xml:space="preserve">
+    <value>Displays the books claimed by user and user can cancel the book claim.</value>
+  </data>
+  <data name="issuerenewreturnui_1" xml:space="preserve">
+    <value>User can Issue, Renew or Return book.</value>
+  </data>
+  <data name="issuerenewreturnui_2" xml:space="preserve">
+    <value>User can Issue, Renew or Return book.</value>
+  </data>
+  <data name="remarkscategoryui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Remarks category. Remark categories configured here will be displayed on the progress remark template.</value>
+  </data>
+  <data name="remarkscategoryui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Remarks category. Remark Categories configured here will be displayed on the progress remark template.</value>
+  </data>
+  <data name="remarksconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Remarks. Remarks configured here will be displayed on the progress report of students.</value>
+  </data>
+  <data name="remarksconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Remarks. Remarks configured here will be displayed on the progress report of students.</value>
+  </data>
+  <data name="standardwiseexamconfigurationui_1" xml:space="preserve">
+    <value>Associate exams for each standard. Configure standard wise "Out Of Marks".</value>
+  </data>
+  <data name="standardwiseexamconfigurationui_2" xml:space="preserve">
+    <value>Associate exams for each standard. Configure standard wise "Out Of Marks".</value>
+  </data>
+  <data name="studentwiseremarkui_1" xml:space="preserve">
+    <value>Add/Edit/Delete student progress remarks.</value>
+  </data>
+  <data name="studentwiseremarkui_2" xml:space="preserve">
+    <value>Add/Edit/Delete student progress remarks.</value>
+  </data>
+  <data name="feevoucherdetailspopup_1" xml:space="preserve">
+    <value>Displays fee particular details of a Fee Voucher.</value>
+  </data>
+  <data name="feevoucherdetailspopup_2" xml:space="preserve">
+    <value>Displays fee particular details of a Fee Voucher.</value>
+  </data>
+  <data name="eventoverview_1" xml:space="preserve">
+    <value>Displays all the events of the School.</value>
+  </data>
+  <data name="eventoverview_2" xml:space="preserve">
+    <value>Displays all the events of the School.</value>
+  </data>
+  <data name="eventoverview_3" xml:space="preserve">
+    <value>Displays all the events of the School.</value>
+  </data>
+  <data name="transferstudentsubjectsmarksui_1" xml:space="preserve">
+    <value>Transfer student's marks from one optional subject to another optional subject.</value>
+  </data>
+  <data name="transferstudentsubjectsmarksui_2" xml:space="preserve">
+    <value>Transfer student's marks from one optional subject to another optional subject.</value>
+  </data>
+  <data name="feedbackdetailsui_1" xml:space="preserve">
+    <value>Add/ Edit/ Delete feedbacks.</value>
+  </data>
+  <data name="uploadnoticesui_1" xml:space="preserve">
+    <value>Add /Edit /Delete school notice. Displays all school notices.</value>
+  </data>
+  <data name="ledgersummaryui_1" xml:space="preserve">
+    <value>Display summary of the selected ledger for the selected date range.</value>
+  </data>
+  <data name="ledgersummaryui_2" xml:space="preserve">
+    <value>Display summary of the selected ledger for the selected date range.</value>
+  </data>
+  <data name="misreportui_1" xml:space="preserve">
+    <value>Displays Annual, Bi-Annual and Quarterly details for inflow, outflow and fixed assets.</value>
+  </data>
+  <data name="misreportui_2" xml:space="preserve">
+    <value>Displays Annual, Bi-Annual and Quarterly details for inflow, outflow and fixed assets.</value>
+  </data>
+  <data name="remarktemplateconfigui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Remark Template. Template configured here will be displayed on the progress report of the students.</value>
+  </data>
+  <data name="remarktemplateconfigui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Remark Template. Template configured here will be displayed on the progress report of the students.</value>
+  </data>
+  <data name="chequetemplateconfigurationui_1" xml:space="preserve">
+    <value>Allows configuration of templates for Cheque printing.</value>
+  </data>
+  <data name="chequetemplateconfigurationui_2" xml:space="preserve">
+    <value>Allows configuration of templates for Cheque printing.</value>
+  </data>
+  <data name="attendancestatusui_1" xml:space="preserve">
+    <value>Shows the attendance status for all standards and divisions for selected date.</value>
+  </data>
+  <data name="attendancestatusui_2" xml:space="preserve">
+    <value>Shows the attendance status for all standards and divisions for selected date.</value>
+  </data>
+  <data name="attendancealertconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete missing attendance alert configuration for the users.</value>
+  </data>
+  <data name="attendancealertconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete missing attendance alert configuration for the users.</value>
+  </data>
+  <data name="salarydifferenceui_2" xml:space="preserve">
+    <value>Displays salary difference of selected month and year with respective to selected base month's and year's configuration.</value>
+  </data>
+  <data name="regenaraterollnoui_1" xml:space="preserve">
+    <value>Select standard and division and regenerate / reassign the roll numbers from displayed student's list and click on save to save new roll numbers.</value>
+  </data>
+  <data name="regenaraterollnoui_2" xml:space="preserve">
+    <value>Select standard and division and regenerate / reassign the roll numbers from displayed student's list and click on save to save new roll numbers.</value>
+  </data>
+  <data name="salarydifferenceconfigpopup_1" xml:space="preserve">
+    <value>Select Earning / Deduction and formula to consider in salary difference calculation.</value>
+  </data>
+  <data name="savedsalarydifferencepopup_1" xml:space="preserve">
+    <value>Displays saved and paid salary difference in details. User can delete last transaction of saved difference.</value>
+  </data>
+  <data name="managementdashboardui_1" xml:space="preserve">
+    <value>Displays cumulative data of associated schools, such as Student details, Staff details, fee collection and MIS report.</value>
+  </data>
+  <data name="managementdashboardui_2" xml:space="preserve">
+    <value>Displays cumulative data of associated schools, such as Student details, Staff details, fee collection and MIS report.</value>
+  </data>
+  <data name="customizeinternalrecieptpopup_1" xml:space="preserve">
+    <value>Here you can generate customized receipt.</value>
+  </data>
+  <data name="customizeinternalrecieptpopup_2" xml:space="preserve">
+    <value>Here you can generate customized receipt.</value>
+  </data>
+  <data name="basicleaveconfigpopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete basic leave configuration.</value>
+  </data>
+  <data name="basicleaveconfigpopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete basic leave configuration.</value>
+  </data>
+  <data name="investmentmethodui_1" xml:space="preserve">
+    <value>Add / Edit / Delete investment / income method details.</value>
+  </data>
+  <data name="investmentmethodui_2" xml:space="preserve">
+    <value>Add / Edit / Delete investment / income method details.</value>
+  </data>
+  <data name="sectiondetailspopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete section details.</value>
+  </data>
+  <data name="sectiondetailspopup_2" xml:space="preserve">
+    <value>Add / Edit / Delete section details.</value>
+  </data>
+  <data name="investmentdeclarationui_1" xml:space="preserve">
+    <value>Add / Edit / Delete investment / income declarations.</value>
+  </data>
+  <data name="investmentdeclarationui_2" xml:space="preserve">
+    <value>Add / Edit / Delete investment / income declarations.</value>
+  </data>
+  <data name="incometaxdetailsui_1" xml:space="preserve">
+    <value>Publish / Unpublish Income Tax Details for all users.</value>
+  </data>
+  <data name="incometaxdetailsui_2" xml:space="preserve">
+    <value>Publish / Unpublish Income Tax Details for all users.</value>
+  </data>
+  <data name="taxdeductionui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Tax Deduction details for selected user.</value>
+  </data>
+  <data name="taxdeductionui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Tax Deduction details for selected user.</value>
+  </data>
+  <data name="taxdeductionconfigpopup_1" xml:space="preserve">
+    <value>Add/Edit/Display income tax configuration details.</value>
+  </data>
+  <data name="taxdeductionconfigpopup_2" xml:space="preserve">
+    <value>Add/Edit/Display income tax configuration details.</value>
+  </data>
+  <data name="incometaxslabsui_1" xml:space="preserve">
+    <value>To Add/Edit/Delete income tax slabs.</value>
+  </data>
+  <data name="incometaxslabsui_2" xml:space="preserve">
+    <value>To Add/Edit/Delete income tax slabs.</value>
+  </data>
+  <data name="blockprogressreportui_1" xml:space="preserve">
+    <value>Block/Unblock progress report of students.</value>
+  </data>
+  <data name="blockprogressreportui_2" xml:space="preserve">
+    <value>Block/Unblock progress report of students.</value>
+  </data>
+  <data name="investmentdeclarationuploadpopup_1" xml:space="preserve">
+    <value>Upload documents against selected user and investment method.</value>
+  </data>
+  <data name="investmentdeclarationuploadpopup_2" xml:space="preserve">
+    <value>Upload documents against selected user and investment method.</value>
+  </data>
+  <data name="investmentdocumentpopup_1" xml:space="preserve">
+    <value>Upload / Delete document(s).</value>
+  </data>
+  <data name="investmentdocumentpopup_2" xml:space="preserve">
+    <value>Upload / Delete document(s).</value>
+  </data>
+  <data name="userreportassignmentpopup_1" xml:space="preserve">
+    <value>View/Set the reports to the user(s).</value>
+  </data>
+  <data name="userreportassignmentpopup_2" xml:space="preserve">
+    <value>View/Set the reports to the user(s).</value>
+  </data>
+  <data name="assignhomeworkui_1" xml:space="preserve">
+    <value>Users can Add/Edit/Delete/Publish and Unpublish homework. And displays homework added by other teachers.</value>
+  </data>
+  <data name="assignhomeworkui_2" xml:space="preserve">
+    <value>Users can Add/Edit/Delete/Publish and Unpublish homework. And displays homework added by other teachers.</value>
+  </data>
+  <data name="studenthomeworkui_3" xml:space="preserve">
+    <value>You can view homework of all subjects.</value>
+  </data>
+  <data name="homeworkui_1" xml:space="preserve">
+    <value>List the class subjects of the selected teacher for homework assignment.</value>
+  </data>
+  <data name="homeworkui_2" xml:space="preserve">
+    <value>List the class subjects for homework assignment.</value>
+  </data>
+  <data name="viewhomeworkui_1" xml:space="preserve">
+    <value>User can view homework details.</value>
+  </data>
+  <data name="viewhomeworkui_2" xml:space="preserve">
+    <value>User can view homework details.</value>
+  </data>
+  <data name="viewhomeworkui_3" xml:space="preserve">
+    <value>You can view homework details assigned to your child.</value>
+  </data>
+  <data name="retirementnoticeconfigui_1" xml:space="preserve">
+    <value>To add/update retirement notice configuration.</value>
+  </data>
+  <data name="retirementnoticeconfigui_2" xml:space="preserve">
+    <value>To add/update retirement notice configuration.</value>
+  </data>
+  <data name="webcampopup_1" xml:space="preserve">
+    <value>Capture photo and submit for upload.</value>
+  </data>
+  <data name="webcampopup_2" xml:space="preserve">
+    <value>Capture photo and submit for upload.</value>
+  </data>
+  <data name="staffmembersdocumentuploadui_1" xml:space="preserve">
+    <value>Add/Edit/Remove user education and experience details. And upload the documents for required details.</value>
+  </data>
+  <data name="staffmembersdocumentuploadui_2" xml:space="preserve">
+    <value>Add/Edit/Remove user education and experience details. And upload the documents for required details.</value>
+  </data>
+  <data name="trialbalancereportui_1" xml:space="preserve">
+    <value>Displays trial balance report for selected criteria.</value>
+  </data>
+  <data name="trialbalancereportui_2" xml:space="preserve">
+    <value>Displays trial balance report for selected criteria.</value>
+  </data>
+  <data name="schooldesignationui_1" xml:space="preserve">
+    <value>Add/Update/Delete Designations.</value>
+  </data>
+  <data name="schooldesignationui_2" xml:space="preserve">
+    <value>Add/Update/Delete Designations.</value>
+  </data>
+  <data name="mailinggrouppopup_1" xml:space="preserve">
+    <value>Add/edit delete contact group(s).</value>
+  </data>
+  <data name="mailinggrouppopup_2" xml:space="preserve">
+    <value>Add/edit delete contact group(s).</value>
+  </data>
+  <data name="performancegradeconfigui_1" xml:space="preserve">
+    <value>Configure Performance Grades to assign to users.</value>
+  </data>
+  <data name="performancegradeconfigui_2" xml:space="preserve">
+    <value>Configure Performance Grades to assign to users.</value>
+  </data>
+  <data name="skillconfigurationui_1" xml:space="preserve">
+    <value>Configure skill type for staff performance evaluation</value>
+  </data>
+  <data name="skillconfigurationui_2" xml:space="preserve">
+    <value>Configure skill type for staff performance evaluation</value>
+  </data>
+  <data name="houseconfigurationui_1" xml:space="preserve">
+    <value>Configure House Information.</value>
+  </data>
+  <data name="houseconfigurationui_2" xml:space="preserve">
+    <value>Configure House Information.</value>
+  </data>
+  <data name="studentshouseassignmentui_1" xml:space="preserve">
+    <value>Assign House Information to students.</value>
+  </data>
+  <data name="studentshouseassignmentui_2" xml:space="preserve">
+    <value>Assign House Information to students.</value>
+  </data>
+  <data name="performanceparametersui_1" xml:space="preserve">
+    <value>Add /Edt / Delete performance parameter.</value>
+  </data>
+  <data name="performanceparametersui_2" xml:space="preserve">
+    <value>Add /Edt / Delete performance parameter.</value>
+  </data>
+  <data name="mailinggrouppopup_3" xml:space="preserve">
+    <value>Select required contact group(s).</value>
+  </data>
+  <data name="reportinguserconfigurationui_1" xml:space="preserve">
+    <value>Configure Reporting Information.</value>
+  </data>
+  <data name="reportinguserconfigurationui_2" xml:space="preserve">
+    <value>Configure Reporting Information.</value>
+  </data>
+  <data name="staffperformanceevaluationui_1" xml:space="preserve">
+    <value>Set/View staff performance evaluation details.</value>
+  </data>
+  <data name="staffperformanceevaluationui_2" xml:space="preserve">
+    <value>Set/View staff performance evaluation details.</value>
+  </data>
+  <data name="readreceiptdetailspopup_1" xml:space="preserve">
+    <value>Displays read receipt details.</value>
+  </data>
+  <data name="readreceiptdetailspopup_2" xml:space="preserve">
+    <value>Displays read receipt details.</value>
+  </data>
+  <data name="readreceiptdetailspopup_3" xml:space="preserve">
+    <value>Displays read receipt details.</value>
+  </data>
+  <data name="remarkslengthconfigurationui_1" xml:space="preserve">
+    <value>Configure progress remark length for selected standard and term.</value>
+  </data>
+  <data name="remarkslengthconfigurationui_2" xml:space="preserve">
+    <value>Configure progress remark length for selected standard and term.</value>
+  </data>
+  <data name="paymentparameterpopup_1" xml:space="preserve">
+    <value>Add/edit delete parameter(s).</value>
+  </data>
+  <data name="paymentparameterpopup_2" xml:space="preserve">
+    <value>Add/edit delete parameter(s).</value>
+  </data>
+  <data name="studentattendance_1" xml:space="preserve">
+    <value>Attendance of selected student. You can change the month by clicking on month link on the top corners of the calender.</value>
+  </data>
+  <data name="smshistoryui_10" xml:space="preserve">
+    <value>Displays sent / scheduled / received SMS list.</value>
+  </data>
+  <data name="smshistoryui_13" xml:space="preserve">
+    <value>Displays sent / scheduled / received SMS list.</value>
+  </data>
+  <data name="smshistoryui_20" xml:space="preserve">
+    <value>Displays received SMS list.</value>
+  </data>
+  <data name="smshistoryui_23" xml:space="preserve">
+    <value>Displays scheduled SMS list.</value>
+  </data>
+  <data name="smshistoryui_26" xml:space="preserve">
+    <value>It Reads, Displays sent/scheduled/received SMS list.</value>
+  </data>
+  <data name="smshistoryui_30" xml:space="preserve">
+    <value>Displays received SMS list.</value>
+  </data>
+  <data name="smshistoryui_33" xml:space="preserve">
+    <value>Displays scheduled SMS list.</value>
+  </data>
+  <data name="smshistoryui_60" xml:space="preserve">
+    <value>Displays received SMS list.</value>
+  </data>
+  <data name="smsui_10" xml:space="preserve">
+    <value>View Sent / Received / Scheduled Messages.</value>
+  </data>
+  <data name="smsui_13" xml:space="preserve">
+    <value>View Sent / Received / Scheduled Messages.</value>
+  </data>
+  <data name="smsui_20" xml:space="preserve">
+    <value>View Sent/Received Messages.</value>
+  </data>
+  <data name="smsui_23" xml:space="preserve">
+    <value>View Sent/Received Messages.</value>
+  </data>
+  <data name="smsui_26" xml:space="preserve">
+    <value>View Sent / Received / Scheduled Messages.</value>
+  </data>
+  <data name="smsui_30" xml:space="preserve">
+    <value>View received Messages.</value>
+  </data>
+  <data name="smsui_33" xml:space="preserve">
+    <value>View received Messages.</value>
+  </data>
+  <data name="smsui_60" xml:space="preserve">
+    <value>View Sent/Received Messages.</value>
+  </data>
+  <data name="uploadnewsui_1" xml:space="preserve">
+    <value>Add /Edit /Delete school news.Displays all school news.</value>
+  </data>
+  <data name="uploadnewsui_2" xml:space="preserve">
+    <value>Add /Edit /Delete school news.Displays all school news.</value>
+  </data>
+  <data name="staffbirthday_7" xml:space="preserve">
+    <value>List of the school staff birthdays.</value>
+  </data>
+  <data name="feedbackui_7" xml:space="preserve">
+    <value>Please write us your feedback about school/software.</value>
+  </data>
+  <data name="newquerypopup_1" xml:space="preserve">
+    <value>Add/Edit query.</value>
+  </data>
+  <data name="newquerypopup_2" xml:space="preserve">
+    <value>Add/Edit query.</value>
+  </data>
+  <data name="newquerypopup_3" xml:space="preserve">
+    <value>Add/Edit query.</value>
+  </data>
+  <data name="publishedqueriesui_1" xml:space="preserve">
+    <value>Displays published queries.</value>
+  </data>
+  <data name="publishedqueriesui_2" xml:space="preserve">
+    <value>Displays published queries.</value>
+  </data>
+  <data name="publishedqueriesui_3" xml:space="preserve">
+    <value>Displays published queries.</value>
+  </data>
+  <data name="querydetailsui_1" xml:space="preserve">
+    <value>View/Edit /Delete communication details</value>
+  </data>
+  <data name="querydetailsui_2" xml:space="preserve">
+    <value>View/Edit /Delete communication details</value>
+  </data>
+  <data name="querydetailsui_3" xml:space="preserve">
+    <value>View/Edit /Delete communication details</value>
+  </data>
+  <data name="viewquerydetailspopup_1" xml:space="preserve">
+    <value>Display all communications of selected query.</value>
+  </data>
+  <data name="viewquerydetailspopup_2" xml:space="preserve">
+    <value>Display all communications of selected query.</value>
+  </data>
+  <data name="viewquerydetailspopup_3" xml:space="preserve">
+    <value>Displays all communications of selected query.</value>
+  </data>
+  <data name="ownerassignmentpopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete owners for selected query.</value>
+  </data>
+  <data name="ownerassignmentpopup_2" xml:space="preserve">
+    <value>Add / Edit / Delete owners for selected query.</value>
+  </data>
+  <data name="panattachmentui_1" xml:space="preserve">
+    <value>Displays PAN / Aadhar Card details.</value>
+  </data>
+  <data name="staffattendancepopup_1" xml:space="preserve">
+    <value>Assign /check staff leaves.</value>
+  </data>
+  <data name="studentwiseheightweightcaptureui_1" xml:space="preserve">
+    <value>Capture  termwise students' height and weight.</value>
+  </data>
+  <data name="studentwiseheightweightcaptureui_2" xml:space="preserve">
+    <value>Capture  termwise students' height and weight.</value>
+  </data>
+  <data name="salarypaymentpopup_1" xml:space="preserve">
+    <value>Displays salary payment details. We can update details of last published month.</value>
+  </data>
+  <data name="salarypaymentpopup_2" xml:space="preserve">
+    <value>Displays salary payment details. We can update details of last published month.</value>
+  </data>
+  <data name="admissionstatuspopup_1" xml:space="preserve">
+    <value>Set admission status details.</value>
+  </data>
+  <data name="admissionstatuspopup_2" xml:space="preserve">
+    <value>Set admission status details.</value>
+  </data>
+  <data name="copyreportingconfigpopup_1" xml:space="preserve">
+    <value>Copy reporting staff configuration to selected users.</value>
+  </data>
+  <data name="copyreportingconfigpopup_2" xml:space="preserve">
+    <value>Copy reporting staff configuration to selected users.</value>
+  </data>
+  <data name="performanceevaluationui_1" xml:space="preserve">
+    <value>Manage / display performance evaluation details.</value>
+  </data>
+  <data name="performanceevaluationui_2" xml:space="preserve">
+    <value>Manage / display performance evaluation details.</value>
+  </data>
+  <data name="surveyfeedbackui_1" xml:space="preserve">
+    <value>Submit your feedback on various parameters.</value>
+  </data>
+  <data name="surveyfeedbackui_3" xml:space="preserve">
+    <value>Submit your feedback on various parameters.</value>
+  </data>
+  <data name="lessonplandetailsui_1" xml:space="preserve">
+    <value>Save / Submit / Approve / Reject lesson plan details.</value>
+  </data>
+  <data name="lessonplandetailsui_2" xml:space="preserve">
+    <value>Save / Submit / Approve / Reject lesson plan details.</value>
+  </data>
+  <data name="lessonplanui_1" xml:space="preserve">
+    <value>Displays all available lesson plans.</value>
+  </data>
+  <data name="lessonplanui_2" xml:space="preserve">
+    <value>Displays all available lesson plans.</value>
+  </data>
+  <data name="reportingconfigurationui_1" xml:space="preserve">
+    <value>Add / Edit / Delete reporting user configuration.</value>
+  </data>
+  <data name="reportingconfigurationui_2" xml:space="preserve">
+    <value>Add / Edit / Delete reporting user configuration.</value>
+  </data>
+  <data name="lessonplanreportinguserconfigui_1" xml:space="preserve">
+    <value>Add / Edit / Delete reporting user configuration.</value>
+  </data>
+  <data name="lessonplanreportinguserconfigui_2" xml:space="preserve">
+    <value>Add / Edit / Delete reporting user configuration.</value>
+  </data>
+  <data name="examtypepopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete Exam Types</value>
+  </data>
+  <data name="examtypepopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete Exam Types</value>
+  </data>
+  <data name="lessonplanapprovalui_1" xml:space="preserve">
+    <value>Save / Submit / Approve lesson plan details.</value>
+  </data>
+  <data name="lessonplanapprovalui_2" xml:space="preserve">
+    <value>Save / Submit / Approve lesson plan details.</value>
+  </data>
+  <data name="studentsearchui_1" xml:space="preserve">
+    <value>Search student and payment details with Name/Reg. No and receipt number respectively.</value>
+  </data>
+  <data name="lessonplanstdsubjectui_1" xml:space="preserve">
+    <value>Configure standardwise subjects for lesson plan.</value>
+  </data>
+  <data name="lessonplanstdsubjectui_2" xml:space="preserve">
+    <value>Configure standardwise subjects for lesson plan.</value>
+  </data>
+  <data name="lessonplanparameterui_1" xml:space="preserve">
+    <value>Add / Edit / Delete lesson plan parameter.</value>
+  </data>
+  <data name="lessonplanparameterui_2" xml:space="preserve">
+    <value>Add / Edit / Delete lesson plan parameter.</value>
+  </data>
+  <data name="staffleaveexportpopup_1" xml:space="preserve">
+    <value>You can export leave details of selected year, month, staff group, date and user as well as we can export current leave balance details.</value>
+  </data>
+  <data name="investmentdetailsui_1" xml:space="preserve">
+    <value>Submit investment details for income tax calculation.</value>
+  </data>
+  <data name="investmentdetailsui_2" xml:space="preserve">
+    <value>Submit investment details for income tax calculation.</value>
+  </data>
+  <data name="assigngradesui_1" xml:space="preserve">
+    <value>Displays class and subject details according to selected exam configuration and teacher.</value>
+  </data>
+  <data name="assigngradesui_2" xml:space="preserve">
+    <value>Displays class and subject details according to selected exam configuration and teacher.</value>
+  </data>
+  <data name="observationgradeassignmentui_1" xml:space="preserve">
+    <value>Assign grade for given parameters.</value>
+  </data>
+  <data name="observationgradeassignmentui_2" xml:space="preserve">
+    <value>Assign grade for given parameters.</value>
+  </data>
+  <data name="smsstatuspopup_1" xml:space="preserve">
+    <value>Displays SMS status of sent SMS.</value>
+  </data>
+  <data name="smsstatuspopup_2" xml:space="preserve">
+    <value>Displays SMS status of sent SMS.</value>
+  </data>
+  <data name="surveyformpopup_1" xml:space="preserve">
+    <value>Add / Edit registration details.</value>
+  </data>
+  <data name="surveyformdetailsui_1" xml:space="preserve">
+    <value>Displays all registration details.</value>
+  </data>
+  <data name="houseconfigurationpopup_1" xml:space="preserve">
+    <value>Set standard applicable for house configuration. Select the standard and click on save.</value>
+  </data>
+  <data name="surveyuserlistui_1" xml:space="preserve">
+    <value>Displays use list according to selected user role and survey.</value>
+  </data>
+  <data name="usersurveydetailsui_1" xml:space="preserve">
+    <value>Add / Edit / Submit user's answers / feedbacks.</value>
+  </data>
+  <data name="usersurveydetailsui_2" xml:space="preserve">
+    <value>Add / Edit / Submit user's answers / feedbacks.</value>
+  </data>
+  <data name="usersurveydetailsui_3" xml:space="preserve">
+    <value>Add / Edit / Submit user's answers / feedbacks.</value>
+  </data>
+  <data name="studentachievementpopup_1" xml:space="preserve">
+    <value>Add/Edit student achievement detailis and click on save.</value>
+  </data>
+  <data name="surveysendsmspopup_1" xml:space="preserve">
+    <value>Send SMS to all survey students as per the selected category and standard(s).</value>
+  </data>
+  <data name="surveysendsmspopup_2" xml:space="preserve">
+    <value>Send SMS to all survey students as per the selected category and standard(s).</value>
+  </data>
+  <data name="stockdetailspopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete stock details.</value>
+  </data>
+  <data name="stockdetailspopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete stock details.</value>
+  </data>
+  <data name="itemspecificationui_1" xml:space="preserve">
+    <value>Add / Edit / Delete item specification details.</value>
+  </data>
+  <data name="itemspecificationui_2" xml:space="preserve">
+    <value>Add / Edit / Delete item specification details.</value>
+  </data>
+  <data name="monthwisestaffattendancepopup_1" xml:space="preserve">
+    <value>Display monthwise staff attendance.</value>
+  </data>
+  <data name="monthwisestaffattendancepopup_2" xml:space="preserve">
+    <value>Display monthwise staff attendance.</value>
+  </data>
+  <data name="oddetailspopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete staff member's O.D details.</value>
+  </data>
+  <data name="oddetailspopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete staff member's O.D details.</value>
+  </data>
+  <data name="assemblydetailsui_1" xml:space="preserve">
+    <value>Configure status of assembly.</value>
+  </data>
+  <data name="assemblydetailsui_2" xml:space="preserve">
+    <value>Configure status of assembly.</value>
+  </data>
+  <data name="assemblylistui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Assembly Details.</value>
+  </data>
+  <data name="assemblylistui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Assembly Details.</value>
+  </data>
+  <data name="guestdetailsui_1" xml:space="preserve">
+    <value>Add/Edit/Delete guest details.</value>
+  </data>
+  <data name="guestdetailsui_2" xml:space="preserve">
+    <value>Add/Edit/Delete guest details.</value>
+  </data>
+  <data name="guestdetailsui_3" xml:space="preserve">
+    <value>Add/Edit/Delete guest details.</value>
+  </data>
+  <data name="subjectexpertassignmentui_1" xml:space="preserve">
+    <value>Assign a Subject Teacher as a Subject Expert for Ask Me.</value>
+  </data>
+  <data name="subjectexpertassignmentui_2" xml:space="preserve">
+    <value>Assign a Subject Teacher as a Subject Expert for Ask Me.</value>
+  </data>
+  <data name="selectcommunicationpopup_1" xml:space="preserve">
+    <value>Publish / Unpublish selected communications.</value>
+  </data>
+  <data name="selectcommunicationpopup_2" xml:space="preserve">
+    <value>Publish / Unpublish selected communications.</value>
+  </data>
+  <data name="datewiseclasshalfdayconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete class wise  Half Day Configuration.</value>
+  </data>
+  <data name="datewiseclasshalfdayconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete class wise  Half Day Configuration.</value>
+  </data>
+  <data name="dayworkinghrsconfigurationui_1" xml:space="preserve">
+    <value>Save  Full  and Half hours configuration.</value>
+  </data>
+  <data name="dayworkinghrsconfigurationui_2" xml:space="preserve">
+    <value>Save  Full  and Half hours configuration.</value>
+  </data>
+  <data name="studentcountdetailsui_1" xml:space="preserve">
+    <value>Displays monthwise new / left student count details.</value>
+  </data>
+  <data name="studentcountdetailsui_2" xml:space="preserve">
+    <value>Displays monthwise new / left student count details.</value>
+  </data>
+  <data name="assigndescriptiveindicatormarksui_1" xml:space="preserve">
+    <value>Add / Edit marks and remarks for descriptive indicators.</value>
+  </data>
+  <data name="assigndescriptiveindicatormarksui_2" xml:space="preserve">
+    <value>Add / Edit marks and remarks for descriptive indicators.</value>
+  </data>
+  <data name="descriptiveindicatorsui_1" xml:space="preserve">
+    <value>Display student list for Descriptive Indicator assignment.</value>
+  </data>
+  <data name="descriptiveindicatorsui_2" xml:space="preserve">
+    <value>Display student list for Descriptive Indicator assignment.</value>
+  </data>
+  <data name="feedbackformui_3" xml:space="preserve">
+    <value>Submit your feedback.</value>
+  </data>
+  <data name="uploadvideoviewui_1" xml:space="preserve">
+    <value>Add / Edit / Delete photos of selected gallery.</value>
+  </data>
+  <data name="uploadvideoviewui_2" xml:space="preserve">
+    <value>Add / Edit / Delete photos of selected gallery.</value>
+  </data>
+  <data name="panattachmentpopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete PAN / Aadhar Card details.</value>
+  </data>
+  <data name="smsstatusdetailspopup_1" xml:space="preserve">
+    <value>Displays SMS delivery status.</value>
+  </data>
+  <data name="smsstatusdetailspopup_2" xml:space="preserve">
+    <value>Displays SMS delivery status.</value>
+  </data>
+  <data name="additionalclassesintimetablepopup_1" xml:space="preserve">
+    <value>Add additional / optional subject lectures.</value>
+  </data>
+  <data name="vendorconfigurationui_1" xml:space="preserve">
+    <value>Add/Edit/Delete Vendor Configuration Details.</value>
+  </data>
+  <data name="vendorconfigurationui_2" xml:space="preserve">
+    <value>Add/Edit/Delete Vendor Configuration Details.</value>
+  </data>
+  <data name="purchaseorderapproverui_1" xml:space="preserve">
+    <value>View, Update, Approve Purchase Order.</value>
+  </data>
+  <data name="purchaseorderapproverui_2" xml:space="preserve">
+    <value>View, Update, Approve Purchase Order.</value>
+  </data>
+  <data name="studentrecordcommentpopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete / Submit student record comment.</value>
+  </data>
+  <data name="studentrecordcommentpopup_2" xml:space="preserve">
+    <value>Add / Edit / Delete / Submit student record comment.</value>
+  </data>
+  <data name="studentrecordstatusui_1" xml:space="preserve">
+    <value>Display list of students as per selected class and filter and it's status.</value>
+  </data>
+  <data name="studentrecordstatusui_2" xml:space="preserve">
+    <value>Display list of students as per selected class and filter and it's status.</value>
+  </data>
+  <data name="studentrecordui_1" xml:space="preserve">
+    <value>Add / Submit student details.</value>
+  </data>
+  <data name="studentrecordui_2" xml:space="preserve">
+    <value>Add / Submit student details.</value>
+  </data>
+  <data name="salarychangesui_1" xml:space="preserve">
+    <value>Exports salary increment details.</value>
+  </data>
+  <data name="salarychangesui_2" xml:space="preserve">
+    <value>Exports salary increment details.</value>
+  </data>
+  <data name="resetfeereceiptpopup_1" xml:space="preserve">
+    <value>Reset fee receipts.</value>
+  </data>
+  <data name="resetfeereceiptpopup_2" xml:space="preserve">
+    <value>Reset fee receipts.</value>
+  </data>
+  <data name="teacheradditionaldetailsui_1" xml:space="preserve">
+    <value>Add, update teachers additional details for UDISE report</value>
+  </data>
+  <data name="teacheradditionaldetailsui_2" xml:space="preserve">
+    <value>Add, update teachers additional details for UDISE report</value>
+  </data>
+  <data name="healthparametersui_1" xml:space="preserve">
+    <value>Add / Edit / Delete health parameter.</value>
+  </data>
+  <data name="healthparametersui_2" xml:space="preserve">
+    <value>Add / Edit / Delete health parameter.</value>
+  </data>
+  <data name="healthcomponentui_1" xml:space="preserve">
+    <value>Add / Edit / Delete Health Component</value>
+  </data>
+  <data name="healthcomponentui_2" xml:space="preserve">
+    <value>Add / Edit / Delete Health Component</value>
+  </data>
+  <data name="payinternalfeeonlinepopup_1" xml:space="preserve">
+    <value>Paid Internal Fee Online.</value>
+  </data>
+  <data name="payinternalfeeonlinepopup_2" xml:space="preserve">
+    <value>Paid Internal Fee Online.</value>
+  </data>
+  <data name="payinternalfeeonlinepopup_3" xml:space="preserve">
+    <value>Pay Internal Fee Online.</value>
+  </data>
+  <data name="externalstudentfeeui_1" xml:space="preserve">
+    <value>Add/Edit/Delete External Students Fee Details.</value>
+  </data>
+  <data name="externalstudentfeeui_2" xml:space="preserve">
+    <value>Add/Edit/Delete External Students Fee Details.</value>
+  </data>
+  <data name="leaveencashmentpopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete Leave Encashment details.</value>
+  </data>
+  <data name="leaveencashmentpopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete Leave Encashment details.</value>
+  </data>
+  <data name="userrejoiningdetailspopup_1" xml:space="preserve">
+    <value>Add/Edit/Delete user rejoining details.</value>
+  </data>
+  <data name="userrejoiningdetailspopup_2" xml:space="preserve">
+    <value>Add/Edit/Delete user rejoining details.</value>
+  </data>
+  <data name="uploadphotosui_1" xml:space="preserve">
+    <value>Upload login user's photo.</value>
+  </data>
+  <data name="uploadphotosui_2" xml:space="preserve">
+    <value>Upload login user's photo.</value>
+  </data>
+  <data name="onlineexamquestionconfigurationui_1" xml:space="preserve">
+    <value>Add/edit/delete questions for each class and subject.</value>
+  </data>
+  <data name="onlineexamquestionconfigurationui_2" xml:space="preserve">
+    <value>Add/edit/delete questions for each class and subject.</value>
+  </data>
+  <data name="onlineexamconfigui_1" xml:space="preserve">
+    <value>Configure online exam as per class/subject.</value>
+  </data>
+  <data name="onlineexamconfigui_2" xml:space="preserve">
+    <value>Configure online exam as per class/subject.</value>
+  </data>
+  <data name="onlineexamdetailsui_1" xml:space="preserve">
+    <value>Display configured exams of selected exam.</value>
+  </data>
+  <data name="onlineexamdetailsui_2" xml:space="preserve">
+    <value>Display configured exams of selected exam.</value>
+  </data>
+  <data name="publishonlineexamui_1" xml:space="preserve">
+    <value>Publish online exam to show marks at student login.</value>
+  </data>
+  <data name="publishonlineexamui_2" xml:space="preserve">
+    <value>Publish online exam to show marks at student login.</value>
+  </data>
+  <data name="studentonlineexamui_1" xml:space="preserve">
+    <value>Displays questins and answers for online exam.</value>
+  </data>
+  <data name="studentonlineexamui_2" xml:space="preserve">
+    <value>Displays questins and answers for online exam.</value>
+  </data>
+  <data name="studentonlineexamui_3" xml:space="preserve">
+    <value>Displays questins and answers for online exam.</value>
+  </data>
+  <data name="onlineexamprogressreportui_1" xml:space="preserve">
+    <value>Displays online exam progress report.</value>
+  </data>
+  <data name="onlineexamprogressreportui_2" xml:space="preserve">
+    <value>Displays online exam progress report.</value>
+  </data>
+  <data name="onlineexamprogressreportui_3" xml:space="preserve">
+    <value>Displays online exam progress report.</value>
+  </data>
+  <data name="mathformula_1" xml:space="preserve">
+    <value>Design formula here.</value>
+  </data>
+  <data name="mathformula_2" xml:space="preserve">
+    <value>Design formula here.</value>
+  </data>
+  <data name="markleftfortransportpopup_1" xml:space="preserve">
+    <value>Mark user as left from transport assignement.</value>
+  </data>
+  <data name="studenttransporthistoryui_1" xml:space="preserve">
+    <value>Displays transport history.</value>
+  </data>
+  <data name="transportoptionimagespopup_1" xml:space="preserve">
+    <value>Display / Delete availables photos.</value>
+  </data>
+  <data name="vehiclebillingui_1" xml:space="preserve">
+    <value>Export vehicle billing details.</value>
+  </data>
+  <data name="vehiclepassingdetailsui_1" xml:space="preserve">
+    <value>Add / Edit / Delete vehicle passing details.</value>
+  </data>
+  <data name="vehiclepucdetailsui_1" xml:space="preserve">
+    <value>Add / Edit / Delete vehicle PUC details.</value>
+  </data>
+  <data name="vehicleservicingdetailsui_1" xml:space="preserve">
+    <value>Add / Edit / Delete vehicle servicing details.</value>
+  </data>
+  <data name="gstinvoicedetailsui_1" xml:space="preserve">
+    <value>Add / Display / Edit / Delete invoice details.</value>
+  </data>
+  <data name="servicereceiverdetailspopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete service receiver details.</value>
+  </data>
+  <data name="depositebankdetailspopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete deposite bank details.</value>
+  </data>
+  <data name="vehicledocumentpopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete vehicle documents.</value>
+  </data>
+  <data name="vehicledocumentspopup_1" xml:space="preserve">
+    <value>Display / Add / Edit / Delete vehicle documents.</value>
+  </data>
+  <data name="homeworkdailylogsui_1" xml:space="preserve">
+    <value>Display / Add / Edit / Delete homework log of respective class.</value>
+  </data>
+  <data name="homeworkdailylogsui_2" xml:space="preserve">
+    <value>Display / Add / Edit / Delete homework log of respective class.</value>
+  </data>
+  <data name="uploadstudentphotoui_3" xml:space="preserve">
+    <value>Upload student photo.</value>
+  </data>
+  <data name="cancellationformui_1" xml:space="preserve">
+    <value>Add / Edit / Delete cancellation form details.</value>
+  </data>
+  <data name="userattendanceInbusdetailsui_1" xml:space="preserve">
+    <value>Displays journeywise user list and their attendance details.</value>
+  </data>
+  <data name="transportcapacitydetailsui_1" xml:space="preserve">
+    <value>Displays vehicle capacity details.</value>
+  </data>
+  <data name="transportnotificationdetailsui" xml:space="preserve">
+    <value>Display transport notifiction details</value>
+  </data>
+  <data name="overridedetailsui_1" xml:space="preserve">
+    <value>Save override details.</value>
+  </data>
+  <data name="transportoverridedetailsui_1" xml:space="preserve">
+    <value>Add / Display / Edit / Delete override details.</value>
+  </data>
+  <data name="transportoverrideconfigdetailsui_1" xml:space="preserve">
+    <value>Add / Edit / Delete route shift timing configuration override details.</value>
+  </data>
+  <data name="storeitemdetailsui" xml:space="preserve">
+    <value>Add/Edit store item details.</value>
+  </data>
+  <data name="storeitemdetailsui_1" xml:space="preserve">
+    <value>Save / Update store item details.</value>
+  </data>
+  <data name="storeitemlistui_1" xml:space="preserve">
+    <value>Display / Edit / Delete store items.</value>
+  </data>
+  <data name="storeitemvariationdetailsui_1" xml:space="preserve">
+    <value>Display / Add / Edit / Delete store item variation details.</value>
+  </data>
+  <data name="parenthealthdetailsui_3" xml:space="preserve">
+    <value>Save / Update parent health details.</value>
+  </data>
+  <data name="storeitemstockdetailspopup_1" xml:space="preserve">
+    <value>Add / Edit / Delete item/variation stock details.</value>
+  </data>
+  <data name="blackListedstudentui_1" xml:space="preserve">
+    <value>Add / Delete student in/from black list.</value>
+  </data>
+  <data name="freeitemdetailspopup_1" xml:space="preserve">
+    <value>Manage free item details.</value>
+  </data>
+  <data name="rfiddetailsui_1" xml:space="preserve">
+    <value>Set / Update RFID of student.</value>
+  </data>
+  <data name="bulkdocumentuploaddetailsui_1" xml:space="preserve">
+    <value>Add / Update vehicle document details.</value>
+  </data>
+  <data name="studentassessmentdetailsui_3" xml:space="preserve">
+    <value>Add student assessment details.</value>
+  </data>
+  <data name="configurepeerdetailsui_1" xml:space="preserve">
+    <value>Configure peer for multiple students.</value>
+  </data>
+  <data name="configurepeerdetailsui_2" xml:space="preserve">
+    <value>Configure peer for multiple students.</value>
+  </data>
+  <data name="studentlistforassessmentdetailsui_1" xml:space="preserve">
+    <value>Displays student list with submit status.</value>
+  </data>
+  <data name="studentlistforassessmentdetailsui_2" xml:space="preserve">
+    <value>Displays student list with submit status.</value>
+  </data>
+  <data name="resultdetailsui_1" xml:space="preserve">
+    <value>Save result details.</value>
+  </data>
+  <data name="resultdetailsui_2" xml:space="preserve">
+    <value>Save result details.</value>
+  </data>
+  <data name="observationskillconfigui_1" xml:space="preserve">
+    <value>Add / Edit / Delete observation skills.</value>
+  </data>
+  <data name="observationskillconfigui_2" xml:space="preserve">
+    <value>Add / Edit / Delete observation skills.</value>
+  </data>
+  <data name="observationparametersui_1" xml:space="preserve">
+    <value>Add / Edit / Delete observation parameters.</value>
+  </data>
+  <data name="observationparametersui_2" xml:space="preserve">
+    <value>Add / Edit / Delete observation parameters.</value>
+  </data>
+  <data name="studentsmonthlystatusdetailsui_1" xml:space="preserve">
+    <value>Save studentwise remark as per selected category and month.</value>
+  </data>
+  <data name="studentsmonthlystatusdetailsui_2" xml:space="preserve">
+    <value>Save studentwise remark as per selected category and month.</value>
+  </data>
+  <data name="importtransportallocationui_1" xml:space="preserve">
+    <value>Import details as per selected type.</value>
+  </data>
+  <data name="studentdocumentui_1" xml:space="preserve">
+    <value>Add / Update student documents.</value>
+  </data>
+  <data name="studentlistfornotedetailsui_1" xml:space="preserve">
+    <value>Displays student list to add/edit activity details.</value>
+  </data>
+  <data name="studentlistfornotedetailsui_2" xml:space="preserve">
+    <value>Displays student list to add/edit activity details.</value>
+  </data>
+  <data name="studentexamwisesubjectmarksdetailsui_3" xml:space="preserve">
+    <value>Displays marks as per selected exam.</value>
+  </data>
+  <data name="updatestudentdetailsinbulkui_1" xml:space="preserve">
+    <value>Update student details as per selected category.</value>
+  </data>
+  <data name="assignsummarygradesui_1" xml:space="preserve">
+    <value>Assign summary grades as per exam and subject.</value>
+  </data>
+  <data name="assignsummarygradesui_2" xml:space="preserve">
+    <value>Assign summary grades as per exam and subject.</value>
+  </data>
+</root>

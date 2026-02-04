@@ -1,0 +1,324 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="PopupMaster.master.cs"
+    Inherits="PopupMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Welcome to Schooling...</title>
+    <base target="_self" />
+    <link runat="server" id="Styles" href="../Styles/Styles.css" type="text/css" rel="stylesheet" />
+    <link runat="server" id="Styles1" href="../Styles/Styles1.css" type="text/css" rel="stylesheet" />
+    <link href="~/Styles/Styles2.css" type="text/css" rel="stylesheet" />
+    <link runat="server" id="Styles2" href="../Styles/Styles2.css" type="text/css" rel="stylesheet" />
+    <link runat="server" id="Styles3" href="../Styles/Styles3.css" type="text/css" rel="stylesheet" />
+    <link runat="server" id="Toppers" href="../Styles/Toppers.css" type="text/css" rel="stylesheet" />
+    <link runat="server" id="ppsStyles" href="../Styles/ppsStyles.css" type="text/css" rel="stylesheet" />
+    <link rel="SHORTCUT ICON" href="../../images/favicon.ico?version=1.2" type="image/x-icon" />
+    <script type="text/javascript" src="../Scripts/Validate2.js"></script>
+    <% if (Utility.Constants.S_PAYMENT_SCREENS.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+        <script type="text/javascript" src="../Scripts/jquery-1.4.1-vsdoc.js"></script>
+    <% }%>
+        <script src="../Scripts/jquery-1.7.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="../Scripts/Validations.js"></script>
+        <script type="text/javascript" src="../Scripts/TextColorChange.js"></script>
+        <script type="text/javascript" src="../Scripts/Ajax.js"></script>
+    <% if (Utility.Constants.S_PAYMENT_SCREENS.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+        <link href="../Kendo/css/kendo.default.min.css" rel="stylesheet" type="text/css" />
+        <script src="../Kendo/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+        <link href="../Kendo/css/kendo.common.min.css" rel="stylesheet" />
+        <script src="../Kendo/js/kendo.all.min.js" type="text/javascript"></script>
+        <script src="../Kendo/js/Common.js" type="text/javascript"></script>
+        <link href="../Kendo/css/kendo.common-bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../Kendo/css/kendo.common.min.css" rel="stylesheet" type="text/css" />
+        <script src="../Kendo/js/jquery.min.js" type="text/javascript"></script>
+        <link href="../Kendo/css/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+        <script src="../Kendo/js/ace-extra.min.js" type="text/javascript"></script>
+        <script src="../Kendo/js/kendo.all.min.js" type="text/javascript"></script>
+        <link href="../Kendo/js/kendo.web.min.js" rel="stylesheet" />
+        <link href="../Kendo/Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="../Styles/KendoGrid.css" rel="stylesheet" type="text/css" />
+    <% }%>
+    <% if (Utility.Constants.S_PAYMENT_SCREENS.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+       <link href="../../assets/css/ace-fonts.css" rel="stylesheet" type="text/css" />
+       <link href="../../assets/css/ace.min.css" rel="stylesheet" type="text/css" />
+       <link href="../../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <% }%>
+        <link href="../Styles/ThemeOverride.css?version=1.1" rel="stylesheet" type="text/css" />
+        <link href="../Styles/Site.css?version=1.1" rel="stylesheet" type="text/css" />
+        <link href="../Styles/ButtonStyleOverride.css?version=1.1" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="../Scripts/Script.js?version=1.0"></script>
+    <% if (Utility.Constants.S_PAYMENT_SCREENS.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+        <script type="text/javascript" src="../RITAutoCompleteService/RITAutoSuggest.js?version=1.4"></script>
+    <% }%>
+    <link href="../Styles/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <% if (Utility.Constants.S_LEGEND_SCREEN_NAME.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+       <link href="../Styles/GridStyleOverride.css?version=1.1" rel="stylesheet" type="text/css" />
+    <% }%>
+    <% if (Utility.Constants.S_PAYMENT_SCREENS.IndexOf(System.IO.Path.GetFileName(HttpContext.Current.Request.PhysicalPath)) <= 0)
+       {%>
+        <script src="../Scripts/jquery-ui.js" type="text/javascript"></script>
+        <script src="../../assets/js/ace.min.js" type="text/javascript"></script>
+    <% }%>
+    <style type="text/css">
+        body
+        {
+            background: #fff !important;
+            line-height: unset;
+        }
+        
+        html
+        {
+            min-height: 100%;
+            position: relative;
+        }
+        
+        input[disabled]
+        {
+            background-color: #eee !important;
+            color: #848484 !important;
+        }
+        
+        input[disabled]:hover
+        {
+            border-color: #d5d5d5 !important;
+        }
+        
+        body
+        {
+            background-color: #e4e6e9;
+            color: #393939;
+            font-family: "Open Sans";
+            font-size: 13px;
+            line-height: 1.5;
+            min-height: 100%;
+            padding-bottom: 0;
+        }
+        
+        #disablepage
+        {
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+            background-color: Gray;
+            opacity: 0.5;
+            -moz-opacity: 0.5;
+            filter: alpha(opacity=50);
+            position: absolute;
+            background-image: url(../images/Loading9.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .ui-menu .ui-menu-item a
+        {
+            font: 9pt arial;
+        }
+    </style>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(document).on("click", "input:submit[disable-page='true']", function () {
+                if (typeof (Page_IsValid) != "undefined") {
+                    if (!Page_IsValid) {
+                        return;
+                    }
+                }
+                var height = $(document).height() + 50;
+                var width = $(document).width();
+                $(this).after("<div id='disablepage' style='height:" + height + "px;width:" + width + "px;'/>");
+            });
+        });
+
+    </script>
+</head>
+<body style="margin: 0; width: 100%; height: 100%; position: absolute" class="<%= Session[Utility.Constants.S_SESSION_LANGUAGE].ToString()%>">
+    <form id="form1" runat="server" style="margin: 0; width: 100%; height: 100%; position: absolute"
+    submitdisabledcontrols="true">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <table style="width: 95%; height: 100%; border: solid 1px #dddddd;" border="0" align="center"
+        cellpadding="0" cellspacing="0">
+        <tr align="center">
+            <td valign="top" align="left">
+                <table style="width: 100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <%if (Convert.ToBoolean(HttpContext.Current.Session[Utility.Constants.S_SESSION_IS_LOGIN_FROM_MOBILE]) == false)
+                      {%>
+                            <tr align="center">
+                            <td valign="bottom" colspan="1" style="height: 100;" align="right">
+                                <table style="width: 100%; height: 100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td runat="server" id="tdCommonImage" style="background-image: url(../images/subpgTopImgSml.jpg);
+                                            background-repeat: no-repeat; width: 800px; height: 100px" align="right" valign="bottom">
+                                        </td>
+                                        <td runat="server" id="tdOuterImage" visible="false" style="background-image: url(images/subpgTopImgSml.jpg);
+                                            background-repeat: no-repeat; width: 800px; height: 77px" align="right" valign="bottom">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    <%}%>
+                    <tr>
+                        <td align="right" style="padding-right: 65px; padding-top: 2px; border-bottom: 1px solid #dddddd;">
+                            <a href="#" class="tt1"><span class="tooltip1"><span class="top1"></span><span class="middle1"
+                                id="sp1" runat="server"></span><span class="bottom1"></span></span>
+                                <asp:Image ImageUrl="../images/HelpIcon.gif" border="0" runat="server" ID="help" /></a>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td align="center">
+                            <asp:UpdateProgress ID="UProgressPopUp" runat="server">
+                                <ProgressTemplate>
+                                    <div style="width: 250px; margin: 5px">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <i class="fa fa-spinner fa-spin progress-spinner"></i>
+                                                </td>
+                                                <td valign="middle">
+                                                    <span class="progress-text">Processing...</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </ProgressTemplate>
+                            </asp:UpdateProgress>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height: 80%" align="center" valign="top">
+            <td colspan="1" valign="top" align="center" class="td-vertical-align-top">
+                <asp:ContentPlaceHolder ID="PopupMainBody" runat="server" />
+                <asp:ContentPlaceHolder ID="MainBody" runat="server" />
+            </td>
+        </tr>
+        <tr align="center">
+            <td colspan="1" valign="bottom">
+                <table style="width: 100%" class="ClsBottomAlign">
+                    <tr>
+                        <td align="left" style="width: 75%">
+                            <div id="footernote" style="color: black; font-size: 8pt">
+                            </div>
+                        </td>
+                        <td align="right" style="width: 25%">
+                            <div style="color: black; font-size: 8pt">
+                                <asp:Label runat="server" ID="lblBestViewIn" Text="<%$ Resources:LocalizedResources, BestViewIn %>"></asp:Label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:HiddenField runat="server" ID="hidServerDate" />
+                <asp:HiddenField runat="server" ID="hidSessionUserId" Value="0" />
+                <asp:HiddenField runat="server" ID="hidClassName" />
+                <asp:HiddenField ID="hidRightsReserved" runat="server" />
+                <asp:HiddenField ID="hidRIT" runat="server" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+<script language="javascript" type="text/javascript">
+
+    _clienthidServerDate = "<%=this.hidServerDate.ClientID %>";
+    _clienthidRightsReserved = "<%=this.hidRightsReserved.ClientID %>";
+    _clienthidMiniSite = "<%=this.hidRIT.ClientID %>";
+    function fnTXTFocus(varname) {
+
+        var objTXT = document.getElementById(varname)
+        objTXT.style.backgroundColor = "PapayaWhip";
+
+    }
+
+    function fnTXTLostFocus(varname) {
+        var objTXT = document.getElementById(varname)
+        objTXT.style.backgroundColor = "White";
+    }
+
+    function fnOnLoad() {
+        var t = document.getElementsByTagName('INPUT');
+        var i;
+        for (i = 0; i < t.length; i++) {
+            if (t[i].type == "text" || t[i].type == "password") {
+                if (document.addEventListener) {
+                    // as Timo suggested
+                    //document.addEventListener('keydown', my_onkeydown_handler, true); 
+                    t[i].addEventListener('focus', new Function("fnTXTFocus('" + t[i].id + "')"), true);
+                    t[i].addEventListener('blur', new Function("fnTXTLostFocus('" + t[i].id + "')"), true);
+                }
+                else if (document.attachEvent) {
+                    // IE style
+                    t[i].attachEvent('onfocus', new Function("fnTXTFocus('" + t[i].id + "')"));
+                    t[i].attachEvent('onblur', new Function("fnTXTLostFocus('" + t[i].id + "')"));
+                    //document.attachEvent('onkeydown', my_onkeydown_handler);
+                }
+            }
+        }
+    }
+    function fnover(varname, doc) {
+        var objTXT = document.getElementById(varname);
+        hidClassName = objTXT.className;
+        objTXT.style.borderWidth = "1";
+        objTXT.style.borderColor = "maroon";
+        objTXT.style.backgroundImage = "url(../images/BtnBGRollNew.jpg)";
+    }
+
+    function fnout(varname, doc) {
+        var objTXT = document.getElementById(varname);
+        objTXT.style.borderWidth = '';
+        objTXT.style.borderColor = '';
+        objTXT.className = hidClassName;
+        objTXT.style.backgroundImage = '';
+    }
+</script>
+<script type="text/javascript">
+
+    window.onload = AddClickEvent;
+
+    function AddClickEvent() {
+        var year = document.getElementById(_clienthidServerDate).value;
+        if ($("#" + _clienthidMiniSite).val() == 'true') {
+            if (year == 2013)
+                document.getElementById('footernote').innerHTML = document.getElementById("<%= this.hidRightsReserved.ClientID %>").value + " 2013 " + document.getElementById("<%= this.hidRIT.ClientID %>").value;
+            else
+                document.getElementById('footernote').innerHTML = document.getElementById("<%= this.hidRightsReserved.ClientID %>").value + " 2013 " + " - " + year + ", " + document.getElementById("<%= this.hidRIT.ClientID %>").value;
+        }
+        else
+            document.getElementById('footernote').innerHTML = document.getElementById("<%= this.hidRightsReserved.ClientID %>").value + " 2007 " + " - " + year + ", " + document.getElementById("<%= this.hidRIT.ClientID %>").value;
+        fnOnLoad();
+        //window.document.forms[0].onclick = function(){ highlight(event); }; 
+    }
+
+</script>
+<% if (SchoolBase.Settings.AddIntGoogleAnalytics)
+   { %>
+<script type="text/javascript">
+
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+</script>
+<script type="text/javascript">
+
+    var pageTracker = _gat._getTracker("UA-4752582-2");
+
+    pageTracker._trackPageview();
+
+</script>
+<%} %>
+</html>

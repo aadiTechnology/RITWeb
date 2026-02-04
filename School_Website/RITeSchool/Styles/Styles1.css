@@ -1,0 +1,722 @@
+.navSub
+{
+	margin-left: 5px;
+	font-family: Verdana;
+	color: #000;
+	font-size: 8pt;
+	font-weight: 400;
+	text-decoration: none;
+}
+a:hover.navSub
+{
+	margin-left: 5px;
+	font-family: Verdana;
+	color: blue;
+	font-size: 8pt;
+	font-weight: 400;
+	text-decoration: underline;
+}
+.MenuHW
+{
+	background-repeat: repeat-x;
+	background-position: left top;
+	font-family: calibri;
+	font-size: 16px;
+	font-weight: 700;
+	color: #930;
+	text-decoration: none;
+	padding: 1px 5px 0 2px;
+}
+a:hover.MenuHW
+{
+	background-repeat: repeat-x;
+	background-position: left top;
+	font-family: calibri;
+	font-size: 16px;
+	font-weight: 700;
+	color: #FFF;
+	background-color: #D15705;
+	padding: 1px 5px 0 2px;
+}
+a.tt
+{
+	position: relative;
+	z-index: 100;
+	color: #36c;
+	font-family: Verdana;
+	font-size: 8pt;
+	text-decoration: none;
+}
+a.tt:hover span.tooltip
+{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -115px;
+	width: 200px;
+	color: #930;
+	text-align: left;
+	filter: alpha(opacity:100);
+	khtmlopacity: 1px;
+	mozopacity: 1px;
+	opacity: 1px;
+	z-index: 0;
+	padding: 15px 0 0;
+}
+a.tt1
+{
+	position: relative;
+	z-index: 100;
+	color: #000;
+	font-family: Verdana;
+	font-size: 8pt;
+	text-decoration: none;
+}
+a.tt1:hover span.tooltip1
+{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -115px;
+	width: 200px;
+	color: #930;
+	text-align: left;
+	filter: alpha(opacity:100);
+	khtmlopacity: 1px;
+	mozopacity: 1px;
+	opacity: 1px;
+	z-index: 0;
+	padding: 16px 0 0;
+}
+#GridViewScrollContainer
+{
+	width: 97%;
+	overflow: auto;
+	margin-left: 5px;
+}
+#GridViewScrollContainer1
+{
+	width: 97%;
+	overflow: auto;
+	margin-left: 5px;
+	margin-bottom:-7px;
+	border: 1px solid #8FBC8F;
+}
+#GridViewScrollContainer td.locked, #GridViewScrollContainer th.Llocked
+{
+	left: expression(document.getElementById("GridViewScrollContainer" ).scrollLeft);
+	position: relative;
+	z-index: 100;
+}
+#GridViewScrollContainer th, #GridViewScrollContainer th.Llocked
+{
+	position: relative;
+	cursor: default;
+}
+#GridViewScrollContainer th.Llocked
+{
+	z-index: 110;
+}
+.Clspadding
+{
+	padding: 0 5px;
+}
+.ClsPaddingGen
+{
+	padding: 3px;
+}
+.ClspaddingT
+{
+	padding-top: 10px;
+}
+.ClspaddingMidT
+{
+	padding-top: 8px;
+}
+.ClspaddingSmallT
+{
+	padding-top: 6px;
+}
+.ClspaddingLMax
+{
+	padding-left: 25px;
+}
+.ClsPaddingL,.ClspaddingL
+{
+	padding-left: 15px;
+	text-align: left;
+}
+.paddingLSML
+{
+	padding-left: 5px;
+	text-align: left;
+}
+.ClspaddingR, .ClsPaddingR
+{
+	padding-right: 10px;
+}
+.AnRBorderBtm
+{
+	background-color: #eee;
+	font-family: Arial;
+	font-size: 9pt;
+	border-bottom: #000 1px dashed;
+}
+.AnRClsMarksCell
+{
+	background-color: #efffff;
+	font-family: Arial;
+	font-size: 9pt;
+	padding-right: 5px;
+}
+.AnRClsTotalMarksCell
+{
+	background-color: #f3f3f3;
+	color: #000;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 0 3px;
+}
+.AnRClsMarksGridHeader
+{
+	font-weight: 700;
+	font-size: 10pt;
+	color: #333;
+	text-decoration: none;
+	padding-right: 5px;
+	height: 20px;
+	background-color: #cefaf8;
+}
+.AnRClsTestHeader
+{
+	font-size: 8pt;
+	font-family: Verdana;
+	color: #000;
+	text-decoration: none;
+	height: 20px;
+	background-color: #b9f6f2;
+	padding: 0 3px;
+}
+.AnRClsMarksGridHeaderBG
+{
+	font-weight: 700;
+	font-size: 10pt;
+	color: #333;
+	text-decoration: none;
+	padding-right: 5px;
+	padding-left: 5px;
+	height: 20px;
+	vertical-align: bottom;
+	background-color: #efffff;
+}
+.AnRClsMarksGridRow
+{
+	background-color: #cefaf8;
+	margin-left: 5px;
+	height: 20px;
+	font-weight: 700;
+	font-size: 9pt;
+	padding-left: 5px;
+}
+.AnRClsMarksGridAltRow
+{
+	background-color: #efffff;
+	margin-left: 5px;
+	height: 20px;
+	font-weight: 700;
+	font-size: 9pt;
+	padding-left: 5px;
+}
+.AnRTotalType
+{
+	background-color: #cefaf8;
+	font-weight: 700;
+	font-size: 10pt;
+	font-family: Verdana;
+	color: #000;
+	padding: 0 3px;
+}
+.AnRGraceNote
+{
+	background-color: #cefaf8;
+	font-weight: 700;
+	font-size: 8pt;
+	font-family: Verdana;
+	color: #E47070;
+	padding: 0 3px;
+}
+.AnRTotalHead
+{
+	background-color: #b9f6f2;
+	font-weight: 700;
+	font-size: 10pt;
+	color: #000;
+	padding: 0 3px;
+}
+.AnRReportOuter
+{
+	background-color: #5ac7c9;
+}
+.AnRClsHilightTextB
+{
+	padding-left: 5px;
+	color: #000;
+	font-size: 9pt;
+	font-weight: 700;
+}
+.AnRClsReportHead
+{
+	font-weight: 700;
+	font-family: Tahoma,;
+	color: #000;
+	text-transform: capitalize;
+	font-size: 13pt;
+	border-bottom: 1px solid #ddd;
+	background-color: #b9f6f2;
+	padding: 2px 2px 3px 5px;
+}
+.AnRSocietyName
+{
+	font-weight: 700;
+	font-family: Tahoma,;
+	color: #000;
+	text-transform: capitalize;
+	font-size: 12pt;
+	border-bottom: 1px solid #ddd;
+	background-color: #b9f6f2;
+	padding: 2px 2px 3px 5px;
+}
+.AnRActualSchoolName
+{
+	font-weight: 700;
+	font-family: Tahoma,;
+	color: #000;
+	text-transform: capitalize;
+	font-size: 13pt;
+	border-bottom: 1px solid #ddd;
+	background-color: #efefef;
+	padding: 2px 2px 3px 5px;
+}
+.TClsMarksGridRow
+{
+	background-color: #e4efc4;
+	margin-left: 5px;
+	height: 20px;
+	font-family: Verdana;
+	font-size: 10pt;
+	font-weight: 700;
+	padding-left: 5px;
+	color: #000;
+}
+.TClsMarksCell
+{
+	background-color: #e4efc4;
+	font-family: Verdana;
+	font-size: 10pt;
+	font-weight: 700;
+	padding-right: 3px;
+}
+.TTotalType
+{
+	background-color: #e4efc4;
+	color: #000;
+	font-family: Verdana;
+	font-size: 10pt;
+	font-weight: 700;
+	padding: 0 3px;
+}
+.Dottedhr
+{
+	border-bottom: #000 1px dashed;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;
+	margin: 0;
+	padding: 1px;
+}
+.ClsBGWhite
+{
+	background-color: #fff;
+}
+.ConfigMenuHead
+{
+	background-image: url(../images/GridHeaderBG.gif);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	font-weight: 700;
+	font-size: 10pt;
+	color: #333;
+	text-decoration: none;
+	padding-right: 5px;
+	height: 20px;
+}
+.ConfigHeadBG
+{
+	background-color: #eaeaea;
+}
+.ConfigBG
+{
+	background-color: #e4efc4;
+}
+.ConfigHead
+{
+	font-family: Tahoma;
+	font-size: 11pt;
+	font-weight: 700;
+	color: #333;
+}
+.ClsPrintHead
+{
+	font-family: Arial;
+	font-size: 12pt;
+	font-weight: 700;
+	color: #333;
+}
+.DateDisable a
+{
+	visibility: hidden;
+	text-decoration: none;
+}
+.BorderTop
+{
+	border-top: solid 1px #000;
+}
+.BorderTB
+{
+	border-top: solid 1px #ddd;
+	border-bottom: solid 1px #ddd;
+}
+.SchoolHeadID
+{
+	font-family: rockwell,Century,Verdana;
+	font-size: 12pt;
+	font-weight: 700;
+}
+.StudentNameID
+{
+	font-family: cambria,Century,Verdana;
+	font-size: 10pt;
+	font-weight: 700;
+}
+.SchoolHeadTeacherID
+{
+	font-family: Arial;
+	font-size: 10pt;
+	font-weight: 600;
+}
+.TeacherNameID
+{
+	font-family: Arial;
+	font-size: 8pt;
+	font-weight: 600;
+	vertical-align: text-top;
+}
+.TeacherDesigNameID
+{
+	font-family: Arial;
+	font-size: 7pt;
+	font-weight: 600;
+}
+.SchoolAddID
+{
+	font-family: Arial;
+	font-size: 6.5pt;
+	font-weight: 700;
+	vertical-align: top;
+}
+.IdDetails
+{
+	font-family: Verdana;
+	font-size: 8.5pt;
+	color: #000;
+	font-weight: 400;
+}
+.IDtblBorder
+{
+	margin-bottom: 10px;
+	margin-left: 5px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	font-size: 9pt;
+	padding: 0;
+}
+.PageBreak
+{
+	page-break-after: always;
+}
+.SMSDisplay
+{
+	background-image: url(../images/Mobile_Screen.jpg);
+	background-position: center;
+	height: 310px;
+	width: 230px;
+	background-repeat: no-repeat;
+}
+.SMSTxtBoxSMl
+{
+	font-family: Arial;
+	font-size: 8pt;
+	border-right: #0c53fc 1px solid;
+	border-top: #0c53fc 1px solid;
+	border-left: #0c53fc 1px solid;
+	width: 105px;
+	color: #fff;
+	border-bottom: #0c53fc 1px solid;
+	background-color: #0c53fc;
+}
+.SMSLblSMl
+{
+	font-family: Arial;
+	font-size: 8pt;
+	color: #fff;
+	font-weight: 700;
+	width: 105px;
+	height: 16px;
+}
+.SMSLblSMlBlue
+{
+	font-family: verdana;
+	font-size: 8pt;
+	color: Blue;
+	height: 16px;
+}
+.SMSLblSMlBlk
+{
+	font-family: verdana;
+	font-size: 8pt;
+	color: #000;
+	height: 16px;
+}
+.SMSFromTxtBox
+{
+	border-right: gray 1px solid;
+	border-top: gray 1px solid;
+	border-left: gray 1px solid;
+	width: 200px;
+	border-bottom: gray 1px solid;
+	background-color: #fff;
+	font-family: Arial;
+	font-size: 9pt;
+	color: #000;
+	padding: 2px;
+}
+.btnSMSsend
+{
+	background-image: url(../images/rootItemHoverBg.png);
+	background-repeat: repeat-x;
+	height: 20px;
+	color: #000;
+	font-size: 9pt;
+	font-family: Verdana;
+	font-weight: 700;
+	width: 120px;
+	border: solid 1px maroon;
+}
+.StudentDOBHead
+{
+	font-family: Arial;
+	font-size: 12pt;
+	font-weight: 700;
+	color: #483D8B;
+	background-image: url(../images/PayBtnBg.gif);
+	background-position: top left;
+	background-repeat: repeat-x;
+	padding: 2px;
+}
+.DOBGridRow
+{
+	background-color: #eef1ea;
+	margin-left: 5px;
+	height: 20px;
+	font-family: Verdana;
+	font-size: 10pt;
+}
+.DOBGridAltRow
+{
+	background-color: #dae9d4;
+	margin-left: 5px;
+	height: 20px;
+	font-family: Verdana;
+	font-size: 10pt;
+}
+.ToprGridRow
+{
+	background-color: #eef1ea;
+	margin-left: 5px;
+	height: 20px;
+	font-size: 9pt;
+}
+.ToprGridAltRow
+{
+	background-color: #dae9d4;
+	margin-left: 5px;
+	height: 20px;
+	font-size: 9pt;
+}
+.ToprTotalHead
+{
+	background-color: #dae9d4;
+	font-weight: 700;
+	font-size: 10pt;
+	color: #000;
+	padding: 0 3px;
+}
+.ToprTestHeader
+{
+	font-size: 8pt;
+	font-family: Verdana;
+	color: #871616;
+	text-decoration: none;
+	height: 20px;
+	background-color: #ebd5bd;
+	padding: 0 3px;
+}
+.ToprBGlghtTxtBlk
+{
+	background-color: #f3e5d7;
+	border: #e7e7e7 1px solid;
+	padding-left: 4px;
+	font-family: Verdana;
+	color: #000;
+	font-size: 9pt;
+	font-weight: 700;
+	height: 20px;
+}
+.ToprTblTitle
+{
+	background-color: #b6c7b0;
+	color: #000;
+	font-weight: 700;
+	font-size: 9pt;
+	font-family: Arial;
+}
+.LateFee
+{
+	font-family: Arial;
+	font-size: 9pt;
+	color: red;
+	padding-right: 5px;
+}
+.BounceCheque
+{
+	font-family: Arial;
+	font-size: 9pt;
+	height: 20px;
+	padding-left: 5px;
+	color: red;
+	background-color: #E9D2EE;
+}
+.PendingFees
+{
+	font-family: Arial;
+	font-size: 9pt;
+	height: 20px;
+	padding-left: 5px;
+	color: red;
+	background-color: #FEEABA;
+}
+.UnclearedChq, .UnclearedChq td
+{
+	font-family: Arial;
+	font-size: 9pt;
+	height: 20px;
+	padding-left: 5px;
+	background-color: #FFB6C1 !important;
+	color: #444 !important;
+}
+a.tt span, a.tt1 span
+{
+	display: none;
+	z-index: 0;
+}
+a.tt:hover, a.tt1:hover
+{
+	z-index: 100;
+	color: #03c;
+}
+a.tt:hover span.top, a.tt1:hover span.top1
+{
+	display: block;
+	z-index: 100;
+	padding: 37px 8px 5px;
+}
+
+.mr a.tt:hover span.top,.mr a.tt1:hover span.top1
+{
+ background: url(../images/mr_bubble.png) no-repeat top;   
+}
+
+.en a.tt:hover span.top,.en a.tt1:hover span.top1
+{
+ background: url(../images/bubble.gif) no-repeat top;   
+}
+
+a.tt:hover span.middle, a.tt1:hover span.middle1
+{
+	display: block;
+	z-index: 0;
+	background: url(../images/bubble_filler.gif) repeat bottom;
+	padding: 0 15px;
+}
+a.tt:hover span.bottom, a.tt1:hover span.bottom1
+{
+	display: block;
+	z-index: 100;
+	color: #548912;
+	background: url(../images/bubble.gif) no-repeat bottom;
+	padding: 3px 8px 10px;
+}
+
+.mr a.tt:hover span.bottom, .mr a.tt1:hover span.bottom1
+{
+    background: url(../images/mr_bubble.png) no-repeat bottom;
+}
+
+.en a.tt:hover span.bottom, .mr a.tt1:hover span.bottom1
+{
+    background: url(../images/bubble.gif) no-repeat bottom;
+}
+
+.ToprMarkGrdRow, .ToprMarkGrdAltRow
+{
+	background-color: #f6ede4;
+	margin-left: 5px;
+	height: 20px;
+	font-size: 9pt;
+	padding-left: 5px;
+}
+.clsCount
+{
+	border: 1px solid #007399;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 2px #666666;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-align: center;
+	font-size: 85%;
+	cursor: pointer;
+	left: 20px;
+	width: auto;
+	min-width: 20px;
+	padding: 1px 5px 1px 5px;
+	vertical-align: middle;
+	margin-bottom:3px;
+	margin-left:1px;
+	background: #00b7ea; /* Old browsers */ /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwYjdlYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDllYzMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #00b7ea 0%, #009ec3 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#00b7ea), color-stop(100%,#009ec3)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #00b7ea 0%,#009ec3 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #00b7ea 0%,#009ec3 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #00b7ea 0%,#009ec3 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #00b7ea 0%,#009ec3 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b7ea', endColorstr='#009ec3',GradientType=0 ); /* IE6-8 */
+}
+.PhotoCapturd
+{
+	font-family: Arial;
+	font-size: 9pt;
+	height: 20px;
+	padding-left: 5px;
+	background-color:#FFB6C1;
+}

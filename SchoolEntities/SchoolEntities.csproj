@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{482E90CC-E31F-4E8F-BCEA-DD38CFE97FC0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SchoolEntities</RootNamespace>
+    <AssemblyName>SchoolEntities</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Utility\bin\Debug\Utility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\AccountBaseEntity.cs" />
+    <Compile Include="Accounts\NetBankingTransaction.cs" />
+    <Compile Include="AdditionalFields.cs" />
+    <Compile Include="Admin\AchievementDetails.cs" />
+    <Compile Include="Admin\Activity.cs" />
+    <Compile Include="Admin\Admin.cs" />
+    <Compile Include="Admin\AdmissionProcessDetails.cs" />
+    <Compile Include="Admin\AttendanceConfigDetails.cs" />
+    <Compile Include="Admin\Bank.cs" />
+    <Compile Include="Admin\BirthDaySMS.cs" />
+    <Compile Include="Admin\BlackListedStudent.cs" />
+    <Compile Include="Admin\CancellationForm.cs" />
+    <Compile Include="Admin\ExternalLectures.cs" />
+    <Compile Include="Admin\FileUploadDetails.cs" />
+    <Compile Include="Admin\HouseConfigurationDetails.cs" />
+    <Compile Include="Admin\JobDetails.cs" />
+    <Compile Include="Admin\LeavingCertificateConfig.cs" />
+    <Compile Include="Admin\ManagementEntities.cs" />
+    <Compile Include="Admin\MenuFileDetails.cs" />
+    <Compile Include="Admin\NewsDetails.cs" />
+    <Compile Include="Admin\NoticeDetails.cs" />
+    <Compile Include="Admin\OnlinePaymentTermsDetails.cs" />
+    <Compile Include="Admin\OptionalSubject.cs" />
+    <Compile Include="Admin\PANAttachmentDetailsMaster.cs" />
+    <Compile Include="Admin\SchoolGuestDetails.cs" />
+    <Compile Include="Admin\SchoolModule.cs" />
+    <Compile Include="Admin\SchoolWorkingDetails.cs" />
+    <Compile Include="Admin\StandardsWaitingList.cs" />
+    <Compile Include="Admin\StandardwiseDocument.cs" />
+    <Compile Include="Admin\StudentStrengthDetails.cs" />
+    <Compile Include="Admin\SubjectwiseExamTypeDetails.cs" />
+    <Compile Include="Admin\TermConfigurationDetails.cs" />
+    <Compile Include="Admin\TimeTableDetails.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Admin\UpdateStudentDetailsInBulk.cs" />
+    <Compile Include="Admin\YearWiseSubjectsDetails.cs" />
+    <Compile Include="Admission\AdmissionDetails.cs" />
+    <Compile Include="AskMe\AskMeQuestionMaster .cs" />
+    <Compile Include="Careers\CareerDetailsInfo.cs" />
+    <Compile Include="Common\ActivityLog.cs" />
+    <Compile Include="Common\Event.cs" />
+    <Compile Include="Common\FeedbackDetails.cs" />
+    <Compile Include="Common\Holiday.cs" />
+    <Compile Include="Common\ImageGallery.cs" />
+    <Compile Include="Common\MasterEntities.cs" />
+    <Compile Include="Common\MessageDetails.cs" />
+    <Compile Include="Common\PageRequestLog.cs" />
+    <Compile Include="Common\PreCondition.cs" />
+    <Compile Include="Common\RecaptchaResponse.cs" />
+    <Compile Include="Common\Report.cs" />
+    <Compile Include="Common\SchoolSettings.cs" />
+    <Compile Include="Common\StudentLCDetails.cs" />
+    <Compile Include="Common\SupportDetails.cs" />
+    <Compile Include="Common\TransactionResult.cs" />
+    <Compile Include="Common\UserDetails.cs" />
+    <Compile Include="Common\UserMailingList.cs" />
+    <Compile Include="Common\UserRolewisePhotoDetails.cs" />
+    <Compile Include="ConfigurePeerDetails.cs" />
+    <Compile Include="Dashboard\DashboardEntities.cs" />
+    <Compile Include="EmployeeDetails.cs" />
+    <Compile Include="eStore\StoreItemDetails.cs" />
+    <Compile Include="eStore\StoreItemList.cs" />
+    <Compile Include="eStore\StoreItemStockDetails.cs" />
+    <Compile Include="eStore\StoreItemVariationDetails.cs" />
+    <Compile Include="EvaluationPeriodDetails.cs" />
+    <Compile Include="ExternalStudentFee.cs" />
+    <Compile Include="FeeSMS.cs" />
+    <Compile Include="HealthRecord\HealthComponent.cs" />
+    <Compile Include="HealthRecord\HealthParameter.cs" />
+    <Compile Include="HealthRecord\ParentHealthDetails.cs" />
+    <Compile Include="House\HouseConfiguration.cs" />
+    <Compile Include="InternalPaidFeeExamDetails.cs" />
+    <Compile Include="Inventory\Category.cs" />
+    <Compile Include="Inventory\DepositeBankDetails.cs" />
+    <Compile Include="Inventory\ExternalPODetails.cs" />
+    <Compile Include="Inventory\GSTInvoiceDetails.cs" />
+    <Compile Include="Inventory\ItemCategory.cs" />
+    <Compile Include="Inventory\ItemDetails.cs" />
+    <Compile Include="Inventory\ItemImageDetails.cs" />
+    <Compile Include="Inventory\ItemSpecificationDetails.cs" />
+    <Compile Include="Inventory\POUserDetails.cs" />
+    <Compile Include="Inventory\ServiceReceiverDetails.cs" />
+    <Compile Include="Inventory\StockDetails.cs" />
+    <Compile Include="Inventory\VendorDetails.cs" />
+    <Compile Include="LessonPlan\LessonPlanParameters.cs" />
+    <Compile Include="Library\BookDetails.cs" />
+    <Compile Include="Library\LibraryRecord.cs" />
+    <Compile Include="ObservationParameters.cs" />
+    <Compile Include="OnlineExam\OnlineExamConfiguration.cs" />
+    <Compile Include="OnlineExam\OnlineExamProgressReportDetails.cs" />
+    <Compile Include="OnlineExam\OnlineExamQuestionConfig.cs" />
+    <Compile Include="OnlineExam\OnlineExamWiseQueConfig.cs" />
+    <Compile Include="OnlineExam\PublishOnlineExam.cs" />
+    <Compile Include="ParentFeedback.cs" />
+    <Compile Include="Payroll\AdditionalPayment.cs" />
+    <Compile Include="Payroll\IncomeTaxSlab.cs" />
+    <Compile Include="Payroll\InvestmentDetails.cs" />
+    <Compile Include="Payroll\LeaveApprovalConfiguration.cs" />
+    <Compile Include="Payroll\LeavesDetails.cs" />
+    <Compile Include="Payroll\ODDetails.cs" />
+    <Compile Include="Payroll\PaymentCategory.cs" />
+    <Compile Include="Payroll\ReportingUserConfiguration.cs" />
+    <Compile Include="Payroll\RetirementNoticeConfiguration.cs" />
+    <Compile Include="Payroll\SalaryDetails.cs" />
+    <Compile Include="Payroll\SchoolShifts.cs" />
+    <Compile Include="Payroll\StaffHolidayDetails.cs" />
+    <Compile Include="Payroll\TaxReliefParameter.cs" />
+    <Compile Include="Payroll\UserApplyLeaveDetails.cs" />
+    <Compile Include="Payroll\UserAppointmentDetails.cs" />
+    <Compile Include="Payroll\UserBasicDetails.cs" />
+    <Compile Include="Payroll\UserRejoiningDetails.cs" />
+    <Compile Include="ProductDemoDetailsInfo.cs" />
+    <Compile Include="ProgressReport\DescriptiveIndicators.cs" />
+    <Compile Include="ProgressReport\ProgressReportDetails.cs" />
+    <Compile Include="ProgressReport\StudentConsolidatedMarkDetails.cs" />
+    <Compile Include="ProgressReport\StudentMarkDetails.cs" />
+    <Compile Include="ProgressReport\StudentProgressReport.cs" />
+    <Compile Include="ProgressReport\TestwiseMark.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishStatus.cs" />
+    <Compile Include="QualificatoinDetails.cs" />
+    <Compile Include="ResultDetails.cs" />
+    <Compile Include="RiteSchoolUsage.cs" />
+    <Compile Include="SchoolEntity.cs" />
+    <Compile Include="SchoolEvents.cs" />
+    <Compile Include="StaffAdditionalDetails.cs" />
+    <Compile Include="StaffPerformance\InputType.cs" />
+    <Compile Include="StaffPerformance\PerformanceGrade.cs" />
+    <Compile Include="StaffPerformance\PerformanceParameter.cs" />
+    <Compile Include="StaffPerformance\PerformanceReportingConfig.cs" />
+    <Compile Include="StaffPerformance\PerformanceSkill.cs" />
+    <Compile Include="StaffPerformance\StaffPerformanceEvaluation.cs" />
+    <Compile Include="StandardwiseAcademicYear\StandardwiseAcademicYear.cs" />
+    <Compile Include="StatisticalData.cs" />
+    <Compile Include="SteppingStone\RemarksConfig.cs" />
+    <Compile Include="SteppingStone\StandardWiseExamConfiguration.cs" />
+    <Compile Include="StudentAssessmentDetails.cs" />
+    <Compile Include="StudentExamWiseSubjectMarksDetails.cs" />
+    <Compile Include="StudentFee\AccountHeaderDetails.cs" />
+    <Compile Include="StudentFee\FeeDetails.cs" />
+    <Compile Include="StudentFee\FeeReport.cs" />
+    <Compile Include="StudentFee\LateFeeConfiguration.cs" />
+    <Compile Include="StudentFee\OldYearPendingFeeStudents.cs" />
+    <Compile Include="StudentFee\PaymentGatewayDetails.cs" />
+    <Compile Include="StudentFee\StudentPayFeeDetails.cs" />
+    <Compile Include="StudentListForAssessment.cs" />
+    <Compile Include="StudentsMonthlyStatusDetails.cs" />
+    <Compile Include="StudentsYearwisePendingfeecount.cs" />
+    <Compile Include="StudentTestwiseAttendance.cs" />
+    <Compile Include="Student\AcademicYearwiseLeftStudentDetails.cs" />
+    <Compile Include="Student\DynamicFieldDetails.cs" />
+    <Compile Include="Student\FeeAreaNamesDetails.cs" />
+    <Compile Include="Student\HealthDetails.cs" />
+    <Compile Include="Student\HomeWork.cs" />
+    <Compile Include="Student\HomeworkDailyLog.cs" />
+    <Compile Include="Student\MusterRollDetails.cs" />
+    <Compile Include="Student\PendingInternalFeeStatusDetails.cs" />
+    <Compile Include="Student\RITeStoreUser.cs" />
+    <Compile Include="Student\Student.cs" />
+    <Compile Include="Student\StudentAchievement.cs" />
+    <Compile Include="Student\StudentAdditionalDetails.cs" />
+    <Compile Include="Student\StudentAttendance.cs" />
+    <Compile Include="Student\StudentDetails.cs" />
+    <Compile Include="Student\StudentListForNoteDetails.cs" />
+    <Compile Include="Student\StudentPaidFeeDetails.cs" />
+    <Compile Include="Student\StudentRecord.cs" />
+    <Compile Include="Student\StudentSanctionedLeaves.cs" />
+    <Compile Include="Student\StudentTransferDetails.cs" />
+    <Compile Include="Student\UploadStudentPhoto.cs" />
+    <Compile Include="SuperAdmin\AllStudentCount.cs" />
+    <Compile Include="SuperAdmin\SuperAdminDetails.cs" />
+    <Compile Include="Survey\FeedbackDetails.cs" />
+    <Compile Include="Survey\GuestDetails.cs" />
+    <Compile Include="Survey\SurveyStudentDetails.cs" />
+    <Compile Include="Survey\UserSurveyDetails.cs" />
+    <Compile Include="TaskManagement\TaskMaster.cs" />
+    <Compile Include="TeacherAdditionalDetails.cs" />
+    <Compile Include="Teacher\AssemblyDetails.cs" />
+    <Compile Include="Teacher\AssignSummaryGradesDetails.cs" />
+    <Compile Include="Teacher\Associations.cs" />
+    <Compile Include="Teacher\AttendanceDetails.cs" />
+    <Compile Include="Teacher\CoordinateDetails.cs" />
+    <Compile Include="Teacher\ObservationDetails.cs" />
+    <Compile Include="Teacher\ObservationSkillConfig.cs" />
+    <Compile Include="Teacher\TransferMarksDetails.cs" />
+    <Compile Include="Transport\BulkDocumentDetails.cs" />
+    <Compile Include="Transport\RFIDDetails.cs" />
+    <Compile Include="Transport\StopCharges.cs" />
+    <Compile Include="Transport\StopDetails.cs" />
+    <Compile Include="Transport\TransportCapacityDetails.cs" />
+    <Compile Include="Transport\TransportDetails.cs" />
+    <Compile Include="Transport\TransportLateFeeSetting.cs" />
+    <Compile Include="Transport\TransportNotification.cs" />
+    <Compile Include="Transport\TransportNotificationDetails.cs" />
+    <Compile Include="Transport\TransportOverrideConfigDetails.cs" />
+    <Compile Include="Transport\TransportPUCDetails.cs" />
+    <Compile Include="Transport\TransportReadingAllocationDetails.cs" />
+    <Compile Include="Transport\TransportServiceDates.cs" />
+    <Compile Include="Transport\UserAttendanceInBus.cs" />
+    <Compile Include="Transport\VehicleDocument.cs" />
+    <Compile Include="Transport\VehicleMaintenanceExpenses.cs" />
+    <Compile Include="Transport\VehicleServicingDetails.cs" />
+    <Compile Include="UserLoginDetails.cs" />
+    <Compile Include="VideoDetails.cs" />
+    <Compile Include="WeekDays.cs" />
+    <Compile Include="WeekdaysName.cs" />
+    <Compile Include="WinServiceScheduler.cs" />
+    <Compile Include="Xseed\ProgressReport.cs" />
+    <Compile Include="Xseed\XseedReportDetails.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AskMe\vssver.scc" />
+    <None Include="Careers\vssver.scc" />
+    <None Include="House\vssver.scc" />
+    <None Include="packages.config" />
+    <None Include="StaffPerformance\vssver.scc" />
+    <None Include="Transport\vssver.scc" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

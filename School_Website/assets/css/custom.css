@@ -1,0 +1,498 @@
+/****** Login Page ******/
+.login-container {
+    max-width: 550px;
+    width:auto !important;
+}
+
+.login-box .welcome-note {
+  margin-top: 12px;
+}
+
+.login-box .welcome-note a {
+  border-radius: 100%;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0 1px;
+  border: none;
+}
+/****** End - Login Page ******/
+
+/****** Master Page ******/
+#sidebar-shortcuts a {
+    color:#FFFFFF;
+}
+
+#navbar-container .navbar-header.pull-left .navbar-brand small {
+    font-size: 24px !important;
+}
+
+.breadcrumb a {
+    color: #2C6AA0 !important;
+    font-size: 20px !important;
+}
+
+.breadcrumb .active {
+    color: #000000 !important;
+    font-size: 20px !important;
+}
+
+.breadcrumb > li + li:before {
+    font-size: 24px !important;
+}
+
+.nav-list > li.active > a, .nav-list > li.active > a:hover, .nav-list > li.active > a:focus, .nav-list > li.active > a:active {
+    font-weight:normal !important;
+}
+
+.ace-settings-container {
+    top:0;
+}
+
+/****** End - Master Page ******/
+
+/****** Widget ******/
+
+.widget-header {
+    border-width: 0;
+    color: #003F59;
+    font-weight: bold;
+}
+.widget-body {
+    padding: 10px;
+    overflow:auto;
+}
+
+.widget-header-flat {
+    background: none repeat scroll 0 0 #83D2F7;
+}
+
+.widget-box 
+{
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.skin-1 .breadcrumbs {
+    background-color: #E7F2F8;
+    border: 0 none;
+}
+
+/****** End - Widget ******/
+
+/****** Icon Color ******/
+.dark-blue {
+    color: #003F59;
+}
+
+/****** End - Icon Color ******/
+
+/****** Dashboard ******/
+.infobox {
+    height: auto;
+    width: 100% !important;
+    border: none !important;
+    margin-bottom:25px;
+    padding:0;
+    color:#FFFFFF;
+    cursor:pointer;
+}
+
+.infobox > .infobox-data {
+    text-align: right;
+    float:right;
+    margin-right: 10px;
+    line-height: 30px;
+    padding-top: 8px;
+}
+
+.infobox > .infobox-data > .infobox-data-number {
+    width: 145px;
+    word-wrap: break-word;
+    float: right;
+}
+
+.infobox .more {
+    clear: both;
+    color: #FFFFFF;
+    display: block;
+    font-size: 11px;
+    font-weight: 300;
+    opacity: 0.7;
+    padding: 5px 10px;
+    text-transform: uppercase;
+}
+
+.infobox .more:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+.infobox-custom-green {
+    background-color: #28B779 !important;
+}
+
+.infobox-custom-green .more
+{
+    background-color: #10A062;
+}
+
+.infobox-custom-blue {
+    background-color: #27A9E3 !important;
+}
+
+.infobox-custom-blue .more
+{
+    background-color: #208DBE;
+}
+
+.infobox-custom-yellow {
+    background-color: #FFB848 !important;
+}
+
+.infobox-custom-yellow .more
+{
+    background-color: #CB871B;
+}
+
+.infobox-custom-red {
+    background-color: #D15B47 !important;
+}
+
+.infobox-custom-red .more
+{
+    background-color: #B74635;
+}
+
+.infobox > .infobox-icon {
+    padding:10px;
+}
+
+.infobox > i
+{
+    float: left; 
+    font-size: 43px; 
+    padding: 15px 20px;
+}
+
+/****** End - Dashboard ******/
+
+/****** glitter css ******/
+
+.gritter-with-image
+{
+    float: none;
+    width: auto;
+}
+
+.gritter-center {
+    margin: 6%;
+}
+
+.gritter-title {
+    padding: 0 0 7px 57px
+}
+
+/****** End - glitter css ******/
+
+/****** Sidebar changes ******/
+
+.sidebar-shortcuts {
+    background-color: #2A435A !important;
+}
+
+.sidebar, .sidebar:before {
+    background-color: #2A435A !important;
+}
+
+.nav-list > li {
+    border-style: none none solid;
+}
+
+.nav-list > li > a {
+    background-color: #2A435A;
+    color: #F9F9F9;
+    padding: 0 15px 0 7px;
+}
+
+.sidebar-collapse {
+    background-color: #2A435A !important;
+}
+
+.nav-list > li > a:hover:before
+{
+    background-color: #F9F9F9 !important;
+}
+
+.nav-list > li > a:hover {
+    color:#2A435A;
+}
+
+.nav-list > li.active > a, .nav-list > li.active > a:hover, .nav-list > li.active > a:focus, .nav-list > li.active > a:active {
+    color:#2A435A;
+}
+
+.nav-list li.active > a:after {
+    border-color: rgba(0, 0, 0, 0) #2A435A rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
+
+.sidebar-shortcuts-mini, .menu-min .sidebar-shortcuts-large {
+    background-color:#2A435A;
+}
+
+.menu-min .nav-list > li > a > .menu-text {
+    background-color:#F9F9F9;
+    color: #2A435A;
+}
+
+.menu-min .nav-list > li:hover > a, .menu-min .nav-list > li.active > a, .nav-list > li > a:focus,.nav-list > li.active > a:focus {
+    background-color:#F9F9F9;
+    color: #2A435A;
+}
+
+/****** End - Sidebar changes ******/
+
+
+/****** User info changes ******/
+
+.user-info {
+    top: 0;
+    vertical-align:text-top;
+    max-width: none;
+}
+
+#navbar-container .ace-nav > li > a {
+    float:left;
+}
+
+/****** End - Sidebar changes ******/
+
+label, body, textarea {
+    font-size:11px;
+}
+
+input, select[multiple],input[type="datetime"] {
+    font-size:11px !important;
+    padding-top:2px;
+    padding-bottom:2px;
+}
+
+.required {
+    color: red; 
+    margin-left: 5px;
+}
+
+.errorMsg {
+    color: red; 
+}
+.user-info {
+    font-size:14px;
+}
+.btnWidth
+{
+    width: 30px;
+    padding-bottom: 4px;
+    width: 28px;
+}
+.k-grid tbody .k-button, .k-ie8 .k-grid tbody button.k-button
+{ 
+    min-width:0px;
+}
+
+/****** User info changes ******/
+
+.k-dropdown-wrap .k-input {
+    padding-left: 5px;    
+}
+
+.k-list-container .k-list .k-item {
+    padding-left: 6px;
+}
+
+.k-picker-wrap .k-input {
+    padding-left: 3px;    
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+    border-radius: 3px !important
+}
+
+/****** End - Sidebar changes ******/
+
+.k-ff input.k-textbox {
+    height: auto;
+}
+
+@media screen and (min-width: 1195px) {
+   .k-autocomplete, .k-combobox, .k-datepicker, .k-timepicker, .k-datetimepicker, .k-colorpicker, .k-numerictextbox, .k-dropdown, .k-selectbox, .k-textbox, text-area
+	{
+		width:14.9em;   /*17.4em;*/
+		font-size:11px !important
+	}
+	.k-edit-cell > .k-textbox, .k-edit-cell > .k-widget, .k-grid-edit-row > td > .k-textbox, .k-grid-edit-row > td > .k-widget, .k-grid-edit-row > td > .text-box {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 1195px) {
+   .k-autocomplete, .k-combobox, .k-datepicker, .k-timepicker, .k-datetimepicker, .k-colorpicker, .k-numerictextbox, .k-dropdown, .k-selectbox, .k-textbox, text-area
+	{
+		width:13.7em !important;   /*17.4em;*/
+		font-size:11px !important
+	}
+   .k-edit-cell > .k-textbox, .k-edit-cell > .k-widget, .k-grid-edit-row > td > .k-textbox, .k-grid-edit-row > td > .k-widget, .k-grid-edit-row > td > .text-box {
+        width: 100% !important;
+    }
+}
+/*
+@media screen and (max-width: 1024px) {
+    .k-autocomplete, .k-combobox, .k-datepicker, .k-timepicker, .k-datetimepicker, .k-colorpicker, .k-numerictextbox, .k-dropdown, .k-selectbox, .k-textbox, text-area {
+        width: 13.7em;
+        font-size: 11px !important;
+    }
+}*/
+
+/********/
+
+li.k-item {
+    white-space: nowrap;
+}
+/********/
+
+.k-pager-wrap .k-dropdown {
+    width: 4.6em;
+}
+
+.modal-footer {
+    margin-top: 0;
+}
+
+.padding-top-10
+{
+    padding-top :10px;
+}
+
+.margin-10
+{
+    margin:10px;    
+}
+
+.margin-top-10
+{
+ margin-top:10px;   
+ }
+ 
+.margin-top-5
+{
+ margin-top:5px;   
+}
+ 
+ .margin-bottom-5
+{
+ margin-bottom:5px;   
+}
+
+.control-container
+{
+    margin: 0 !important;
+    padding-bottom: 3px;
+    padding-top: 4px;
+}
+
+.widget-header
+{
+    font-weight:normal;
+}
+.dropdown-menu
+{
+    font-size:11px !important
+}
+
+.padding-top-5 {
+    padding-top:5px !important;
+}
+
+.widget-body {
+    padding:5px !important;
+}
+.page-content {
+    padding: 6px 12px 0 !important;
+}
+
+.dropdown-navbar > li > a {
+    line-height: 10px;
+}
+
+.dropdown-navbar {   
+    width: 150px;
+}
+
+.dropdown-navbar > li.dropdown-header {
+    line-height: 25px !important;
+}
+
+.dropdown-navbar > li {
+    border-bottom: 1px solid !important;
+    border-bottom-color: #27A9E3 !important;
+}
+
+.dropdown-menu li a:hover {
+    color: #4f99c6;
+    background-color: #f8f8f8;
+    text-decoration:none;
+}
+/* Start - Change color of grid selection, pager count, dropdown selection */
+.k-state-selected, .k-button:active, .k-draghandle.k-state-selected:hover {
+    background-image: none, linear-gradient(to bottom, rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.23) 100%);
+}
+.k-state-selected, .k-state-selected:link, .k-state-selected:visited, .k-list > .k-state-selected, .k-list > .k-state-highlight, .k-panel > .k-state-selected, .k-button:active, .k-ghost-splitbar-vertical, .k-ghost-splitbar-horizontal, .k-draghandle.k-state-selected:hover, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-marquee-color {
+    background-color: #13688c;
+    border-color: #13688c;
+    color: #fff;
+}
+
+.k-secondary .k-button:active {
+    background-color: #13688c;
+    border-color: #13688c;
+    color: #fff;
+}
+
+.k-state-focused.k-state-selected, .k-list > .k-state-focused.k-state-selected, .k-listview > .k-state-focused.k-state-selected, td.k-state-focused.k-state-selected, .k-button:focus:active:not(.k-state-disabled):not([disabled]) {
+    box-shadow: 0 0 7px rgba(0, 92, 131, 0.5) inset, 0 0 7px 1px #105776 inset;
+}
+
+/* End - Change color of grid selection, pager count, dropdown selection */
+
+.nav-list > li > .submenu li > .submenu > li a {
+    font-size: 12px;
+}
+
+.nav-list > li > .submenu li > .submenu > li a:hover {
+    text-decoration:none !important;
+}
+
+.submenu > li > a
+{
+    font-size: 12px;
+}
+
+.dropdown-navbar > li.dropdown-header {
+  font-size: 11px !important;
+}
+.btn 
+{
+    font-size:11px !important;
+}
+
+widget-toolbar > .dropdown > .dropdown-menu.pull-right::before, .dropdown-menu.pull-right.dropdown-caret::before {
+    right: 23px;
+}
+
+.widget-toolbar > .dropdown > .dropdown-menu.pull-right::after, .dropdown-menu.pull-right.dropdown-caret::after {
+    right: 23px;
+}
+
+.k-edit-label, .k-edit-form-container .editor-label {
+    padding: 0.4em 0 5px;
+}

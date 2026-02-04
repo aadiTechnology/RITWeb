@@ -1,0 +1,328 @@
+﻿/*File Name - StaffKidConcessionScreen.aspx.cs
+ * Created By - Sonali
+ * Created Date - 7 August 2018
+ * Description - This class is used to manage Staff KidConcession Screen.
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BusinessLogic;
+using BusinessLogic.Exceptions;
+using StaffPerformanceEntity;
+using Utility;
+using SchoolEntities;
+using System.Reflection;
+using System.Data;
+
+public partial class StaffKidConcessionScreen : SchoolBase
+{
+    #region Constant(s)
+
+    private const string S_DELETE_MESSAGE = "StaffKid process details deleted successfully !!!";
+    private const string S_UPDATE_MESSAGE = "StaffKid process details updated successfully !!!";
+    private const string S_SAVE_MESSAGE = "StaffKid process details saved successfully !!!";
+    private const string S_UPDATE_TEXT = "Update";
+    private const string S_SAVE_TEXT = "Save";
+
+    #endregion
+
+    #region Data Member(s)
+
+    private StudentFeeDetailsBL moStudentFeeDetailsBL;
+
+    #endregion
+
+    #region Events
+     /// <summary>
+    /// This event is used to fill up FeeSubType and fill Concession list view.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!CheckPreCondition())
+            {
+                moStudentFeeDetailsBL = new StudentFeeDetailsBL(miSchoolId, miAcademicYearId); 
+                if (!IsPostBack)
+                {
+                     SetJavaScriptAttribute();
+                     FillFeeTypeCombobox();
+                    FillConcessionListview();
+                }
+            }
+            else
+                SetJavaScriptAttribute();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This method is used to check pre-condition to configure association.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckPreCondition()
+    {
+        bool bReturn = false;
+        string sLinks = ReferenceBL.GetPreConditionMsg(Constants.SchoolConfigurations.PerformanceParameter);       
+
+        return bReturn;
+    }
+    /// <summary>
+    /// This event is used to cancel current operation and clean fields.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ClearFields();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }  
+    
+    ///// <summary>
+    ///// This event is used to save Concession details.
+    ///// </summary>
+    ///// <param name="sender"></param>
+    ///// <param name="e"></param>
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Save();
+
+            bool bIsConfigured = QueryString[Constants.S_IS_CONFIGURED] != Constants.S_YES;
+            if (bIsConfigured)
+                SaveConfigDetails(Convert.ToInt32(Constants.SchoolConfigurations.PerformanceParameter));
+
+            DisplayMessage(hidRule_Id.Value == Constants.S_ZERO ? Constants.ItemState.saved : Constants.ItemState.updated, false);
+            ClearFields();
+            FillConcessionListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to fill up FillConcessionList view according to selected FeeType.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+
+
+    protected void cmbFeeType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        try
+        {
+          FillConcessionListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+
+
+    }
+
+    #endregion
+
+    #region Method(s)
+    /// <summary>
+    /// This method is used to save Staff Kid ConcessionScreen details.
+    /// </summary>
+    private void Save()
+    {
+        ConcessionDetails oStaffKidConcessionScreen = new ConcessionDetails
+        {
+
+            Rule_Id = hidRule_Id.Value.ToInt(),
+            RuleName = txtRuleName.Text.Trim(),
+            Description = txtDescription.Text.Trim(),
+            PercentageConcession = txtPercentageConcession.Text.ToInt(),
+            FeeTypeId = cmbFeeType.SelectedValue.ToInt(),
+        };
+        moStudentFeeDetailsBL.Save(oStaffKidConcessionScreen);
+    }
+
+    /// <summary>
+    /// This event is used to edit / delete selected records.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+   
+    protected void lstvwStaffKidScreen_ItemCommand1(object sender, ListViewCommandEventArgs e)
+    {
+        try
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+              
+                int iRule_Id = lstvwStaffKidScreen.DataKeys[e.Item.DisplayIndex]["Rule_Id"].ToInt();
+
+                if (e.CommandName == Constants.S_COMMAND_UPDATE)
+                {
+                    Label lblRuleName = e.Item.FindControl("lblRuleName") as Label;
+                    Label lblDescription = e.Item.FindControl("lblDescription") as Label;
+                    Label lblpercon = e.Item.FindControl("lblpercon") as Label;
+                  
+                    hidRule_Id.Value = iRule_Id.ToString();
+                    txtRuleName.Text = HttpUtility.HtmlDecode(lblRuleName.Text);
+                    txtDescription.Text = HttpUtility.HtmlDecode(lblDescription.Text);
+                    txtPercentageConcession.Text = HttpUtility.HtmlDecode(lblpercon.Text);
+                    cmbFeeType.SelectedValue = lstvwStaffKidScreen.DataKeys[e.Item.DisplayIndex]["FeeTypeId"].ToString();
+                    btnSave.Text = Constants.ButtonText.Update.ToString();
+                }
+                else if (e.CommandName == Constants.S_COMMAND_REMOVE)
+                {
+                   
+                    moStudentFeeDetailsBL.Delete(iRule_Id);
+                    if (iRule_Id == hidRule_Id.Value.ToInt())
+                        ClearFields();
+                    DisplayMessage(Constants.ItemState.deleted, false);
+                    FillConcessionListview();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to set attributes on delete button.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void lstvwStaffKidScreen_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+        try
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                StaffKidConcessionScreen oStaffKidConcessionScreen = e.Item.DataItem as StaffKidConcessionScreen;
+                
+                ImageButton btnDelete = e.Item.FindControl("btnDelete") as ImageButton;
+                ImageButton btnEdit = e.Item.FindControl("btnEdit") as ImageButton;
+               
+
+                btnDelete.Attributes.Add("onclick", "if(!ConfirmDelete()) return false;");
+
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to handle sorting.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void lstvwParameter_Sorting(object sender, ListViewSortEventArgs e)
+    {
+        try
+        {
+            if (hidSortExpression.Value != e.SortExpression)
+                hidSortDirection.Value = Constants.S_DESCENDING;
+
+            base.RevertSortOrder(hidSortDirection);
+            hidSortExpression.Value = e.SortExpression;
+
+            FillConcessionListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+    /// <summary>
+    /// This method is used to fill up FeeType combo box.
+    /// </summary>
+    private void FillFeeTypeCombobox()
+    {
+        StudentFeeDetailsBL oStudentFeeDetailsBL = new StudentFeeDetailsBL(miSchoolId, miUserId);
+        DataTable oDtStandardCollection = oStudentFeeDetailsBL.GetSubFeeType(miSchoolId, miAcademicYearId);
+        cmbFeeType.Bind(oDtStandardCollection, "Original_Fee_SubType_Id", "Fee_SubType", Constants.S_SELECT);
+    }
+
+   /// <summary>
+    /// This method is used to  Fill Concession list view.
+    /// </summary>
+    private void FillConcessionListview()
+        {
+            List<ConcessionDetails> oStaffKidConcessionScreen = moStudentFeeDetailsBL.GetAllConcessionScreenDetails();
+            lstvwStaffKidScreen.DataSource = oStaffKidConcessionScreen;
+            lstvwStaffKidScreen.DataBind();
+      }
+
+    /// <summary>
+    /// This method is used to set java script attributes.
+    /// </summary>
+    private void SetJavaScriptAttribute()
+    {
+        btnCancel.Attributes.Add("onclick", "ClearFields();");
+        base.ApplyMouseHoverEffect(new List<Button> { btnCancel, btnSave, btnBack });
+        btnBack.PostBackUrl = Convert.ToString(CommonUtility.GetEncryptedQueryStringForConfigMenu(Constants.SchoolConfigMenuId.StaffPerformanceRelated));
+        hidRule_Id.Value = Constants.S_ZERO;
+        btnSave.Attributes.Add("onclick", "ClearMessage()");
+        cmbFeeType.Focus();
+    }
+
+    /// <summary>
+    /// This method is used to clear fields.
+    /// </summary>
+    private void ClearFields()
+    {
+            txtRuleName.Text = string.Empty;
+            txtDescription.Text = string.Empty;
+            txtPercentageConcession.Text = string.Empty;
+            cmbFeeType.SelectedValue = Constants.S_ZERO;
+            hidRule_Id.Value = Constants.S_ZERO;
+            btnSave.Text = btnSave.Text = S_SAVE_TEXT;
+    }
+
+    /// <summary>
+    /// This method is used to display message.
+    /// </summary>
+    /// <param name="aoItemState"></param>
+    /// <param name="abIsErrorMessage"></param>
+    private void DisplayMessage(Constants.ItemState aoItemState, bool abIsErrorMessage)
+    {
+        string sMessage = "Concession Screen  " + aoItemState.ToString() + " successfully!!!";
+        DisplayMessage(sMessage, abIsErrorMessage, tdMessage);
+    }
+
+    /// <summary>
+    /// This method is used to display message.
+    /// </summary>
+    /// <param name="asButtonName"></param>
+    /// <param name="abIsErrorMessage"></param>
+    private void DisplayMessage(string asButtonName, bool abIsErrorMessage)
+    {
+        string sMessage = "Concession Screen " + asButtonName + " successfully!!!";
+        DisplayMessage(sMessage, abIsErrorMessage, tdMessage);
+    }
+
+  
+
+    #endregion      
+    
+}

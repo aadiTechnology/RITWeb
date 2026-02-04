@@ -1,0 +1,297 @@
+﻿/*File Name - AccountHeaderConfiguration.aspx.cs
+ * Created By - Sonali
+ * Created Date - 14 August 2018
+ * Description - This class is used to manage AccountHeaderConfiguration.
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BusinessLogic;
+using BusinessLogic.Exceptions;
+using StaffPerformanceEntity;
+using Utility;
+using SchoolEntities;
+using System.Reflection;
+using System.Data;
+
+public partial class AccountHeaderConfiguration : SchoolBase
+{
+    
+    #region Constant(s)
+
+    private const string S_UPDATE_TEXT = "Update";
+    private const string S_SAVE_TEXT = "Save";
+
+    #endregion
+
+    #region Data Member(s)
+
+    private StudentFeeDetailsBL moStudentFeeDetailsBL;
+
+    #endregion
+
+    #region Events
+    /// <summary>
+    /// This event is used to set the page Load Events.
+    /// </summary>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!CheckPreCondition())
+            {
+                moStudentFeeDetailsBL = new StudentFeeDetailsBL(miSchoolId,miAcademicYearId);
+                if (!IsPostBack)
+                {
+                    SetJavaScriptAttribute();
+                    FillBankNameCombobox();
+                    FillAccountConfigueartionListview();
+                }
+            }
+            else
+                SetJavaScriptAttribute();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+        ///// <summary>
+        ///// This event is used to save Account Configuration details.
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+    
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+      try
+        {
+            Save();
+
+            bool bIsConfigured = QueryString[Constants.S_IS_CONFIGURED] != Constants.S_YES;
+            if (bIsConfigured)
+                SaveConfigDetails(Convert.ToInt32(Constants.SchoolConfigurations.PerformanceParameter));
+
+           DisplayMessage(hidAccountHeaderId.Value == Constants.S_ZERO ? Constants.ItemState.saved : Constants.ItemState.updated, false);
+            ClearFields();
+            FillAccountConfigueartionListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+      /// <summary>
+    /// This event is used to cancel current operation and clean fields.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void  btnCancel_Click(object sender, EventArgs e)
+    {
+         try
+        {
+            ClearFields();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to fill up  Fill AccountConfigueartion Listview according to selected FeeType.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+
+    protected void cmbBankId_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            FillAccountConfigueartionListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+    #endregion
+
+    #region Method(s)
+
+    /// <summary>
+    /// This method is used to save Account Configuration details.
+    /// </summary>
+    private void Save()
+    {
+        AccountHeaderConfig oAccountHeaderConfig = new AccountHeaderConfig
+        {
+            AccountHeaderId = hidAccountHeaderId.Value.ToInt(),
+            AccountHeaderName = txtAcHeaderName.Text.Trim(),
+            SchoolCurrentAccountNumber = txtAccountNumber.Text.Trim(),
+            SchoolwiseBankId = cmbBankId.SelectedValue.ToInt(),
+            BankAddress = txtBankAddress.Text.Trim(),
+           
+        };
+        
+        moStudentFeeDetailsBL.save(oAccountHeaderConfig);
+       
+    }
+
+    
+    /// <summary>
+    /// This method is used to fill up Bank Name combo box.
+    /// </summary>
+    private void FillBankNameCombobox()
+    {
+        StudentFeeDetailsBL oStudentFeeDetailsBL = new StudentFeeDetailsBL(miSchoolId,miAcademicYearId);
+        DataTable oDtStandardCollection = oStudentFeeDetailsBL.GetBankNameDetails(miSchoolId);
+        cmbBankId.Bind(oDtStandardCollection, "Schoolwise_Bank_Id","Bank_Name",Constants.S_SELECT);
+     
+    }
+    /// <summary>
+    /// This event is used to edit / delete selected records.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+  
+        protected void  lstvwAcHeaderConfiguration_ItemCommand(object sender, ListViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.Item.ItemType == ListViewItemType.DataItem)
+                {
+
+                    int iAccountHeaderId = lstvwAcHeaderConfiguration.DataKeys[e.Item.DisplayIndex]["AccountHeaderId"].ToInt();
+
+                    if (e.CommandName == Constants.S_COMMAND_UPDATE)
+                    {
+                        Label lblAccountHeaderName = e.Item.FindControl("lblAccountHeaderName") as Label;
+                        Label lblAcoountNumber = e.Item.FindControl("lblAcoountNumber") as Label;
+                        Label lblBankAddress = e.Item.FindControl("lblBankAddress") as Label;
+
+                        hidAccountHeaderId.Value = iAccountHeaderId.ToString();
+                        txtAcHeaderName.Text = HttpUtility.HtmlDecode(lblAccountHeaderName.Text);
+                        txtAccountNumber.Text = HttpUtility.HtmlDecode(lblAcoountNumber.Text);
+                        txtBankAddress.Text = HttpUtility.HtmlDecode(lblBankAddress.Text);
+                        cmbBankId.SelectedValue = lstvwAcHeaderConfiguration.DataKeys[e.Item.DisplayIndex]["BankId"].ToString();
+                        btnSave.Text = Constants.ButtonText.Update.ToString();
+                    }
+                    else if (e.CommandName == Constants.S_COMMAND_REMOVE)
+                    {
+
+                        moStudentFeeDetailsBL.DeleteAccountHeader(iAccountHeaderId);
+                        if (iAccountHeaderId == hidAccountHeaderId.Value.ToInt())
+                            ClearFields();
+                       DisplayMessage(Constants.ItemState.deleted, false);
+                         FillAccountConfigueartionListview();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+            }    
+        }
+        /// <summary>
+        /// This event is used to set attributes on delete button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+    protected void  lstvwAcHeaderConfiguration_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+        try
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                AccountHeaderConfiguration oAccountHeaderConfiguration = e.Item.DataItem as AccountHeaderConfiguration;
+
+                ImageButton btnDelete = e.Item.FindControl("btnDelete") as ImageButton;
+                ImageButton btnEdit = e.Item.FindControl("btnEdit") as ImageButton;
+
+
+                btnDelete.Attributes.Add("onclick", "if(!ConfirmDelete()) return false;");
+
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+    ///// <summary>
+    ///// This method is used to  Fill AccountConfigueartion list view.
+    ///// </summary>
+    private void FillAccountConfigueartionListview()
+    {
+        List<AccountHeaderConfig> oAccountHeaderConfig = moStudentFeeDetailsBL.GetAllAccountHeaderConfigueartionDetails();
+        lstvwAcHeaderConfiguration.DataSource = oAccountHeaderConfig;
+        lstvwAcHeaderConfiguration.DataBind();
+    }
+    
+    /// <summary>
+    /// This method is used to check pre-condition to configure association.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckPreCondition()
+    {
+        bool bReturn = false;
+        string sLinks = ReferenceBL.GetPreConditionMsg(Constants.SchoolConfigurations.PerformanceParameter);       
+
+        return bReturn;
+    }
+
+
+     /// <summary>
+    /// This method is used to set java script attributes.
+    /// </summary>
+    private void SetJavaScriptAttribute()
+        {
+            btnCancel.Attributes.Add("onclick", "ClearFields();");
+            base.ApplyMouseHoverEffect(new List<Button> { btnCancel, btnSave, btnBack });
+            btnBack.PostBackUrl = Convert.ToString(CommonUtility.GetEncryptedQueryStringForConfigMenu(Constants.SchoolConfigMenuId.StaffPerformanceRelated));        
+            hidAccountHeaderId.Value = Constants.S_ZERO;
+            btnSave.Attributes.Add("onclick", "ClearMessage()");
+            cmbBankId.Focus();
+    }
+     /// <summary>
+    /// This method is used to clear fields.
+    /// </summary>
+    private void ClearFields()
+    {
+            txtAcHeaderName.Text = string.Empty;
+            txtAccountNumber.Text = string.Empty;
+            txtBankAddress.Text = string.Empty;
+            cmbBankId.SelectedValue = Constants.S_ZERO;
+            hidAccountHeaderId.Value = Constants.S_ZERO;
+            btnSave.Text = btnSave.Text = S_SAVE_TEXT;
+    }
+     /// <summary>
+    /// This method is used to display message.
+    /// </summary>
+    /// <param name="aoItemState"></param>
+    /// <param name="abIsErrorMessage"></param>
+    private void DisplayMessage(Constants.ItemState aoItemState, bool abIsErrorMessage)
+    {
+        string sMessage = "Account Header Configuration  " + aoItemState.ToString() + " successfully!!!";
+        DisplayMessage(sMessage, abIsErrorMessage, tdMessage);
+    }
+
+    /// <summary>
+    /// This method is used to display message.
+    /// </summary>
+    /// <param name="asButtonName"></param>
+    /// <param name="abIsErrorMessage"></param>
+    private void DisplayMessage(string asButtonName, bool abIsErrorMessage)
+    {
+        string sMessage = "Account Header Configuration" + asButtonName + " successfully!!!";
+        DisplayMessage(sMessage, abIsErrorMessage, tdMessage);
+    }
+    #endregion
+}
+
+    

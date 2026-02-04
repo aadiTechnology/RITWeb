@@ -1,0 +1,294 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RITeSchool/MasterPages/MasterPage.master"
+    AutoEventWireup="true" CodeFile="StaffKidConcessionScreen.aspx.cs" Inherits="StaffKidConcessionScreen" %>
+
+<%@ Register Assembly="RJS.Web.WebControl.PopCalendar.Net.2008" Namespace="RJS.Web.WebControl"
+    TagPrefix="rjs" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="headContentPlaceholder" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainBody" runat="Server">
+    <div class="MainBodyDiv">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="97%">
+            <tr>
+                <td>
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                     <asp:ValidationSummary ID="valSumErrorMsg" runat="server" CssClass="ClsMdtStar" />
+                                        <asp:RequiredFieldValidator ID="reqvalRuleNam" runat="server" Display="None" ControlToValidate="txtRuleName"
+                                                 ErrorMessage="Rule Name should not be blank.">
+                                       </asp:RequiredFieldValidator>
+                                       <asp:RequiredFieldValidator ID="reqvalDEscription" runat="server" Display="None" ControlToValidate="txtDescription"
+                                               ErrorMessage="Description should not be blank.">
+                                      </asp:RequiredFieldValidator>
+                                     <asp:RequiredFieldValidator ID="reqvalFeeSubType" runat="server" Display="None" ControlToValidate="cmbFeeType" InitialValue="0"
+                                               ErrorMessage="Fee SubType should not be blank."></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="reqvalPercentageConcession" runat="server" Display="None" ControlToValidate="txtPercentageConcession"
+                                               ErrorMessage="Percentage Concession should not be blank.">
+                                   </asp:RequiredFieldValidator>
+                                   </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                        <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
+                                        <asp:AsyncPostBackTrigger ControlID="lstvwStaffKidScreen" EventName="ItemCommand" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                            <td width="20%" align="right">
+                                <span class="ClsMdtStar">* Mandatory Fields </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" id="tdMessage" runat="server" colspan="2">
+                    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:Label ID="lblMessage" runat="server" EnableViewState="false" CssClass="ClsLabelNrml"
+                                Font-Bold="true" ForeColor="Blue" Style="text-align: center"></asp:Label>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                            <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+                </td>
+            </tr>
+            <tr id="trControls" runat="server">
+                <td align="center">
+                    <table width="75%">
+                        <tr>
+                            <td colspan="4" align="center">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <table>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="150px">
+                                                    <span class="ClsLabel">Rule Name : </span>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtRuleName" runat="server" CssClass="ExLrgTxtBox" Width="300px"> </asp:TextBox>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="150px">
+                                                    <span class="ClsLabel">Description : </span>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtDescription" runat="server" CssClass="ExLrgTxtBox" Width="300px"> </asp:TextBox>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="150px">
+                                                    <span class="ClsLabel">Fee SubType&nbsp; : </span>
+                                                </td>
+                                                <td>
+                                                    <asp:DropDownList ID="cmbFeeType" runat="server" CssClass="MidCombo" Width="300px"
+                                                        AutoPostBack="True" OnSelectedIndexChanged="cmbFeeType_SelectedIndexChanged">
+                                                    </asp:DropDownList>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ClsBorderlight" width="190px">
+                                                    <span class="ClsLabel">&nbsp;Concession in Percentage : </span>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtPercentageConcession" runat="server" CssClass="ExLrgTxtBox" Width="300px"></asp:TextBox>
+                                                    <span class="ClsMdtStar">*</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" align="center">
+                                                    <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="ClsBtn" OnClick="btnSave_Click" />
+                                                    <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="ClsBtn" 
+                                                        CausesValidation="false" onclick="btnCancel_Click" />
+                                                    <asp:HiddenField ID="hidRule_Id" runat="server" Value="0" />
+                                                    <asp:HiddenField ID="hidSortExpression" runat="server" Value="" />
+                                                    <asp:HiddenField ID="hidSortDirection" runat="server" Value="" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                        <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
+                                       
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <table width="100%">
+                                            <tr>
+                                                <td align="center">
+                                                    <asp:ListView ID="lstvwStaffKidScreen" runat="server" DataKeyNames="Rule_Id,FeeTypeId"
+                                                        OnItemCommand="lstvwStaffKidScreen_ItemCommand1" ClientIDMode="AutoID" OnItemDataBound="lstvwStaffKidScreen_ItemDataBound"
+                                                        ViewStateMode="Enabled">
+                                                        <LayoutTemplate>
+                                                            <table width="100%" style="color: #333333" cellpadding="0" cellspacing="1" class="GridBorder">
+                                                                <tr class="ClsGridHeader" id="trHeader" runat="server">
+                                                                    <th align="left" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="lnkTitle" runat="server" CommandName="Sort" CommandArgument="RuleName"
+                                                                            CausesValidation="false" ForeColor="Black">
+                                                                                                                  Rule Name </asp:LinkButton>
+                                                                    </th>
+                                                                    <th align="center" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="lnkName" runat="server" CommandName="Sort" CommandArgument="Description"
+                                                                            CausesValidation="false" ForeColor="Black"> Description </asp:LinkButton>
+                                                                    </th>
+                                                                    <th align="center" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Sort" CommandArgument="FeeTypeId"
+                                                                            CausesValidation="false" ForeColor="Black"> Fee SubType</asp:LinkButton>
+                                                                    </th>
+                                                                    <th align="center" class="clsLabelgrd" width="100px">
+                                                                        <asp:LinkButton ID="LinkButton2" runat="server" CommandName="Sort" CommandArgument="Concession in Percentage"
+                                                                            CausesValidation="false" ForeColor="Black">
+                                                                                         Concession In Percentage </asp:LinkButton>
+                                                                    </th>
+                                                                    <th width="50px" align="center" class="clsLabelgrd">
+                                                                        Edit
+                                                                    </th>
+                                                                    <th width="50px" class="clsLabelgrd">
+                                                                        Delete
+                                                                    </th>
+                                                                </tr>
+                                                                <tr id="itemPlaceholder" runat="server">
+                                                                </tr>
+                                                            </table>
+                                                        </LayoutTemplate>
+                                                        <ItemTemplate>
+                                                            <tr id="Tr2" runat="server" class="ClsGridRow">
+                                                                <td align="center">
+                                                                    <asp:Label ID="lblRuleName" runat="server" CssClass="ClsLabel" Text='<%#Eval("RuleName")
+%>'></asp:Label>
+                                                                    <asp:HiddenField ID="hidId" runat="server" Value='<%#Eval("Rule_Id")
+%>' />
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblDescription" runat="server" Text='<%#Eval("Description")
+%>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="LblFeesubId" runat="server" Text='<%#Eval("FeeSubType") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblpercon" runat="server" Text='<%#Eval("PercentageConcession") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="UpdateCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex %>" ImageUrl="~/RITeSchool/images/IconGrid_Edit.gif"
+                                                                        ToolTip="Edit" />
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="RemoveCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex
+%>" ImageUrl="~/RITeSchool/images/IconGrid_Delete.gif" ToolTip="Delete" />
+                                                                </td>
+                                                            </tr>
+                                                        </ItemTemplate>
+                                                        <AlternatingItemTemplate>
+                                                            <tr id="Tr3" runat="server" class="ClsGridAltRow">
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblRuleName" runat="server" CssClass="ClsLabel" Text='<%#Eval("RuleName") %>'></asp:Label>
+                                                                    <asp:HiddenField ID="hidId" runat="server" Value='<%#Eval("Rule_Id") %>' />
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblDescription" runat="server" Text='<%#Eval("Description") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="LblFeesubId" runat="server" Text='<%#Eval("FeeSubType") %>'></asp:Label>
+                                                                </td>
+                                                                <td align="left">
+                                                                    <asp:Label ID="lblpercon" runat="server" Text='<%#Eval("PercentageConcession")
+%>'></asp:Label>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnEdit" runat="server" CausesValidation="false" CommandName="UpdateCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex
+%>" ImageUrl="~/RITeSchool/images/IconGrid_Edit.gif" ToolTip="Edit" />
+                                                                </td>
+                                                                <td align="center">
+                                                                    <asp:ImageButton ID="btnDelete" runat="server" CausesValidation="false" CommandName="RemoveCommand"
+                                                                        CommandArgument="<%# Container.DataItemIndex %>" ImageUrl="~/RITeSchool/images/IconGrid_Delete.gif"
+                                                                        ToolTip="Delete" />
+                                                                </td>
+                                                            </tr>
+                                                        </AlternatingItemTemplate>
+                                                        <EmptyDataTemplate>
+                                                            <tr>
+                                                                <td class="LblNoRecord" align="center">
+                                                                    No record found.
+                                                                </td>
+                                                            </tr>
+                                                        </EmptyDataTemplate>
+                                                    </asp:ListView>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </ContentTemplate>
+                                    <Triggers>
+                                   <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                                    <ContentTemplate>
+                                        <asp:Button ID="btnBack" runat="server" Text="Back" CssClass="ClsBtn" CausesValidation="false" />
+                                    </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+           <script language="javascript" type="text/javascript">
+
+            _clientTxtRuleName = "<%=this.txtRuleName.ClientID %>"; 
+            _clientTxtDescription ="<%=this.txtDescription.ClientID %>";
+            _clienthidRule_Id = "<%=this.hidRule_Id.ClientID%>";
+            _clientlblMessage = "<%=this.lblMessage.ClientID %>";
+            _clientlstvwStaffKidScreen = "<%=this.lstvwStaffKidScreen.ClientID %>"
+            _clientTxtPercentageConcession = "<%=this.txtPercentageConcession.ClientID %>"; 
+            
+            function ClearFields() 
+            {
+             $get(_clientTxtRuleName).value = "";
+             $get(_clientTxtDescription).value = ""; 
+             $get(_clientTxtPercentageConcession).value = "";
+             $get(_clienthidRule_Id).value = 0;
+              } 
+              
+             function ConfirmDelete() 
+                { 
+                return confirm('Are you sure you want to delete this record?');
+            }
+         function ClearMessage() {
+                $get(_clientlblMessage).innerHTML = "";
+            }
+            
+
+         </script>
+                </div>
+                </asp:Content>
+                <asp:Content ID="Content3" ContentPlaceHolderID="PopupMainBody" runat="Server">
+                </asp:Content>

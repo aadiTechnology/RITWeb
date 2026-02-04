@@ -1,0 +1,393 @@
+<%@ Master Language="C#" CodeFile="~/ZESPMaster.master.cs" Inherits="ZESPMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#"">
+<head runat="server">
+    <title>Welcome to <%=  ConfigurationManager.AppSettings["SchoolName"]%></title>
+    <meta name="description" content="Zeal English School, Paudgaon, Maharashtra" />
+    <meta name="keywords" content="Zeal English School, Paudgaon, Maharashtra, india, educational experience, learning, guidance, students, Regulus Information Technologies, ERP" />
+    <meta name="section" content="schools-maharashtra-india" />
+    <meta name="pagename" content="Zeal English School, Paudgaon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="robots" content="index,follow" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="mobile" content="" />
+    <meta name="SchoolName" content="STSS" />
+    <meta name="author" content="Regulus Information Technologies - http://www.RegulusIT.net" />
+    <link href="Styles2.css" type="text/css" rel="stylesheet" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="RITeSchool/Scripts/jquery-1.4.1-vsdoc.js"></script>    
+    <link rel="SHORTCUT ICON" href="../../images/favicon.ico" type="image/x-icon" />
+    <script src="https://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+    <script src="https://platform.twitter.com/widgets.js" type="text/javascript"></script>
+    <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+    <script src="RITeSchool/Scripts/FbIntegration.js" type="text/javascript"></script>
+    <script language="JavaScript" type="text/javascript">
+        //<!--
+        function mmLoadMenus() {
+            if (window.mm_menu_0827125911_0) return;
+            window.mm_menu_0827125911_0 = new Menu("root", 134, 18, "", 12, "#FFFFFF", "#990000", "#0099FF", "#FFCC00", "left", "middle", 3, 1, 1000, -5, 7, true, true, true, 0, true, true);
+            mm_menu_0827125911_0.addMenuItem("Mission&nbsp;Statement", "location='MissionStatement.aspx'");
+            mm_menu_0827125911_0.hideOnMouseOut = true;
+            mm_menu_0827125911_0.bgColor = '#ffffff';
+            mm_menu_0827125911_0.menuBorder = 0;
+            mm_menu_0827125911_0.menuLiteBgColor = '#FFFFFF';
+            mm_menu_0827125911_0.menuBorderBgColor = '#FFFFFF';
+
+            window.mm_menu_0827130533_0 = new Menu("root", 135, 18, "", 12, "#FFFFFF", "#990000", "#0099FF", "#FFCC00", "left", "middle", 3, 1, 1000, -5, 7, true, true, true, 0, true, true);
+            mm_menu_0827130533_0.addMenuItem("Photo/Video&nbsp;Gallery", "location='ShowImageGallery.aspx'");
+            mm_menu_0827130533_0.hideOnMouseOut = true;
+            mm_menu_0827130533_0.bgColor = '#ffffff';
+            mm_menu_0827130533_0.menuBorder = 0;
+            mm_menu_0827130533_0.menuLiteBgColor = '#FFFFFF';
+            mm_menu_0827130533_0.menuBorderBgColor = '#FFFFFF';
+
+
+            window.mm_menu_0828180914_0 = new Menu("root", 160, 18, "", 12, "#FFFFFF", "#990000", "#0099FF", "#FFCC00", "left", "middle", 3, 1, 1000, -5, 7, true, true, true, 0, true, true);
+            mm_menu_0828180914_0.addMenuItem("Admission&nbsp;Policies", "location='AdmissionPolicies.aspx'");
+            mm_menu_0828180914_0.hideOnMouseOut = true;
+            mm_menu_0828180914_0.bgColor = '#FFFFFF';
+            mm_menu_0828180914_0.menuBorder = 0;
+            mm_menu_0828180914_0.menuLiteBgColor = '#FFFFFF';
+            mm_menu_0828180914_0.menuBorderBgColor = '#FFFFFF';
+
+            window.mm_menu_0828181015_0 = new Menu("root", 173, 18, "", 12, "#FFFFFF", "#990000", "#0099FF", "#FFCC00", "left", "middle", 3, 1, 1000, -5, 7, true, true, true, 0, true, true);
+            mm_menu_0828181015_0.addMenuItem("General&nbsp;Discipline", "location='GeneralDiscipline.aspx'");
+            mm_menu_0828181015_0.addMenuItem("Library", "location='Library.aspx'");
+            mm_menu_0828181015_0.addMenuItem("Withdrawals", "location='Withdrawals.aspx'");
+            mm_menu_0828181015_0.hideOnMouseOut = true;
+            mm_menu_0828181015_0.bgColor = '#FFFFFF';
+            mm_menu_0828181015_0.menuBorder = 0;
+            mm_menu_0828181015_0.menuLiteBgColor = '#FFFFFF';
+            mm_menu_0828181015_0.menuBorderBgColor = '#FFFFFF';
+
+            window.mm_menu_0827130534_0 = new Menu("root", 110, 18, "", 12, "#FFFFFF", "#990000", "#0099FF", "#FFCC00", "left", "middle", 3, 1, 1000, -5, 7, true, true, true, 0, true, true);
+            //mm_menu_0827130534_0.addMenuItem("Bus&nbsp;Route", "location='BusTimingsDetails.aspx'");
+            mm_menu_0827130534_0.addMenuItem("School&nbsp;Notices", "location='School_Notices.aspx'");
+            mm_menu_0827130534_0.addMenuItem("School&nbsp;News", "location='SchoolNews.aspx'");
+            //mm_menu_0827130534_0.addMenuItem("Public&nbsp;Holidays", "location='PublicHolidayList.aspx'");
+            mm_menu_0827130534_0.hideOnMouseOut = true;
+            mm_menu_0827130534_0.bgColor = '#FFFFFF';
+            mm_menu_0827130534_0.menuBorder = 0;
+            mm_menu_0827130534_0.menuLiteBgColor = '#FFFFFF';
+            mm_menu_0827130534_0.menuBorderBgColor = '#FFFFFF';
+
+            window.mm_menu_0827130536_0 = new Menu("root", 110, 18, "", 12, "#FFFFFF", "#990000", "#0099FF", "#FFCC00", "left", "middle", 3, 1, 1000, -5, 7, true, true, true, 0, true, true);
+            mm_menu_0827130536_0.addMenuItem("Users", "location='FeedbackListUI.aspx?wlHZOyPUhfm5/wwtuLvzmg==q'");
+            mm_menu_0827130536_0.addMenuItem("Others", "location='FeedbackListUI.aspx?HTM+HFqsE3QbEML4MpFILg==q'");
+            mm_menu_0827130536_0.hideOnMouseOut = true;
+            mm_menu_0827130536_0.bgColor = '#FFFFFF';
+            mm_menu_0827130536_0.menuBorder = 0;
+            mm_menu_0827130536_0.menuLiteBgColor = '#FFFFFF';
+            mm_menu_0827130536_0.menuBorderBgColor = '#FFFFFF';
+
+            mm_menu_0828181015_0.writeMenus();
+        }
+     //-->          
+    </script>
+    <script language="javascript" type="text/javascript">
+        function openTerms() {
+            window.open('TermsOfUse.aspx', '_new', 'scrollbars=no,resizable=no,menubar=no,status=no,titlebar=no,toolbar=no,top=100,left=50,width=900,height=780');
+        }
+
+        function blinkIt() {
+            if (!document.all) return;
+            else {
+                for (i = 0; i < document.all.tags('blink').length; i++) {
+                    s = document.all.tags('blink')[i];
+                    s.style.visibility = (s.style.visibility == 'visible') ? 'hidden' : 'visible';
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            window.setInterval(blinkSchoolName, 500);
+        });
+
+        function blinkSchoolName() {
+            $('#schoolname').toggle();
+        }
+
+    </script>
+    <script type="text/javascript" src="RITeSchool/Scripts/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="RITeSchool/Scripts/jquery-blink.js"></script>
+    <script src="js/jquery.qtip-1.0.0-rc3.min.js" type="text/javascript"></script>    
+    <script language="JavaScript" type="text/javascript" src="mm_menu.js"></script>
+    <script type="text/javascript" src="RITeSchool/Scripts/Validate2.js"></script>
+    <script type="text/javascript" src="RITeSchool/Scripts/Validations.js"></script>
+    <style type="text/css">
+        .style1
+        {
+            background-image: url('images/subpgTopImgSml.jpg');
+            background-position: left bottom;
+            background-repeat: no-repeat;
+            background-color: #FFF;
+            height: 100px;
+            width: 80%;
+            float: left;
+        }
+        
+        .logo
+        {
+            background-image: url('images/165X100.png');
+            background-position: right bottom;
+            background-repeat: no-repeat;
+            background-color: #FFF;
+            height: 100px;
+            width: 20%;
+            float: right;
+        }
+    </style>
+</head>
+<body style="height: 97%" onload="setInterval('blinkIt()',500)">
+<div id="fb-root"></div>
+    <script language="JavaScript1.2" type="text/javascript">        mmLoadMenus();</script>
+    <form id="form1" runat="server">
+    <table border="0" cellpadding="0" cellspacing="0" align="center" style="height: 95%;
+        width: 95%">
+
+           <tr>
+            <td width="25%">
+                <asp:Label runat="server" ID="lblLastUpdateDate" CssClass="navST"></asp:Label>
+            </td>
+            <td align="center" id="notices" runat="server" visible="true"  width="50%">
+                <asp:HyperLink ID="hlnkNoticeHadpsar" runat="server" Text="School Notices" CssClass="HomeTopLink "
+                    NavigateUrl="School_Notices.aspx" />
+                <img src="images/newLink.gif" runat="server" id="imgNewNotice" />
+            </td>
+            <td align="right" width="25%">
+                <table width="92%" border="0" cellspacing="2" align="right" cellpadding="2">
+                    <tr>
+                        <td align="right" valign="top" style="visibility:visible">
+                                <a class="navSel" onclick="openNewWindows()" style="cursor:pointer; color:Orange;">Home</a>								
+								<a class="nav" href="careers.aspx">Careers</a> 
+                               <%-- <img src="images/newLink.gif" runat="server" id="img2" />--%>
+								
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 100%;">
+            <td style="height: 100%;" colspan="3">
+                <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border: 1px solid #fff;
+                    height: 100%;">
+                    <tr>
+                        <td bgcolor="#FFFFFF" valign="top">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>
+                                        <div class="style1" align="left">
+                                        </div>
+                                        <div class="logo" align="right">
+										 <a href="http://zealschool.riteschool.com" target="_blank">
+                                           <img alt="http://zealschool.riteschool.com" src="images/165X100.png"/></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td class="menuBg" align="left">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td style="width: 70%; vertical-align: bottom;" align="left">
+                                                    <div id="tabs10" style="letter-spacing: 1;">
+                                                        <ul>
+                                                            <% if (
+                                                                    Request.Url.ToString().ToLower().EndsWith("Parents Feedback .aspx")
+                                                                  )
+                                                               {  %>
+                                                            <li id="Li1">
+                                                                <% }
+                                                               else
+                                                               {  %>
+                                                                <li>
+                                                                    <% } %>
+                                                                    <a name="link7" id="link7" onmouseover="MM_showMenu(window.mm_menu_0827130536_0,5,27,null,'link7')"
+                                                                        runat="server" onmouseout="MM_startTimeout();"><span>Appreciations</span></a></li>
+
+                                                                 <% if ( Request.Url.ToString().ToLower().EndsWith("showimagegallery.aspx")                                                              
+                                                                           )
+                                                                       {  %>
+                                                                   <li id="current">
+                                                                        <% }
+                                                                            
+                                                                       else
+                                                                       {  %>
+                                                                        <li>
+                                                                            <% } %>
+                                                                        <a name="link2" id="link2" onmouseover="MM_showMenu(window.mm_menu_0827130533_0,5,27,null,'link2')"
+                                                                        runat="server" onmouseout="MM_startTimeout();"><span>Activities </span></a></li>
+
+                                                                  <% if (Request.Url.ToString().ToLower().EndsWith("school_notices.aspx")                                                                  
+                                                                                       )
+                                                                                   {  %>
+                                                                                <li id="Li2">
+                                                                                    <% }
+                                                                                   else
+                                                                                   {  %>
+                                                                                    <li>
+                                                                                        <% } %>
+                                                                                        <a name="link6" id="link6" onmouseover="MM_showMenu(window.mm_menu_0827130534_0,5,27,null,'link6')"
+                                                                                            onmouseout="MM_startTimeout();"><span>Information</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+												<td id="Td1" runat="server" visible="true" style="vertical-align: middle;">
+													<%--<table width="100%" cellspacing="0" cellpadding="0">
+														<tr>
+															<td align="left">
+																<img src="images/newLink.gif" id="imgNew" runat="server" />
+																<asp:HyperLink ID="hlnkOnlineAdmission" runat="server" Text="Online Admissions" CssClass="navselHPL "
+																	onclick="openOnlineAdmissionPopUp()"  Style="white-space: nowrap;cursor:pointer;" />
+															</td>
+														</tr>
+                                                        
+													</table>--%>
+												</td>
+                                                <td style="width: 10%; padding-right: 3px;" valign="bottom">
+                                                    <asp:ImageButton ID="BtnRITLogin" runat="server" ImageUrl="images/Btn_RITLogin.gif"
+                                                        OnClick="BtnRITLogin_Login" CausesValidation="False" />
+                                                </td>  
+                                                <%--<td style="width: 1%; padding-right: 3px;" valign="bottom">
+                                                    <a id="mobileLink" title="<%= ConfigurationManager.AppSettings["MobileUrlTitle"] %>" href="<%= ConfigurationManager.AppSettings["MobileUrl"] %>"
+                                                        target="_blank">
+                                                        <img alt="" id="imgMobile" src="images/mobile_phone.png" />
+                                                    </a>
+                                                </td> --%>                                             
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">
+                                        <div align="center" style="height: 20px;">
+                                            <div style="float: right; width: 35%">
+                                                <span id="schoolname" style="font-weight: bold; font-family: Arial; font-size: 15px;
+                                                    color: Blue;">
+                                                    <%= ConfigurationManager.AppSettings["SchoolName"]%></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" align="center" style="width: 100%; height: 100%;">
+                                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" class="footer" style="background-color: White; padding-bottom: 5px">
+                            <table border="0" cellpadding="0" cellspacing="2" align="center">
+                                <tr>    
+								   <td align="center">
+                                        <a class="footer" href="" onclick="openNewWindows()" style="cursor:pointer;" >Home</a>
+                                    </td> 
+									 <td align="center">
+                                        <span class="red">I</span>
+                                    </td>                             
+                                    <td align="center">
+                                        <a class="footer" href="FeedbackListUI.aspx">Appreciations</a>
+                                    </td>
+                                    <td align="center">
+                                        <span class="red">I</span>
+                                    </td>
+									<td align="center">
+										<a class="footer" href="careers.aspx">Careers</a>
+									</td>
+									<td align="center">
+                                        <span class="red">I</span>
+                                    </td>
+                                    <td align="center">
+                                        <a class="footer" href="javascript:openTerms();">Terms of Use</a>
+                                    </td>
+                                    <td align="center">
+                                        <span class="red">I</span>
+                                    </td>
+                                    <td align="center">
+                                        <a runat="server" id="hlnkLoginPage" class="footer" href="eSchoolLogin.aspx">Login to RITeSchool</a>
+                                    </td>                                    
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#DAE4F1" class="footer">
+                            <div align="center" id="footernote">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:HiddenField runat="server" ID="hidServerDate" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+<% if (SchoolBase.Settings.AddExtGoogleAnalytics)
+   { %>
+
+<script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+  m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-4752582-26', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+<%} %>
+    </script>
+<script language="javascript" type="text/javascript">
+    _clienthidServerDate = "<%=this.hidServerDate.ClientID %>";
+
+    var year = document.getElementById(_clienthidServerDate).value;
+    document.getElementById('footernote').innerHTML = "Copyright © 2007 - " + year + " RegulusIT.net All rights reserved."
+</script>
+<script type="text/javascript">
+      var n = 0
+      // Create the tooltips only on document load
+      $(document).ready(function () {
+
+          // Match all link elements with href attributes within the content div
+          $('#mobileLink').qtip({
+              content: {
+                  text: false // Use each elements title attribute
+              },
+              style: {
+                  name: 'cream',
+                  color: 'black',  //'cream', // Give it some style
+                  border: {
+                      width: 3,
+                      radius: 5
+                  },
+                  tip: 'topRight',
+                  width: 220
+              },
+
+              position: { adjust: { x: -210, y: 0} }
+          });
+          $('#imgMobile').blink();
+         });
+         function openOnlineAdmissionPopUp() {
+         	window.open('RITeSchool/Admission/OnlineAdmissionUI.aspx', '_blank', 'scrollbars=yes,resizable=no,width=900,height=700');
+         }
+
+         function openNewWindows() {
+             window.open("http://zealschool.riteschool.com/", '_self');
+         }
+
+</script>
+</html>

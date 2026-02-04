@@ -1,0 +1,171 @@
+﻿/**/
+select
+{
+    color: #000000 !important;
+    font-size:13px !important;
+    height:30px !important;
+}
+
+textarea
+{
+    color: #000000 !important;
+    font-size: 13px !important;
+ }
+ 
+ /* if align not set then set align=center e.g edit delete button on 1. feedback 2. Subjects*/
+ th,th[align="center"] {
+    text-align: center;
+}
+
+th[align="right"] {
+    text-align: right;
+}
+
+th[align="left"] {
+    text-align: left;
+}
+
+th[class="paddingLSML"] {
+    text-align: left;
+}
+
+th[class="ClspaddingL"] {
+    text-align: left;
+}
+
+/*Clearance list, Import item*/
+th[class="ClspaddingR"] {
+    text-align: right;
+}
+
+th>label {
+    font-weight:bold;
+}
+
+/*Standard wise exam*/
+tr.ClsGridHeader > td > label {
+    font-weight: bold !important;
+    margin-bottom:0;
+}
+
+/*Staff Groups - Earnings and Deductions Association*/
+tr.ClsGridHeader > th >span > label {
+    font-weight: bold !important;
+    margin-bottom:0;
+}
+
+/*This is generic change for all td which are attribute valign top..explicitly we added style  vertical align: middle*/
+/*This is generic change for all td which are attribute valign top..explicitly we added style  vertical align: middle*/
+td[valign="top"] {
+    vertical-align: middle;
+}
+
+/*On multiple places used valign top and above we already applied style for td top as vertical align middle */
+/* Here tdMainContentplaceHolder, MainDataTable is the genric id and tdSupervisorMenu, tdSupervisorDetails, 
+    tdSidebar, tdDashboardContent used on Control panel screen */
+td[id$='tdMainContentplaceHolder'][valign="top"], td[id$='MainDataTable'][valign="top"], td[id$='tdSupervisorMenu'][valign="top"],td[id$='tdSupervisorDetails'][valign="top"], [id$='tdSidebar'][valign="top"], [id$='tdDashboardContent'][valign="top"]{
+vertical-align:top;
+}
+
+.td-vertical-align-top, .vertical-align-top, .vertical-align-top.all-checkbox > label {
+    vertical-align: top !important;
+}
+
+/*
+th[style*="padding-left"] {
+    text-align: left;
+}*/
+
+/*
+label[for*=chk]
+{
+    padding-left:5px;
+}
+
+label[for*=opt]
+{
+    padding-left:5px;
+}*/
+
+label[for]
+{
+    font-size: 12px;
+    font-family:Arial;
+    display:inline-block;
+    margin-bottom:5px;
+}
+
+td > label[for]{    
+    margin-bottom: 5px;
+}
+
+/* Standardwise Divisions screen header size increased*/
+th > label[for]{    
+    margin-bottom: 0;
+}
+
+.ClsHilightText {
+    color: #906 !important;
+    font-size: 13px !important;
+}
+
+input[type="checkbox"],input[type="radio"] {    
+    margin: 4px 4px 0 !important;
+}
+
+input[type="text"]   /* change for - input not visible clearly - */
+{
+    padding : 4px;
+    line-height :unset;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"]
+{
+    font-size: 13px !important;
+    color: #000;
+}
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus {
+    color: #000 !important;
+}
+
+input[type="file"] {
+    display: inline !important;
+     font-size: 12px;
+}
+
+input[type = "image"][disabled = "disabled"]
+{
+  background-color: transparent !important;
+}
+
+td > div.ClsGreenBG          /* change for text cut at bootom - increase div height */
+{
+    height:25px !important;
+}
+
+.itemdiv > .body > .time 
+{
+    position: unset;
+}
+
+.CollapsedTitle > a > img, .CollapsTitle a img {
+    vertical-align: top !important;
+}
+
+.ui-autocomplete {
+    width:auto !important;
+    min-width: 250px !important;
+}
+
+.progress-spinner {
+    color: darkcyan;
+    font-size: 24px;
+}
+
+.progress-text {
+    color: darkcyan;
+    font-family: "open sans";
+    font-size: 12px;
+    font-weight: 700;
+}

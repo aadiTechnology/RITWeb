@@ -1,0 +1,308 @@
+﻿/*File Name - StudentRecordParametersUI.aspx.cs
+ * Created By - Sonali
+ * Created Date - 31 st May 2018
+ * Description - This class is used to manage StudentRecordParameters.
+ */
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Web;
+using System.Web.UI.WebControls;
+using BusinessLogic;
+using BusinessLogic.Exceptions;
+using SchoolEntities;
+using Utility;
+
+public partial class StudentRecordParametersUI : SchoolBase
+{
+    #region Data Member(s)
+
+    private StudentRecordParameterBL moStudentRecordParameterBL;
+
+    #endregion
+
+    #region Event(s)
+
+    /// <summary>
+    /// This event is used to add sort image.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Page_PreRenderComplete(object sender, EventArgs e)
+    {
+        try
+        {
+            if (hidSortExpression.Value == string.Empty)
+                hidSortExpression.Value = "SortOrder";
+
+            if (hidSortDirection.Value == string.Empty)
+                hidSortDirection.Value = Constants.S_ASCENDING;
+
+            base.AddSortImage(lstvwParameter, hidSortExpression.Value, hidSortDirection.Value);
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    ///  This event is used to fill up Section combo boxes and fill parameter list view.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            moStudentRecordParameterBL = new StudentRecordParameterBL(miSchoolId, miAcademicYearId, miUserId);
+            if (!IsPostBack)
+            {
+                SetJavaScriptAttribute();
+                FillSectionCombobox();
+                FillParameterListview();
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to save StudentRecord Parameter details.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// 
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Save();
+
+            bool bIsConfigured = QueryString[Constants.S_IS_CONFIGURED] != Constants.S_YES;
+            if (bIsConfigured)
+                SaveConfigDetails(Convert.ToInt32(Constants.SchoolConfigurations.StudentRecordParameter));
+
+            DisplayMessage(hidParameterId.Value == Constants.S_ZERO ? Constants.ItemState.saved : Constants.ItemState.updated, false);
+            ClearFields(false);
+            FillParameterListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to fill up parameter list view according to selected Section
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void cmbSection_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            FillParameterListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to edit / delete selected records.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// 
+
+    protected void lstvwParameter_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        try
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                int iParameterId = lstvwParameter.DataKeys[e.Item.DisplayIndex]["Id"].ToInt();
+
+                if (e.CommandName == Constants.S_COMMAND_UPDATE)
+                {
+                    Label lblSectionName = e.Item.FindControl("lblSectionName") as Label;
+                    Label lblParameter = e.Item.FindControl("lblParameter") as Label;
+                    Label lblSortOrder = e.Item.FindControl("lblSortOrder") as Label;
+
+                    txtParameter.Text = HttpUtility.HtmlDecode(lblParameter.Text);
+                    txtSortOrder.Text = HttpUtility.HtmlDecode(lblSortOrder.Text);
+                    hidParameterId.Value = iParameterId.ToString();
+                    cmbSection.SelectedValue = lstvwParameter.DataKeys[e.Item.DisplayIndex]["SectionId"].ToString();
+                    btnSave.Text = Constants.ButtonText.Update.ToString();
+                }
+                else if (e.CommandName == Constants.S_COMMAND_REMOVE)
+                {
+                    moStudentRecordParameterBL.Delete(iParameterId,miSchoolId);
+                    if (iParameterId.ToString() == hidParameterId.Value)
+                        ClearFields(false);
+                    lblMessage.Text = "Parameter deleted successfully !!!";
+                    FillParameterListview();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to cancel current operation and clean fields.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        ClearFields(true);
+    }
+
+    /// <summary>
+    /// This event is used to set attributes on delete button.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void lstvwParameter_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+       
+        try
+        {
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                StudentRecordParameter oStudentRecordParameter = e.Item.DataItem as StudentRecordParameter;
+
+                ImageButton btnDelete = e.Item.FindControl("btnDelete") as ImageButton;
+                ImageButton btnEdit = e.Item.FindControl("btnEdit") as ImageButton;
+
+
+                btnDelete.Attributes.Add("onclick", "if(!ConfirmDelete()) return false;");
+
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to handle sorting.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void lstvwParameter_Sorting(object sender, ListViewSortEventArgs e)
+    {
+        try
+        {
+            if (hidSortExpression.Value != e.SortExpression)
+                hidSortDirection.Value = Constants.S_DESCENDING;
+                base.RevertSortOrder(hidSortDirection);
+                hidSortExpression.Value = e.SortExpression;
+                FillParameterListview();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    #endregion
+
+    #region Method(s)
+
+    /// <summary>
+    /// This method is used to fill up section combo box.
+    /// </summary>
+    private void FillSectionCombobox()
+    {
+        List<StudentRecordSection> lstSections = moStudentRecordParameterBL.GetAllSections();
+        ListSource.FillDropDownList(lstSections, cmbSection, "Name", "Id", Constants.S_SELECT);
+    }
+
+    /// <summary>
+    /// This method is used to set java script attributes.
+    /// </summary>
+    private void SetJavaScriptAttribute()
+    {
+        base.ApplyMouseHoverEffect(new List<Button> { btnCancel, btnSave, btnBack });
+        btnBack.PostBackUrl = Convert.ToString(CommonUtility.GetEncryptedQueryStringForConfigMenu(Constants.SchoolConfigMenuId.Student_Record_related));
+        valSumErrorMsg.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
+        hidParameterId.Value = Constants.S_ZERO;
+        btnSave.Attributes.Add("onclick", "ClearMessage()");
+    }
+
+
+    /// <summary>
+    /// This method is used to Save Student Record Parameter.
+    /// </summary>
+    /// <returns></returns>
+    private void Save()
+    {
+        StudentRecordParameter oStudentRecordParameter = new StudentRecordParameter
+       
+        {  
+           Id = hidParameterId.Value.ToInt(),
+            SectionId = cmbSection.SelectedValue.ToInt(),
+            Name = txtParameter.Text.Trim(),
+            SortOrder = txtSortOrder.Text.ToInt(),
+        };
+        moStudentRecordParameterBL.Save(oStudentRecordParameter);
+    }
+
+    /// <summary>
+    /// This method is used to fill parameter list view.
+    /// </summary>
+    private void FillParameterListview()
+    {
+        int aiSectionId = Convert.ToInt32(cmbSection.SelectedValue);
+        List<StudentRecordParameter> lstParameters = moStudentRecordParameterBL.GetAll(aiSectionId);
+        lstvwParameter.DataSource = lstParameters;
+        lstvwParameter.DataBind();
+    }
+
+    /// <summary>
+    /// This method is used to clear fields.
+    /// </summary>
+    private void ClearFields(bool abClearSection)
+    {
+        txtParameter.Text = string.Empty;
+        txtSortOrder.Text = string.Empty;
+        hidParameterId.Value = Constants.S_ZERO;
+        btnSave.Text = Constants.ButtonText.Save.ToString();
+        hidParameterId.Value = Constants.S_ZERO;
+
+        if (abClearSection)
+            cmbSection.ClearSelection();
+    }
+
+    /// <summary>
+    /// This method is used to display message.
+    /// </summary>
+    /// <param name="aoItemState"></param>
+    /// <param name="abIsErrorMessage"></param>
+    private void DisplayMessage(Constants.ItemState aoItemState, bool abIsErrorMessage)
+    {
+        string sMessage = "Student Record Sections " + aoItemState.ToString() + " successfully!!!";
+        DisplayMessage(sMessage, abIsErrorMessage, tdMessage);
+    }
+    /// This method is used to display message.
+    /// </summary>
+    /// <param name="asButtonName"></param>
+    /// <param name="abIsErrorMessage"></param>
+    private void DisplayMessage(string asButtonName, bool abIsErrorMessage)
+    {
+        string sMessage = "Student Record Sections " + asButtonName + " successfully!!!";
+        DisplayMessage(sMessage, abIsErrorMessage, tdMessage);
+    }
+    #endregion
+}
+
+

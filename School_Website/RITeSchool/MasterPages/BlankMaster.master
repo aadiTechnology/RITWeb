@@ -1,0 +1,21 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="BlankMaster.master.cs" Inherits="BlankMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../Styles/Styles.css"  type="text/css" rel="stylesheet" />
+    <link href="../Styles/Styles1.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/Styles2.css" type="text/css" rel="stylesheet" />
+    <link href="../Styles/Styles3.css" type="text/css" rel="stylesheet" />
+    <asp:ContentPlaceHolder id="headContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+		<asp:ContentPlaceHolder id="bodyContentPlaceHolder" runat="server">
+		</asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

@@ -1,0 +1,151 @@
+﻿.ClsBtnMid {    
+    padding: 6px 24px !important;
+    text-transform:uppercase;
+}
+
+.ClsBtn,
+.ClsBtnSml,
+.ClsBtnMid,
+.ClsBtnLrg,
+.ClsBtnExLrg
+{
+    border-radius: 3px !important;
+    display: inline-block !important;
+    color: rgb(255, 255, 255) !important;
+    width:auto !important;
+    height:auto !important;
+    min-width:75px;
+    text-transform:uppercase;
+    padding: 4px 10px !important;
+}
+
+input[type="submit"], input[type="button"], input[type="reset"] {
+    background: #77a809 linear-gradient(to bottom, #37c8a6 5%, #177d5b 100%) repeat scroll 0 0 !important;
+    border: 1px solid #007c3e !important;
+    border-radius: 5px;
+    color: #fff !important;
+}
+
+input[type='submit']:hover ,input[type='button']:hover,input[type='reset']:hover {
+   background: #77a809 linear-gradient(to bottom, #177d5b 5%, #37c8a6 100%) repeat scroll 0 0 !important;
+   border: 1px solid #007c3e !important;
+}
+
+input[type="submit"][value="Cancel"], 
+input[type="button"][value="Cancel"], 
+input[type="reset"][value="Cancel"], 
+input[type="submit"][value="Delete"], 
+input[type="button"][value="Delete"], 
+input[type="reset"][value="Delete"], 
+input[type="submit"][value="Back"], 
+input[type="button"][value="Back"], 
+input[type="reset"][value="Back"],
+input[type="submit"][value="Close"],
+input[type="button"][value="Close"],
+input[type="reset"][value="Close"],
+input[type="submit"][value="Clear"]
+{
+    /*background: #c62d1f linear-gradient(to bottom, #ff836b 5%, #ff623f 100%) repeat scroll 0 0 !important;*/
+    background: #c62d1f linear-gradient(to bottom, #ff9a82 5%, #e94c29 100%) repeat scroll 0 0 !important;
+    border: 1px solid #ff623f !important;
+    color: white !important;
+}
+
+input[type="submit"][value="Cancel"]:hover, 
+input[type="button"][value="Cancel"]:hover, 
+input[type="reset"][value="Cancel"]:hover, 
+input[type="submit"][value="Delete"]:hover, 
+input[type="button"][value="Delete"]:hover, 
+input[type="reset"][value="Delete"]:hover, 
+input[type="submit"][value="Back"]:hover, 
+input[type="button"][value="Back"]:hover, 
+input[type="reset"][value="Back"]:hover,
+input[type="submit"][value="Close"]:hover,
+input[type="button"][value="Close"]:hover,
+input[type="reset"][value="Close"]:hover,
+input[type="submit"][value="Clear"]:hover {
+    /*background: #c62d1f linear-gradient(to bottom, #ff623f 5%, #ff836b 100%) repeat scroll 0 0 !important;*/
+    background:#c62d1f linear-gradient(to bottom, #e94c29 5%, #ff9a82 100%) repeat scroll 0 0 !important;
+    color: #fff !important;
+    border: 1px solid #ff623f !important;
+}
+
+input[type="submit"][disabled],
+input[type="button"][disabled],
+input[type="reset"][disabled],
+input[type="submit"][value="Cancel"][disabled], 
+input[type="button"][value="Cancel"][disabled], 
+input[type="reset"][value="Cancel"][disabled], 
+input[type="submit"][value="Delete"][disabled], 
+input[type="button"][value="Delete"][disabled], 
+input[type="reset"][value="Delete"][disabled], 
+input[type="submit"][value="Back"][disabled], 
+input[type="button"][value="Back"][disabled], 
+input[type="reset"][value="Back"][disabled],
+input[type="submit"][value="Close"][disabled],
+input[type="button"][value="Close"][disabled],
+input[type="reset"][value="Close"][disabled],
+input[type="submit"][disabled]:hover,
+input[type="button"][disabled]:hover,
+input[type="reset"][disabled]:hover,
+input[type="submit"][value="Cancel"][disabled]:hover, 
+input[type="button"][value="Cancel"][disabled]:hover, 
+input[type="reset"][value="Cancel"][disabled]:hover, 
+input[type="submit"][value="Delete"][disabled]:hover, 
+input[type="button"][value="Delete"][disabled]:hover, 
+input[type="reset"][value="Delete"][disabled]:hover, 
+input[type="submit"][value="Back"][disabled]:hover, 
+input[type="button"][value="Back"][disabled]:hover, 
+input[type="reset"][value="Back"][disabled]:hover,
+input[type="submit"][value="Close"][disabled]:hover,
+input[type="button"][value="Close"][disabled]:hover,
+input[type="reset"][value="Close"][disabled]:hover {
+    background: #f4f4f4 linear-gradient(to bottom, #f4f4f4 5%, #cccccc 100%) repeat scroll 0 0 !important;
+    border: 1px solid #cccccc !important;
+    color: #848484 !important;
+}
+
+.btn-green
+{
+    background: #77a809 linear-gradient(to bottom, #37c8a6 5%, #177d5b 100%) repeat scroll 0 0 !important;
+    border: 1px solid #007c3e !important;
+    border-radius: 5px;
+    color: #fff !important;    
+}
+
+.btn-green:hover
+{
+   background: #77a809 linear-gradient(to bottom, #177d5b 5%, #37c8a6 100%) repeat scroll 0 0 !important;
+   border: 1px solid #007c3e !important;   
+}
+
+.btn-red
+{
+    background: #c62d1f linear-gradient(to bottom, #ff9a82 5%, #e94c29 100%) repeat scroll 0 0 !important;
+    border: 1px solid #ff623f !important;
+    color: white !important;
+}
+
+.btn-red:hover
+{
+    background:#c62d1f linear-gradient(to bottom, #e94c29 5%, #ff9a82 100%) repeat scroll 0 0 !important;
+    color: #fff !important;
+    border: 1px solid #ff623f !important;
+}
+
+.btn-disabled,.btn-disabled:hover
+{
+     background: #77a809 linear-gradient(to bottom, #f4f4f4 5%, #cccccc 100%) repeat scroll 0 0 !important;
+    border: 1px solid #cccccc !important;
+    color: #848484 !important;
+}
+
+.BtnHLightSml{
+    text-transform:uppercase;
+    font-weight:700;
+
+}
+
+.btnSMSsend{
+ text-transform:uppercase;
+}

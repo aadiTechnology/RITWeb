@@ -1,0 +1,6 @@
+﻿/*BootstarpOverride.css- Override bootsratp classes*/
+table
+{
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+}

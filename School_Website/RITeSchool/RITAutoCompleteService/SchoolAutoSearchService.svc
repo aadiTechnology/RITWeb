@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SchoolAutoSearchService.Service.AutoSearchService" CodeBehind="~/App_Code/AutoSearchService.cs" %>

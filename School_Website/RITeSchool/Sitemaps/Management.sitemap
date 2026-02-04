@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0"  >
+	<siteMapNode url="RITeSchool/Management/ManagementDashboardUI.aspx" title="Management Dashboard">
+		<siteMapNode url="RITeSchool/Common/DisplayMenuContents.aspx" title="Menu"/>
+
+		<siteMapNode url="RITeSchool/Accounts/VoucherListUI.aspx" title="Vouchers"/>
+		<siteMapNode url="RITeSchool/Accounts/DayBook.aspx" title="Day Book"/>
+		<siteMapNode url="RITeSchool/Accounts/MISReportUI.aspx" title="MIS Report"/>
+		<siteMapNode url="RITeSchool/Accounts/LedgerSummaryUI.aspx" title="Ledger Summary"/>
+    <siteMapNode url="RITeSchool/Accounts/TrialBalanceReportUI.aspx" title="Trial Balance Report"/>
+	</siteMapNode>
+</siteMap>

@@ -1,0 +1,14 @@
+﻿body {}
+.ProgressReportHeader{font-weight: 700;font-size: 10pt;text-decoration: none;height: 20px;font-family:Verdana;}
+.LblNoRecord{font-family:Verdana;font-size:8pt;font-weight:700;width:100%;border:1px solid #8FBC8F;padding:4px;}
+.HeadTxtBWOPadding{font-weight:700;font-family:Verdana;font-size:12pt;}
+.ClsProgressGridTestHeader{font-weight:700;font-size:9pt;text-decoration:none;padding-right:5px;height:20px;border-bottom-style:solid;border-bottom-width:1px;padding-left:5px;font-family:Verdana;}
+.ClsBGWhite{background-color: white;font-family:Verdana;}
+.ClsHilightTextB{padding-left:5px;font-size:9pt;font-weight:700;font-family:Verdana;}
+.ClsMarksCell{font-family:Verdana;font-size:9pt;}
+.SocietyName{font-weight:700;font-family:Verdana;text-transform:capitalize;font-size:12pt;border-bottom:1px solid #ddd;padding:2px 2px 3px 5px;}
+.ActualSchoolName{font-weight:700;font-family:Verdana;text-transform:capitalize;font-size:13pt;border-bottom:1px solid #ddd;padding:2px 2px 3px 5px;}
+.ClsReportHead{font-weight:700;font-family:Verdana;text-transform:capitalize;font-size:13pt;border-bottom:1px solid #ddd;padding:2px 2px 3px 5px;}
+.ClsPaddings{ padding-left:5px; padding-right:5px;font-family:Verdana;}
+.ClsLabelNrml{font-size:9pt;font-family:Verdana;padding-left:5px;}
+.clsLabel,.ClsLabel{font-size:9pt;font-family:Verdana;padding-left:5px;padding-right:2px;}

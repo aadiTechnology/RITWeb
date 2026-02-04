@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<settings>
+
+	<!-- IMAGE DISPLAY -->
+	<!-- width and height (in pixels) of border around main image -->
+	<var symboltype="number" name="bordersize" value="0" />
+	<!--color (in hex) of the main image preloader-->
+	<var symboltype="string" name="imagePreloadColor" value="000000" />
+	
+	<!-- THUMBNAIL NAV -->
+	<!-- width and height (in pixels) for the thumbnail default size -->
+	<var symboltype="number" name="navSmSize" value="0" />
+	<!-- width (in pixels) of the gap between individual thumbnails -->
+	<var symboltype="number" name="navSpacing" value="10" />
+	<!-- width and height (in pixels) of border around individual thumbnails -->
+	<var symboltype="number" name="navBordersize" value="0" />
+	<!-- show the image numbers before the filename/title by default -->
+	<var symboltype="boolean" name="showNavNumbers" value="false" />
+	<!--Nav Bar Scale (in percentage)-->
+	<var symboltype="number" name="navScale" value="0" />
+	
+	
+	<!-- CONTROLS -->
+	<!-- open the controller menu by default-->
+	<var symboltype="boolean" name="showController" value="true" />
+	<!-- display info toggle button -->
+	<var symboltype="boolean" name="showHelpButton" value="false" />
+	<!-- display thumbnail toggle button-->
+	<var symboltype="boolean" name="showNavButton" value="false" />
+	<!-- hold time between each image -->
+	<var symboltype="number" name="showTime" value="3" />
+	<!--controller Scale (in percentage)-->
+	<var symboltype="number" name="controlScale" value="150" />
+
+	<!-- AUDIO -->
+	<!-- play sound on load -->
+	<var symboltype="boolean" name="playSound" value="true" />
+	<!-- loop amount for audio (if playsound is true, it will play once) -->
+	<var symboltype="number" name="soundLoop" value="3" />
+	<!--path to desired audio file-->
+	<var symboltype="string" name="mp3file" value="useraudio.mp3" />
+	
+	<!-- EMBED FONT -->
+	<var symboltype="boolean" name="embedFont" value="true" />
+
+</settings>

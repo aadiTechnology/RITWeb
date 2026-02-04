@@ -1,0 +1,181 @@
+﻿using System.Collections.Generic;
+using DataCommunicator.eStoreDC;
+using SchoolEntities.eStore;
+using System;
+
+namespace BusinessLogic.eStoreBL
+{
+    public class StoreItemVariationBL
+    {
+        #region Data member(s)
+        
+        private StoreItemVariationDC moStoreItemVariationDC;
+        private int miTotalRows; 
+
+        #endregion
+
+        #region Constructor(s)
+        
+        public StoreItemVariationBL()
+        {
+            moStoreItemVariationDC = new StoreItemVariationDC();
+        }
+
+        public StoreItemVariationBL(int aiSchoolId, int aiAcademicYearId, int aiUpdatedById)
+        {
+            moStoreItemVariationDC = new StoreItemVariationDC(aiSchoolId, aiAcademicYearId, aiUpdatedById);
+        } 
+
+        #endregion
+
+        #region Public Method(s)
+        
+        /// <summary>
+        /// This method is used to return colors.
+        /// </summary>
+        /// <returns></returns>
+        public List<Color> GetColors()
+        {
+            return moStoreItemVariationDC.GetColors();
+        }
+
+        /// <summary>
+        /// This method is used to retirn item sizes.
+        /// </summary>
+        /// <returns></returns>
+        public List<StoreItemSize> GetStoreItemSizes()
+        {
+            return moStoreItemVariationDC.GetStoreItemSizes();
+        }
+
+        /// <summary>
+        /// This method is used to save store item variation details.
+        /// </summary>
+        /// <param name="aoStoreItemVariationDetails"></param>
+        public void Save(StoreItemVariationDetails aoStoreItemVariationDetails)
+        {
+            moStoreItemVariationDC.Save(aoStoreItemVariationDetails);
+        }
+
+        /// <summary>
+        /// This method is used to return all store item variations.
+        /// </summary>
+        /// <param name="aiSchoolid"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiStoreItemMasterId"></param>
+        /// <param name="asFilter"></param>
+        /// <param name="SortExpression"></param>
+        /// <param name="SortDirection"></param>
+        /// <param name="maximumRows"></param>
+        /// <param name="startRowIndex"></param>
+        /// <returns></returns>
+        public List<StoreItemVariationDetails> GetAll(int aiSchoolid, int aiAcademicYearId, int aiStoreItemMasterId, string asFilter, string SortExpression, string SortDirection, int maximumRows, int startRowIndex)
+        {
+            int iEndIndex = startRowIndex + maximumRows;
+
+            if (asFilter == null)
+                asFilter = string.Empty;
+
+            if (SortExpression == null || SortExpression == string.Empty)
+                SortExpression = "Title ASC";
+            else
+            {
+                SortExpression = SortExpression.ToLower().Replace(" desc", string.Empty).Replace(" asc", string.Empty);
+                SortExpression = SortExpression + " " + SortDirection;
+            }
+
+            List<StoreItemVariationDetails> lstStoreItemVariationDetails = moStoreItemVariationDC.GetAll(aiSchoolid, aiAcademicYearId, aiStoreItemMasterId, asFilter, SortExpression, startRowIndex, iEndIndex);
+
+            if (lstStoreItemVariationDetails.Count > 0)
+                miTotalRows = lstStoreItemVariationDetails[0].TotalRows;
+            else
+                miTotalRows = 0;
+
+            return lstStoreItemVariationDetails;
+        }
+
+        /// <summary>
+        /// This method is used to return store item variation count.
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiStoreItemMasterId"></param>
+        /// <param name="asFilter"></param>
+        /// <param name="SortExpression"></param>
+        /// <param name="SortDirection"></param>
+        /// <param name="maximumRows"></param>
+        /// <param name="startRowIndex"></param>
+        /// <returns></returns>
+        public int GetCount(int aiSchoolId, int aiAcademicYearId, int aiStoreItemMasterId, string asFilter, string SortExpression, string SortDirection, int maximumRows, int startRowIndex)
+        {
+            return miTotalRows;
+        }
+
+        /// <summary>
+        /// This method is used to return variation details.
+        /// </summary>
+        /// <param name="aiId"></param>
+        /// <returns></returns>
+        public StoreItemVariationDetails Get(int aiId)
+        {
+            return moStoreItemVariationDC.Get(aiId);
+        }
+        
+        /// <summary>
+        /// This method is used to delete varation entry.
+        /// </summary>
+        /// <param name="aiId"></param>
+        public void Delete(int aiId)
+        {
+            moStoreItemVariationDC.Delete(aiId);
+        }
+
+        /// <summary>
+        /// This method is used to validate variation.
+        /// </summary>
+        /// <param name="asTitle"></param>
+        /// <param name="aiColorId"></param>
+        /// <param name="aiSizeId"></param>
+        /// <param name="aiId"></param>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <returns></returns>
+        public string Validate(string asTitle, int aiColorId, int aiSizeId, int aiId, int aiSchoolId, int aiAcademicYearId, int aiTypeId, int aiStoreItemMasterId, string asItemCode)
+        {
+            return moStoreItemVariationDC.Validate(asTitle, aiColorId, aiSizeId, aiId, aiSchoolId, aiAcademicYearId, aiTypeId, aiStoreItemMasterId, asItemCode);
+        } 
+
+        #endregion
+
+        public void SaveFreeItemDetails(FreeItemDetails oFreeItemDetails)
+        {
+            moStoreItemVariationDC.SaveFreeItemDetails(oFreeItemDetails);
+        }
+
+        public FreeItemDetails GetFreeItems(int aiId)
+        {
+            List<FreeItemDetails> lstFreeItemDetails = moStoreItemVariationDC.GetAllFreeItems(0, aiId);
+            return lstFreeItemDetails[0];
+        }
+
+        public List<FreeItemDetails> GetAllFreeItems(int aiBaseMasterVariationId)
+        {
+            return moStoreItemVariationDC.GetAllFreeItems(aiBaseMasterVariationId, 0);
+        }
+
+        public void DeleteFreeItems(int aiId)
+        {
+            moStoreItemVariationDC.DeleteFreeItems(aiId);
+        }
+
+        /// <summary>
+        /// This method is used to test result.
+        /// </summary>
+        /// <param name="aiIndexNo"></param>
+        /// <param name="asName"></param>
+        /// <param name="adtDOB"></param>
+        public void Test(int aiIndexNo, string asName, DateTime adtDOB)
+        {
+        }
+    }
+}

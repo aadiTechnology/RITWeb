@@ -1,0 +1,277 @@
+.ClsMainGrid{font-family:arial;font-weight:700;font-size:9pt;color:#000;text-decoration:none;height:200px;}
+.ClsPanel{font-family:Calibri, Arial;font-weight:700;font-size:12pt;color:#36C;height:200px;vertical-align:top;}
+.ClsGridHeader{background-image:url('../RITeSchool/images/GridHeaderBG.gif');
+background-repeat:repeat-x;background-position:left bottom;font-weight:700;font-size:10pt;color:#333;text-decoration:none;margin-left:5px;padding-right:5px;height:20px;
+}
+.ClsGridRow{background-color:#f3f5e2;margin-left:5px;height:20px;font-size:9pt;}
+.ClsGridAltRow{background-color:#e4efc4;margin-left:5px;height:20px;font-size:9pt;}
+.ClsGridBG{background-color:#d5ddbc;margin-left:5px;height:20px;font-size:9pt;}
+.ClsGridNA{background-color:#E6E9C7;font-size:9pt;padding-left:8px;padding-top:2px;vertical-align:middle;}
+.ClsConfigNotdone{background-color:#58682b;color:#fff;font-weight:700;font-size:9pt;font-family:Arial;}
+.ClsNotAssignLght{background-color:#e6e9c7;color:#000;font-weight:700;font-size:9pt;font-family:Arial;}
+.ClsNotAssignDark{background-color:#a8b39d;color:#000;font-size:9pt;font-family:Arial;}
+.ClsUpdate{background-color:#acc16f;color:#000;font-weight:700;font-size:9pt;font-family:Arial;}
+.ClsTextNormal{font-family:Arial;font-size:9pt;}
+.ClslblWithBorder{font-family:Arial;font-size:9pt;background-color:#fff;margin:0;padding:2px;}
+.lblBorderRedB{font-family:Arial;font-size:9pt;background-color:#ffe4c4;border:1px solid #ddd;color:Red;margin:0;padding:2px;}
+.lblBorderMaroonB{font-family:Arial;font-size:9pt;background-color:#ffe4c4;border:1px solid #ddd;color:Maroon;margin:0;padding:2px;}
+.ClsNwGridPaging{font-family:arial;font-size:9pt;font-weight:Bold;color:#000;padding:2px;}
+.GreenBGPatch{background-position:bottom;}
+.SubTitleHead{padding-left:15px;font-family:Arial;font-size:9pt;font-weight:700;height:20px;background-color:#efefef;}
+a:hover.navUGFeedback{background-position:right;padding-left:15px;margin-left:5px;font-family:verdana;color:Blue;font-size:8pt;font-weight:700;text-decoration:underline;}
+.navUGFeedback{background-position:right;padding-left:15px;margin-left:5px;font-family:verdana;color:#F60;font-size:8pt;font-weight:700;text-decoration:underline;}
+.MainTitleHead{font-family:Tahoma;font-size:11pt;font-weight:700;}
+.SubTitle{background-position:left;background-image:url('../RITeSchool/images/ArrowOrangDoted.gif');
+background-repeat:no-repeat;padding-left:20px;font-family:Arial;font-size:9pt;font-weight:700;height:20px;color:#55713d;
+}
+.SubTitleMenu{background-position:left;background-image:url('../RITeSchool/images/ArrowOrangDoted.gif');
+background-repeat:no-repeat;padding-left:20px;font-family:"Open Sans";font-size:12px;font-weight:700;height:20px;color:#55713d;text-decoration:none;
+}
+A:hover.SubTitleMenu{background-position:left;background-image:url('../RITeSchool/images/ArrowPurpleDbl.gif');
+background-repeat:no-repeat;padding-left:20px;font-family:"Open Sans";font-size:12px;height:20px;color:#906;text-decoration:underline;
+}
+.SubTitleMenuAdmin{background-position:left;background-image:url('../RITeSchool/images/ArrowOrangDoted.gif');
+background-repeat:no-repeat;padding-left:20px;font-family:"Open Sans";font-size:10pt;font-weight:700;height:20px;color:#55713d;text-decoration:none;
+}
+A:hover.SubTitleMenuAdmin{background-position:left;background-image:url('../RITeSchool/images/ArrowPurpleDbl.gif');
+background-repeat:no-repeat;padding-left:20px;font-family:"Open Sans";font-size:10pt;height:20px;color:#906;text-decoration:underline;
+}
+A:hover.GridLinks{background-position:left;background-repeat:no-repeat;font-family:Arial;font-size:10pt;height:18px;font-weight:700;color:maroon;text-decoration:underline;}
+.GridLinks{background-position:left;background-repeat:no-repeat;font-family:Arial;font-size:9pt;height:18px;text-decoration:none;color:#333;}
+.BGHeighLight{background-color:Aqua;}
+.ErrorImgBlink{background-image:url('../RITeSchool/images/error_icon_pulse.gif');
+background-position:left;background-repeat:no-repeat;
+}
+.IconSpacing{padding-left:5px;}
+.ClsOuterBorderGray{padding:5px;}
+.ClsBorderGray{background-color:#fff;margin:0;padding:2px;}
+.ClsBorder{background-color:#fff;border:1px solid #000;margin:0;padding:2px;}
+.ClsBorderP{background-color:#fff;border:2px solid #000;margin:0;padding:2px;}
+.ClsBorderPBg{background-color:#e7e7e7;border:solid 2px #000;margin:0;padding:2px;}
+.ClsBorder1PBg{background-color:#e7e7e7;border:solid 1px #000;margin:0;padding:2px;}
+.ClsBorderlight{background-color:#fff;border:1px solid #ddd;font-size:9pt;margin:0;padding:0;}
+.ClsBorderPager{background-color:#d6e1b7;border-top:0 solid #b6c196;font-size:9pt;font-weight:700;margin:0;padding:2px;}
+.ClsOnlyBorderlght{background-color:#fff;border:1px solid #ddd;}
+.ClsBorderNoBg{border:1px solid #ddd;padding:2px;}
+.ClsBorderBlue{border:1px solid #4682B4;padding:2px;}
+.demousertable{width: 100%;padding-right: 5px; padding-left: 5px;}
+.subpgTopImgSml{background-image: url('../RITeSchool/images/subpgTopImgSml.jpg'); 
+background-repeat: no-repeat;width: 800px; height: 77px;
+}
+.demouseroage{width: 100%; height: 100%; background-image: url('../RITeSchool/images/BGline.gif');
+background-repeat: repeat;
+}
+.demouserform{margin: 0; width: 100%; height: 100%; position: absolute;}
+.demousermaintable{width: 97%; height: 97%;}
+.SubPgMainImg{background-image:url('../RITeSchool/Styles/images/subpgTopImg.jpg');
+background-repeat:no-repeat;width:800px;height:155px;
+}
+.MainBodyDiv{padding-left:10px;padding-right:10px;}
+.TopCoenerDiv{float:right;top:0;background-color:#000;width:10px;position:absolute;}
+.floatR{float:right;}
+.ActualSchoolName{font-weight:700;font-family:Tahoma,;color:#000;text-transform:capitalize;font-size:13pt;border-bottom:1px solid #ddd;background-color:#efefef;padding:2px 2px 3px 5px;}
+.MenuActualSchoolName{font-weight:700;font-family:Tahoma;color:#7900F2;text-transform:capitalize;font-size:13pt;border-bottom:1px solid #ddd;background-color:#efefef;letter-spacing:2px;word-spacing:3px;padding:2px 4px 3px 15px;}
+.LblErrorMsg{color:Red;font-family:arial;font-size:9pt;text-align:left;float:left;}
+.MenuHeader{padding-left:5px;padding-right:5px;background-image:url('../RITeSchool/images/MenuItemBg.gif');
+background-repeat:repeat-x;background-position:left top;
+color:#fff;text-decoration:none;height:22px;font-size:8pt;font-weight:700;
+}
+.MenuArticleHeader{background-repeat:repeat-x;background-position:left top;font-family:calibri;font-size:16px;font-weight:700;color:#930;padding:1px 5px 0 2px;}
+.MenuArticleHeaderOver{background-repeat:repeat-x;background-position:left top;font-family:calibri;font-size:16px;font-weight:700;color:#FFF;background-color:#D15705;padding:1px 5px 0 2px;}
+.MenuArticleItem{font-family:Calibri;font-size:14px;border:solid 1px #000;background:#E0E6FF;font-weight:700;color:#000;margin:1px 0;padding:1px 5px;}
+.MenuArticleItemOver{font-family:Calibri;font-size:14px;border:1px solid #339;background:#369;color:#ECECFF;font-weight:700;margin:1px 0;padding:1px 5px;}
+.SchoolNameBG{border-bottom:#e5e5e5 1px solid;height:26px;background-color:#fefefe;}
+.TxtAlignRght{text-align:right;border:gray 1px solid;padding-right:5px;}
+.TxtAlignRghtB{text-align:right;border:gray 1px solid;background-color:#fcc;padding-right:5px;font-weight:700;}
+.TxtAlignCenterBLeftPad{text-align:center;border:gray 1px solid;background-color:#fcc;font-weight:700;}
+.TxtAlignRghtNoBrdr{text-align:right;padding-right:5px;}
+.TxtAlignCenter{text-align:center;border:gray 1px solid;background-color:#fff;}
+.TxtAlignCenterNoBrdr{text-align:center;padding-right:5px;}
+.TxtBoxLogin{border:1px solid #000;font-family:Verdana;font-size:9pt;color:#000;width:195px;}
+.WorkingDay,.AbsentDay,.PresentDay{color:#000;font-size:9pt;padding:3px;}
+.WorkingDayRslt{background-color:#e7e7e7;border:#000 1px solid;color:#000;font-size:9pt;font-weight:700;padding:3px;}
+.PresentDayRslt{background-color:#d8eb88;border:#000 1px solid;color:#060;font-size:9pt;font-weight:700;padding:3px;}
+.AbsentDayRslt{background-color:#FFEFD5;border:#000 1px solid;color:#f06;font-size:9pt;font-weight:700;padding:3px;}
+.AtteendeceToppers{background-image:url('../RITeSchool/images/PayBtnBg.gif');
+background-repeat:repeat-x;background-position:left top;
+font-size:9pt;font-weight:700;padding:3px;
+}
+.MonthHeader{background-image:url('../RITeSchool/images/MenuBG.gif');
+background-repeat:repeat-x;background-position:left top;
+color:#333;text-decoration:none;height:25px;
+}
+.AttenNotAvlbl{background-color:#e7e7e7;height:22px;color:#333;text-decoration:none;padding:2px;}
+.ClsTextLrg{font:Bold 11pt verdana;color:#fff;text-decoration:none;}
+.ClsConfigText{font:Bold 10pt verdana;color:#000;text-decoration:none;}
+.ClsConfigLink{font:bold 10pt verdana;color:Blue;padding-top:5px;padding-bottom:5px;text-decoration:underline;}
+.GridRowDisable{padding-left:15px;font-family:Arial;font-size:9pt;height:20px;color:#A9A9A9;background-color:#efefef;}
+.ClsMarksCell{background-color:#e6effc;font-family:Arial;font-size:9pt;padding-right:5px;}
+.ClsTotalMarksCell{background-color:#bdc6ac;color:#00f;font-family:Arial;font-size:10pt;padding:0 3px;}
+.ClsMarksGridHeader{font-weight:700;font-size:10pt;color:#333;text-decoration:none;padding-right:5px;height:20px;background-color:#c8dffe;}
+.ClsProgressGridHeader{font-weight:700;font-size:8pt;color:#333;text-decoration:none;padding-right:5px;height:20px;background-color:#c8dffe;}
+.ClsProgressGridTestHeader{font-weight:700;font-size:9pt;color:#006;text-decoration:none;padding-right:5px;height:20px;background-color:#BFE0F2;border-bottom-style:solid;border-bottom-width:1px;}
+.ClsTestHeader{font-size:8pt;font-family:Verdana;color:#009;text-decoration:none;height:20px;background-color:#b4d4ff;padding:0 3px;}
+.ClsGpTestTypeHdr{font-size:8pt;font-family:Verdana;color:#443456;text-decoration:none;height:20px;background-color:#BFDBFF;padding:0 3px;}
+.ClsReportHead{font-weight:700;font-family:Tahoma,;color:#000;text-transform:capitalize;font-size:13pt;border-bottom:1px solid #ddd;background-color:#c8dffe;padding:2px 2px 3px 5px;}
+.SocietyName{font-weight:700;font-family:Tahoma,;color:#000;text-transform:capitalize;font-size:12pt;border-bottom:1px solid #ddd;background-color:#c8dffe;padding:2px 2px 3px 5px;}
+.ClsMarksGridHeaderBG{font-weight:700;font-size:10pt;color:#333;text-decoration:none;padding-right:5px;padding-left:5px;height:20px;vertical-align:bottom;background-color:#d0d8b7;}
+.ClsMarksGridRow{background-color:#c8dffe;margin-left:5px;height:20px;font-weight:700;font-size:9pt;padding-left:5px;}
+.ClsMarksGridAltRow{background-color:#e6effc;margin-left:5px;height:20px;font-weight:700;font-size:9pt;padding-left:5px;}
+.TTransGridAltRow{background-color:#e6effc;margin-left:5px;height:20px;font-weight:400;font-size:9pt;padding-left:5px;}
+.ClsMarksGridAltRowN{background-color:#d7e3f5;margin-left:5px;height:20px;font-size:9pt;padding-left:5px;}
+.TotalType{background-color:#f3f5e2;font-weight:700;font-size:10pt;color:#000;padding:0 3px;}
+.TotalHead{background-color:#e4efc4;font-weight:700;font-size:10pt;color:#000;padding:0 3px;}
+.ReportOuter{background-color:#6495ED;}
+.DashboardMenuHead{font-family:Calibri;font-size:12pt;font-weight:700;color:#C39;background-color:#F4FECF;border:1px solid #ddd;padding:0 3px;}
+.TxtBSml{color:#4682B4;font-weight:700;font-family:Verdana, Arial, Tahoma,;font-size:8pt;line-height:10pt;}
+.HomePGTopImg{background-image:url('../RITeSchool/images/HomeImg.jpg');
+background-repeat:no-repeat;
+}
+.TxtBoxMandAdmission{border:1px solid #000;background-color:#ffffa0;font-family:Verdana;font-size:8pt;}
+.TxtNormalAdmission{color:#000;font-weight:400;font-family:MS Sans Serif;font-size:10pt;line-height:12pt;}
+.HeadTxtBWOPadding{font-weight:700;font-family:Verdana;font-size:12pt;color:#06c;}
+b.rtop,b.rbottom{display:block;background:#FFF;}
+b.rtop b,b.rbottom b{display:block;height:1px;overflow:hidden;background:#efefef;}
+b.rtop b.r4,b.rbottom b.r4{height:2px;margin:0 1px;}
+.ErrMsg{color:red;font-weight:400;font-family:Verdana,;font-size:8pt;}
+.TextNormalB{color:#0000CD;font-weight:700;font-family:MS Sans Serif;font-size:10pt;line-height:12pt;}
+.TxtBoxAdmission{border:1px solid #000;font-family:Verdana;font-size:8pt;}
+.ClsBtmBorderGray,.borderBtm{border-bottom:1px solid #ddd;}
+.MenuHeaderRoll,.DayHeader{background-image:url('../RITeSchool/images/blue-bg.gif');
+background-position:left top;
+background-repeat:repeat-x;height:22px;color:#333;text-decoration:none;
+}
+.MenuHeaderBG,.NewMenuHeaderBG{background-image:url('../RITeSchool/images/BtnBG.gif');
+background-repeat:repeat-x;background-position:left top;
+height:22px;
+}
+.navForgotPwd{background-image:url('../images/Arrow.gif');
+background-position:left center;background-repeat:no-repeat;color:#616192;font-family:Arial;font-size:9pt;font-weight:700;margin-left:5px;padding-left:15px;text-decoration:none;
+}
+.ClsUnread{font-weight: bold !important; }
+.footnote{color: black; font-size: 8pt;}
+.ClsBottomAlignment{position: relative;bottom: 0%;}
+.parentfeedbackmaintable{width: 100%; height: 97%;vertical-align: top;}
+.btnmouseover{ border-width:1; border-color:Maroon;background-image:url('../RITeSchool/Styles/images/BtnBGRollNew.jpg');
+}
+.btnmouseout{ border-width:1; border-color:#a3c07b;background-image:url('../RITeSchool/Styles/images/BtnBG.jpg');
+}
+
+.overlayInnerLanguage
+{
+    border: 8px solid #DDDDDD;
+    background: #F4F4F4;
+    position: absolute !important;
+    display: none;
+    border-radius: 25px;
+    top: 30%;
+    left: 40%;
+    cursor: default;
+    width: 500px;
+    -height: 400px;
+    z-index: 100002;
+}
+.overlayInner
+{
+    border: 8px solid #DDDDDD;
+    background: #F4F4F4;
+    position: absolute !important;
+    display: none;
+    border-radius: 25px;
+    top: 30%;
+    left: 40%;
+    cursor: default;
+    width: 500px;
+    -height: 400px;
+    z-index: 100001;
+}
+
+.themeCombo
+{
+    border: 2px solid #BBBBBB;
+    margin-left: 15px;
+    height: 25px;
+    width: 200px;
+    background-color: #F4F8FF;
+    text-align: left;
+    color: #666666;
+    overflow: hidden;
+    border-radius: 9px;
+}
+.ThemeLabel
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    color: #555555;
+    height: 25px;
+    line-height: 1px;
+    vertical-align: middle;
+    text-align: center;
+}
+.ThemeDiv
+{
+    border: 3px solid #FFFFFF;
+    background-color: #D1D1D1;
+    padding: 10px;
+    margin: 25px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: default;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+}
+   .overlayOuter
+{
+    background: #01235A;
+    display: none;
+    height: 100%;
+    left: 0;
+    cursor: default;
+    position: absolute !important;
+    top: 0;
+    width: 100%;
+    z-index: 100001;
+    opacity:0.5;
+	-moz-opacity:0.5;
+	filter: alpha(opacity=50);
+}
+
+  .overlayOuterLanguage
+{
+    background: #01235A;
+    display: none;
+    height: 100%;
+    left: 0;
+    cursor: default;
+    position: absolute !important;
+    top: 0;
+    width: 100%;
+    z-index: 100002;
+    opacity:0.5;
+	-moz-opacity:0.5;
+	filter: alpha(opacity=50);
+}
+.clsLegendLbl
+{
+    background-color: #E6E9C7;
+}
+
+.colonPadding
+{
+    padding-left: 1px;
+}
+
+.mr .colonPadding
+{
+    padding-top: 2px;
+}
+
+.subMenu
+{
+    left: 100% !important;
+    top: 0% !important;
+}
+

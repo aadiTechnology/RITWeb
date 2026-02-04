@@ -1,0 +1,355 @@
+﻿a {
+    text-decoration: none;
+}
+/*Site.css - Used to add classes for new dashbaord*/
+
+.ClsHilightTextB
+{
+    height:20px !important;    
+}
+/*
+commented this code due to this alignment is break on standardwise division screen
+th[style*="padding-left"] {
+    text-align: left;
+}*/
+
+/*
+label[for*=chk]
+{
+    padding-left:5px;
+}
+
+label[for*=opt]
+{
+    padding-left:5px;
+}*/
+
+.ClsHilightText {
+    color: #906 !important;
+    font-size: 13px !important;
+}
+
+
+/*.ClsBorderlight
+{
+    padding:0px !important;    /* replace padding 1 by 0 temporary for  colon alignment issue  on photo gallery screen 
+}*/
+
+/*-----------Message list -----------*/
+#ulUnreadMessage>div > li > a:active, #ulUnreadMessage>ul> li > a:hover, #ulUnreadMessage>ul> li > a:focus {
+    background-color: transparent !important;
+    color: #555;
+}
+
+#ulUnreadMessage>div > li > a:active, .#ulUnreadMessage>ul> li > a:hover, #ulUnreadMessage>ul > li > a:focus {
+    background-color: transparent !important;
+}
+
+#ulUnreadMessage>div > li > a:active, #ulUnreadMessage>ul > li > a:hover, #ulUnreadMessage>ul > li > a:focus {
+    background-color: transparent !important;
+}
+
+#ulUnreadMessage>div > li a:hover, #ulUnreadMessage>ul li a:focus, #ulUnreadMessage>ul li a:active, .#ulUnreadMessage>ul li.active a, #ulUnreadMessage>ul li.active a:hover, 
+#ulUnreadMessage>div .dropdown-submenu:hover > a, .nav-tabs #ulUnreadMessage>ul li > a:focus {
+    background: #4f99c6 none repeat scroll 0 0;
+}
+
+#ulUnreadMessage>div > li > a:hover, #ulUnreadMessage>ul > li > a:focus {
+    text-decoration: none;
+}
+
+#ulUnreadMessage>div > li > a {
+    border-bottom-color: #e4ecf3;
+}
+
+#ulUnreadMessage>div > li > a {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0;
+    padding: 10px 2px;
+}
+
+#ulUnreadMessage>div > li > a {
+    clear: both;
+    display: block;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+#ulUnreadMessage > li:last-child > a {
+    border-bottom: 0 solid #ddd;
+    border-top: 1px solid #e4ecf3;
+    color: #4f99c6;
+    font-size: 13px;
+    text-align: center;
+}
+
+#ulUnreadMessage>div > li:last-child > a {
+    text-align: left !important;
+    color:#555;
+}
+
+#innerUlMessage {
+    box-shadow: initial !important;
+    height: 215px;
+    /*height :79px;*/
+    min-height:75px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-left: 5px;
+     width: 263px;
+     font-size:11px;
+}
+
+#innerUlEvents {
+    box-shadow: initial !important;
+    height: 175px;
+    /*height :79px;*/
+    min-height:75px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-left: 2px;
+   width: 263px;
+   font-size:13px !important;
+}
+
+#ulUpcomingEvents > li:last-child > a {
+    border-bottom: 0 solid #ddd;
+    border-top: 1px solid #e4ecf3;
+    color: #4f99c6;
+    font-size: 13px;
+    text-align: center;
+}
+
+
+#ulUpcomingEvents>div > li > a {
+    clear: both;
+    display: block;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.msg-subject
+{
+    margin-top:3px;    
+}
+
+/*----------------*/
+
+.width-20{
+    width:20px !important;
+ }
+ 
+ .width-111{
+    width:111px !important;
+ }
+ 
+ .width-99-percentage
+ {
+     width:99% !important;
+ }
+ 
+.remove-margin-top{
+    margin-top:0px;
+ }
+
+.margin-bottom-0
+{
+    margin-bottom:0px !important;    
+}
+
+.margin-bottom-2
+{
+    margin-bottom:2px !important;    
+}
+
+.margin-bottom-5
+{
+    margin-bottom:5px !important;    
+}
+
+.vertical-align-middle
+{
+    vertical-align:middle !important;
+}
+
+/*table[id*='Legend'] img
+{
+    vertical-align:unset;
+
+}*/
+
+.img-align-unset{
+
+ vertical-align:unset;
+
+}
+
+.font-size-13{
+    font-size :13px;
+}
+
+.txt-color-green{
+    color:#59A84B;
+    font-size :13px;
+}
+
+
+/*-------------attendance date picker changes--------------*/
+.k-picker-wrap
+{
+    border-radius: 2px !important;
+}
+
+.k-calendar .k-footer {
+    padding: 0 !important;
+    font-family:open sans !important;
+}
+
+.k-calendar .k-content
+{
+    font-family:open sans !important;    
+    font-size:11px;
+    color:#2e2e2e !important;
+}
+
+.ClsGrayMainTitle {
+    height: auto !important;
+    padding: 0 0 0 10px !important;
+}
+
+.k-calendar-container>.k-widget
+{
+    margin-left:0 !important;
+}
+/*-------------attendance date picker changes--------------*/
+
+/*------------mesage count-------------*/
+
+.img-align-top
+{
+   vertical-align :top;
+
+}
+
+.z-index-0
+{
+    z-index:0;    
+}
+
+#statistics-widget .nav-tabs > li.active > a, #statistics-widget .nav-tabs > li.active > a:hover, #statistics-widget .nav-tabs > li.active > a:focus {
+    z-index: 1 !important;
+}
+
+/*Student Attendance,StudentPayFeeUI */
+.AtteendeceToppers {
+    height: 25px !important;
+}
+
+
+#ulUpcomingEvents > div > li {
+    border-bottom: 1px solid #e4ecf3 !important;
+    line-height:25px !important;
+    font-weight:normal;
+    font-size:13px !important
+}
+
+#innerUlEvents li.events{background-color:#afeeee !important;color:navy !important; border:none; border-bottom: 1px solid #e4ecf3 !important; font-weight:normal;}
+#innerUlEvents li.exam{background-color:#d8eb88 !important;color:#060 !important; border:none; border-bottom: 1px solid #e4ecf3 !important; font-weight:normal;}
+#innerUlEvents li.holidays{background-color:#FFEFD5 !important;color:red !important; border:none; border-bottom: 1px solid #e4ecf3 !important; font-weight:normal;}
+
+/*#innerUlEvents li:hover {
+    background-color: #f4f9fc !important;
+}*/
+
+.event-span
+{
+    margin-bottom : 1px !important;
+}
+
+#innerUlEvents > li> span >div
+{ 
+    color:#555;
+    font-size:11px !important;
+    line-height:15px !important
+
+
+}
+.padding-bottom-5
+{
+    padding-bottom :5px !important;
+}
+
+.no-record-found-msg
+{
+    text-align:center;
+    font-size:15px;    
+}
+/*-------------------------Dashbaord Changes------------------------------------*/
+/* This class is used to school logo image over*/
+.SchoolLogoHover {
+  background-color: white;
+  box-shadow: 0 0 5px #ccc;
+  left: 0;
+  padding: 10px;
+  position: absolute;
+  top: 45px;
+}
+
+.margin-auto {
+    margin-left:auto !important;
+    margin-right:auto !important;
+}
+
+.ClsGridHeader > th > a{
+color: #333333 !important;
+font-family:'Open Sans'
+}
+
+/*Investment / Income Methods - grid header text color and font size*/
+.ClsGridHeader> th.clsLabelgrd{
+    color : #333333 !important;
+    font-family :open sans;
+    font-size: 9pt
+}
+
+/*Tax deduction - grid header text color and font size*/
+.ClsLabelR,.ClsLabelL {
+    float: none;
+    font-family: open sans;
+    font-size: 9pt;
+}
+
+.sectionHeader,.tableHeader,.sectionView .parent , .sectionTotal{
+    background-color : #bcdbca !important
+}
+
+.clsLegendLbl{
+     background-color: #eaeaea !important;
+}
+
+.TotalCount {
+     background-color: #a7c6b5 !important;
+}
+
+.ClsNotAssignDark{
+    background-color:#eaeaea;
+}
+
+.ClsUpdate{
+    background-color:#8fc6a6
+}
+
+.ClsGridNA{
+    background-color:#eaeaea !important
+}
+
+.ClsConfigNotdone{
+
+    background-color : #5dad8e
+}
+
+/* change for block progress report screen */
+/*.PendingFees td {
+    border-top: 1px solid #edb62c;
+}*/

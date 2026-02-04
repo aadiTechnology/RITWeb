@@ -1,0 +1,173 @@
+<%@ Master Language="C#" CodeFile="OnlineAdmission.master.cs" Inherits="OnlineAdmission" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Welcome to <%= ConfigurationManager.AppSettings["SchoolName"] %></title>
+    <meta name="description" content="Maharashtra, India" />
+    <meta name="keywords" content="Maharashtra, india, educational experience, learning, guidance, students, Regulus Information Technologies, ERP" />
+    <meta name="section" content="schools-maharashtra-india" />
+    <meta name="pagename" content="RITeSchool" />
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
+    <meta name="robots" content="index,follow" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="author" content="Regulus Information Technologies - http://www.RegulusIT.net" />
+    <link href="../../Styles2.css" type="text/css" rel="stylesheet" />    
+    <link rel="SHORTCUT ICON" href="../../images/favicon.ico?version=1.2" type="image/x-icon" />
+    <script language="JavaScript" type="text/javascript">
+        window.history.forward(1)
+        history.go(1);
+        function openReceipt(url) {
+            window.open(url, '_blank', 'scrollbars=yes,resizable=no,menubar=no,status=no,titlebar=no,toolbar=no,top=20,left=100,width=800,height=600');
+        }
+    </script>
+    <script type="text/javascript" src="../Scripts/Validate2.js?version=1.0"></script>
+    <script type="text/javascript" src="../Scripts/Validations.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery-1.7.min.js"></script>
+</head>
+<body style="height: 97%">
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border: 1px solid #fff; height: 100%;">
+        <tr>
+            <td bgcolor="#FFFFFF" valign="top">
+                <table border="0" cellspacing="0" cellpadding="0" style="width: 100%; height: 100%;">
+                    <tr id="trSchoolLogo" runat="server">
+                        <td id="schoolLogo" runat="server" align="right" colspan="2" valign="top" class="PPSTopImg" style="height: 70px">
+                            <div style="float: left">
+                                <img src="../../images/PPSLogo.gif" height="70px" alt="PPS Logo"></div>
+                        </td>                        
+                    </tr>
+                    <tr id="trSchoolLogozlsp" runat="server" visible="false">
+                        <td colspan="2">
+                            <table style="border:1px solid; width:100%;">
+                                <tr>
+                                    <td id="schoolLogozlsp" runat="server" align="right" valign="top"  style="height: 70px; width:200px;">
+                                        <div style="float: left">
+                                            <img src="../images/School_LogoZLSP.png" height="120px" width="auto" alt="PPS Logo"></div>
+                                    </td>   
+                                    <td style="font-family : Verdana; font-size:28px; font-weight: bold;">
+                                        <u>ZEAL School - Admission Form</u>
+                                    </td> 
+                                </tr>
+                            </table>
+                         </td>                        
+                    </tr>
+                    <tr align="center">
+                        <td align="center" colspan="2">
+                            <asp:UpdateProgress ID="UProgressPopUp" runat="server">
+                                <ProgressTemplate>
+                                    <div style="width: 250px; margin: 5px">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <asp:Image ImageUrl="~/RITeSchool/images/Loading9.gif" runat="server" ID="imgLoading9" />
+                                                </td>
+                                                <td valign="middle" class="ClsLoadingBG">
+                                                    <span class="LoadingTxt">Please wait...</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </ProgressTemplate>
+                            </asp:UpdateProgress>
+                        </td>
+                    </tr>
+                    <tr>
+                    <%--class="borderBlue"--%>
+                        <td align="right" valign="top" style="margin: 4px; width: 300px; padding-top: 4px;">
+                            <asp:Menu ID="AdmissionMenus" runat="server" StaticSubMenuIndent="10px" BackColor="#F7F6F3"
+                                DynamicHorizontalOffset="2" Font-Names="Verdana" ForeColor="#7C6F57" Visible="false" >
+                                <StaticMenuStyle BackColor="#E9DCE0" BorderColor="#FFCC00" BorderStyle="Solid" BorderWidth="1px" />
+                                <StaticSelectedStyle BackColor="#5D7B9D" BorderColor="#333300" BorderStyle="Solid"
+                                    BorderWidth="1px" CssClass="px" ForeColor="#FFECFF" Font-Bold="False" />
+                                <StaticMenuItemStyle BackColor="#FDF7E1" BorderColor="#000066" BorderStyle="Solid"
+                                    BorderWidth="1px" HorizontalPadding="5px" ItemSpacing="2px" VerticalPadding="2px" />
+                                <DynamicHoverStyle BackColor="#7C6F57" ForeColor="White" />
+                                <DynamicMenuStyle BackColor="#F7F6F3" />
+                                <DynamicSelectedStyle BackColor="#5D7B9D" />
+                                <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                                <StaticHoverStyle BackColor="#7C6F57" BorderColor="#FE5F6A" BorderStyle="Solid" BorderWidth="1px"
+                                    ForeColor="White" />
+                                <Items>
+                                    <asp:MenuItem NavigateUrl="~/RITeSchool/Admission/OnlineAdmissionUI.aspx" Text="Online Admission"
+                                        Value="Onlin Admission"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/RITeSchool/Admission/OnlineAdmissionDashBoardUI.aspx"
+                                        Text="Status" Value="Dash Board"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="../Accountant/FeesMiniReceipt.aspx" Text="Fee Receipt"
+                                        Value="Fee Receipt"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="../Admission/AdmissionFormReport.aspx" Text="Admission Form"
+                                        Value="Admission Form"></asp:MenuItem>
+                                    <asp:MenuItem NavigateUrl="~/RITeSchool/Admission/OnlineAdmissionlLoginUI.aspx" Text="Log In"
+                                        Value="Log In"></asp:MenuItem>
+                                </Items>
+                            </asp:Menu>
+                        </td>
+                        <td valign="top" align="center" style="width: 100%; height: 100%;" class="borderBlue"
+                            rowspan="1">
+                            <asp:UpdatePanel runat="server" ID="UpdtContentPlaceHolder" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <asp:ContentPlaceHolder ID="MainBody" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </ContentTemplate>
+                                <Triggers>
+                                    <asp:AsyncPostBackTrigger ControlID="ADmissionMenus" EventName="MenuItemClick" />
+                                </Triggers>
+                            </asp:UpdatePanel>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#DAE4F1" class="footer">
+                <div align="center" id="footernote">
+                    </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:HiddenField ID="hidServerDate" runat="server" />
+                <asp:HiddenField runat="server" ID="hidSessionUserId" Value="0"/>
+            </td>
+        </tr>
+    </table>
+    </form>
+<asp:ContentPlaceHolder ID="ContentFooter" runat="server">
+</asp:ContentPlaceHolder>
+</body>
+<% if (SchoolBase.Settings.AddIntGoogleAnalytics)
+   { %>
+
+<script type="text/javascript">
+
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    
+
+</script>
+
+<script type="text/javascript">
+
+    var pageTracker = _gat._getTracker("UA-4752582-2");
+
+    pageTracker._trackPageview();
+
+</script>
+
+<%} %>
+
+<script language="javascript" type="text/javascript">
+  _clienthidServerDate = "<%=this.hidServerDate.ClientID %>";
+window.onload = SetYear;
+
+function SetYear() {
+    //window.document.forms[0].onclick = function(){ highlight(event); };
+    var year = document.getElementById(_clienthidServerDate).value;
+    document.getElementById('footernote').innerHTML = "Copyright © 2007 - " + year + " RegulusIT.net All rights reserved."
+}
+</script>
+
+</html>

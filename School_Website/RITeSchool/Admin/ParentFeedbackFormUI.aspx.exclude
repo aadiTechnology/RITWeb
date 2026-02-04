@@ -1,0 +1,81 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RITeSchool/MasterPages/MasterPage.master"
+    AutoEventWireup="true" CodeFile="ParentFeedbackFormUI.aspx.cs" Inherits="RITeSchool_Admin_ParentFeedbackFormUI" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="headContentPlaceholder" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainBody" runat="Server">
+    <div class="MainBodyDiv">
+        <div>
+            <table width="50%">
+                <tr align="center">
+                    <th align="center">
+                        <u><b>Parent Feedback Form</b></u>
+                    </th>
+                </tr>
+                <tr>
+                    <td align="justify">
+                        We at Shantiniketen School appreciate and trust you place in us to educate your
+                        child in holistic way. As parterns in education of your child , your opnion can
+                        help us understand how satisfied you are with the educational services we provide.We
+                        are commmited to providing the best possible experiance for you and your child.So
+                        please take a moment to complete this short survey.Your opnions are valued and will
+                        help us to improve.We shall be discreet about your identity.Kindly fill up the form
+                        in the parent portal.Thanks for helping us out.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <table align="center" width="100%">
+                            <tr>
+                                <td align="center" style="width: 100%">
+                                    <asp:ListView ID="lstvwParentFeedback" runat="server">
+                                        <LayoutTemplate>
+                                            <table width="100%" runat="server" id="tblParentFeedback" style="color: #333333" cellpadding="0"
+                                                cellspacing="1" class="GridBorder">
+                                                <tr class="ClsGridHeader">
+                                                    <th align="left">
+                                                        Title
+                                                    </th>
+                                                    <th align="left">
+                                                        <asp:DropDownList ID="cmbFeedback" runat="server" Width="50px">
+                                                        </asp:DropDownList>
+                                                    </th>
+                                                    <th>
+                                                        <asp:TextBox ID="txtFeedback" runat="server" MaxLength="300" Visible="false"></asp:TextBox>
+                                                    </th>
+                                                </tr>
+                                                <tr id="itemPlaceholder" runat="server">
+                                                </tr>
+                                            </table>
+                                        </LayoutTemplate>
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td align="left">
+                                                    <asp:Label ID="lblTitl" runat="server" Text="Title"></asp:Label>
+                                                </td>
+                                                <td>
+                                                    <asp:DropDownList ID="cmbFeedback" runat="server" Width="50px">
+                                                    </asp:DropDownList>
+                                                </td>
+                                                <td>
+                                                    <asp:TextBox ID="txtFeedback" runat="server" MaxLength="300" Visible="false"></asp:TextBox>
+                                                </td>
+                                            </tr>
+                                        </ItemTemplate>
+                                    </asp:ListView>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit" class="ClsBtn" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</asp:Content>
+<%--<asp:Content ID="Content3" ContentPlaceHolderID="PopupMainBody" runat="Server">
+</asp:Content>--%>

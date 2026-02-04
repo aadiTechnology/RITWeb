@@ -1,0 +1,235 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/RITeSchool/MasterPages/MasterPage.master"
+    AutoEventWireup="true" CodeFile="StaffPerformanceEvaluationUI.aspx.cs" Inherits="StaffPerformanceEvaluationUI" %>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainBody" runat="Server">
+    <div class="MainBodyDiv">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="97%">
+            <tr>
+                <td align="left" id="td1" runat="server">
+                    <asp:ValidationSummary ID="valSum" runat="server" CssClass="ClsMdtStar" />
+                    <asp:CustomValidator ID="cstValGrade" runat="server" ClientValidationFunction="ValidateGrade"
+                        SetFocusOnError="True" Display="None" ErrorMessage=""></asp:CustomValidator>
+                    <asp:CustomValidator ID="cstvalObservation" runat="server" ClientValidationFunction="ValidateObservation"
+                        SetFocusOnError="True" Display="None" ErrorMessage=""></asp:CustomValidator>
+                    <asp:CustomValidator ID="cstValObservationLength" runat="server" ClientValidationFunction="ValidateObservationLength"
+                        SetFocusOnError="True" Display="None" ErrorMessage=""></asp:CustomValidator>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" id="tdMessage" runat="server">
+                    <asp:Label ID="lblMessage" runat="server" EnableViewState="false" CssClass="ClsLabelNrml"
+                        ForeColor="Blue" Style="text-align: center"></asp:Label>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" id="tdFinalApprover" runat="server">
+                    <table width="70%">
+                        <tr>
+                            <td align="center" class="LblNoRecord">
+                                <asp:Label ID="lblAdminMessage" runat="server" EnableViewState="false" Text="<%$ Resources:LocalizedResources, msgStaffPerformanceEvalNotPublished%>"
+                                    ForeColor="Blue" Style="text-align: center"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <asp:Button ID="btnBackUp" runat="server" Text="<%$ Resources:LocalizedResources, Back%>" CssClass="ClsBtn" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <table width="100%" id="tblEvaluation" runat="server">
+                        <tr>
+                            <td align="center">
+                                <table width="70%" id="tblSchoolDetails" runat="server">
+                                    <tr>
+                                        <td align="center" class="SocietyName">
+                                            <asp:Label ID="lblOrgName" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" class="ActualSchoolName">
+                                            <asp:Label ID="lblSchoolName" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" class="ClsReportHead">
+                                            <asp:Label ID="lblStaffPerformance" runat="server" Text="<%$ Resources:LocalizedResources, StaffPerformanceEvaluation%>"></asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <table width="70%" id="tblUserDetails" runat="server">
+                                    <tr>
+                                        <td align="left" class="ClsBorderlight">
+                                            <asp:Label ID="lblNameHeader" runat="server" CssClass="ClsLabel" Text="<%$ Resources:LocalizedResources, Name%>"></asp:Label>
+                                            <span class="ClsLabel colonPadding">:</span>
+                                        </td>
+                                        <td align="left" class="ClsBorderlight">
+                                            <asp:Label ID="lblName" runat="server" CssClass="ClsHilightTextB"></asp:Label>
+                                        </td>
+                                        <td align="left" class="ClsBorderlight">
+                                            <asp:Label ID="lblDesignationHeader" runat="server" CssClass="ClsLabel" Text="<%$ Resources:LocalizedResources, Designation%>"></asp:Label>
+                                             <span class="ClsLabel colonPadding">:</span>
+                                        </td>
+                                        <td align="left" class="ClsBorderlight">
+                                            <asp:Label ID="lblDesignation" runat="server" CssClass="ClsHilightTextB"></asp:Label>
+                                        </td>
+                                        <td align="left" class="ClsBorderlight">
+                                            <asp:Label ID="lblYearHeader" runat="server" CssClass="ClsLabel" Text="<%$ Resources:LocalizedResources, Year%>"></asp:Label>
+                                            <span class="ClsLabel colonPadding">:</span>
+                                        </td>
+                                        <td align="left" class="ClsBorderlight">
+                                            <asp:Label ID="lblYear" runat="server" CssClass="ClsHilightTextB"></asp:Label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <table id="tblGrades" runat="server" width="70%">
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <table id="tblParameter" runat="server" width="70%">
+                                </table>
+                            </td>
+                        </tr>
+                        <tr id="trButtons" runat="server">
+                            <td align="center">
+                                <asp:Button ID="btnBack" runat="server" Text="<%$ Resources:LocalizedResources, Back%>" CssClass="ClsBtn" CausesValidation="false" />
+                                <asp:Button ID="btnSave" runat="server" Text="<%$ Resources:LocalizedResources, Save%>" CssClass="ClsBtn" OnClick="btnSave_Click"
+                                    UseSubmitBehavior="False" />
+                                <asp:Button ID="btnSubmit" runat="server" Text="<%$ Resources:LocalizedResources, Submit%>" CssClass="ClsBtn" UseSubmitBehavior="False" CausesValidation="true"
+                                    OnClick="btnSubmit_Click" />
+                                <asp:Button ID="btnPublish" runat="server" Text="<%$ Resources:LocalizedResources, Publish%>" CssClass="ClsBtn" Width="100px" OnClick="btnPublish_Click" CausesValidation="true"
+                                    UseSubmitBehavior="False" />
+                                <asp:Button ID="btnViewReport" runat="server" Text="<%$ Resources:LocalizedResources, ViewReport%>" CssClass="ClsBtn" Width="100px"
+                                    CausesValidation="false" />                                
+                                <asp:HiddenField ID="hidIsViewMode" runat="server" Value="N" />
+                                <asp:HiddenField ID="hidValGradeSelected" runat="server" Value="" />
+                                <asp:HiddenField ID="hidvalBlankObservation" runat="server" Value="" />
+                                <asp:HiddenField ID="hidvalObservationLength" runat="server" Value="" />
+                                <asp:HiddenField ID="hidvalActionSaveandPublish" runat="server" Value="" />
+                                <asp:HiddenField ID="hidvalActionSaveandSubmit" runat="server" Value="" />
+                                <asp:HiddenField ID="hidvalActionUnPublish" runat="server" Value="" />
+                            </td>
+                        </tr>
+                        <tr id="trButtonClose" runat="server" visible="false">
+                            <td align="center">
+                                <asp:Button ID="btnClose" runat="server" Text="<%$ Resources:LocalizedResources, Close%>" CssClass="ClsBtn" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" language="javascript">
+        _clienthidValGradeSelected = "<%=this.hidValGradeSelected.ClientID %>"
+        _clienthidvalBlankObservation = "<%=this.hidvalBlankObservation.ClientID %>";
+        _clienthidvalObservationLength = "<%=this.hidvalObservationLength.ClientID %>"
+        _clienthidvalActionSaveandPublish = "<%=this.hidvalActionSaveandPublish.ClientID %>";
+        _clienthidvalActionSaveandSubmit = "<%=this.hidvalActionSaveandSubmit.ClientID %>";
+        _clienthidvalActionUnPublish = "<%=this.hidvalActionUnPublish.ClientID %>";
+
+
+        function OpenReport(querystring) {
+            window.open('StaffPerformanceEvaluationUI.aspx?' + querystring, '_new', 'scrollbars=yes,resizable=no,top = 50,left=50,width=800,height=600')
+        }
+
+        function ConfirmPublish(isPublish) {
+            $get("<%=this.lblMessage.ClientID %>").innerHTML = "";
+            var validationResult = false;
+            if (typeof (Page_ClientValidate) == 'function')
+                validationResult = Page_ClientValidate("");
+
+            if (validationResult) {
+                if (isPublish == 1)
+                    return confirm($get(_clienthidvalActionSaveandPublish).value);
+                else
+                    return confirm($get(_clienthidvalActionUnPublish).value);
+            }
+        }
+
+        function ConfirmSubmit() {
+            return confirm($get(_clienthidvalActionSaveandSubmit).value);
+        }
+
+        function ValidateGrade(oSrc, args) {            
+            var sRows = ""
+            var grades = document.getElementsByTagName("select");
+            for (var k = 0; k < grades.length; k++) {
+                var grade = grades[k]
+                if (grade.value == 0 && grade.value != "") {
+
+                    if (sRows.match((k + 1)) == null)
+                        sRows = sRows + ", " + (k + 1)
+                }
+            }
+
+            if (sRows != "") {
+                sRows = sRows.substring(1)
+                oSrc.errormessage = $get(_clienthidValGradeSelected).value + sRows;
+                args.IsValid = false;
+                return true;
+            }
+
+            args.IsValid = true;
+            return false;
+        }
+
+        function ValidateObservation(oSrc, args) {
+            var sRows = ""
+            var observations = document.getElementsByTagName("textarea");
+            for (var k = 0; k < observations.length; k++) {
+                var observation = observations[k]
+                if (observation.value.trim() == "") {
+                    if (sRows.match((k + 1)) == null)
+                        sRows = sRows + ", " + (k + 1)
+                }
+            }
+
+            if (sRows != "") {
+                sRows = sRows.substring(1)
+                oSrc.errormessage = $get(_clienthidvalBlankObservation).value + sRows;
+                args.IsValid = false;
+                return true;
+            }
+
+            args.IsValid = true;
+            return false;
+        }
+
+        function ValidateObservationLength(oSrc, args) {
+            var sRows = ""
+            var observations = document.getElementsByTagName("textarea");
+            for (var k = 0; k < observations.length; k++) {
+                var observation = observations[k]
+                if (observation.value.trim() != "" && observation.value.trim().length > 300) {
+                    if (sRows.match((k + 1)) == null)
+                        sRows = sRows + ", " + (k + 1)
+                }
+            }
+
+            if (sRows != "") {
+                sRows = sRows.substring(1)
+                oSrc.errormessage = $get(_clienthidvalObservationLength).value + sRows;
+                args.IsValid = false;
+                return true;
+            }
+
+            args.IsValid = true;
+            return false;
+        }
+
+    </script>
+</asp:Content>

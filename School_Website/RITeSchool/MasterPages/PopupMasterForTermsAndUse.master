@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="PopupMasterForTermsAndUse.master.cs"
+    Inherits="PopupMasterForTermsAndUse" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Welcome to RITeSchool</title>
+    <meta http-equiv="Content-Script-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Style-Type" content="text/CSS"/>
+    <link href="~/Styles2.css" type="text/css" rel="stylesheet" />
+    <script language="JavaScript" type="text/javascript" src="~/mm_menu.js"></script>
+    <script type="text/javascript" src="~/RITeSchool/Scripts/Validate2.js"></script>
+    <script type="text/javascript" src="~/RITeSchool/Scripts/Validations.js"></script>
+    <script type="text/javascript" src="~/RITeSchool/Scripts/jquery-1.4.1-vsdoc.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    <table>
+     <tr>
+        <td>
+            <div id="footernote" align="center" class="ClsPopupMasterDiv">
+            </div>
+            <asp:HiddenField runat="server" ID="hidServerDate" />
+        </td>
+     </tr>
+    </table>
+    </form>
+
+<% if (SchoolBase.Settings.AddExtGoogleAnalytics)
+{ %>
+
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+    var pageTracker = _gat._getTracker("UA-4752582-2");
+    pageTracker._trackPageview();
+</script>
+
+<%} %>
+
+<script language="javascript" type="text/javascript">
+    _clienthidServerDate = "<%=this.hidServerDate.ClientID %>";
+    var year = document.getElementById(_clienthidServerDate).value;
+    document.getElementById('footernote').innerHTML = "Copyright © 2007 - " + year + " RegulusIT.net All rights reserved."
+</script>
+</body>
+</html>

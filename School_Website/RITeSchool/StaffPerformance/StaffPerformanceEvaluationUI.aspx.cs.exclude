@@ -1,0 +1,605 @@
+﻿/*
+ *  File Name - StaffPerformanceEvaluationUI.aspx.cs
+ *  Created By - Sachin
+ *  Created Date - 30 Sept 2013
+ *  Description - This class is used to set performance evaluation details.
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using BusinessLogic;
+using BusinessLogic.Exceptions;
+using StaffPerformanceEntity;
+using Utility;
+
+public partial class StaffPerformanceEvaluationUI : SchoolBase
+{
+    #region Data Member(s)
+
+    private StaffPerformanceEvaluationBL moStaffPerformanceEvaluationBL;
+    private List<StaffPerformanceObservation> mlstObservations;
+
+    #endregion
+
+    #region Property(s)
+
+    private bool IsFinalApprover
+    {
+        get
+        {
+            return moStaffPerformanceEvaluationBL.ReportingStaffs.Where(staff => staff.ReportingUserId == miUserId && staff.IsFinalApprover).Any();
+        }
+    }
+
+    private bool IsSupervisor
+    {
+        get
+        {
+            return moStaffPerformanceEvaluationBL.ReportingStaffs.Where(staff => staff.ReportingUserId == miUserId && staff.IsSupervisor).Any();
+        }
+    }
+
+    #endregion
+
+    #region Event(s)
+
+    /// <summary>
+    /// This event is used to set master page.
+    /// </summary>
+    /// <param name="e"></param>
+    protected override void OnPreInit(EventArgs e)
+    {
+        try
+        {
+            base.OnPreInit(e);
+
+            if (QueryString["IsViewMode"] == Constants.S_YES)
+                this.Page.MasterPageFile = "../MasterPages/PopupMaster.master";
+            else
+                this.Page.MasterPageFile = "../MasterPages/MasterPage.master";
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to set base class details.
+    /// </summary>
+    /// <param name="e"></param>
+    protected override void OnInit(EventArgs e)
+    {
+        try
+        {
+            base.OnInit(e);
+            moStaffPerformanceEvaluationBL = new StaffPerformanceEvaluationBL(miSchoolId, miUserId, QueryString["UserId"].ToInt(),miAcademicYearId);
+
+            if (Page.Request.Params.Get("__EVENTTARGET") != null)
+            {
+                if (btnSave.ClientID.Replace('_', '$').Equals(Page.Request.Params.Get("__EVENTTARGET")) ||
+                    btnPublish.ClientID.Replace('_', '$').Equals(Page.Request.Params.Get("__EVENTTARGET")) ||
+                     btnSubmit.ClientID.Replace('_', '$').Equals(Page.Request.Params.Get("__EVENTTARGET")))
+                    FillPerformanceEvaluationDetails();
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to fill performance evaluation details.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!IsPostBack)
+            {
+                FillPerformanceEvaluationDetails();
+                SetJavaScriptAttributes();
+            }
+            SetFields();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+    
+    /// <summary>
+    /// This event is used to save performance evaluation details.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnSave_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Save();
+            base.DisplayMessage(Resources.LocalizedResources.msgStaffPerformanceSaved, false, tdMessage);
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to publish performance evaluation details.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnPublish_Click(object sender, EventArgs e)
+    {
+        try
+        {   
+            int iYear = QueryString["Year"].ToInt();
+            bool bIsPublish = btnPublish.Text == Resources.LocalizedResources.Publish ? true : false;
+            Save();
+            moStaffPerformanceEvaluationBL.Publish(iYear, bIsPublish);
+            FillPerformanceEvaluationDetails();
+            if (bIsPublish)
+                base.DisplayMessage(Resources.LocalizedResources.msgStaffPerformancePublished, false, tdMessage);
+            else
+                base.DisplayMessage(Resources.LocalizedResources.msgStaffPerformanceUnPublished, false, tdMessage);
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event is used to submit performance evaluation details.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {   
+            int iYear = QueryString["Year"].ToInt();
+            Save();
+            moStaffPerformanceEvaluationBL.Submit(iYear);
+            FillPerformanceEvaluationDetails();
+            base.DisplayMessage(Resources.LocalizedResources.msgStaffPerformanceSubmitted, false, tdMessage);
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    #endregion
+
+    #region Method(s)
+
+    /// <summary>
+    /// This method is used to fill up performance evaluation details.
+    /// </summary>
+    private void FillPerformanceEvaluationDetails()
+    {   
+        int iYear = QueryString["Year"].ToInt();
+
+        tblGrades.Rows.Clear();
+        tblParameter.Rows.Clear();
+
+        mlstObservations = moStaffPerformanceEvaluationBL.GetAll(miUserId, iYear);
+        if (SetView())
+        {
+            SetSchoolDetails();
+            SetUserDetails();
+            FillGrades();
+            FillParameters();
+            SetButtonState();
+        }
+    }
+
+    /// <summary>
+    /// This method is used to show message if performance details are not published.
+    /// </summary>
+    private bool SetView()
+    {
+        if (moStaffPerformanceEvaluationBL.UserDetails == null)
+        {
+            tdFinalApprover.Visible = true;
+            tblEvaluation.Visible = false;
+            return false;
+        }
+        else
+        {
+            tdFinalApprover.Visible = false;
+            tblEvaluation.Visible = true;
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// This method is used to set buttons state.
+    /// </summary>
+    private void SetButtonState()
+    {
+        if (IsSupervisor)
+        {
+            btnPublish.Visible = true;
+            btnSubmit.Visible = false;
+            btnViewReport.Visible = true;
+
+            if (moStaffPerformanceEvaluationBL.StaffPerformanceStatus.Where(user => user.ReportingUserId == miUserId && user.IsPublished).Any())
+            {
+                btnPublish.Text = Resources.LocalizedResources.Unpublish;
+                btnSave.Enabled = false;
+                btnPublish.Enabled = IsSupervisor;
+            }
+            else
+            {
+                btnPublish.Text = Resources.LocalizedResources.Publish;
+                btnSave.Enabled = true;
+                btnPublish.Enabled = true;
+            }
+        }
+
+        if (IsFinalApprover)
+        {
+            btnPublish.Visible = false;
+            btnSave.Visible = false;
+            btnViewReport.Visible = false;
+            btnSubmit.Visible = false;
+        }
+        
+        if (!IsSupervisor && !IsFinalApprover)
+        {
+            btnPublish.Visible = false;
+            btnSubmit.Visible = true;
+            btnViewReport.Visible = false;
+            if (moStaffPerformanceEvaluationBL.StaffPerformanceStatus.Where(user => user.ReportingUserId == miUserId && user.IsPublished).Any())
+            {
+                btnSubmit.Enabled = false;
+                btnSave.Enabled = false;
+            }
+        }
+
+        btnPublish.Attributes.Add("onclick", "if(!ConfirmPublish('" + (btnPublish.Text == Resources.LocalizedResources.Publish ? Constants.S_ONE : Constants.S_ZERO) + "')) return false;");
+        btnSubmit.Attributes.Add("onclick", "if(!ConfirmSubmit()) return false;");
+    }
+
+    /// <summary>
+    /// This method is used to fill parameters.
+    /// </summary>
+    private void FillParameters()
+    {
+        int iSrNo = 1;
+
+        HtmlTableRow trHeader = new HtmlTableRow();
+        AddCell(trHeader, Resources.LocalizedResources.SrNo, "ClsProgressGridTestHeader", "Center", 1, "Width:50px");
+        AddCell(trHeader, Resources.LocalizedResources.PerformanceParameter, "ClsProgressGridTestHeader", "Center", 3);
+        tblParameter.Rows.Add(trHeader);
+
+        moStaffPerformanceEvaluationBL.PerformanceParameters
+        .Join(moStaffPerformanceEvaluationBL.PerformanceSkills, parameter => parameter.SkillId, skill => skill.SkillId, (parameter, skill) => new { Title = parameter.Title + " - " + skill.SkillName, ParameterId = parameter.Id, SkillSortOrder = skill.SortOrder, ParameterSortOrder = parameter.SortOrder })
+        .OrderBy(skl => skl.SkillSortOrder)       
+        .ToList()
+        .ForEach
+         (
+                parameter =>
+                {
+                    HtmlTableRow oHtmlTableRow = new HtmlTableRow { ID = "tr_" + parameter.ParameterId };
+                    Label oLabel = new Label { ID="lblParameter_"+parameter.ParameterId, Text = ( iSrNo++ ).ToString() };
+                    AddCell(oHtmlTableRow, string.Empty, "ClsMarksCell", "Center", 1, string.Empty, oLabel);
+                    AddCell(oHtmlTableRow, parameter.Title, "ClsMarksCell", "Center", 3, "font-weight:bold");
+                    tblParameter.Rows.Add(oHtmlTableRow);
+
+                    HtmlTableRow trObservation = new HtmlTableRow();
+                    AddCell(trObservation, string.Empty, "ClsMarksCell");
+
+                    HtmlTableCell oObservation = new HtmlTableCell();
+                    FillObservations(oObservation, parameter.ParameterId);
+                    trObservation.Cells.Add(oObservation);
+
+                    tblParameter.Rows.Add(trObservation);
+                });
+    }
+
+    /// <summary>
+    /// This method is used to add cell into given row.
+    /// </summary>
+    /// <param name="aoHtmlTableRow"></param>
+    /// <param name="asCaption"></param>
+    /// <param name="asClass"></param>
+    /// <param name="asAlign"></param>
+    /// <param name="aiColSpan"></param>
+    /// <param name="asStyles"></param>
+    /// <param name="aoControl"></param>
+    private void AddCell(HtmlTableRow aoHtmlTableRow, string asCaption, string asClass, string asAlign = "Center", int aiColSpan = 1, string asStyles = "", Control aoControl = null)
+    {
+        string[] stl;
+        HtmlTableCell oHtmlTableCell = new HtmlTableCell { InnerHtml = asCaption, Align = asAlign, ColSpan = aiColSpan };
+        oHtmlTableCell.Attributes.Add("class", asClass);
+        if (aoControl != null)
+            oHtmlTableCell.Controls.Add(aoControl);
+
+        oHtmlTableCell.Style.Add("Padding-Left", "5pt");
+
+        if (asStyles != string.Empty)
+        {
+            string[] sArrStyles = asStyles.Split(';');
+            sArrStyles.ToList().ForEach
+                (
+                    style =>
+                    {
+                        if (style.Trim() != string.Empty)
+                        {
+                            stl = style.Split(':');
+                            if (stl[0] != string.Empty && stl[1] != string.Empty)
+                                oHtmlTableCell.Style.Add(stl[0], stl[1]);
+                            stl = null;
+                        }
+                    });
+        }
+
+        aoHtmlTableRow.Cells.Add(oHtmlTableCell);
+    }
+
+    /// <summary>
+    /// This method is used to fill observations.
+    /// </summary>
+    /// <param name="aoHtmlTableCell"></param>
+    /// <param name="aiParameterId"></param>
+    private void FillObservations(HtmlTableCell aoHtmlTableCell, int aiParameterId)
+    {
+        HtmlTable oHtmlTable = SetObservationHeaders(aiParameterId);
+        moStaffPerformanceEvaluationBL.ReportingStaffs.Where(staff => !staff.IsFinalApprover || (staff.IsFinalApprover && staff.IsSupervisor)).ToList().ForEach
+            (
+                obs =>
+                {
+                    HtmlTableRow oHtmlTableRow = new HtmlTableRow { ID = "trObs_" + aiParameterId + "_" + obs.ReportingUserId };
+
+                    string sName = obs.IsSupervisor ? obs.Name + " (" + Resources.LocalizedResources.AdminStaff+ ")" :
+                        QueryString["UserId"].ToInt() == obs.ReportingUserId ? obs.Name + " (" + Resources.LocalizedResources.Staff+ ")" : obs.Name + " (" + Resources.LocalizedResources.Invitee + ")";
+
+                    AddCell(oHtmlTableRow, sName, "ClsMarksCell", "Left", 1, "width:250px");
+
+                    var oObservation = mlstObservations.Where(obsrv => obsrv.ParameterId == aiParameterId && obsrv.ReportingUserId == obs.ReportingUserId).FirstOrDefault();
+
+                    // If login user is not final approver then set observation assignment view else set final approver view.
+                    if (obs.ReportingUserId == miUserId && (!IsFinalApprover || (IsFinalApprover && IsSupervisor)) && (QueryString["IsViewMode"] == null))
+                        SetObservationAssignmentView(aiParameterId, obs, oHtmlTableRow, oObservation);
+                    else
+                        SetFinalApproverView(obs, oHtmlTableRow, oObservation);
+
+                    oHtmlTable.Rows.Add(oHtmlTableRow);
+                });
+        aoHtmlTableCell.Controls.Add(oHtmlTable);
+    }
+
+    /// <summary>
+    /// Tihs method is used to set observation assignment view.
+    /// </summary>
+    /// <param name="aiParameterId"></param>
+    /// <param name="aoReportingStaff"></param>
+    /// <param name="aoHtmlTableRow"></param>
+    /// <param name="aoObservation"></param>
+    private void SetObservationAssignmentView(int aiParameterId, ReportingStaff aoReportingStaff, HtmlTableRow aoHtmlTableRow, StaffPerformanceObservation aoObservation)
+    {
+        DropDownList oDropDownList = new DropDownList { ID = "cmbGrade_" + aiParameterId + "_" + aoReportingStaff.ReportingUserId, Width = Unit.Pixel(100) };
+        ListSource.FillDropDownList(moStaffPerformanceEvaluationBL.PerformanceGrades, oDropDownList, "ShortName", "GradeId", Constants.S_SELECT);
+        TextBox oTextBox = new TextBox { ID = "txtObservation_" + aiParameterId + "_" + aoReportingStaff.ReportingUserId, Width = Unit.Percentage(100), TextMode = TextBoxMode.MultiLine };
+
+        if (aoObservation != null)
+        {
+            oDropDownList.SelectedValue = aoObservation.GradeId.ToString();
+            oTextBox.Text = aoObservation.Observation;
+        }
+
+        // if login user has published details then disable all fields.
+        if (moStaffPerformanceEvaluationBL.StaffPerformanceStatus.Where(user => user.ReportingUserId == miUserId && user.IsPublished).Any())
+        {
+            oDropDownList.Enabled = false;
+            oTextBox.Enabled = false;
+        }
+
+        AddCell(aoHtmlTableRow, string.Empty, "ClsMarksCell", "Center", 1, "width:100px;Text-Align:Center", oDropDownList);
+        AddCell(aoHtmlTableRow, string.Empty, "ClsMarksCell", "Left", 1, string.Empty, oTextBox);
+    }
+
+    /// <summary>
+    /// This method is used to set final approver or reporting view.
+    /// </summary>
+    /// <param name="aoReportingStaff"></param>
+    /// <param name="aoHtmlTableRow"></param>
+    /// <param name="aoObservation"></param>
+    private void SetFinalApproverView(ReportingStaff aoReportingStaff, HtmlTableRow aoHtmlTableRow, StaffPerformanceObservation aoObservation)
+    {
+        Label lblGrade = new Label();
+        Label lblObservation = new Label();
+
+        if (aoObservation != null)
+        {
+            int iReportingUserId = aoReportingStaff.ReportingUserId;
+            bool bIsPublished = moStaffPerformanceEvaluationBL.StaffPerformanceStatus.Where(staff => staff.IsPublished && staff.ReportingUserId == aoReportingStaff.ReportingUserId).Any();
+
+            // if performance details are published and login user is final approver but not supervisor.
+            if (IsFinalApprover && !IsSupervisor && bIsPublished)
+                iReportingUserId = moStaffPerformanceEvaluationBL.ReportingStaffs.Where(staff => staff.IsSupervisor).FirstOrDefault().ReportingUserId;
+
+            // if login user has published details then disable all fields.
+            if (moStaffPerformanceEvaluationBL.StaffPerformanceStatus.Where(user => user.ReportingUserId == iReportingUserId && user.IsPublished).Any())
+            {
+                string sGradeName = moStaffPerformanceEvaluationBL.PerformanceGrades.Where(grd => grd.GradeId == aoObservation.GradeId).Select(grd => grd.GradeName).FirstOrDefault();
+                lblGrade.Text = sGradeName;
+                lblObservation.Text = aoObservation.Observation;
+            }
+        }
+
+        AddCell(aoHtmlTableRow, string.Empty, "ClsMarksCell", "Left", 1, string.Empty, lblGrade);
+        AddCell(aoHtmlTableRow, string.Empty, "ClsMarksCell", "Left", 1, string.Empty, lblObservation);
+    }
+
+    /// <summary>
+    /// This method is used to set observation header.
+    /// </summary>
+    /// <param name="aiParameterId"></param>
+    /// <returns>HtmlTable</returns>
+    private HtmlTable SetObservationHeaders(int aiParameterId)
+    {
+        HtmlTable oHtmlTable = new HtmlTable { ID = "tblObservations_" + aiParameterId, Width = "100%" };
+        HtmlTableRow oHtmlTableRow = new HtmlTableRow();
+
+        AddCell(oHtmlTableRow, Resources.LocalizedResources.Observer, "ClsProgressGridTestHeader", "Left", 1, "font-weight:bold;width:200px");
+        AddCell(oHtmlTableRow, Resources.LocalizedResources.Grade, "ClsProgressGridTestHeader", "Left", 1, "font-weight:bold;width:100px");
+        AddCell(oHtmlTableRow, Resources.LocalizedResources.Observation, "ClsProgressGridTestHeader", "Left", 1, "font-weight:bold");
+
+        oHtmlTable.Rows.Add(oHtmlTableRow);
+        return oHtmlTable;
+    }
+
+    /// <summary>
+    /// This method is used to set grades.
+    /// </summary>
+    private void FillGrades()
+    {
+        HtmlTableRow oHeader = new HtmlTableRow();
+        AddCell(oHeader, Resources.LocalizedResources.KeyToRate, "HeadTxtBWOPadding", "Center", 2);
+        tblGrades.Rows.Add(oHeader);
+
+        HtmlTableRow oHeaderNames = new HtmlTableRow();
+        AddCell(oHeaderNames, Resources.LocalizedResources.Grade, "ClsProgressGridTestHeader", "Left", 1, "Width:20%");
+        AddCell(oHeaderNames, Resources.LocalizedResources.Description, "ClsProgressGridTestHeader", "Left");
+        tblGrades.Rows.Add(oHeaderNames);
+
+        moStaffPerformanceEvaluationBL.PerformanceGrades.ForEach
+            (
+                grade =>
+                {
+                    HtmlTableRow oHtmlTableRow = new HtmlTableRow();
+                    AddCell(oHtmlTableRow, grade.ShortName, "ClsMarksCell", "Left");
+                    AddCell(oHtmlTableRow, grade.Description, "ClsMarksCell", "Left");
+                    tblGrades.Rows.Add(oHtmlTableRow);
+                });
+    }
+
+    /// <summary>
+    /// This method is used to set user details.
+    /// </summary>
+    private void SetUserDetails()
+    {
+        lblName.Text = moStaffPerformanceEvaluationBL.UserDetails.Name;
+        lblDesignation.Text = moStaffPerformanceEvaluationBL.UserDetails.Designation;
+        lblYear.Text = QueryString["Year"];
+    }
+
+    /// <summary>
+    /// This method is used to set school details.
+    /// </summary>
+    private void SetSchoolDetails()
+    {
+        lblSchoolName.Text = moStaffPerformanceEvaluationBL.SchoolEntity.SchoolName;
+        lblOrgName.Text = moStaffPerformanceEvaluationBL.SchoolEntity.OrganizationName;
+    }
+
+    /// <summary>
+    /// This method is used to set java script attributes.
+    /// </summary>
+    private void SetJavaScriptAttributes()
+    {
+        base.ApplyMouseHoverEffect(new List<Button> { btnBack, btnPublish, btnSave, btnViewReport, btnClose, btnBackUp, btnSubmit });
+
+        string sAssignmentPage = CommonUtility.EncryptQuerystring("Year=" + QueryString["Year"]);
+        btnBack.PostBackUrl = "PerformanceGradeAssignmentUI.aspx?" + sAssignmentPage;
+        btnBackUp.PostBackUrl = "PerformanceGradeAssignmentUI.aspx?" + sAssignmentPage;
+
+        string sQueryString = CommonUtility.EncryptQuerystring("UserId=" + QueryString["UserId"] + "&Year=" + QueryString["Year"] + "&IsViewMode=Y");
+        btnViewReport.Attributes.Add("onclick", "OpenReport('" + sQueryString + "'); return false;");
+        btnClose.Attributes.Add("onclick", "window.close(); return false;");
+        valSum.HeaderText = Resources.LocalizedResources.PleaseFixFollowingError;
+
+        if (QueryString["IsViewMode"] != null && QueryString["IsViewMode"].ToString() == Constants.S_YES)
+        {
+            tblGrades.Width = "90%";
+            tblParameter.Width = "90%";
+            tblSchoolDetails.Width = "90%";
+            tblUserDetails.Width = "90%";
+            trButtonClose.Visible = true;
+            trButtons.Visible = false;
+            hidIsViewMode.Value = Constants.S_YES;
+        }
+        else
+        {
+            trButtonClose.Visible = false;
+            trButtons.Visible = true;
+            hidIsViewMode.Value = Constants.S_NO;
+        }
+    }
+
+    /// <summary>
+    /// This method is used to save performance evaluation Details.
+    /// </summary>
+    private void Save()
+    {
+        List<StaffPerformanceObservation> lstObservations = new List<StaffPerformanceObservation>();
+        foreach (HtmlTableRow oHtmlTableRow in tblParameter.Rows)
+        {
+            if (oHtmlTableRow.ID != null)
+            {
+                string sParameterId = oHtmlTableRow.ID.Substring(oHtmlTableRow.ID.IndexOf("_") + 1);
+                HtmlTable oHtmlTable = oHtmlTableRow.FindControl("tblObservations_" + sParameterId) as HtmlTable;
+                if (oHtmlTable != null)
+                {
+                    foreach (HtmlTableRow tr in oHtmlTable.Rows)
+                    {
+                        if (tr.ID != null)
+                        {
+                            string iReportingUserId = tr.ID.Substring(tr.ID.IndexOf("_"));
+                            DropDownList cmbGrade = tr.FindControl("cmbGrade" + iReportingUserId) as DropDownList;
+                            TextBox txtObservation = tr.FindControl("txtObservation" + iReportingUserId) as TextBox;
+
+                            if (cmbGrade != null && txtObservation != null)
+                            {
+                                if (cmbGrade.SelectedValue != Constants.S_ZERO)
+                                {
+                                    lstObservations.Add(new StaffPerformanceObservation
+                                    {
+                                        ParameterId = sParameterId.ToInt(),
+                                        GradeId = cmbGrade.SelectedValue.ToInt(),
+                                        Observation = txtObservation.Text.Trim()
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (lstObservations.Count > 0)
+        {
+            string sXml = base.GenerateXml(lstObservations);
+            int iYear = QueryString["Year"].ToInt();
+            moStaffPerformanceEvaluationBL.Save(miUserId, iYear, sXml);
+        }
+    }
+
+    /// <summary>
+    /// This method is used to refresh field values according to selected culture.
+    /// </summary>
+    private void SetFields()
+    {   
+        hidValGradeSelected.Value = Resources.LocalizedResources.valGradeSelecttion;
+        hidvalBlankObservation.Value = Resources.LocalizedResources.valBlankObservation;
+        hidvalObservationLength.Value = Resources.LocalizedResources.valObservationMaxLength;
+        hidvalActionSaveandPublish.Value = Resources.LocalizedResources.msgActionSaveandPublish;
+        hidvalActionSaveandSubmit.Value = Resources.LocalizedResources.msgActionSaveandSubmit;
+        hidvalActionUnPublish.Value = Resources.LocalizedResources.msgActionUnPublish;
+    }
+
+    #endregion
+}

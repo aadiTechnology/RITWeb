@@ -1,0 +1,73 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PPSMaster.master" AutoEventWireup="true"
+    CodeFile="NewsLetter.aspx.cs" Inherits="NewsLetter" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div style="width: 95%" align="center">
+        <div id="nifty" align="center">
+            <b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4">
+            </b></b>
+            <table width="100%">
+                <tr>
+                    <td class="HeadTxtB borderBtm" height="25px" align="left">
+                        <label id="lblheadr" runat="server">
+                            E-NewsLetter
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:ListView ID="lstvwNewsLetterList" runat="server" OnItemDataBound="lstvwNewsLetterList_ItemDataBound"
+                            DataKeyNames="ConfigureMenuId,FilePath">
+                            <LayoutTemplate>
+                                <table id="Table2" align="center" width="95%" runat="server" class="GridBorder">
+                                    <tr id="trHeader" runat="server" class="ClsGridHeaderL">
+                                        <th align="left" width="15%">
+                                            E-News Letter List
+                                        </th>
+                                    </tr>
+                                    <tr runat="server" id="itemPlaceholder">
+                                    </tr>
+                                </table>
+                            </LayoutTemplate>
+                            <ItemTemplate>
+                                <tr id="Tr2" runat="server" class="ClsGridRowL">
+                                    <td class="paddingL" style="text-align: left;">
+                                        <asp:HyperLink ID="lnkName" Style="color: #0000FF;" NavigateUrl="#" runat="server"
+                                            Text='<%# Eval("ConfigureMenuName") %>'></asp:HyperLink>
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                            <AlternatingItemTemplate>
+                                <tr id="Tr3" runat="server" class="ClsGridAltRowL">
+                                    <td class="paddingL" style="text-align: left;">
+                                        <asp:HyperLink ID="lnkName" Style="color: #0000FF; text-align: left" NavigateUrl="#"
+                                            runat="server" Text='<%# Eval("ConfigureMenuName") %>'></asp:HyperLink>
+                                    </td>
+                                </tr>
+                            </AlternatingItemTemplate>
+                            <EmptyDataTemplate>
+                                <tr>
+                                    <td align="center" class="LblNoRecord">
+                                        No record found.
+                                    </td>
+                                </tr>
+                            </EmptyDataTemplate>
+                        </asp:ListView>
+                    </td>
+                </tr>
+            </table>
+            <script type="text/javascript">
+                function OpenNewsLetterPopUp(URL) {
+                    var pageWidth = (window.screen.width / 1.3)
+                    var pageHeight = 600
+                    var left = parseInt((pageWidth / 1.6)) + 'px'
+                    var top = parseInt((pageHeight / 1.5)) + 'px'
+                    pageWidth = pageWidth + 'px'
+                    window.open(URL, '_blank', 'scrollbars=yes,resizable=yes,top=0,left=0,width=' + pageWidth + ',height=' + pageHeight + '');
+                }        
+            </script>
+            <b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1">
+            </b></b>
+        </div>
+    </div>
+</asp:Content>

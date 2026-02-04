@@ -1,0 +1,10 @@
+<gallery base="" background="#ffffff" banner="#ffffff" text="#cc3366" link="#1313A2" alink="#8F6F6F" vlink="#550080" date="Gallery Name :  New Community Helpers">
+  <banner font="Verdana" fontsize="5" color="#F0F0F0" />
+  <thumbnail base="/RITeSchool/images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" rows="0" col="0" />
+  <large base="../images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" />
+  <images id="images">
+    <image path="ChangeHousehold1151540.jpg" width="800" height="500" thumbpath="ChangeHousehold1151540.jpg" comment="Image 123 456" />
+    <image path="ChangeHousehold2151540.jpg" width="800" height="500" thumbpath="ChangeHousehold2151540.jpg" comment="Image 2" />
+    <image path="ChangeHousehold3151540.jpg" width="800" height="500" thumbpath="ChangeHousehold3151540.jpg" comment="Image 123 456" />
+  </images>
+</gallery>

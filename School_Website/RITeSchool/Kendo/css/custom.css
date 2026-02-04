@@ -1,0 +1,292 @@
+/****** Login Page ******/
+.login-container {
+    max-width: 550px;
+    width:auto !important;
+}
+
+.login-box .welcome-note {
+  margin-top: 12px;
+}
+
+.login-box .welcome-note a {
+  border-radius: 100%;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  margin: 0 1px;
+  border: none;
+}
+/****** End - Login Page ******/
+
+/****** Master Page ******/
+#sidebar-shortcuts a {
+    color:#FFFFFF;
+}
+
+#navbar-container .navbar-header.pull-left .navbar-brand small {
+    font-size: 24px !important;
+}
+
+.breadcrumb a {
+    color: #2C6AA0 !important;
+    font-size: 20px !important;
+}
+
+.breadcrumb .active {
+    color: #000000 !important;
+    font-size: 20px !important;
+}
+
+.breadcrumb > li + li:before {
+    font-size: 24px !important;
+}
+
+.nav-list > li.active > a, .nav-list > li.active > a:hover, .nav-list > li.active > a:focus, .nav-list > li.active > a:active {
+    font-weight:normal !important;
+}
+
+.ace-settings-container {
+    top:0;
+}
+
+/****** End - Master Page ******/
+
+/****** Widget ******/
+
+.widget-header {
+    border-width: 0;
+    color: #003F59;
+    font-weight: bold;
+}
+.widget-body {
+    padding: 10px;
+    overflow:auto;
+}
+
+.widget-header-flat {
+    background: none repeat scroll 0 0 #83D2F7;
+}
+
+.widget-box 
+{
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.skin-1 .breadcrumbs {
+    background-color: #E7F2F8;
+    border: 0 none;
+}
+
+/****** End - Widget ******/
+
+/****** Icon Color ******/
+.dark-blue {
+    color: #003F59;
+}
+
+/****** End - Icon Color ******/
+
+/****** Dashboard ******/
+.infobox {
+    height: auto;
+    width: 100%;
+    border: none !important;
+    margin-bottom:25px;
+    padding:0;
+    color:#FFFFFF;
+    cursor:pointer;
+}
+
+.infobox > .infobox-data {
+    text-align: right;
+    float:right;
+    margin-right: 10px;
+    line-height: 30px;
+    padding-top: 8px;
+}
+
+.infobox > .infobox-data > .infobox-data-number {
+    width: 145px;
+    word-wrap: break-word;
+    float: right;
+}
+
+.infobox .more {
+    clear: both;
+    color: #FFFFFF;
+    display: block;
+    font-size: 11px;
+    font-weight: 300;
+    opacity: 0.7;
+    padding: 5px 10px;
+    text-transform: uppercase;
+}
+
+.infobox .more:hover {
+    opacity: 1;
+    text-decoration: none;
+}
+
+.infobox-custom-green {
+    background-color: #28B779 !important;
+}
+
+.infobox-custom-green .more
+{
+    background-color: #10A062;
+}
+
+.infobox-custom-blue {
+    background-color: #27A9E3 !important;
+}
+
+.infobox-custom-blue .more
+{
+    background-color: #208DBE;
+}
+
+.infobox-custom-yellow {
+    background-color: #FFB848 !important;
+}
+
+.infobox-custom-yellow .more
+{
+    background-color: #CB871B;
+}
+
+.infobox-custom-red {
+    background-color: #D15B47 !important;
+}
+
+.infobox-custom-red .more
+{
+    background-color: #B74635;
+}
+
+.infobox > .infobox-icon {
+    padding:10px;
+}
+
+.infobox > i
+{
+    float: left; 
+    font-size: 43px; 
+    padding: 15px 20px;
+}
+
+/****** End - Dashboard ******/
+
+/****** glitter css ******/
+
+.gritter-with-image
+{
+    float: none;
+    width: auto;
+}
+
+.gritter-center {
+    margin: 6%;
+}
+
+.gritter-title {
+    padding: 0 0 7px 57px
+}
+
+/****** End - glitter css ******/
+
+/****** Sidebar changes ******/
+
+.sidebar-shortcuts {
+    background-color: #2A435A !important;
+}
+
+.sidebar, .sidebar:before {
+    background-color: #2A435A !important;
+}
+
+.nav-list > li {
+    border-style: none none solid;
+}
+
+.nav-list > li > a {
+    background-color: #2A435A;
+    color: #F9F9F9;
+}
+
+.sidebar-collapse {
+    background-color: #2A435A !important;
+}
+
+.nav-list > li > a:hover:before
+{
+    background-color: #F9F9F9 !important;
+}
+
+.nav-list > li > a:hover {
+    color:#2A435A;
+}
+
+.nav-list > li.active > a, .nav-list > li.active > a:hover, .nav-list > li.active > a:focus, .nav-list > li.active > a:active {
+    color:#2A435A;
+}
+
+.nav-list li.active > a:after {
+    border-color: rgba(0, 0, 0, 0) #2A435A rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
+
+.sidebar-shortcuts-mini, .menu-min .sidebar-shortcuts-large {
+    background-color:#2A435A;
+}
+
+.menu-min .nav-list > li > a > .menu-text {
+    background-color:#F9F9F9;
+    color: #2A435A;
+}
+
+.menu-min .nav-list > li:hover > a, .menu-min .nav-list > li.active > a, .nav-list > li > a:focus,.nav-list > li.active > a:focus {
+    color:#2A435A;
+}
+
+/****** End - Sidebar changes ******/
+
+
+/****** User info changes ******/
+
+.user-info {
+    top: 0;
+    vertical-align:text-top;
+}
+
+#navbar-container .ace-nav > li > a {
+    float:left;
+}
+
+/****** End - Sidebar changes ******/
+
+label, body, textarea {
+    font-size:12px;
+}
+
+.required {
+    color: red; 
+    margin-left: 5px;
+}
+
+.errorMsg {
+    color: red; 
+}
+.user-info {
+    font-size:14px;
+}
+.btnWidth
+{
+    width: 30px;
+    padding-bottom: 4px;
+    width: 28px;
+}
+.k-grid tbody .k-button, .k-ie8 .k-grid tbody button.k-button
+{ 
+    min-width:0px;
+  }

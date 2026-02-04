@@ -1,0 +1,9 @@
+<gallery base="" background="#abcdef" banner="#F0F0F0" text="#060606" link="#1313A2" alink="#8F6F6F" vlink="#550080" date="gal 2">
+  <banner font="Arial" fontsize="3" color="#F0F0F0" />
+  <thumbnail base="../images/gallery/" font="Arial" fontsize="4" color="#F0F0F0" border="0" rows="3" col="5" />
+  <large base="../images/gallery/" font="Arial" fontsize="4" color="#F0F0F0" border="0" />
+  <images id="images">
+    <image path="images3112756.jpg" thumbpath="images3112756.jpg" width="550" height="412" />
+    <image path="images2112756.jpg" thumbpath="images2112756.jpg" width="550" height="412" />
+  </images>
+</gallery>

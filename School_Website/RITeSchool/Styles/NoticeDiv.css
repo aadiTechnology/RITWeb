@@ -1,0 +1,19 @@
+﻿
+.CenterDiv
+{
+	display: none; 
+	visibility: hidden;
+	position:absolute;
+	z-index: 500; 	
+	width: 320px; 
+	height:auto;
+	text-align:left;
+	border-width: 0px; 
+	line-height: normal; 
+	border: 2px solid darkgreen;	
+	background-color: #FFFFBF;
+	left:700px;
+	margin-left:-200px;
+	
+	top:50%;
+}

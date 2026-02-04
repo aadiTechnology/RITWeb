@@ -1,0 +1,323 @@
+﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using SchoolEntities.eStore;
+using Utility;
+using System;
+
+namespace DataCommunicator.eStoreDC
+{
+    public class StoreItemVariationDC
+    {
+        #region Data Member(s)
+
+        private int miSchoolId;
+        private int miAcademicYearId;
+        private int miUpdatedById; 
+
+        #endregion
+
+        #region Constructor(s)
+
+        public StoreItemVariationDC(int aiSchoolId, int aiAcademicYearId, int aiUpdatedById)
+        {
+            this.miSchoolId = aiSchoolId;
+            this.miAcademicYearId = aiAcademicYearId;
+            this.miUpdatedById = aiUpdatedById;
+        }
+
+        public StoreItemVariationDC()
+        {
+        } 
+
+        #endregion
+
+        #region Public Method(s)
+
+        /// <summary>
+        /// This method is used to return colors.
+        /// </summary>
+        /// <returns></returns>
+        public List<Color> GetColors()
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                List<Color> lstColor = new List<Color>();
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetColors"))
+                {
+                    while (oSqlDataReader.Read())
+                    {
+                        Color oColor = new Color();
+                        oColor.Id = oSqlDataReader["Id"].ToInt();
+                        oColor.Name = oSqlDataReader["Name"].ToString();
+                        lstColor.Add(oColor);
+                    }
+                }
+                return lstColor;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to retirn item sizes.
+        /// </summary>
+        /// <returns></returns>
+        public List<StoreItemSize> GetStoreItemSizes()
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                List<StoreItemSize> lstStoreItemSize = new List<StoreItemSize>();
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetStoreItemSizes"))
+                {
+                    while (oSqlDataReader.Read())
+                    {
+                        StoreItemSize oSize = new StoreItemSize();
+                        oSize.Id = oSqlDataReader["Id"].ToInt();
+                        oSize.Size = oSqlDataReader["Size"].ToInt();
+                        lstStoreItemSize.Add(oSize);
+                    }
+                }
+                return lstStoreItemSize;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to save store item variation details.
+        /// </summary>
+        /// <param name="aoStoreItemVariationDetails"></param>
+        public void Save(StoreItemVariationDetails aoStoreItemVariationDetails)
+        {
+            using (SQLServerDbUtility oDbUtility = new SQLServerDbUtility())
+            {
+                oDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oDbUtility.AddParameter("UpdatedById", this.miUpdatedById, SqlDbType.Int);
+                oDbUtility.AddParameter("ColorId", aoStoreItemVariationDetails.ColorId, SqlDbType.Int);
+                oDbUtility.AddParameter("FileNames", aoStoreItemVariationDetails.FileNames, SqlDbType.NVarChar);
+                oDbUtility.AddParameter("Id", aoStoreItemVariationDetails.Id, SqlDbType.Int);
+                oDbUtility.AddParameter("Price", aoStoreItemVariationDetails.Price, SqlDbType.Decimal);
+                oDbUtility.AddParameter("Quantity", aoStoreItemVariationDetails.Quantity, SqlDbType.Int);
+                oDbUtility.AddParameter("ReorderQuantity", aoStoreItemVariationDetails.ReorderQuantity, SqlDbType.Int);
+                oDbUtility.AddParameter("SizeId", aoStoreItemVariationDetails.SizeId, SqlDbType.Int);
+                oDbUtility.AddParameter("StoreItemMasterId", aoStoreItemVariationDetails.StoreItemMasterId, SqlDbType.Int);
+                oDbUtility.AddParameter("Title", aoStoreItemVariationDetails.Title, SqlDbType.NVarChar);
+                oDbUtility.AddParameter("FileIdsToDelete", aoStoreItemVariationDetails.FileIdsToDelete, SqlDbType.NVarChar);
+
+                oDbUtility.AddParameter("UOMId", aoStoreItemVariationDetails.UOMId, SqlDbType.Int);
+                oDbUtility.AddParameter("GSTCategoryId", aoStoreItemVariationDetails.GSTCategoryId, SqlDbType.Int);
+                oDbUtility.AddParameter("MRP", aoStoreItemVariationDetails.MRP, SqlDbType.Decimal);
+                oDbUtility.AddParameter("Discount", aoStoreItemVariationDetails.Discount, SqlDbType.Decimal);
+                oDbUtility.AddParameter("ItemCode", aoStoreItemVariationDetails.ItemCode, SqlDbType.NVarChar);
+                oDbUtility.AddParameter("HSNCode", aoStoreItemVariationDetails.HSNCode, SqlDbType.NVarChar);
+
+                oDbUtility.ExecuteStoredProcedureOnServer("usp_SaveStoreItemVariationDetails");
+            }
+        }
+
+        /// <summary>
+        /// This method is used to return all store item variations.
+        /// </summary>
+        /// <param name="aiSchoolid"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiStoreItemMasterId"></param>
+        /// <param name="asFilter"></param>
+        /// <param name="asSortExpression"></param>
+        /// <param name="aiStartIndex"></param>
+        /// <param name="aiEndIndex"></param>
+        /// <returns></returns>
+        public List<StoreItemVariationDetails> GetAll(int aiSchoolid, int aiAcademicYearId, int aiStoreItemMasterId, string asFilter, string asSortExpression, int aiStartIndex, int aiEndIndex)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolid, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StoreItemMasterId", aiStoreItemMasterId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StartIndex", aiStartIndex, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("EndIndex", aiEndIndex, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Filter", asFilter, SqlDbType.NVarChar);
+                oSQLServerDbUtility.AddParameter("SortExpression", asSortExpression, SqlDbType.NVarChar);
+
+                List<StoreItemVariationDetails> lstStoreItemVariationDetails = new List<StoreItemVariationDetails>();
+
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetAllStoreItemVariationDetails"))
+                {
+                    while (oSqlDataReader.Read())
+                    {
+                        StoreItemVariationDetails oStoreItemVariationDetails = new StoreItemVariationDetails
+                        {
+                            Color = oSqlDataReader["Color"].ToString(),
+                            FileNames = string.Empty,
+                            Id = oSqlDataReader["Id"].ToInt(),
+                            Price = oSqlDataReader["Price"].ToDecimal(),
+                            Quantity = oSqlDataReader["Quantity"].ToInt(),
+                            ReorderQuantity = oSqlDataReader["ReorderQuantity"].ToInt(),
+                            Size = oSqlDataReader["Size"].ToString(),
+                            Title = oSqlDataReader["Title"].ToString(),
+                            ItemCode = oSqlDataReader["ItemCode"].ToString(),
+                            TotalRows = oSqlDataReader["TotalRows"].ToInt(),
+                            IsFreeItemExist = oSqlDataReader["IsFreeItemExist"].ToBool()
+                        };
+
+                        lstStoreItemVariationDetails.Add(oStoreItemVariationDetails);
+                    }
+                }
+                return lstStoreItemVariationDetails;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to return variation details.
+        /// </summary>
+        /// <param name="aiId"></param>
+        /// <returns></returns>
+        public StoreItemVariationDetails Get(int aiId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Id", aiId, SqlDbType.Int);
+
+                StoreItemVariationDetails oStoreItemVariationDetails = new StoreItemVariationDetails();
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetStoreItemVariationDetails"))
+                {
+
+                    List<Attachment> lstAttachment = new List<Attachment>();
+                    while (oSqlDataReader.Read())
+                    {
+                        lstAttachment.Add(new Attachment { Id = oSqlDataReader["Id"].ToInt(), ImageFileName = oSqlDataReader["ImageFileName"].ToString() });
+                    }
+
+                    oSqlDataReader.NextResult();
+                    if (oSqlDataReader.Read())
+                    {
+                        oStoreItemVariationDetails = new StoreItemVariationDetails
+                        {
+                            ColorId = oSqlDataReader["ColorId"].ToInt(),
+                            FileNames = string.Empty,
+                            Id = oSqlDataReader["Id"].ToInt(),
+                            Price = oSqlDataReader["Price"].ToDecimal(),
+                            Quantity = oSqlDataReader["Quantity"].ToInt(),
+                            ReorderQuantity = oSqlDataReader["ReorderQuantity"].ToInt(),
+                            SizeId = oSqlDataReader["SizeId"].ToInt(),
+                            Title = oSqlDataReader["Title"].ToString(),
+                            ImageFileList = lstAttachment,
+                            UOMId = oSqlDataReader["UOMId"].ToInt(),
+                            GSTCategoryId = oSqlDataReader["GSTCategoryId"].ToInt(),
+                            MRP = oSqlDataReader["MRP"].ToDecimal(),
+                            Discount = oSqlDataReader["Discount"].ToDecimal(),
+                            ItemCode = oSqlDataReader["ItemCode"].ToString(),
+                            HSNCode = oSqlDataReader["HSNCode"].ToString(),
+                            UOM = oSqlDataReader["UOM"].ToString(),
+                            GST = oSqlDataReader["GST"].ToString(),
+                            Color = oSqlDataReader["Color"].ToString(),
+                            Size = oSqlDataReader["Size"].ToString(),
+                        };
+                    }
+                }
+                return oStoreItemVariationDetails;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to delete varation entry.
+        /// </summary>
+        /// <param name="aiId"></param>
+        public void Delete(int aiId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("UpdatedById", this.miUpdatedById, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Id", aiId, SqlDbType.Int);
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_DeleteStoreItemVariationDetails");
+            }
+        }
+
+        /// <summary>
+        /// This method is used to validate variation.
+        /// </summary>
+        /// <param name="asTitle"></param>
+        /// <param name="aiColorId"></param>
+        /// <param name="aiSizeId"></param>
+        /// <param name="aiId"></param>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <returns></returns>
+        public string Validate(string asTitle, int aiColorId, int aiSizeId, int aiId, int aiSchoolId, int aiAcademicYearId, int aiTypeId, int aiStoreItemMasterId, string asItemCode)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("ColorId", aiColorId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("SizeId", aiSizeId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Id", aiId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("TypeId", aiTypeId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StoreItemMasterId", aiStoreItemMasterId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Title", asTitle, SqlDbType.NVarChar);
+                oSQLServerDbUtility.AddParameter("ItemCode", asItemCode, SqlDbType.NVarChar);
+                SqlParameter oSqlParameter = oSQLServerDbUtility.AddParameter("Message", string.Empty, SqlDbType.NVarChar, ParameterDirection.Output, 500);
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_ValidateStoreItemDetails");
+                return oSqlParameter.Value.ToString();
+            }
+        } 
+
+        public void SaveFreeItemDetails(FreeItemDetails oFreeItemDetails)
+        {
+            using (SQLServerDbUtility oDbUtility = new SQLServerDbUtility())
+            {
+                oDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oDbUtility.AddParameter("Id", oFreeItemDetails.Id, SqlDbType.Int);
+                oDbUtility.AddParameter("BaseItemVariationId", oFreeItemDetails.BaseItemVariationId, SqlDbType.Int);
+                oDbUtility.AddParameter("ItemVariationId", oFreeItemDetails.ItemVariationId, SqlDbType.Int);
+                oDbUtility.AddParameter("Quantity", oFreeItemDetails.Quantity, SqlDbType.Int);
+                oDbUtility.AddParameter("UpdatedById", this.miUpdatedById, SqlDbType.Int);
+
+                oDbUtility.ExecuteStoredProcedureOnServer("usp_SaveFreeItemDetails");
+            }
+        }
+
+
+        public List<FreeItemDetails> GetAllFreeItems(int aiBaseMasterVariationId, int aiId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Id", aiId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("BaseMasterVariationId", aiBaseMasterVariationId, SqlDbType.Int);                
+                using(SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetFreeItemDetails"))
+                {
+                    List<FreeItemDetails> lstFreeItemDetails = new List<FreeItemDetails>();
+                    while(oSqlDataReader.Read())
+                    {
+                        lstFreeItemDetails.Add(new FreeItemDetails
+                        {
+                            Id = Convert.ToInt16(oSqlDataReader["Id"]),
+                            Title = Convert.ToString(oSqlDataReader["Title"]),
+                            ItemCode = Convert.ToString(oSqlDataReader["ItemCode"]),
+                            Quantity = Convert.ToInt16(oSqlDataReader["Quantity"]),
+                        });
+                     }
+                    return lstFreeItemDetails;
+                }
+                
+            }
+        }
+
+        public void DeleteFreeItems(int aiId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("UpdatedById", this.miUpdatedById, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Id", aiId, SqlDbType.Int);
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_DeleteFreeItemDetails");
+            }
+        }
+
+        #endregion
+    }
+}

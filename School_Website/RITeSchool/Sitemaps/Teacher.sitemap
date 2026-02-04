@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0"  >
+
+	<siteMapNode url="RITeSchool/Common/ControlPanel.aspx" title="Dashboard" >
+    
+    <siteMapNode url="RITeSchool/Gallery/ImageGallery.aspx" title="Photo/Video Gallery"></siteMapNode>
+    <siteMapNode url="RITeSchool/AskMe/PublishedQueriesUI.aspx" title="Ask Me">
+      <siteMapNode url="RITeSchool/AskMe/QueryDetailsUI.aspx" title="Query Details"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="Riteschool/Survey/GuestDetailsUI.aspx" title="VIP Program" />
+
+    <siteMapNode url="RITeSchool/Student/StudentRecordStatusUI.aspx" title="Student Record List">
+      <siteMapNode url="RITeSchool/Student/StudentRecordUI.aspx" title="Student Record"></siteMapNode>
+    </siteMapNode>
+
+    <siteMapNode url="RITeSchool/Payroll/LeaveDeatilsUI.aspx" title="Leave Details">
+      <siteMapNode url="RITeSchool/Payroll/ApplyLeaveUI.aspx" title="Apply / Approve / Reject Leave"></siteMapNode>
+    </siteMapNode>
+
+    <siteMapNode url="RITeSchool/Teacher/StudentsMonthlyStatusDetailsUI.aspx" title="Student Monthly Status"></siteMapNode>
+    <siteMapNode url="RITeSchool/Teacher/StudentwiseHeightWeightCaptureUI.aspx" title="Termwise Height-Weight"></siteMapNode>
+    <siteMapNode url="RITeSchool/Admin/StudentDetailsUI.aspx" title="Student Details"  />
+    <siteMapNode url="RITeSchool/Admin/UploadNewsUI.aspx" title="School News"  />
+    <siteMapNode url="RITeSchool/Admin/UploadPhotoUI.aspx" title="Photo/Video Gallery"></siteMapNode>
+		<siteMapNode url="RITeSchool/Admin/WeekDayTimeTable.aspx" title=" Daily Timetable for Teachers"  />
+		<siteMapNode url="RITeSchool/Common/SchoolReportUI.aspx" title=" Reports"  />
+		<siteMapNode url="RITeSchool/Student/UserTimeTable.aspx" title="Timetable"  />
+		<siteMapNode url="RITeSchool/Admin/TeacherTimeTable.aspx" title=" Weekly Timetable for Teacher / Class"  />
+		<siteMapNode url="RITeSchool/Admin/SchoolTimeTable.aspx" title=" School Timetable"  />
+		<siteMapNode url="RITeSchool/Common/StudentChangePassword.aspx" title="Change Password" ></siteMapNode>
+		<siteMapNode url="RITeSchool/Common/AnnualEventPlanner.aspx" title="Annual Planner"  />
+    <siteMapNode url="RITeSchool/Teacher/StudentAnnualResultEdit.aspx" title="Add Grace"></siteMapNode>
+		<siteMapNode url="RITeSchool/Teacher/StudentsListUI.aspx" title="Students"  />
+    <siteMapNode url="RITeSchool/Teacher/SchoolwiseAttendanceDetails.aspx" title="Attendance"  />
+    <siteMapNode url="RITeSchool/Teacher/LectureWiseAttendanceDetails.aspx" title="LectureWise Attendance"  />
+	<siteMapNode url="RITeSchool/Teacher/ObservationParametersUI.aspx" title="Observation Parameters"  />
+	<siteMapNode url="RITeSchool/Teacher/ObservationSkillConfigUI.aspx" title="Observation Skill Configuration"  />
+	<siteMapNode url="RITeSchool/ProgressReport/BlockProgressReportUI.aspx" title="Block Progress Report"  />
+    <siteMapNode url="RITeSchool/Common/SupportUI.aspx" title="Support"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Common/FeedbackUI.aspx" title="Feedback"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Common/SupportThankYouUI.aspx" title="Support Thank You"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Common/AddStudentDetails.aspx" title="Add Aadhar Card Details" ></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/StudentAttendance.aspx" title="Attendance"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/StudentProgressSheet.aspx" title="Progress Report"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/TeacherSubjectListUI.aspx" title="Subject Teachers"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Common/Error.aspx" title="Error" ></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/StandardwiseExamScheduleList.aspx" title="Exam Schedule"  />
+    <siteMapNode url="RITeSchool/Common/HolidayListUI.aspx" title="Holidays"  />
+    <siteMapNode url="RITeSchool/Admin/SchoolDesignationUI.aspx" title="Designations"  />
+    <siteMapNode url="RITeSchool/Common/DisplayMenuContents.aspx" title="Menu"  />
+    <siteMapNode url="RITeSchool/Common/StaffBirthDay.aspx" title=" Staff Birthdays"  />
+    <siteMapNode url="RITeSchool/Admission/AdmisionLotteryUI.aspx" title="Admissions Lottery"/>
+    <siteMapNode url="RITeSchool/Payroll/SalaryDetailsUI.aspx" title="Salary Details"  />
+    <siteMapNode url="RITeSchool/Payroll/PaySalaryUI.aspx" title="Pay Salary"  />
+    <siteMapNode url="RITeSchool/Payroll/SalaryDifferenceUI.aspx" title="Salary Difference"  />
+    <siteMapNode url="RITeSchool/Payroll/StaffAttendanceUI.aspx" title="Staff Attendance And Leaves"  />
+    <siteMapNode url="RITeSchool/Payroll/LateMarkConfigurationUI.aspx" title="Late Mark Configuration"/>
+    <siteMapNode url="RITeSchool/Payroll/InvestmentMethodUI.aspx" title="Investment / Income Methods"  />
+    <siteMapNode url="RITeSchool/Payroll/InvestmentDetailsUI.aspx" title="Investment Details"  />
+    <siteMapNode url="RITeSchool/Payroll/UsersPunchingDetails.aspx" title="User Check-In/Check-Out Details"  />
+    <siteMapNode url="RITeSchool/Payroll/InvestmentDeclarationUI.aspx" title="Investment / Income Declaration"  />
+    <siteMapNode url="RITeSchool/Payroll/TaxDeductionUI.aspx" title="Tax Deduction"  />
+    <siteMapNode url="RITeSchool/Payroll/IncomeTaxDetailsUI.aspx" title="Income Tax Details"  />
+    <siteMapNode url="RITeSchool/Payroll/StaffHolidayAndLeavesConfigurationUI.aspx" title="Staff Holidays Leave Deduction"/>
+	<siteMapNode url="RITeSchool/Payroll/IncomeTaxSlabsUI.aspx" title="Income Tax Slab"  />
+    <siteMapNode url="RITeSchool/Payroll/AdditionalPaymentsUI.aspx" title="Additional Payments"  />
+		<siteMapNode url="RITeSchool/Payroll/RetirementNoticeConfigUI.aspx" title="Retirement Notice Configuration"  />
+    <siteMapNode url="RITeSchool/Admin/ClasswiseOptionalSubjectConfiguration.aspx" title="Classwise Optional Subject"></siteMapNode>
+    <siteMapNode url="RITeSchool/Admin/SchoolwiseExamStatusConfigUI.aspx" title="Exam Status Configuration" />
+    <siteMapNode url="RITeSchool/Admin/StandardsForGradingSystemConfigUI.aspx" title="Standards For Grading System" />
+    <siteMapNode url="RITeSchool/StaffPerformance/PerformanceGradeConfigUI.aspx" title="Performance Grades"  />
+    <siteMapNode url="RITeSchool/StaffPerformance/SkillConfigurationUI.aspx" title="Performance Skills"  />
+    <siteMapNode url="RITeSchool/StaffPerformance/PerformanceParametersUI.aspx" title="Performance Parameters"  />
+    <siteMapNode url="RITeSchool/StaffPerformance/ReportingConfigurationUI.aspx" title="Reporting Configuration"  />
+    <siteMapNode url="RITeSchool/TaskManagement/WorkFlowRoleConfigurationUI.aspx" title="Work Flow Role Configuration"/>
+    <siteMapNode url="RITeSchool/Transport/TransportLateFeeSettingUI.aspx" title="Transport Late Fee Settings"  />
+    <siteMapNode url="RITeSchool/TaskManagement/TaskListUI.aspx" title="Task Assignment"></siteMapNode>
+
+    <siteMapNode url="RITeSchool/Payroll/LeaveApprovalConfigurationUI.aspx" title="Leave Approval Configuration"></siteMapNode>
+
+    <siteMapNode url="RITeSchool/Admin/UploadPhotosUI.aspx" title="Upload Photo"></siteMapNode>
+    
+    <siteMapNode url="RITeSchool/Xseed/AssessmentConfigurationUI.aspx" title="Assessments"  />
+    <siteMapNode url="RITeSchool/Xseed/GradeConfigurationUI.aspx" title="Grades"  />
+    <siteMapNode url="RITeSchool/Xseed/LearningOutcomeConfigurationUI.aspx" title="Learning Outcomes"  />
+    <siteMapNode url="RITeSchool/Xseed/XseedThemesUI.aspx" title="Themes"  />
+    <siteMapNode url="RITeSchool/Xseed/StandardwiseAssessmentConfigurationUI.aspx" title="Standardwise Assessments"  />
+    <siteMapNode url="RITeSchool/Xseed/SubjectSectionConfigurationUI.aspx" title="Subject Sections"  />
+    <siteMapNode url="RITeSchool/TaskManagement/WorkFlowRoleConfigurationUI.aspx" title="WorkFlow Role Configuration"/>
+
+    <siteMapNode url="RITeSchool/LessonPlan/LessonPlanReportingUserConfigUI.aspx" title="Lesson Plan Reporting User Configuration"  />
+    <siteMapNode url="RITeSchool/LessonPlan/LessonPlanStdSubjectUI.aspx" title="Lesson Plan Standardwise Subjects"  />
+    <siteMapNode url="RITeSchool/LessonPlan/LessonPlanParameterUI.aspx" title="Lesson Plan Parameter" />
+
+    <siteMapNode url="RITeSchool/OnlineExam/OnlineExamQuestionConfigurationUI.aspx" title="Online Exam Question Configuration"></siteMapNode>
+    <siteMapNode url="RITeSchool/OnlineExam/OnlineExamConfigUI.aspx" title="Online Exam Configuration">   </siteMapNode>
+    
+		<siteMapNode url="RITeSchool/Teacher/TestMarksConfigurationUI.aspx" title="Assign Exam Marks"  >
+			<siteMapNode url="RITeSchool/Teacher/StudentMarksAssignment.aspx" title="Subject Exam Marks"  />
+      <siteMapNode url="RITeSchool/Teacher/PrePrimaryStudentProgressList.aspx" title="Pre-Primary Assign Exam Marks">
+        <siteMapNode url="RITeSchool/Teacher/PrePrimaryProgressSheetEntry.aspx" title="Pre-Primary Assign Exam Marks Entry"></siteMapNode>
+		  <siteMapNode url="RITeSchool/Teacher/StudentProgressReportEntry.aspx" title="Pre-Primary Assign Exam Marks"></siteMapNode>
+	  </siteMapNode>
+		</siteMapNode>
+	  <siteMapNode url="RITeSchool/Teacher/LeavingCertificateConfigUI.aspx" title="Leaving Certificate Report Configuration" />
+
+    <siteMapNode url="RITeSchool/Admin/TimeTableGenerationUI.aspx" title="Auto Timetable Generation"  />
+
+    <siteMapNode url="RITeSchool/LessonPlan/LessonPlanUI.aspx" title="Lesson Plans">
+      <siteMapNode url="RITeSchool/LessonPlan/LessonPlanDetailsUI.aspx" title="Lesson Plan Details"  />
+    </siteMapNode>
+    
+		<siteMapNode url="RITeSchool/Common/MessageInbox.aspx" title="Message Center"  >
+			<siteMapNode url="RITeSchool/Common/SendMessageFromInbox.aspx" title="Send Message"  />
+			<siteMapNode url="RITeSchool/Common/MessageViewUI.aspx" title="View Message" />
+		</siteMapNode>
+
+    <siteMapNode url="RITeSchool/Xseed/StudentXseedGradeAssignmentUI.aspx" title="Xseed Subject Grades"  />
+    <siteMapNode url="RITeSchool/Xseed/AssignXseedGradesUI.aspx" title="Assign Exam Marks"  />
+    <siteMapNode url="RITeSchool/Xseed/StudentNonXseedGradeAssignmentUI.aspx" title="Assign Exam Marks"  />
+		<siteMapNode url="RITeSchool/ProgressReport/StudentwiseProgreesReportUI.aspx" title="Student Wise Progress Report"  >
+			<siteMapNode url="RITeSchool/ProgressReport/AssignExamWiseStudentMarksUI.aspx" title="Assign Exam Wise Student Marks"></siteMapNode>
+			<siteMapNode url="RITeSchool/ProgressReport/StudentWiseProgressSheet.aspx" title="Progress Report"  ></siteMapNode>
+			<siteMapNode url="RITeSchool/ProgressReport/XssedStudentwiseProgressReportUI.aspx" title="Progress Report"></siteMapNode>
+		</siteMapNode>
+
+    <siteMapNode url="RITeSchool/StaffPerformance/PerformanceGradeAssignmentUI.aspx" title="Performance Grade Assignment">
+      <siteMapNode url="RITeSchool/StaffPerformance/StaffPerformanceEvaluationUI.aspx" title="Performance Evaluation"  />
+    </siteMapNode>
+    <siteMapNode url="RITeSchool/Teacher/StudentwiseRemarkMasterUI.aspx" title="Progress Remarks"></siteMapNode>
+		<siteMapNode url="RITeSchool/Teacher/ClassTeacherTestMarksUI.aspx" title="Exam Results"  >
+			<siteMapNode url="RITeSchool/Teacher/SubjectmarksList.aspx" title="Subject Mark List"  />
+			<siteMapNode url="RITeSchool/Admin/TransferStudentSubjectsMarksUI.aspx" title="Transfer Optional Subject Marks"/>
+         
+		</siteMapNode>
+		
+		<siteMapNode url="RITeSchool/Teacher/StudentResultList.aspx" title="Final Result"  >
+			<siteMapNode url="RITeSchool/Teacher/StudentProgressSheetEdit.aspx" title="Generate/View Final Result"  ></siteMapNode>
+			<siteMapNode url="RITeSchool/Student/StudentAnnualResult.aspx" title="View Result All"  ></siteMapNode>
+		</siteMapNode>
+    
+    <siteMapNode url="RITeSchool/Common/SMSHistoryUI.aspx" title="Received SMS"  >
+      <siteMapNode url="RITeSchool/Common/SMSUI.aspx" title="View SMS"  ></siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="RITeSchool/LibrarianManagement/LibraryManagementUI.aspx" title="Library"></siteMapNode>
+    <siteMapNode url="RITeSchool/LibrarianManagement/IssueRenewReturnUI.aspx" title="Librarian's Desk"></siteMapNode>
+
+    <siteMapNode url="RITeSchool/Xseed/XseedProgressReportUI.aspx" title="Xseed Progress Report"  />
+
+    <siteMapNode url="RITeSchool/Teacher/AssignGradesUI.aspx" title="Assign Grades">
+      <siteMapNode url="RITeSchool/Teacher/ObservationGradeAssignmentUI.aspx" title=" Grade Assignment"  />
+      <siteMapNode url="RITeSchool/Teacher/AssignSummaryGradesUI.aspx" title="Assign Summary Grades"  />
+    </siteMapNode>
+
+    <siteMapNode url="RITeSchool/HealthDetails/HealthComponentUI.aspx" title="Health Component" />
+    <siteMapNode url="RITeSchool/HealthDetails/HealthParametersUI.aspx" title="Health Parameter" />
+    
+    <siteMapNode url="RITeSchool/OnlineExam/PublishOnlineExamUI.aspx" title="Publish Online Exam">
+      <siteMapNode url="RITeSchool/OnlineExam/OnlineExamResultUI.aspx" title="Online Exam Result"></siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="RITeSchool/OnlineExam/OnlineExamProgressReportUI.aspx" title="Online Exam Progress Report"></siteMapNode>
+
+    <siteMapNode url="RITeSchool/Admin/ConfigurePeerDetailsUI.aspx" title="Configure Peer Details"></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/StudentListForAssessmentDetailsUI.aspx" title="Student List For Self Assessment">
+      <siteMapNode url="RITeSchool/Student/StudentAssessmentDetailsUI.aspx" title="Student Assessment Details"></siteMapNode>
+    </siteMapNode>
+
+    <siteMapNode url="RITeSchool/Teacher/ResultDetailsUI.aspx" title="Result Details"></siteMapNode>
+    <siteMapNode url="riteschool/teacher/ObservationParametersUI.aspx" title="Observation Parameters Configuration"></siteMapNode>
+    <siteMapNode url="RITeSchool/Teacher/ObservationSkillConfigUI.aspx" title="Observation Skill Configuration"  />
+    <siteMapNode url="RITeSchool/Teacher/StudentListForNoteDetailsUI.aspx" title="Student List for Activity Details"  />
+    <siteMapNode url="riteschool/Common/ErrorMessageUI.aspx" title="Error"></siteMapNode>
+	</siteMapNode>
+</siteMap>

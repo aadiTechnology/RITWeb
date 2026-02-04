@@ -1,0 +1,11 @@
+<gallery base="" background="#ffffff" banner="#ffffff" text="#cc3366" link="#1313A2" alink="#8F6F6F" vlink="#550080" date="Gallery Name :  New">
+  <banner font="Verdana" fontsize="5" color="#F0F0F0" />
+  <thumbnail base="/RITeSchool/images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" rows="0" col="0" />
+  <large base="../images/gallery/" font="Verdana" fontsize="4" color="#F0F0F0" border="0" />
+  <images id="images">
+    <image path="ImageProcessor15011.jpeg" width="800" height="500" thumbpath="ImageProcessor15011.jpeg" comment="" />
+    <image path="logo15111.jpg" width="800" height="500" thumbpath="logo15111.jpg" comment="School Logo" />
+    <image path="Penguins - Copy1559.jpg" width="800" height="500" thumbpath="Penguins - Copy1559.jpg" comment="123 456 7890" />
+    <image path="ChangeHousehold2152832.jpg" width="800" height="500" thumbpath="ChangeHousehold2152832.jpg" comment="updated" />
+  </images>
+</gallery>

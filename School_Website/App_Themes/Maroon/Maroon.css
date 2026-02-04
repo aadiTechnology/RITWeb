@@ -1,0 +1,215 @@
+﻿Dashboard
+{
+    background-color: #FFF4F4;
+}
+.ClsBorderPager{background-color: #66CCFF;border-top: 0 solid #b6c196;font-size: 9pt;font-weight: 700;margin: 0;padding: 2px;border-top-color: #04ADFF;}
+.ClsNwGridPaging{font-family:arial;font-size:9pt;font-weight:Bold;color:#E6EEFC;padding:2px;}
+.ClsGridRow
+{
+    background-color: #FFCCCC;
+    margin-left: 5px;
+    height: 20px;
+    font-size: 9pt;
+}
+.ClsGridAltRow
+{
+    background-color: #FFF4F4;
+    margin-left: 5px;
+    height: 20px;
+    font-size: 9pt;
+}
+.tdBG{background-color:#EFD6DA ;}
+.LblNoRecord{font-family:Tahoma;font-size:8pt;font-weight:700;background-color:#E6EEFC;color:blue;width:100%;border:1px solid #8FBC8F;padding:4px;}
+.ClsBtn
+{
+    border: 1px solid #FF6A6A;
+    width: 75px;
+    font-family: Arial;
+    font-size: 9pt;
+    font-weight: 700;
+    background-position: 50% bottom;
+    background-image: url('../../imagesT/BtnMaroonBG.jpg');
+    background-repeat: repeat-x;
+    text-transform: capitalize;
+    cursor: pointer;
+    margin: 2px 0 0 1px;    
+    padding: 2px;
+}
+.ClsBtn:hover
+{
+    border: 1px solid #FF6A6A;
+    width: 75px;
+    font-family: Arial B;
+    font-size: 9pt;
+    font-weight: 700;
+    background-position: 50% bottom;
+    background-image: url('../../imagesT/BtnMaroonBG.jpg');
+    background-repeat: repeat-x;
+    text-transform: capitalize;
+    cursor: pointer;
+    margin: 2px 0 0 1px;    
+    padding: 2px;
+}
+.ClsBtnSmlHght{border:solid 1px #FF6A6A;font-family:Arial;font-size:8pt;background-position:50% bottom;background-image:url('../../imagesT/BtnMaroonBG.jpg');background-repeat:repeat-x;cursor:pointer;}
+.ClsBtnSml{border:solid 1px #FF6A6A;width:55px;font-family:Arial;font-size:9pt;font-weight:700;background-position:50% bottom;background-image:url('../../imagesT/BtnMaroonBG.jpg');background-repeat:repeat-x;text-transform:capitalize;cursor:pointer;margin:2px 0 0 1px;padding:2px;}
+.ClsBtnMid{border:solid 1px #FF6A6A;width:100px;font-family:Arial;font-size:9pt;font-weight:700;background-position:50% bottom;background-image:url('../../imagesT/BtnMaroonBG.jpg');background-repeat:repeat-x;text-transform:capitalize;cursor:pointer;margin:2px 0 0 1px;padding:2px;}
+.ClsBtnLrg{border:solid 1px #FF6A6A;width:145px;font-family:Arial;font-size:9pt;font-weight:700;background-position:50% bottom;background-image:url('../../imagesT/BtnMaroonBG.jpg');background-repeat:repeat-x;text-transform:capitalize;cursor:pointer;margin:2px 0 0 1px;padding:2px;}
+.ClsBtnExLrg{border:solid 1px #FF6A6A;width:225px;font-family:Arial;font-size:9pt;font-weight:700;background-position:50% bottom;background-image:url('../../imagesT/BtnMaroonBG.jpg');background-repeat:repeat-x;text-transform:capitalize;cursor:pointer;margin:2px 0 0 1px;padding:2px;}
+.borderLBR{border-right:1px solid Orange;border-left:1px solid Orange;margin:2px;padding:0 3px 2px;}
+.TxtBox{border:1px solid #FFA8A8;font-family:Verdana;font-size:8pt;}
+.MidTxtBox{border-color:#FFA8A8;width:160px;font-family: Verdana;font-size: 8pt;}
+.GridBorder{border: 1px solid #FF6A6A;}
+.ClsGridHeader{background-image: url('../../imagesT/BtnMaroonBG.jpg');background-repeat: repeat-x;background-position: left bottom;font-weight: 700;font-size: 10pt;color: #333;text-decoration: none;margin-left: 5px;padding-right: 5px;height: 20px;}
+.ClsBorderPager{background-color: #FFA8A8;border-top: 0 solid #b6c196;font-size: 9pt;font-weight: 700;margin: 0;padding: 2px;border-top-color: #66CCFF;}
+.SubTitle{background-position: left;background-image: url('../../imagesT/ArrowOrangDoted.gif');background-repeat: no-repeat;padding-left: 20px;font-family: Arial;font-size: 9pt;font-weight: 700;height: 20px;color: #0055AA;}
+.HilightBGGray{background-color:#FFE8E8;border:#ddd 1px solid;padding-left:4px;color:#906;font-size:9pt;font-weight:700;font-family:Verdana;height:20px;}
+.MonthHeader
+{
+    border: 1px solid #CC0000;
+    background-image: url('../../imagesT/MenuBG.gif');
+    background-repeat: repeat-x;
+    background-position: left top;
+    color: #990033;
+    text-decoration: none;
+    height: 25px;
+    background-color: #FFF4F4;
+}
+.DashboardMenuHead
+{
+    font-family: Calibri;
+    font-size: 12pt;
+    font-weight: 700;
+    color: #990033 !important;
+    background-color: #FFECEC;
+    border: 1px solid #FF8448 !important;
+    padding: 0 3px;
+}
+.SubTitleMenu
+{
+    background-position: left;
+    background-image: url(../../imagesT/ArrowOrangDoted.gif);
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    font-family: arial;
+    font-size: 12pt;
+    font-weight: 700;
+    height: 20px;
+    color: #990000;
+    text-decoration: none;
+}
+A:hover.SubTitleMenu
+{
+    background-position: left;
+    background-image: url(../imagesT/ArrowPurpleDbl.gif);
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    font-family: arial;
+    font-size: 12pt;
+    height: 20px;
+    color: #FF2828;
+    text-decoration: underline;
+}
+
+.SubTitleMenuAdmin{background-position:left;background-image:url(../../imagesT/ArrowOrangDoted.gif);background-repeat:no-repeat;padding-left:20px;font-family:Verdana;font-size:10pt;font-weight:700;height:20px;color:#BB0000;text-decoration:none;}
+A:hover.SubTitleMenuAdmin{background-position:left;background-image:url(../../imagesT/ArrowPurpleDbl.gif);background-repeat:no-repeat;padding-left:20px;font-family:Verdana;font-size:10pt;height:20px;color:#906;text-decoration:underline;}
+.DashboardMenuHead{font-family:Calibri;font-size:12pt;font-weight:700;color:#C39;background-color:;border:1px solid #ddd;padding:0 3px;}
+.ClsBorderLight,.clsBorderLight,.ClsBorderlight
+{
+    background-color: #fff;
+    border: 1px solid #FFCECE !important;
+    font-size: 9pt;
+    margin: 0;
+    padding: 0;
+}
+.ClsHilightBGB{background-color:#fcc;border:#000 1px solid;color:#906;font-size:9pt;font-weight:700;font-family:Verdana;padding:4px;}
+.MenuHeaderRoll,.DayHeader{background-image:url('../../imagesT/BtnCalMaroon.jpg');background-position:top left;background-repeat:repeat-x;height:22px;color:#333;text-decoration:none;}
+.LblNoRecord{font-family:Verdana;font-size:8pt;font-weight:700;background-color:#F5D6D7;color:#CC0066;width:100%;border:1px solid #8FBC8F;padding:4px;}
+.TTComboSelect{font-family:Verdana;font-size:8pt;background-color:white;width:105px;height:20px;border:gray 1px solid;}
+.UsrGridHead{font-weight:700;font-size:10pt;font-family:Verdana;background-image:url(../../imagesT/BtnCalMaroon.jpg);background-position:top left;background-repeat:repeat-x;height:22px;color:#333;text-decoration:none;}
+.TTCells{background-color:#fff;padding:5px;}
+.GrdTotal{background-color:#93B0BF;font-family:arial;font-size:9pt;font-weight:700;color:#FFF;padding:5px 0;}
+.ClsBorderNoBg{border:1px solid #FF9DCE;padding:2px;}
+.ClsGrayMainTitle{background-image:url(../../imagesT/BtnCalMaroon.jpg);background-repeat:repeat-x;float:left;background-color:#f3f5e2;border-bottom:1px dotted #667835;font-family:arial;font-size:10pt;height:20px;width:100%;padding:3px 0 0 10px;}
+.ColorHeadBg,.ColorHeadBgFee{background-color:#F0D9D9;font-weight:700;font-size:9pt;color:#1a3b34;font-family:arial;}
+.HeadTxtB{font-weight:700;font-family:Verdana;font-size:12pt;color:#990000;padding-left:10px;}
+.TextNormalB,.TextHeadB{color:#990000;font-weight:700;font-family:MS Sans Serif;font-size:10pt;line-height:12pt;}
+.ClsGreenBG{background-color:#F5D6D7;border-left:#000 1px solid;padding-left:5px;}
+    .overlayOuter
+{
+    background: #240000;
+    display: none;
+    height: 100%;
+    left: 0;
+    position: absolute !important;
+    top: 0;
+   cursor:default;
+    width: 100%;
+    z-index: 100001;
+     opacity:0.5;
+	-moz-opacity:0.5;
+	filter: alpha(opacity=50);
+}
+
+.overlayInner
+{
+    border: 8px solid #FFB9B9;
+    background: #FFF9F9;
+    position: absolute;
+    display: none;
+    border-radius: 25px;
+    top: 30%; 
+    left: 40%;
+   cursor:default;
+    width: 500px;
+   -height: 400px;
+    z-index: 100001;
+}
+.ThemeDiv
+{
+    border: 3px solid #FFDFDF;
+    background-color: #FFF4F4;
+    padding: 10px;
+    margin: 25px;
+    vertical-align: middle;
+    text-align: center;
+ cursor:default;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+    
+}
+
+.TotalCount
+{
+    background-color: #E7B4B4;
+}
+.clsLegendLbl
+{
+    background-color: #FFE1E1;
+}
+.ClsGridNA
+{
+    background-color: #FFE1E1;
+} 
+
+.ExLrgTxtBox {
+    
+    border: 1px solid #FFA8A8;
+    font: 9pt arial;
+    padding: 1px;
+    width: 245px;
+}
+.MidCombo
+{border: 1px solid #FFA8A8;
+}
+.LrgTxtBox{border: 1px solid #0073AA;width:195px;font-family: Verdana;font-size: 8pt;}
+.sectionHeader{border: 1px solid #ACBB8F;border-bottom: none;background-color: #FFE1E1;color: #333333;font-size: 12pt;font-weight: bold;padding: 5px 10px;cursor: pointer;}
+.sectionView{background-color:#FFE1E1}
+.sectionView .parent {background-color:#FFE1E1!important;font-weight: bold;}
+.tableHeader,.sectionTotal{background-color:#CCB4B4;}
+.ReturnRenewPopop{background-color: Transparent; background-image: url('../../imagesT/BtnMaroonBG.jpg');background-repeat: repeat-x; padding: 4px; color: Black; text-align: right;}
+.GridHeaderCSS {background-image: url(../../imagesT/BtnMaroonBG.jpg);font-weight: 700; font-size: 10pt;color: #333;}
+.notice-popup-title{background-color: Transparent;background-image:url('../../imagesT/BtnMaroonBG.jpg');background-repeat: repeat-x;text-align: right;color: black;height: 14px;padding: 4px;}
+.AttendanceTD{background-color: #FFCCCC; width: 350px;}
+.StudentWiseRemarkMasterPop{background-color: Transparent; padding-top: 3px; height: 30px; background-image: url('../../imagesT/BtnMaroonBG.jpg'); background-repeat: repeat-x; color: Black; width: 760px; text-align: right;}
+.ClsGreenBG{background-color:#FFCCCC;border-left:#000 1px solid;padding-left:5px;}

@@ -1,0 +1,205 @@
+BODY{font-family:verdana;font-size:8pt;color:#000;height:100%;width:98%;margin-top:15px;margin-bottom:0;background-color:#3d474c;background-image:url(images/BGTop.jpg);background-position:left top;background-repeat:no-repeat;vertical-align:top;}
+.ClsBtnClose{border:solid 1px #a3c07b;width:75px;font-family:Arial;font-size:9pt;font-weight:700;background-position:50% bottom;background-image:url(RITeSchool/images/BtnBG.jpg);background-repeat:repeat-x;text-transform:capitalize;cursor:pointer;margin:2px 0 0 1px;padding:2px;}
+.ClslblNetBanking{background-color:#D8CCBC;font-family:verdana;color:#000762;font-size:12px;font-weight:700;border-style:solid;border-width:1px;padding:5px;}
+.PPSTopImg{background-image:url(images/PPS_TopImg.jpg);background-position:right bottom;background-repeat:no-repeat;background-color:#FFF;}
+.HomePGTopImg{background-image:url(images/HomeImg.jpg);background-repeat:no-repeat;}
+.menuBg{background-color:#06C;}
+.borderLBR{border-right:1px solid Orange;border-left:1px solid Orange;margin:2px;padding:0 3px 2px;}
+.TxtBox{border:1px solid #000;font-family:Verdana;font-size:8pt;}
+.LrgTxtBox{border:1px solid #000;width:569px;font-family:Verdana;font-size:8pt;}
+.MidTxtBox{border:1px solid #000;width:145px;font-family:Verdana;font-size:8pt;}
+.TxtBoxLogin{border:1px solid #000;font-family:Tahoma;font-size:10pt;color:#000;width:195px;}
+.TxtB{font-weight:700;font-family:MS Sans Serif;font-size:10pt;}
+.HeadTxtB{font-weight:700;font-family:Verdana;font-size:12pt;color:#39F;padding-left:10px;}
+.HeadTxtBWOPadding{font-weight:700;font-family:Verdana;font-size:12pt;color:#06c;}
+.HeadTxtMumbai{font-weight:700;font-family:MS Sans Serif;font-size:10pt;color:#06c;}
+.HeadFeedback{background-color:#698301;color:#FFF;font-size:10pt;font-family:Verdana;font-weight:700;}
+.TxtBgFaint{background-color:#E9FEC2;}
+.TxtBgDark{background-color:#D6FD84;}
+.ClsTxtFeedback{font-size:10pt;font-weight:400;font-family:MS Sans Serif;}
+.borderLBRBlue{border-bottom:1px solid #2d92e0;border-right:1px solid #2d92e0;border-left:1px solid #2d92e0;margin:2px;padding:0 3px 2px;}
+.borderBlue{border-bottom:1px solid #2d92e0;border-right:1px solid #2d92e0;border-left:1px solid #2d92e0;border:1px solid #2d92e0;margin:2px;padding:0 3px 2px;}
+.admissiondivstyle{height:22px;margin:5px 0 0 2px;text-align:left; padding:0 0 0 10px;}
+.floatR{float:right;}
+.floatL{float:left;}
+.borderBtm{border-bottom:1px solid #ddd;}
+.borderL{border-right:1px solid #ddd;}
+.bordergray{border:1px solid #ddd;margin:2px;padding:2px;}
+.tdFeatures{height:12px;background-color:#DAE4F1;vertical-align:top;}
+.MenuHW{background-repeat:repeat-x;background-position:left top;font-family:calibri;font-size:16px;font-weight:700;color:#930;padding:1px 5px 0 2px;}
+a:hover.MenuHW{background-repeat:repeat-x;background-position:left top;font-family:calibri;font-size:16px;font-weight:700;color:#FFF;background-color:#D15705;padding:1px 5px 0 2px;}
+.navST{margin-left:5px;font-family:MS Sans Serif;color:Orange;font-size:9pt;font-weight:700;text-decoration:none;}
+a:hover.navST{margin-left:5px;font-family:MS Sans Serif;color:blue;font-size:9pt;font-weight:700;text-decoration:underline;}
+.nav{background-image:url(images/Arrow.gif);background-position:left;background-repeat:no-repeat;padding-left:15px;margin-left:5px;font-family:Arial;color:Orange;font-size:9pt;font-weight:700;text-decoration:none;}
+.navSub{background-position:left;background-repeat:no-repeat;padding-left:15px;margin-left:5px;font-family:MS Sans Serif;color:marron;font-size:9pt;font-weight:700;text-decoration:none;}
+a:hover.navSub{background-position:left;background-repeat:no-repeat;padding-left:15px;margin-left:5px;font-family:MS Sans Serif;color:blue;font-size:9pt;font-weight:700;text-decoration:underline;}
+.navselHPL{background-position:right;margin-left:5px;font-family:verdana;color:#0FF;font-size:8pt;font-weight:700;text-decoration:underline;}
+a:hover.HPLFee{background-position:right;margin-left:5px;font-family:Tahoma;color:#00F;font-size:10pt;font-weight:700;text-decoration:underline;}
+.HPLFee{background-position:right;margin-left:5px;font-family:Tahoma;color:Orange;font-size:10pt;font-weight:700;text-decoration:underline;}
+.navUG{background-position:right;padding-left:15px;margin-left:5px;font-family:Verdana;color:#B53C3C;font-size:9pt;font-weight:700;text-decoration:underline;}
+.navUGFeedback{background-position:right;padding-left:15px;margin-left:5px;font-family:Verdana;color:#F60;font-size:9pt;font-weight:700;text-decoration:underline;}
+a:hover.navselent{background-position:right;font-family:MS Sans Serif;color:purple;font-size:10pt;font-weight:700;text-decoration:underline;}
+.navselent{background-position:right;font-family:MS Sans Serif;color:#C60;font-size:10pt;font-weight:700;text-decoration:underline;}
+a:hover.navHome{background-position:right;font-family:MS Sans Serif;color:#F60;font-size:10pt;font-weight:700;text-decoration:underline;}
+.navHome{background-position:right;font-family:MS Sans Serif;color:Blue;font-size:10pt;font-weight:700;text-decoration:underline;}
+.dataBG{background-color:#fff;height:100%;}
+.menu{font-family:Verdana;font-size:8pt;color:#000;padding-bottom:15px;padding-top:10px;}
+.TitleBlueB{font-family:verdana;color:#F5F5DC;font-weight:700;font-size:8pt;background-color:#06c;padding-left:20px;}
+.TitleB{font-family:MS Sans Serif;color:maroon;font-weight:700;font-size:10pt;background-color:#ccc;padding-left:20px;}
+.NoteB{font-family:MS Sans Serif;color:red;font-weight:700;font-size:10pt;background-color:#ccc;padding-left:20px;}
+.TitleRBg{background-color:#c93;height:20px;text-align:center;}
+.TitleBg{background-color:#e1e1e1;height:20px;text-align:center;}
+.topLeftAlignemnt{text-align:left;vertical-align:middle;}
+.bottomAlignemnt{text-align:center;vertical-align:bottom;}
+.paddingR5{padding-right: 5px;}
+.paddingR20{padding-right: 20px;}
+.paddingL5{padding-left:5px;}
+.paddingL20{padding-left:20px;}
+.paddingL30{padding-left:30px;}
+.padding10{padding:10px;}
+.paddingLR{padding:0 5px;}
+.paddingLSml{padding-left:5px;}
+.paddingT{padding-top:10px;}
+.paddingT20{padding-top:20px;}
+.paddingL{padding-left:10px;}
+.paddingL15{padding-left:15px;}
+.paddingBottom{padding-bottom:10px;}
+.footer{color:#696969;font-family:Arial;font-size:8pt;text-align:center;padding:2px;}
+.footer a:hover{color:maroon;text-decoration:none;font-family:Arial;font-size:8pt;text-align:center;padding:2px;}
+.red{color:red;font-family:Arial;font-size:9pt;padding:0 2px;}
+.TextSmall{color:#000;font-weight:400;font-family:Verdana,;font-size:8pt;line-height:12pt;}
+.TxtNormal{color:#000;font-weight:400;font-family:Verdana;font-size:10pt;line-height:12pt;}
+.TxtNormalB{color:#000;font-weight:700;font-family:MS Sans Serif;font-size:10pt;line-height:12pt;}
+.TxtBoxMand{border:1px solid #000;background-color:#ffffa0;font-family:Verdana;font-size:8pt;}
+.TxtBoxMandMid{border:1px solid #000;background-color:#ffffa0;font-family:Verdana;font-size:8pt;width:257px;}
+.TxtBoxMandLrg{border:1px solid #000;background-color:#ffffa0;font-family:Verdana;font-size:8pt;width:569px;}
+.ErrMsg{color:red;font-weight:400;font-family:Verdana,;font-size:8pt;}
+.ClsButton{border:solid 1px #000;color:#000;width:75px;font-family:Arial;font-size:9pt;font-weight:700;margin-top:5px;background-position:50% bottom;background-image:url(RITeSchool/images/ButtonBG.gif);background-repeat:repeat-x;padding:2px;}
+.TxtBSml{color:#4682B4;font-weight:700;font-family:Tahoma;font-size:8pt;line-height:10pt;}
+.TxtDivBG{background-color:#F7F7F7;}
+.TxtNormalPadding10{color:#000;font-weight:400;font-family:MS Sans Serif;font-size:10pt;line-height:12pt;padding:12px 0 0 17px;}
+.TdGrayBG{background-color:#e8e8e8;border:#dcdcdc solid 1px;}
+img{border:none;}
+.TxtBrown{font-size:9pt;color:#8B0000;font-family:arial;}
+.ColorBg{background-color:#FFE4B5;font-weight:700;font-size:9pt;color:#8B0000;font-family:arial;}
+.ClsBorderlight{border-color:Gray;border-style:solid;border-width:1px;}
+.MyClsBorderlight{background-color:#fff;border:1px solid #ddd;font-size:9pt;margin:0;padding:0;}
+.ColorBgThankYou{background-color:#FFE4B5;font-weight:700;font-size:9pt;color:#8B0000;font-family:Tahoma;height:25px;vertical-align:middle;}
+.
+/*- ------- Menu Tabs 10--------------------------- */
+#tabs10{float:left;width:100%;border-bottom:1px solid #2763A5;line-height:normal;}
+#tabs10 ul{list-style:none;margin:0;padding:5px 5px 0 0;}
+#tabs10 a{float:left;background:url(   "images/tableft10.gif" ) no-repeat left top;text-decoration:none;margin:0;padding:0 0 0 4px;}
+#tabs10 a span{display:block;background:url(   "images/tabright10.gif" ) no-repeat right top;color:#FFF;float:none;padding:5px 15px 4px 6px;}
+#tabs9 a:hover span{color:#FFF;}
+div#nifty{background:#efefef;}
+b.rtop,b.rbottom{display:block;background:#FFF;}
+b.rtop b,b.rbottom b{display:block;height:1px;overflow:hidden;background:#efefef;}
+b.r1{margin:0 5px;}
+b.r2{margin:0 3px;}
+b.r3{margin:0 2px;}
+b.rtop b.r4,b.rbottom b.r4{height:2px;margin:0 1px;}
+.TitleWhite{font-family:Tahoma;font-size:9pt;color:#FFF;font-weight:700;}
+.AdmSchedule{background-color:#DCDCDC;font-family:MS Sans Serif;font-size:10pt;color:#000;}
+.NewLogins{padding-left:5px;padding-right:5px;font-family:Tahoma;color:#C09;font-size:14pt;font-weight:400;}
+.CollapsTitle{color:#000;font-size:10pt;font-family:Arial;background-color:#EBCFD7;border-bottom:#a5c7a7 1px solid;font-weight:700;padding:2px;}
+.ClsPhotoGal{color:#906;font-size:10pt;font-family:Arial;height:15px;}
+.GridBorder{border:1px solid #8FBC8F;}
+.ClsNwGridPaging{font-family:arial;font-size:9pt;font-weight:Bold;color:#000;padding:2px;}
+.ClsGridRow{background-color:#f3f5e2;margin-left:5px;height:20px;font-size:9pt;}
+.ClsGridHeader{background-image:url(RITeSchool/images/GridHeaderBG.gif);background-repeat:repeat-x;background-position:left bottom;font-weight:700;font-size:10pt;color:#333;text-decoration:none;margin-left:5px;padding-right:5px;height:20px;}
+.ClsGridAltRow{background-color:#e4efc4;margin-left:5px;height:20px;font-size:9pt;}
+.LblNoRecord{font-family:Tahoma;font-size:8pt;font-weight:700;background-color:#E6EEFC;color:blue;width:100%;border:1px solid #8FBC8F;padding:4px;}
+.CollapsedTitle{color:#000;font-size:10pt;font-family:Arial;background-color:#EEBBBC;border-bottom:#a5c7a7 1px solid;font-weight:700;padding:2px;}
+.ClsBorderPager{background-color:#d6e1b7;border-top:0 solid #b6c196;font-size:9pt;font-weight:700;margin:0;padding:2px;}
+.ClsLblLgnd{color:#066;float:left;font-weight:700;font-size:9pt;padding-left:2px;}
+.ClsPaddingL,.ClspaddingL{padding-left:15px;text-align:left;}
+.paddingLSML{padding-left:5px;text-align:left;}
+.ClspaddingR{padding-right:10px;}
+.MainBodyDiv{padding-left:10px;padding-right:10px;}
+.LblNrmlB{font-weight:Bold;font-size:9pt;padding-left:5px;}
+.ClsHilightBGB{background-color:#fcc;border:#000 1px solid;color:#906;font-size:9pt;font-weight:700;font-family:Verdana;padding:4px;}
+.ClsBorderGray{border:1px solid #D0D5DD;}
+.ClsTopBorderGray{border-top-style:solid;border-color:#D0D5DD;border-width:1px;}
+.NoteLabel{font-family:Arial, Helvetica, sans-serif;color:#DC7E01;font-size:9pt;font-weight:400;text-decoration:none;border-top-style:solid;border-bottom-style:solid;border-color:#D1D1D1;border-width:1px;}
+.NoteHdrLabel{font-family:Arial, Helvetica, sans-serif;color:#2B5500;font-size:9pt;font-weight:700;text-decoration:none;}
+.navForgotPwd{background-image:url(images/Arrow.gif);background-position:left;background-repeat:no-repeat;padding-left:15px;margin-left:5px;font-family:Arial;color:#616192;font-size:9pt;font-weight:700;text-decoration:none;}
+a:hover.navForgotPwd{background-image:url(images/Arrow.gif);background-position:left;background-repeat:no-repeat;padding-left:15px;margin-left:5px;font-family:Arial;color:#47476B;font-size:9pt;font-weight:700;text-decoration:underline;}
+.lblAdmissionSteps{font-family:Arial;font-size:11px;font-weight:700;color:#030;}
+.HomeTopLink{background-position:right;margin-left:5px;font-family:verdana;color:#CFC;font-size:8pt;font-weight:700;text-decoration:underline;}
+a:hover.nav,.navSel{background-image:url(images/Arrow.gif);background-position:left;background-repeat:no-repeat;padding-left:15px;margin-left:5px;font-family:Arial;color:#FFF;font-size:9pt;font-weight:700;text-decoration:underline;}
+a:hover.navselHPL,a:hover.HomeTopLink{background-position:right;margin-left:5px;font-family:verdana;color:#EC9900;font-size:8pt;font-weight:700;text-decoration:underline;}
+a:hover.navUG,a:hover.navUGFeedback{background-position:right;padding-left:15px;margin-left:5px;font-family:Verdana;color:Blue;font-size:9pt;font-weight:700;text-decoration:underline;}
+.TextNormalB,.TextHeadB{color:#0000CD;font-weight:700;font-family:MS Sans Serif;font-size:10pt;line-height:12pt;}
+.ColorHeadBg,.ColorHeadBgFee{background-color:#ADD8E6;font-weight:700;font-size:9pt;color:#1a3b34;font-family:arial;}
+.ColorHeadBg,.ColorHeadBgFee1{background-color:#ADD8E6;font-weight:700;font-size:9pt;color:#1a3b34;font-family:arial;}
+.ColorHeadBgFee1 th{padding-left:10px;font-weight:700;font-family:MS Sans Serif;font-size:10pt;}
+.ColorHeadBgFee1 td{background-color:#F7F7F7; padding-left:10px;color:#000;font-weight:400;font-family:MS Sans Serif;font-size:10pt;line-height:12pt; }
+#tabs10 li,.AdmisionMenus{color:#000;font-weight:700;font-family:verdana;font-size:8pt;display:inline;margin:0;padding:0;}
+#tabs10 a:hover,#tabs10 #current a,.AdmisionMenus a:hover{background-position:0 -42px;}
+#tabs10 a:hover span,#tabs10 #current a span{background-position:100% -42px;}
+.ClsFontSmallSize{font-size:small;}
+.ClsDivWidth90{width:90%;}
+.ClsDivWidth60{width:60%;}
+.ClsPopupMasterDiv{color: White; font-family: Tahoma; font-size: 8pt;}
+.ClsVerticalAlignTop{vertical-align:top;}
+.ClsVerticalAlignMiddle{vertical-align:middle;}
+.ClsParentFeedbackTable{width: 100%; height: 97%; vertical-align: top;}
+.ClsOurAimParagraph{height:150px;width:200px;}
+.ClsActivitiesheight{height:25px;width:25%;}
+.ClsActivitiestable{width:95%;height:95%;border-width:0px;}
+.ClsMaroonColor{color:Maroon;}
+.ClsupdtpnlPopUp{visibility: hidden; display: none; position: absolute; margin: 0px; padding: 0px; width: 600px; height: 150px; border-width: 0px; left: 5px; top: 0px; line-height: normal; border: solid 2px darkgreen; margin: 20px 0px 0px 100px; background-color: #FFFFBF;}
+.ClsAdmissionsubdiv1{background-color: Transparent; padding-top: 3px; height: 30px; background-image: url(RITeSchool/images/GridHeaderBG.gif); background-repeat: repeat-x; color: Black; text-align: right;}
+.ClsAdmissionsubdiv2{font-size:12px; width:100x; letter-spacing:1px; padding-left:8px; font-weight:bold; color:darkgreen; float: left; height: 10px;}
+.ClsAdmissionsubdiv3{padding:2px; background-color:#FFFFBF; text-align:left; vertical-align:top; color: #333; overflow: auto; height: 100px; width: 590px;}
+.ClsSNoticediv1{height:780px;width:99%;}
+.ClsAdmissionclmstyle1{font-size:11pt; color:#333; font-family:Arial;}
+.ClsAdmissionclmstyle2{color:Maroon;font-size:medium;}
+.ClsGlobalCancerImg{height:1200px;width:750px;vertical-align:top;} 
+.ClsBTDcolStyle1{font-size:10pt;line-height:20px;}
+.ClsBTDcolStyle2{font-size:10pt;padding-left:16px;line-height: 20px;}
+.busDetailcolStyle3{font-size:10pt;line-height:20px;text-align:left;margin:5px 0 0 20px;}
+.busDetailcolStyle4{font-size:10pt;padding-left:16px;line-height: 20px;text-align:left;}
+.busDetailcolStyle5{margin:0;padding:0;}
+.ClsERcolStyle1{padding-left:10px;color:#c45001;}
+.ClseSchoolLoginMarquee{cursor:progress;border-top-width:thin;vertical-align:bottom;border-top-color:blue;}
+.ClsSpacerImg{height: 200px; width: 260px;}
+.ClseSchoolLogindiv{height:50px;text-align:center;}
+.ClseventColheight1{height:14px;padding-left:5px;}
+.ClsSNoticesColheight1{padding-left:5px;height:20px;}
+.ClsImageGalaryCol1{width:5%;background-color: #ffffc4;height:17px;}
+.ClsImageGalaryCol2{padding-left:5px;width:70%;height: 17px;background-color:#f2f1dd;font-weight:lighter}
+.ClsImageGalarytable{width: 100%;height: 100%;background-color: white;}
+.ClsSNoticesRowheight1{font-size: 10pt;background-color:#F7F7F7;font-family:tahoma;}
+.ClsSNoticesRowheight2{font-weight: bold;font-size:10pt;background-color:lightblue;font-family: Verdana;color: black;}
+.ClseventColheight10{height:10px;}
+.ClseventColWidth10{width:10%;}
+.ClseventdivStyle{float: left;font-family:MS Sans Serif;font-size:10pt;}
+.ClsFPasswordtable1{margin:0;width:99%;height:390px;background-image: url('RITeSchool/images/BGline.gif');background-repeat: repeat;}
+.ClsFPasswordPopupName{margin:0;background-image: url('RITeSchool/images/BGline.gif');background-repeat: repeat;}
+.ClsFPasswordPopupBody{margin:0;width:100%;background-image: url('RITeSchool/images/BGline.gif');background-repeat: repeat;}
+.ClsFPasswordtable2{margin:0;width:96%;}
+.ClsFeeStructureColStyle1{font-size:small;font-weight:bold;background-color:LightGrey;}
+.fontWeightBold{font-weight:bold;}
+.ClsFeeStructureColStyle2{font-size:12px;font-weight:bold;}
+.ClsFeeStructureColStyle3{height:2px;font-weight:bold;color:Black;}
+.ClsFeeStructureSpanStyle{color:Red;font-size: x-large;}
+.ClsGuidlineColStyle1{vertical-align:middle;padding-left:20px;}
+.bordersize1{border:1;}
+.tableheightwidth{width:100%;height:100%;}
+.tblcolwidth5{width:5%;}
+.externalEventstyle{vertical-align:top;background-color:#EFEFEF;}
+.externalEventdivstyle{background-color:#F3F5E2;padding-top:0.5px;}
+.WorkSheetdivStyle{width:40%;height:35px;text-align:left;float:left;font-weight:700;font-family:Verdana;font-size:12pt;color:#39F;padding-left:10px;font-size:small;}
+.WorkSheetsubdivStyle{width:50%; height:35px; text-align:left;float:right;font-weight:700;font-family:Verdana;font-size:12pt;color:#39F;padding-left:10px;}
+.ExLrgTxtBox{width:245px;font:9pt arial;border:gray 1px solid;background-color:#fff;padding:1px;}
+.ClsMdtStar{color:Red;font-family:arial;font-size:9pt;}
+.MidTxtBox{width:145px;font:9pt arial;border:gray 1px solid;background-color:#fff;padding:1px;}
+.ClsTxtLarge{---x-system-font:none;background-color:#FFF;border:1px solid gray;font-family:arial;font-size:9pt;font-size-adjust:none;font-stretch:normal;font-style:normal;font-variant:normal;font-weight:400;line-height:normal;width:260px;padding:1px;}
+.ClsBtn{border:solid 1px #a3c07b;width:75px;font-family:Arial;font-size:9pt;font-weight:700;background-position:50% bottom;background-image:url('RITeSchool/images/BtnBG.jpg');background-repeat:repeat-x;text-transform:capitalize;cursor:pointer;margin:2px 0 0 1px;padding:2px;}
+.LblSmlGray{font-family:Arial;font-size:8pt;color:Gray;}
+.ClsLabel{float:left;font-size:9pt;font-family:Arial;padding-left:5px;padding-right:2px;}
+.sectionHeader{border: 1px solid #ACBB8F;border-bottom: none;background-color: #E4EFC4;color: #333333;font-size: 12pt;font-weight: bold;padding: 5px 10px;cursor: pointer;}
+.sectionView{background-color:#ACBB8F}
+.sectionView .parent {background-color:#D6E1B7!important;font-weight: bold;}

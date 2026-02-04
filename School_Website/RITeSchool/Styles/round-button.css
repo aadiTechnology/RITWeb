@@ -1,0 +1,88 @@
+
+DEL.button{overflow-y:hidden;display:inline-block;font-size:0;vertical-align:middle;width:10px;cursor:pointer;color:#2e523b;line-height:0;background-repeat:no-repeat;font-style:normal;position:relative;height:30px;text-decoration:none;background-image:url(form_buttons.gif);background-position:0 -120px;border-style:none;margin:0 6px 0 0;padding:0 10px 0 0;}
+A.button SPAN{background-image:url(form_buttons.gif);background-position:100% 0;display:block;font-size:12px important;right:-5px;vertical-align:text-top;cursor:pointer;color:#222;line-height:1;background-repeat:no-repeat;zoom:1px;font-style:normal;font-family:"Arial" !important;white-space:nowrap;letter-spacing:0 important;position:relative;top:0;height:30px;background-color:transparent;border-style:none;margin:0 -10px 0 10px;padding:8px 12px 0 0;}
+DEL.button SPAN{background-image:url(form_buttons.gif);display:block;font-size:12px important;right:-5px;vertical-align:text-top;line-height:1;background-repeat:no-repeat;zoom:1px;font-style:normal;font-family:"Arial" !important;white-space:nowrap;letter-spacing:0 important;position:relative;top:0;height:30px;background-color:transparent;background-position:100% -120px;cursor:default;color:#aaa !important;border-style:none;margin:0 -10px 0 10px;padding:8px 12px 0 0;}
+HTML.safari SPAN.button BUTTON{line-height:2.6px;}
+A.button:unknown SPAN{background-position:100% -60px;color:#444;}
+A.button:active{color:#444;}
+A.button,SPAN.button{background-position:0 0;overflow-y:hidden;display:inline-block;font-size:0;vertical-align:middle;width:10px;cursor:pointer;color:#2e523b;line-height:0;background-repeat:no-repeat;font-style:normal;position:relative;height:30px;text-decoration:none;background-image:url(form_buttons.gif);border-style:none;margin:0 6px 0 0;padding:0 10px 0 0;}
+SPAN.button BUTTON,SPAN.button INPUT{background-image:url(form_buttons.gif);background-position:100% 0;display:block;font-size:12px important;right:-5px;vertical-align:text-top;cursor:pointer;color:#222;background-repeat:no-repeat;zoom:1px;font-style:normal;font-family:"Arial" !important;white-space:nowrap;letter-spacing:0 important;position:relative;top:0;height:30px;background-color:transparent;line-height:2.5;border-style:none;margin:0 -10px 0 10px;padding:0 12px 0 0;}
+HTML.safari A.button SPAN,HTML.safari DEL.button SPAN{line-height:1.3px;}
+HTML.safari A.button:unknown,HTML.safari SPAN.button BUTTON:unknown{outline:none;}
+A.button:hover,SPAN.button:hover,A.button:unknown,A.dom-button-focus,SPAN.button-behavior-hover{background-position:0 -60px;color:#222;text-decoration:none;}
+A.button:hover SPAN,SPAN.button:hover BUTTON,SPAN.button-behavior-hover BUTTON,SPAN.button-behavior-hover INPUT{background-position:100% -60px;}
+DEL.button-behavior-hover,DEL.button:hover{background-position:0 -180px;}
+DEL.button-behavior-hover SPAN,DEL.button:hover SPAN{background-position:100% -180px;}
+
+/*Optional hack for IE6 to simulate :hover selector*/
+
+span.button button, del.button span, span.button input{
+
+
+	
+	_behavior:expression(
+		(function(el){
+
+			if( typeof( behavior_onMouseEnter) == 'undefined'){
+
+				
+				behavior_onMouseEnter = function(el){
+					
+					var dEl = this.parentNode;					
+					var sClass = dEl.className ;
+					dEl.__defaultClassName = sClass ;
+					dEl.className = sClass + ' button-behavior-hover';	
+					this.setCapture();
+				};
+
+				behavior_onMouseLeave = function(el) {
+					var dEl = this.parentNode;
+					dEl.className = dEl.__defaultClassName ;
+					dEl.__defaultClassName = undefined;
+					this.releaseCapture();
+				};
+
+
+			};
+			
+			
+			el.runtimeStyle.behavior = 'none';
+			el.onmouseenter = behavior_onMouseEnter;
+			el.onmouseleave = behavior_onMouseLeave;
+			
+			
+		})(this));
+
+
+
+
+}
+ntNode;					
+					var sClass = dEl.className ;
+					dEl.__defaultClassName = sClass ;
+					dEl.className = sClass + ' button-behavior-hover';	
+					this.setCapture();
+				};
+
+				behavior_onMouseLeave = function(el) {
+					var dEl = this.parentNode;
+					dEl.className = dEl.__defaultClassName ;
+					dEl.__defaultClassName = undefined;
+					this.releaseCapture();
+				};
+
+
+			};
+			
+			
+			el.runtimeStyle.behavior = 'none';
+			el.onmouseenter = behavior_onMouseEnter;
+			el.onmouseleave = behavior_onMouseLeave;
+			
+			
+		})(this));
+
+
+
+
+}
