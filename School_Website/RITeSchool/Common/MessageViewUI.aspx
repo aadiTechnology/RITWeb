@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="../MasterPages/MasterPage.master"
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="../MasterPages/MasterPage.master"
     CodeFile="MessageViewUI.aspx.cs" Inherits="MessageViewUI" ViewStateMode="Disabled" %>
 
 <%--<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>--%>
@@ -12,110 +12,117 @@
                         <tr>
                             <td align="left" colspan="4" valign="top">
                                 <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
-                                    <tr>
-                                        <td align="left" width="150px">
-                                        </td>
-                                        <td align="right" width="690px">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left" class="ClsBorderlight">
-                                            <span class="ClsLabel">From :</span>
-                                        </td>
-                                        <td align="left" class="ClsBorderlight">
-                                            <asp:Label ID="lblFromUserName" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left" class="ClsBorderlight">
-                                            <span class="ClsLabel" id="spReceivedDate" runat="server" viewstatemode="Enabled">Received Date :</span>
-                                        </td>
-                                        <td align="left" class="ClsBorderlight">
-                                            <asp:Label ID="lblReceivedDate" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">To :</span>&nbsp;
-                                        </td>
-                                        <td align="left" style="" class="ClsBorderlight">
-                                            <asp:Label ID="lblToUserName" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">Cc :</span>&nbsp;
-                                        </td>
-                                        <td align="left" style="" class="ClsBorderlight">
-                                            <asp:Label ID="lblCcUserName" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="left" class="ClsBorderlight">
-                                            <span class="ClsLabel">Subject :</span>
-                                        </td>
-                                        <td align="left" class="ClsBorderlight">
-                                            <asp:Label ID="lblSubject" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr id="tdAttachment" runat="server" viewstatemode="Enabled" visible="false">
-                                        <td align="left" style="" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">Attachment1 :</span><br />
-                                        </td>
-                                        <td align="left" style="" valign="top">
-                                            <asp:HyperLink ID="lnkAttachment" runat="server" ViewStateMode="Enabled" CssClass="CursorHand ClsLblRslt"
-                                                Target="_blank" ToolTip="Click to download the file." Font-Size="Smaller" Font-Underline="true"></asp:HyperLink>
-                                        </td>
-                                    </tr>
-                                    <tr id="tdAttachment1" runat="server" viewstatemode="Enabled" visible="false">
-                                        <td align="left" style="" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">Attachment2 :</span><br />
-                                        </td>
-                                        <td align="left" style="" valign="top">
-                                            <asp:HyperLink ID="lnkAttachment1" runat="server" ViewStateMode="Enabled" CssClass="CursorHand ClsLblRslt"
-                                                Target="_blank" ToolTip="Click to download the file." Font-Size="Smaller" Font-Underline="true"></asp:HyperLink>
-                                        </td>
-                                    </tr>
-                                    <tr id="tdAttachment2" runat="server" viewstatemode="Enabled" visible="false">
-                                        <td align="left" style="" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">Attachment3 :</span><br />
-                                        </td>
-                                        <td align="left" style="" valign="top">
-                                            <asp:HyperLink ID="lnkAttachment2" runat="server" ViewStateMode="Enabled" CssClass="CursorHand ClsLblRslt"
-                                                Target="_blank" ToolTip="Click to download the file." Font-Size="Smaller" Font-Underline="true"></asp:HyperLink>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                     <td align="left" style="" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">Attachments :</span><br />
-                                        </td>
-                                        <td align="left" style="" valign="top">
-                                          <asp:Panel ID="pnl" runat="server" style="height:auto">
+                                  <tr>
+                                    <td  align="left" >
+                                     <div  id="printArea">
+                                         <table border="0" cellpadding="0" cellspacing="0" style="width:90%;">
+                                         <tr>
+                                           <td align="left"  width="150px">
+                                           </td>
+                                            <td align="right" width="690px">
+                                            </td>
+                                          </tr>
+                                             <tr>
+                                                <td align="left" class="ClsBorderlight">
+                                                    <span class="ClsLabel">From :</span>
+                                                </td>
+                                                <td align="left" class="ClsBorderlight">
+                                                    <asp:Label ID="lblFromUserName" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td align="left" class="ClsBorderlight">
+                                                    <span class="ClsLabel" id="spReceivedDate" runat="server" viewstatemode="Enabled">Received Date :</span>
+                                                </td>
+                                                <td align="left" class="ClsBorderlight">
+                                                    <asp:Label ID="lblReceivedDate" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td align="left" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">To :</span>&nbsp;
+                                                </td>
+                                                <td align="left" style="" class="ClsBorderlight">
+                                                    <asp:Label ID="lblToUserName" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td align="left" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">Cc :</span>&nbsp;
+                                                </td>
+                                                <td align="left" style="" class="ClsBorderlight">
+                                                    <asp:Label ID="lblCcUserName" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td align="left" class="ClsBorderlight">
+                                                    <span class="ClsLabel">Subject :</span>
+                                                </td>
+                                                <td align="left" class="ClsBorderlight">
+                                                    <asp:Label ID="lblSubject" runat="server" ViewStateMode="Enabled" CssClass="ClsLblRslt"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr id="tdAttachment" runat="server" viewstatemode="Enabled" visible="false">
+                                                <td align="left" style="" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">Attachment1 :</span><br />
+                                                </td>
+                                                <td align="left" style="" valign="top">
+                                                    <asp:HyperLink ID="lnkAttachment" runat="server" ViewStateMode="Enabled" CssClass="CursorHand ClsLblRslt"
+                                                        Target="_blank" ToolTip="Click to download the file." Font-Size="Smaller" Font-Underline="true"></asp:HyperLink>
+                                                </td>
+                                            </tr>
+                                             <tr id="tdAttachment1" runat="server" viewstatemode="Enabled" visible="false">
+                                                <td align="left" style="" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">Attachment2 :</span><br />
+                                                </td>
+                                                <td align="left" style="" valign="top">
+                                                    <asp:HyperLink ID="lnkAttachment1" runat="server" ViewStateMode="Enabled" CssClass="CursorHand ClsLblRslt"
+                                                        Target="_blank" ToolTip="Click to download the file." Font-Size="Smaller" Font-Underline="true"></asp:HyperLink>
+                                                </td>
+                                            </tr>
+                                             <tr id="tdAttachment2" runat="server" viewstatemode="Enabled" visible="false">
+                                                <td align="left" style="" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">Attachment3 :</span><br />
+                                                </td>
+                                                <td align="left" style="" valign="top">
+                                                    <asp:HyperLink ID="lnkAttachment2" runat="server" ViewStateMode="Enabled" CssClass="CursorHand ClsLblRslt"
+                                                        Target="_blank" ToolTip="Click to download the file." Font-Size="Smaller" Font-Underline="true"></asp:HyperLink>
+                                                </td>
+                                            </tr>
+                                             <tr  id="trAttachmentsLabel" runat="server">
+                                               <td align="left" style="" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">Attachments :</span><br />
+                                                </td>
+                                                <td align="left" style="" valign="top">
+                                                    <asp:Panel ID="pnl" runat="server" style="height:auto">
                                           
-                                          </asp:Panel>
-                                        </td>
-                                    
-                                    </tr>
-                                    <tr>
-                                        <td align="left" style="" class="ClsBorderlight" valign="top">
-                                            <span class="ClsLabel">Message :</span><br />
-                                        </td>
-                                        <td align="left" style="" valign="top">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" align="left">
-                                            <%--<CKEditor:CKEditorControl ID="FCKMessageBody" ReadOnly="true" Toolbar="" BasePath="../ckeditor/" Visible="false"
-                                                Width="100%" runat="server" ViewStateMode="Enabled" Height="350px" ToolbarCanCollapse="False"></CKEditor:CKEditorControl>--%>
-                                            <div id="divData" runat="server" style="overflow:auto;border-style:solid;border-color:Gray;border-width:1px;padding:5px;background-color:lightGray;width:100%;height:400px;background-color:#FCFCFC">
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                    </asp:Panel>
+                                                </td>
+                                           </tr>
+                                             <tr>
+                                                <td align="left" style="" class="ClsBorderlight" valign="top">
+                                                    <span class="ClsLabel">Message :</span><br />
+                                                </td>
+                                                <td align="left" style="" valign="top">
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td colspan="2" align="left">
+                                                    <%--<CKEditor:CKEditorControl ID="FCKMessageBody" ReadOnly="true" Toolbar="" BasePath="../ckeditor/" Visible="false"
+                                                        Width="100%" runat="server" ViewStateMode="Enabled" Height="350px" ToolbarCanCollapse="False"></CKEditor:CKEditorControl>--%>
+                                                    <div id="divData" runat="server" style="overflow:auto;border-style:solid;border-color:Gray;border-width:1px;padding:5px;background-color:lightGray;width:100%;height:400px;background-color:#FCFCFC">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                         </table> 
+                                      </div>
+                                   </td>
+                                </tr>
                                     <tr>
                                         <td align="left" colspan="2">
                                             <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
                                                 <tr>
+                                                    
                                                     <td align="left" style="width: 30%">
                                                         <asp:Button ID="btnBack" UseSubmitBehavior="false" OnClick="btnBack_Click" runat="server"
                                                             ViewStateMode="Enabled" Text="Back" CssClass="ClsBtnSml" BorderWidth="1px" BorderStyle="Solid" Visible="True">
@@ -124,6 +131,7 @@
                                                             CssClass="ClsBtnLrg" UseSubmitBehavior="false" />
                                                     </td>
                                                     <td align="right">
+                                                        <asp:Button ID="btnPrint" runat="server" Text="Print" OnClientClick="printDiv('printArea'); return false;" CssClass="ClsBtnLrg" Visible="false"/>
                                                         <asp:Button ID="btnForward" Text="Forward" runat="server" ViewStateMode="Enabled" OnClick="btnForward_Click"
                                                             CssClass="ClsBtnLrg" />
                                                         <asp:Button ID="btnReply" Text="Reply" runat="server" ViewStateMode="Enabled" OnClick="btnReply_Click" CssClass="ClsBtnLrg" />
@@ -197,6 +205,56 @@
                 }
             });
         });
+
+        var printWindow = null; 
+
+        function printDiv(divId) {
+            try {
+                var originalDiv = document.getElementById(divId);
+                if (!originalDiv) return;
+
+                var printDivClone = originalDiv.cloneNode(true);
+
+                var attachmentRowIds = [
+                                    "<%= tdAttachment.ClientID %>",
+                                    "<%= tdAttachment1.ClientID %>",
+                                    "<%= tdAttachment2.ClientID %>",
+                                    "<%= trAttachmentsLabel.ClientID %>"];
+                attachmentRowIds.forEach(function (id) {
+                    var row = printDivClone.querySelector("#" + id);
+                    if (row) row.remove();
+                });
+
+               var messageDiv = printDivClone.querySelector("#<%= divData.ClientID %>");
+                if (messageDiv) {
+                    messageDiv.querySelectorAll("p, div, span").forEach(function (el) {
+                        if (!el.textContent.trim()) el.remove();
+                    });
+                    messageDiv.innerHTML = messageDiv.innerHTML
+                        .replace(/(<br\s*\/?>\s*){3,}/gi, "<br>")
+                        .trim();
+                }
+
+                if (printWindow && !printWindow.closed) {
+                    printWindow.close();
+                }
+
+                printWindow = window.open('', '', 'height=600,width=800');
+                printWindow.document.write('<html><head><title>Print</title>');
+                printWindow.document.write('<style>body { font-family: Arial; margin: 10px } div { overflow: visible !important; border: none !important; }</style>');
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(printDivClone.innerHTML);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+              //  alert("For best print output, please disable 'Headers and Footers' in the print settings.");
+                printWindow.focus();
+                printWindow.print();
+                printWindow.close();
+            }
+            catch (e) {
+                console.error("Print error:", e);
+            }
+        }
     </script>
     <script src="../Scripts/Common/MessageView.js" type="text/javascript"></script>
 </asp:Content>

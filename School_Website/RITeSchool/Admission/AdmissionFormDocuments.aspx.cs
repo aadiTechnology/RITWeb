@@ -350,7 +350,7 @@ public partial class AdmissionFormDocuments : SchoolBase
                 Tr1to10.Visible = true;
             }
 
-            if (sStandardName == "2" || sStandardName == "3" || sStandardName == "4" || sStandardName == "5" || sStandardName == "6" || sStandardName == "7" || sStandardName == "8")
+            if (sStandardName == "2" || sStandardName == "3" || sStandardName == "4" || sStandardName == "5" || sStandardName == "6" || sStandardName == "7" || sStandardName == "8" || sStandardName == "9")
             {
                 liGrade2.InnerText = "An activity paper of 1 hour will be conducted on Saturday, 7th February 2026 at 10:00 a.m. The form numbers of selected students (merit list) will be declared on 12th  February 2026 at 3:00 p.m. on the school website and notice board.";
                 liGrade2to8.Visible = true;

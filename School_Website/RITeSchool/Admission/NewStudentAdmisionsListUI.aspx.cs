@@ -832,7 +832,7 @@ public partial class NewStudentAdmisionsListUI : ExportDataTable
             {
                 AddHeader("Preference", "text-align:left; font-weight:bold; font-size:17px;");
                 AddHeader("Mobile Number1", "text-align:center; font-weight:bold; font-size:17px;");
-                AddHeader("Mobile Number2", "text-align:center; font-weight:bold; font-size:17px;");
+                AddHeader("Mobile Number2", "text-align:center; font-weight:bold; font-size:17px;");                
             }
             if (miSchoolId == Constants.SchoolId.PPS.ToInt())
             {
@@ -842,7 +842,9 @@ public partial class NewStudentAdmisionsListUI : ExportDataTable
             }
 			
 			AddHeader("Previous School UDISE No", "text-align:center; font-weight:bold; font-size:17px;");
-            AddHeader("Previous School Saral Id", "text-align:center; font-weight:bold; font-size:17px;");
+
+            if(moSchool != Constants.SchoolId.PPSN)
+                AddHeader("Previous School Saral Id", "text-align:center; font-weight:bold; font-size:17px;");
 
             if (miSchoolId == Constants.SchoolId.PPS.ToInt())
             {
@@ -872,6 +874,11 @@ public partial class NewStudentAdmisionsListUI : ExportDataTable
                AddHeader("Father OfficeAddress ", "text-align:left; font-weight:bold; font-size:17px;");
               }
 
+            AddHeader("PEN No.", "text-align:left; font-weight:bold; font-size:17px;");
+            AddHeader("AAPAR ID", "text-align:left; font-weight:bold; font-size:17px;");
+            AddHeader("Aadhar Card Number", "text-align:center; font-weight:bold; font-size:17px;");
+            AddHeader("Name As Per Aadhar Card", "text-align:left; font-weight:bold; font-size:17px;");
+
             HttpContext.Current.Response.Write("</TR>");
 
             foreach (DataRow row in dtStudentAdmission.Rows)
@@ -895,7 +902,7 @@ public partial class NewStudentAdmisionsListUI : ExportDataTable
                 {
                     AddTableRows(row["ResidenceType"].ToString(), "text-align:left");
                     AddTableRows(row["MobileNumber1"].ToString(), "text-align:center");
-                    AddTableRows(row["MobileNumber2"].ToString(), "text-align:center");
+                    AddTableRows(row["MobileNumber2"].ToString(), "text-align:center");                    
                 }
                 if (miSchoolId == Constants.SchoolId.PPS.ToInt())
                 {
@@ -905,7 +912,9 @@ public partial class NewStudentAdmisionsListUI : ExportDataTable
                 }
 				
 				AddTableRows(row["LastSchoolUDISENo"].ToString(), "text-align:left");
-                AddTableRows(row["PreviousSchoolSaralId"].ToString(), "text-align:left");
+                
+                if (moSchool != Constants.SchoolId.PPSN)
+                    AddTableRows(row["PreviousSchoolSaralId"].ToString(), "text-align:left");
 
                 if (miSchoolId == Constants.SchoolId.PPS.ToInt())
                 {
@@ -947,7 +956,12 @@ public partial class NewStudentAdmisionsListUI : ExportDataTable
                     AddTableRows(row["F_OfficeAddress"].ToString(), "text-align:left");
                }
 
-              HttpContext.Current.Response.Write("</TR>");
+                AddTableRows(row["PenNo"].ToString(), "mso-number-format:\"\\@\";");
+                AddTableRows(row["ApaarId"].ToString(), "mso-number-format:\"\\@\";");
+                AddTableRows(row["AadharCardNo"].ToString(), "mso-number-format:\"\\@\"; text-align:center;");
+                AddTableRows(row["NameAsPerAadharCard"].ToString(), "text-align:left");
+
+                HttpContext.Current.Response.Write("</TR>");
             }
 
             HttpContext.Current.Response.Write("</Table>");

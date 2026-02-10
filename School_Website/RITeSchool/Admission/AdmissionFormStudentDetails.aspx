@@ -643,7 +643,7 @@
                                         Permanent Education Number (PEN No.) :&nbsp;
                                     </td>
                                     <td class="TxtNormal" align="left" style="font-size: 10pt" colspan="3">
-                                        <asp:TextBox ID="txtPenNo" CssClass="MidTxtBox" runat="server" MaxLength="11" onkeyup="extractNumber(this, 0,false);" onkeypress="return blockNonNumbers (this, event, true, false);"/>
+                                        <asp:TextBox ID="txtPenNo" CssClass="TxtBox" runat="server" MaxLength="11" onkeyup="extractNumber(this, 0,false);" onkeypress="return blockNonNumbers (this, event, true, false);"/>
                                         <asp:RequiredFieldValidator ID="reqValPenNo" runat="server" ErrorMessage="Permanent Education Number should not be blank." Display="None" Enabled="false" ControlToValidate="txtPenNo"></asp:RequiredFieldValidator>
                                     </td>
                                 </tr>
@@ -652,7 +652,9 @@
                                         APAAR ID :&nbsp;
                                     </td>
                                     <td class="TxtNormal" align="left" style="font-size: 10pt" colspan="3">
-                                        <asp:TextBox ID="txtApaarId" CssClass="MidTxtBox" runat="server" MaxLength="12" onkeyup="extractNumber(this, 0,false);" onkeypress="return blockNonNumbers (this, event, true, false);"/>                                        
+                                        <asp:TextBox ID="txtApaarId" CssClass="TxtBox" runat="server" MaxLength="12" onkeyup="extractNumber(this, 0,false);" onkeypress="return blockNonNumbers (this, event, true, false);"/> 
+                                          <asp:RequiredFieldValidator ID="reqValAparId" runat="server" ErrorMessage="APAAR ID should not be blank." Display="None" Enabled="false" ControlToValidate="txtApaarId"></asp:RequiredFieldValidator>
+                                       
                                     </td>
                                 </tr>
                                 <tr id="trSNS10thStdDetails" runat="server" visible="false">

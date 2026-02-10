@@ -351,7 +351,8 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("SourceId", aiId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("VehicleIds", asVehicleIds, SqlDbType.Xml);
                 oSQLServerDbUtility.AddParameter("DisplayName", asDisplayName, SqlDbType.NVarChar);
-                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("[Transport].[usp_CopyRouteShiftVehicleConfig]");
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("[Transport].[usp_CopyRouteShiftVehicleConfigInSingleCall]");
+                //oSQLServerDbUtility.ExecuteStoredProcedureOnServer("[Transport].[usp_CopyRouteShiftVehicleConfig]");                
             }
         }
 

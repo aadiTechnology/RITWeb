@@ -44,7 +44,7 @@ public partial class FeesMiniReceipt : SchoolBase
 			if (!IsPostBack)
 				this.Page.Title = Constants.S_TITLE_FOR_PAGE;
 
-            if (moSchool == Constants.SchoolId.VPMCPS)
+            if (moSchool == Constants.SchoolId.VPMCPS && (QueryString["NewAcdYear"] == null || QueryString["NewAcdYear"].ToString().ToLower() !="true"))
                 DisplayReport();
             else
                 DisplayReport(GetFilterString());

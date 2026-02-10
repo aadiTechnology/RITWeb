@@ -701,7 +701,8 @@ public partial class AdmissionFormStudentDetails : SchoolBase
             txtFFatherName.BackColor = oBackColor;
             txtMHName.BackColor = oBackColor;
             txtNameOnAadharCard.BackColor = oBackColor;
-
+            
+         
             //txtFFatherName.BackColor = oBackColor;
             //txtMHName.BackColor = oBackColor;
             txtFAge.BackColor = oBackColor;
@@ -1250,8 +1251,8 @@ public partial class AdmissionFormStudentDetails : SchoolBase
                 reqValSecondLanguage.Enabled = true;
                 reqValThirdLanguage.Enabled = true;
 
-                txtPenNo.BackColor = oBackColor;
-                reqValPenNo.Enabled = true;
+                //txtPenNo.BackColor = oBackColor;
+                //reqValPenNo.Enabled = true;
             }
 
             if(sStdName == "Nursery")
@@ -2578,6 +2579,23 @@ public partial class AdmissionFormStudentDetails : SchoolBase
                 cstSchoolUDISE.Enabled = false;
                 CustomValidator6.Enabled = false;
             }
+            List<string> lstMandatoryStds = new List<string> { "4", "5", "6", "7", "8", "9" };
+
+            if (lstMandatoryStds.Contains(sStdName))
+            {
+                reqValAparId.Enabled = true;
+                txtApaarId.BackColor = System.Drawing.Color.FromName("#FFFFA0");
+
+                reqValPenNo.Enabled = true;
+                txtPenNo.BackColor = System.Drawing.Color.FromName("#FFFFA0");
+            }
+            else
+            {
+                reqValAparId.Enabled = false;
+                reqValPenNo.Enabled = false;
+                txtApaarId.BackColor = System.Drawing.Color.FromName("#FFFFFF");
+                txtPenNo.BackColor = System.Drawing.Color.FromName("#FFFFFF");
+              }
         }
     }
 

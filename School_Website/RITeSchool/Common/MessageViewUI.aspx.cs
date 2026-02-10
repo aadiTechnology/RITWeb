@@ -54,6 +54,7 @@ public partial class MessageViewUI : SchoolBase
               }
               SetButtonState();
               RestrictFields();
+              SetPrintButtonVisibility();
           }         
         }
         catch (Exception ex)
@@ -658,5 +659,15 @@ public partial class MessageViewUI : SchoolBase
             hidRestrictCopy.Value = Constants.S_ONE;
         else
             hidRestrictCopy.Value = Constants.S_ZERO;
+    }
+    /// <summary>
+    /// This method is used print button Visibility.
+    /// </summary>
+    private void SetPrintButtonVisibility()
+    {
+        if (miSchoolId == Constants.SchoolId.PPSN.ToInt() && moUserRole == Constants.UserRoles.Supervisor)
+               btnPrint.Visible = true;
+        else
+              btnPrint.Visible = false;
     }
 }
