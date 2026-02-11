@@ -924,8 +924,25 @@ public partial class PendingFeeStudentList : ExportToExcel
             row1.Append(AddCell(dtPending["Roll_No"].ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
             row1.Append(AddCell(dtPending["StudentName"].ToString(), CellValues.String, StudentPaidFeeEnum.LeftData));
             row1.Append(AddCell(dtPending["Mobile_Number"].ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
-            row1.Append(AddCell(dtPending["Amount"].ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
-            row1.Append(AddCell(dtPending["Late_Fee_Amt"].ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
+
+            if (moSchool == Constants.SchoolId.PPSH)
+            {
+                int iTotalPendingAmount = dtPending["Amount"].ToInt();
+                int iLateFeeAmount = dtPending["Late_Fee_Amt"].ToInt();
+
+                int iTotalLateFeeAmt = dsFee.Tables[1].AsEnumerable().Where(dt => dt.Field<int>("Student_Id") == dtPending["Student_Id"].ToInt() && dt.Field<string>("Fee_Type").ToUpper() == "LATE FEE").Sum(dt => dt.Field<int>("Amount"));
+                iLateFeeAmount = iLateFeeAmount + iTotalLateFeeAmt;
+                iTotalPendingAmount = iTotalPendingAmount - iTotalLateFeeAmt;
+
+                row1.Append(AddCell(iTotalPendingAmount.ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
+                row1.Append(AddCell(iLateFeeAmount.ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
+            }
+            else
+            {
+                row1.Append(AddCell(dtPending["Amount"].ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
+                row1.Append(AddCell(dtPending["Late_Fee_Amt"].ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
+            }
+
             if (moSchool == Constants.SchoolId.PPSH)
             {
                 foreach (DataRow dr in dsFee.Tables[2].Rows)
