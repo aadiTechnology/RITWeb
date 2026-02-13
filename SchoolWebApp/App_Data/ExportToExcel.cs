@@ -258,6 +258,11 @@ public class ExportToExcel : SchoolBase
                new DocumentFormat.OpenXml.Spreadsheet.FontSize() { Val = 10 },
                new FontName { Val = "Arial" },
                new Color { Rgb = "FFFFC0CB" } // 
+           ),
+           new Font(
+               new DocumentFormat.OpenXml.Spreadsheet.FontSize() { Val = 10 },
+               new FontName { Val = "Arial" },
+               new Bold { Val = true }
            )
          );
 
@@ -295,7 +300,8 @@ public class ExportToExcel : SchoolBase
                 new CellFormat { FontId = 7, FillId = 0, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Center, VerticalAlignmentValues.Center, 0U) },
                 new CellFormat { FontId = 2, FillId = 0, BorderId = 0, ApplyBorder = false, Alignment = GetAlignment(HorizontalAlignmentValues.Right, VerticalAlignmentValues.Center, 0U) },                
                 new CellFormat { FontId = 0, FillId = 2, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Right, VerticalAlignmentValues.Center, 0U) },
-                new CellFormat { FontId = 1, FillId = 0, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Right, VerticalAlignmentValues.Center, 0U) }
+                new CellFormat { FontId = 1, FillId = 0, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Right, VerticalAlignmentValues.Center, 0U) },
+                new CellFormat { FontId = 9, FillId = 0, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Center, VerticalAlignmentValues.Center, 0U) }
             );
 
         aoWorkbookStylesPart1.Stylesheet = new Stylesheet(fonts1, fills1, borders, cellFormats1); ;

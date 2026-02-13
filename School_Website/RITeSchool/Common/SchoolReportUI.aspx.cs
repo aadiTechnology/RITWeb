@@ -2712,14 +2712,26 @@ public partial class SchoolReportsUI : ExportToExcel
 
                 bool bIsGradingstandard = StandardMasterBL.IsGradingStandard(miSchoolId, miAcademicYearId, iStandardId);
                 if (!bIsGradingstandard)
-                    msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\FinalProgressReportPP.rpt";
+                {
+                    if (miAcademicYearId <= 55)
+                        msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\FinalProgressReportPP.rpt";
+                    else
+                        msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\FinalProgressReportPP2026.rpt";
+                }
                 else
                 {
                     var cmbStandard = grdDisplayParameter.Rows[Constants.I_ZERO].FindControl("DDLRptParameter") as ComboRpt;
                     if (miAcademicYearId >= 54 && cmbStandard.SelectedItem.Text == "5")
-                        msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentFinalProgressReportGradingFor5th_2024.rpt";
-                    else
+                    {
+                        if (miAcademicYearId <= 55)
+                            msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentFinalProgressReportGradingFor5th_2024.rpt";
+                        else
+                            msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentFinalProgressReportGradingFor5th_2026.rpt";
+                    }
+                    else if (miAcademicYearId <= 55)
                         msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentFinalProgressReportGrading2023.rpt";
+                    else
+                        msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentFinalProgressReportGrading2026.rpt";
                 }
             }
 
@@ -3266,7 +3278,7 @@ public partial class SchoolReportsUI : ExportToExcel
         //if (!molstPayrollDateReports.Contains(msReportID) || (hidHasFullAccess.Value != Constants.S_ONE && moUserRole != Constants.UserRoles.Admin))
         //    oPopCalendar.AutoPostBack = PopCalendar.AutoPostBackEnum.False;
 
-        if (!molstPayrollDateReports.Contains(msReportID))
+        if (!molstPayrollDateReports.Contains(msReportID) && msReportID != S_DYNAMIC_PENDING_FEE_REPORT)
             oPopCalendar.AutoPostBack = PopCalendar.AutoPostBackEnum.False;
 
         var oChkAll = grdDisplayParameter.Rows[aiGridRowCount].FindControl("ChkAll") as HtmlInputCheckBox;
@@ -11670,9 +11682,10 @@ public partial class SchoolReportsUI : ExportToExcel
     private void ExportStudentPendingFeeDetailsReport(string asFilterString)  //
     {
         int iStandardId = 0, iDivisionId = 0, iStudentId = 0, iFromYear = 0, iToYear = 0, iIncludeLateFee = 0;
+        string sStartDate = "", sEndDate = "";
         //var oFilters = asFilterString.Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace("AND", "@").TrimAll().Replace("usp_GetStudentPaidFeeDetailsForReport;1.", "").Split('@');
-        var oFilters = asFilterString.Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace("AND", "@").TrimAll().Replace("usp_GetOldPendingFeeDetailsForAllYears;1.", "").Split('@');
-
+        var oFilters = asFilterString.Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace("AND", "@").Replace("OR", "@").TrimAll().Replace("usp_GetOldPendingFeeDetailsForAllYears;1.", "").Split('@');
+        
         foreach (string sVal in oFilters)
         {
             var oData = sVal.Split('=');
@@ -11690,12 +11703,22 @@ public partial class SchoolReportsUI : ExportToExcel
                     iToYear = (oData[1].Trim() == "null" ? 0 : oData[1].ToInt());
                 else if (oData[0].Trim().ToUpper() == "INCLUDELATEFEE")
                     iIncludeLateFee = (oData[1].Trim() == "null" ? 0 : oData[1].Trim().ToInt());
+                else if (oData[0].Trim().ToUpper() == "DATESTARTDATE")
+                    sStartDate = (oData[1].Trim() == "null" ? string.Empty : oData[1].ToString().TrimAll());
+                else if (oData[0].Trim().ToUpper() == "DATEENDDATE")
+                    sEndDate = (oData[1].Trim() == "null" ? string.Empty : oData[1].ToString().TrimAll());
             }
         }
 
+        string sPaidFeeHeaderTitle = string.Empty;
+        if (sStartDate != string.Empty && sEndDate != string.Empty)
+            sPaidFeeHeaderTitle = "Paid Fee Details from " + sStartDate + " to " + sEndDate;        
+        else
+            sPaidFeeHeaderTitle = string.Empty;
+
         S_SHEET_NAME = "StudentPaidFeeDetailsReport";
         OldYearPendingFeeStudentsBL moFeeReportBL = new OldYearPendingFeeStudentsBL(miSchoolId, miAcademicYearId);
-        moPendingFee = moFeeReportBL.GetOldYearPendingFeeDetails(miSchoolId, miAcademicYearId, iStudentId, iStandardId, iDivisionId, iFromYear, iToYear, iIncludeLateFee);
+        moPendingFee = moFeeReportBL.GetOldYearPendingFeeDetails(miSchoolId, miAcademicYearId, iStudentId, iStandardId, iDivisionId, iFromYear, iToYear, iIncludeLateFee, sStartDate, sEndDate);
 
         string sFileName = "StudentPendingFeeDetails_" + Guid.NewGuid() + ".xlsx";
         string filePath = base.BasePath + @"\RITeSchool\UPLOADS\ResultSheet\" + sFileName;
@@ -11704,7 +11727,7 @@ public partial class SchoolReportsUI : ExportToExcel
         {
             WorkbookPart workbookPart = document.AddWorkbookPart();
             // CreateWorkBookForAaryan(workbookPart);
-            CreateWorkBookForPendingFeeReport(workbookPart);
+            CreateWorkBookForPendingFeeReport(workbookPart, sPaidFeeHeaderTitle);
         }
 
         Response.Write(string.Format("<Script language='Javascript'>window.open('../UPLOADS/ResultSheet/" + sFileName + "')</Script>"));
@@ -11715,14 +11738,14 @@ public partial class SchoolReportsUI : ExportToExcel
     /// This method is used to create work book part for student pending fee details report.
     /// </summary>
     /// <param name="aoPart"></param>
-    private void CreateWorkBookForPendingFeeReport(WorkbookPart aoPart)   //
+    private void CreateWorkBookForPendingFeeReport(WorkbookPart aoPart, string asPaidFeeHeaderTitle)   //
     {
         WorkbookStylesPart workbookStylesPart1 = aoPart.AddNewPart<WorkbookStylesPart>("rId3");
         base.GenerateReportStyles(workbookStylesPart1);
 
         WorksheetPart worksheetPart1 = aoPart.AddNewPart<WorksheetPart>("rId1");
         // GenerateStudentFeeDetailsForAaryan(worksheetPart1);
-        GenerateStudentPendingFeeDetails(worksheetPart1);
+        GenerateStudentPendingFeeDetails(worksheetPart1, asPaidFeeHeaderTitle);
 
         
         GeneratePartContent(aoPart, "Fee Details");
@@ -11732,7 +11755,7 @@ public partial class SchoolReportsUI : ExportToExcel
     /// This method is used to geenerate pending fee details.
     /// </summary>
     /// <param name="aoWorksheetPart1"></param>
-    private void GenerateStudentPendingFeeDetails(WorksheetPart aoWorksheetPart1)    //
+    private void GenerateStudentPendingFeeDetails(WorksheetPart aoWorksheetPart1, string asPaidFeeHeaderTitle)    //
     {
          
         int iColCount = moPendingFee.OldYearPendingFeeStudents.Count;
@@ -11743,13 +11766,42 @@ public partial class SchoolReportsUI : ExportToExcel
         SetStudentPendingFeeDetailsColumnWidth(worksheet1, iColCount);
         AddPendingFeeHeader(sheetData1, iColCount);
         AddStudentPendingFeeDataRows(sheetData1, iColCount);
+        
+        if (moSchool == Constants.SchoolId.PPSH)
+            AddStudentPaidFee(sheetData1, iColCount, asPaidFeeHeaderTitle);
 
         worksheet1.Append(sheetData1);
+
+        worksheet1.Append(MergeCellsfForPendingFeeReport());
 
         base.AddPrintOptions(worksheet1);
         base.SetPageMargin(worksheet1, 0.2);
         base.SetPageSetup(worksheet1, OrientationValues.Landscape);
         aoWorksheetPart1.Worksheet = worksheet1;
+    }
+
+    private MergeCells MergeCellsfForPendingFeeReport()
+    {
+        MergeCells mergeCells1 = new MergeCells() { Count = (UInt32Value)1U };
+
+        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+        int iTotalCellCount = 4 + oAcademicYears.Count + 1;
+        mergeCells1.Append(new MergeCell() { Reference = "A1" + ":" + ((char)(65 + iTotalCellCount)).ToString()+"1" });
+
+        if (moSchool == Constants.SchoolId.PPSH && moPendingFee.PaidFees.Count > 0)
+        {
+            int iRowIndex = moPendingFee.OldYearPendingFeeStudents.Count + 5;
+
+            string sStartCell = "A" + iRowIndex;
+            string sLastCell = string.Empty;
+
+            if (iTotalCellCount <= 26)
+                sLastCell = ((char)(65 + iTotalCellCount)).ToString() + iRowIndex;
+
+            mergeCells1.Append(new MergeCell() { Reference = sStartCell + ":" + sLastCell });
+        }        
+        
+        return mergeCells1;
     }
 
     /// <summary>
@@ -11760,6 +11812,8 @@ public partial class SchoolReportsUI : ExportToExcel
     private void AddStudentPendingFeeDataRows(SheetData aoSheetData1, int iColCount)    /////
     {
         miStudentPaidFeeStartupRow++;
+
+        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
 
         moPendingFee.OldYearPendingFeeStudents.OrderBy(stud => stud.OriginalStandardId).ThenBy(stud => stud.OriginalDivisionId).ThenBy(stud => stud.RollNo).ToList().ForEach
             (
@@ -11773,8 +11827,6 @@ public partial class SchoolReportsUI : ExportToExcel
                 row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
                 row.Append(AddCell(stud.MobileNo, CellValues.String, StudentPaidFeeEnum.LeftData));
                
-                var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
-
                 foreach (var year in oAcademicYears)
                 {
                     var oData = moPendingFee.PendingFees.Where(fee => fee.StudentId == stud.YearWiseStudentId && fee.AcademicYearId == year.AcademicYearId).Select(fee => fee.Amount).FirstOrDefault();
@@ -11784,13 +11836,130 @@ public partial class SchoolReportsUI : ExportToExcel
                         row.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterData));
                 }
 
+                int oTotalPendingFee = moPendingFee.PendingFees.Where(fee => fee.StudentId == stud.YearWiseStudentId).Sum(fee => fee.Amount);
+                row.Append(AddCell(oTotalPendingFee.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
 
                 aoSheetData1.Append(row);
-
                 miStudentPaidFeeStartupRow++;
             }
             );
 
+
+        Row rowTotal = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+        rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
+        rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
+        rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterData));
+        rowTotal.Append(AddCell("Total", CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+        rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
+
+        foreach (var year in oAcademicYears)
+        {
+            var oData = moPendingFee.PendingFees.Where(fee => fee.AcademicYearId == year.AcademicYearId).Sum(fee => fee.Amount);
+            if (oData != null)
+                rowTotal.Append(AddCell(oData.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+            else
+                rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+        }
+
+        int oOverallTotalPendingFee = moPendingFee.PendingFees.Sum(fee => fee.Amount);
+        rowTotal.Append(AddCell(oOverallTotalPendingFee.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+
+        aoSheetData1.Append(rowTotal);
+        miStudentPaidFeeStartupRow++;
+    }
+
+    /// <summary>
+    /// This method is used to fill fee details.
+    /// </summary>
+    /// <param name="aoSheetData1"></param>
+    /// <param name="iColCount"></param>
+    private void AddStudentPaidFee(SheetData aoSheetData1, int iColCount, string asPaidFeeHeaderTitle)
+    {
+        if (moPendingFee.PaidFees.Count > 0)
+        {
+            var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+
+            miStudentPaidFeeStartupRow++;
+            Row rowHeaderTitle = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+            rowHeaderTitle.Append(AddCell(asPaidFeeHeaderTitle, CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            int iTotalCellCount = 4 + oAcademicYears.Count + 1;
+            for (int iIndex = 0; iIndex < iTotalCellCount; iIndex++)
+            {
+                rowHeaderTitle.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            }
+            aoSheetData1.Append(rowHeaderTitle);
+
+            /////////////////////////////////////////////////
+            miStudentPaidFeeStartupRow++;
+            Row rowHeader = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+                        rowHeader.Append(AddCell("Reg. No.", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            rowHeader.Append(AddCell("Class", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            rowHeader.Append(AddCell("Roll No.", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            rowHeader.Append(AddCell("Student Name", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            rowHeader.Append(AddCell("Mobile No.", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            
+            foreach (var year in oAcademicYears)
+            {
+                rowHeader.Append(AddCell(year.AcademicYear, CellValues.String, StudentPaidFeeEnum.CenterHeader));
+            }
+
+            rowHeader.Append(AddCell("Total Paid Fee", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+
+            aoSheetData1.Append(rowHeader);
+            /////////////////////////////////////////////////
+            miStudentPaidFeeStartupRow++;
+            moPendingFee.OldYearPaidFeeStudents.OrderBy(stud => stud.OriginalStandardId).ThenBy(stud => stud.OriginalDivisionId).ThenBy(stud => stud.RollNo).ToList().ForEach
+                (
+                stud =>
+                {
+                    Row row = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+
+                    row.Append(AddCell(stud.RegNo, CellValues.String, StudentPaidFeeEnum.LeftData));
+                    row.Append(AddCell(stud.Class, CellValues.String, StudentPaidFeeEnum.LeftData));
+                    row.Append(AddCell(stud.RollNo.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
+                    row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
+                    row.Append(AddCell(stud.MobileNo, CellValues.String, StudentPaidFeeEnum.LeftData));
+
+                    foreach (var year in oAcademicYears)
+                    {
+                        var oData = moPendingFee.PaidFees.Where(fee => fee.StudentId == stud.YearWiseStudentId && fee.AcademicYearId == year.AcademicYearId).Select(fee => fee.Amount).FirstOrDefault();
+                        if (oData != null)
+                            row.Append(AddCell(oData.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
+                        else
+                            row.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterData));
+                    }
+
+                    int oTotalPendingFee = moPendingFee.PaidFees.Where(fee => fee.StudentId == stud.YearWiseStudentId).Sum(fee => fee.Amount);
+                    row.Append(AddCell(oTotalPendingFee.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+
+                    aoSheetData1.Append(row);
+                    miStudentPaidFeeStartupRow++;
+                }
+                );
+
+            /////////////////////////////////////////////////
+            Row rowTotal = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+            rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
+            rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
+            rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterData));
+            rowTotal.Append(AddCell("Total", CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+            rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
+
+            foreach (var year in oAcademicYears)
+            {
+                var oData = moPendingFee.PaidFees.Where(fee => fee.AcademicYearId == year.AcademicYearId).Sum(fee => fee.Amount);
+                if (oData != null)
+                    rowTotal.Append(AddCell(oData.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+                else
+                    rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+            }
+
+            int oOverallTotalPendingFee = moPendingFee.PaidFees.Sum(fee => fee.Amount);
+            rowTotal.Append(AddCell(oOverallTotalPendingFee.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+
+            aoSheetData1.Append(rowTotal);
+            miStudentPaidFeeStartupRow++;
+        }
     }
 
     /// <summary>
@@ -11800,6 +11969,18 @@ public partial class SchoolReportsUI : ExportToExcel
     /// <param name="iColCount"></param>
     private void AddPendingFeeHeader(SheetData aoSheetData1, int iColCount)   //////
     {
+        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+
+        Row rowHeaderTitle = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow-1), CustomHeight = true, Height = 15 };
+        rowHeaderTitle.Append(AddCell("Pending Fee Details", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+        int iTotalCellCount = 4 + oAcademicYears.Count + 1;
+        for (int iIndex = 0; iIndex < iTotalCellCount; iIndex++)
+        {
+            rowHeaderTitle.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterHeader));
+        }
+        aoSheetData1.Append(rowHeaderTitle);
+
+        /////////////////////////////////////////////////
         Row row = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
 
         row.Append(AddCell("Reg. No.", CellValues.String, StudentPaidFeeEnum.CenterHeader));
@@ -11808,12 +11989,14 @@ public partial class SchoolReportsUI : ExportToExcel
         row.Append(AddCell("Student Name", CellValues.String, StudentPaidFeeEnum.CenterHeader));
         row.Append(AddCell("Mobile No.", CellValues.String, StudentPaidFeeEnum.CenterHeader));
        
-        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+        
 
         foreach (var year in oAcademicYears)
         {
             row.Append(AddCell(year.AcademicYear, CellValues.String, StudentPaidFeeEnum.CenterHeader));
         }
+
+        row.Append(AddCell("Total Pending Fee", CellValues.String, StudentPaidFeeEnum.CenterHeader));
 
         aoSheetData1.Append(row);
     }
@@ -11834,6 +12017,9 @@ public partial class SchoolReportsUI : ExportToExcel
 
         int iAcademicYearCount = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().Count();
         columns1.Append(new Column() { Min = (UInt32Value)6U, Max = Convert.ToUInt32(5 + iAcademicYearCount), Width = 21D, CustomWidth = true });
+
+        int iPendingFeeTotalColumnIndex = 5 + iAcademicYearCount + 1;
+        columns1.Append(new Column() { Min = Convert.ToUInt32(iPendingFeeTotalColumnIndex), Max = Convert.ToUInt32(iPendingFeeTotalColumnIndex), Width = 21D, CustomWidth = true });
 
         aoWorksheet1.Append(columns1);
     }
@@ -13129,7 +13315,8 @@ public partial class SchoolReportsUI : ExportToExcel
         LeftData = 3,
         CenterData = 4,
         NoBorderCenterHeader = 5,
-        RightDataWithNoBorder = 14
+        RightDataWithNoBorder = 14,
+        CenterDataBold = 17
     }
 
     private enum CellAlignment

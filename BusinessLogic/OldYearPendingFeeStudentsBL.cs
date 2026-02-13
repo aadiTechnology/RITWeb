@@ -31,10 +31,10 @@ namespace BusinessLogic
         /// <param name="aiUserId"></param>
         /// <param name="aiSchoolId"></param>
         /// <returns></returns>
-        public OldYearPendingFeeReport GetOldYearPendingFeeDetails(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiStandardId, int aiDivisionId, int aiFromYear, int aiToYear, int aiIncludeLateFee)
+        public OldYearPendingFeeReport GetOldYearPendingFeeDetails(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiStandardId, int aiDivisionId, int aiFromYear, int aiToYear, int aiIncludeLateFee, string asStartDate, string asEndDate)
         {
             OldYearPendingFeeStudentsDC moEmployeeDetailsDC = new OldYearPendingFeeStudentsDC();
-            return moEmployeeDetailsDC.GetOldYearPendingFeeDetails(aiSchoolId, aiAcademicYearId, aiStudentId, aiStandardId, aiDivisionId, aiFromYear, aiToYear, aiIncludeLateFee);
+            return moEmployeeDetailsDC.GetOldYearPendingFeeDetails(aiSchoolId, aiAcademicYearId, aiStudentId, aiStandardId, aiDivisionId, aiFromYear, aiToYear, aiIncludeLateFee, asStartDate, asEndDate);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace SchoolEntities
 
         public List<OldYearPendingFeeStudent> OldYearPendingFeeStudents { get; set; }
         public List<OldYearPendingFee> PendingFees { get; set; }
+        public List<OldYearPendingFeeStudent> OldYearPaidFeeStudents { get; set; }
+        public List<OldYearPendingFee> PaidFees { get; set; }
     }
      [Serializable]
     public class OldYearPendingFeeStudent

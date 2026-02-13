@@ -27,7 +27,7 @@ namespace DataCommunicator
         }
         #endregion
 
-        public OldYearPendingFeeReport GetOldYearPendingFeeDetails(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiStandardId, int aiDivisionId, int aiFromYear, int aiToYear, int aiIncludeLateFee)
+        public OldYearPendingFeeReport GetOldYearPendingFeeDetails(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiStandardId, int aiDivisionId, int aiFromYear, int aiToYear, int aiIncludeLateFee, string asStartDate, string asEndDate)
         {
             OldYearPendingFeeReport oOldYearPendingFeeReport = new OldYearPendingFeeReport();
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -40,9 +40,17 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("FromYear", aiFromYear, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("ToYear", aiToYear, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("IncludeLateFee", aiIncludeLateFee, SqlDbType.NVarChar);
+                
+                if(!string.IsNullOrWhiteSpace(asStartDate))
+                    oSQLServerDbUtility.AddParameter("StartDate", asStartDate, SqlDbType.Date);
+
+                if (!string.IsNullOrWhiteSpace(asEndDate))
+                    oSQLServerDbUtility.AddParameter("EndDate", asEndDate, SqlDbType.Date);
+
                 using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetOldPendingFeeDetailsForAllYears"))
                 {
                     oOldYearPendingFeeReport.OldYearPendingFeeStudents = new List<OldYearPendingFeeStudent>();
+                    oOldYearPendingFeeReport.OldYearPaidFeeStudents = new List<OldYearPendingFeeStudent>();
                     while (oSqlDataReader.Read())
                     {
                         oOldYearPendingFeeReport.OldYearPendingFeeStudents.Add(
@@ -80,6 +88,41 @@ namespace DataCommunicator
 
                     }
 
+                    if (oSqlDataReader.NextResult())
+                    {
+                        while (oSqlDataReader.Read())
+                        {
+                            oOldYearPendingFeeReport.OldYearPaidFeeStudents.Add(
+                                new OldYearPendingFeeStudent
+                                {
+                                    YearWiseStudentId = Convert.ToInt32(oSqlDataReader["Yearwise_Student_Id"]),
+                                    RegNo = Convert.ToString(oSqlDataReader["Enrolment_Number"]),
+                                    Class = Convert.ToString(oSqlDataReader["ClassName"]),
+                                    RollNo = Convert.ToInt32(oSqlDataReader["Roll_No"]),
+                                    StudentName = Convert.ToString(oSqlDataReader["StudentName"]),
+                                    MobileNo = Convert.ToString(oSqlDataReader["Mobile_Number"]),
+                                    OriginalStandardId = Convert.ToInt32(oSqlDataReader["Original_Standard_Id"]),
+                                    OriginalDivisionId = Convert.ToInt32(oSqlDataReader["Original_Division_Id"])
+                                });
+                        }
+                    }
+
+                    if (oSqlDataReader.NextResult())
+                    {
+                        oOldYearPendingFeeReport.PaidFees = new List<OldYearPendingFee>();
+                        while (oSqlDataReader.Read())
+                        {
+                            oOldYearPendingFeeReport.PaidFees.Add(
+                                new OldYearPendingFee
+                                {
+                                    StudentId = oSqlDataReader["SchoolWise_Student_Id"].ToInt(),
+                                    AcademicYearId = oSqlDataReader["Academic_Year_Id"].ToInt(),
+                                    AcademicYear = oSqlDataReader["Academic_Year_Name"].ToString(),
+                                    Amount = oSqlDataReader["Amount"].ToInt()
+
+                                });
+                        }
+                    }
 
                     return oOldYearPendingFeeReport;
                 }
