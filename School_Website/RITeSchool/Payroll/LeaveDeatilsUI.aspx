@@ -85,7 +85,7 @@
             <td align="center" runat="server" valign="top">
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <table width="90%">
+                        <table width="95%">
                             <tr>
                                 <td align="left">
                                     <table id="trLegend" runat="server" visible="false">
@@ -143,7 +143,7 @@
                                                     <th align="left" class="paddingLSML">
                                                         <asp:Label ID="Label1" runat="server" Text="Description"></asp:Label>
                                                     </th>
-                                                    <th align="center" style="width: 70px;">
+                                                    <th align="center" style="width: 80px;">
                                                         <asp:Label ID="Label5" runat="server" Text="Total Days"></asp:Label>
                                                     </th>
                                                     <th align="left" style="width: 80px;" class="paddingLSML">
@@ -197,10 +197,10 @@
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblUserName" Text='<%#Eval("UserName") %>'></asp:Label>
                                                 </td>
                                                 <td align="center">
-                                                    <asp:Label runat="server" CssClass="ClsLabel" ID="lblStartDate" Text='<%#Eval("StartDate") %>'></asp:Label>
+                                                    <asp:Label runat="server" CssClass="ClsLabel" ID="lblStartDate" style="float:inherit" Text='<%#Eval("StartDate") %>'></asp:Label>
                                                 </td>
                                                 <td align="center">
-                                                    <asp:Label runat="server" CssClass="ClsLabel" ID="lblEndDate" Text='<%#Eval("EndDate") %>'></asp:Label>
+                                                    <asp:Label runat="server" CssClass="ClsLabel" ID="lblEndDate" style="float:inherit" Text='<%#Eval("EndDate") %>'></asp:Label>
                                                 </td>
                                                 <td align="left">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblDescription" Text='<%#Eval("Description") %>'></asp:Label>

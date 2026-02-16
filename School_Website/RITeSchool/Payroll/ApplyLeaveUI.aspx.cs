@@ -13,6 +13,7 @@ using SchoolEntities.Payroll;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Text;
+using System.IO;
 
 public partial class ApplyLeaveUI : SchoolBase
 {
@@ -20,6 +21,8 @@ public partial class ApplyLeaveUI : SchoolBase
 
     private const string S_UPDATE = "Update";
     private const string S_SAVE = "Submit";
+    private const string S_FOLDER_PATH = @"\RITeSchool\UPLOADS\LeaveDocuments\";
+
 
     #endregion
 
@@ -100,7 +103,6 @@ public partial class ApplyLeaveUI : SchoolBase
             if (Page.IsValid)
             {
                 UserApplyLeaveDetails oUserApplyLeaveDetails = Populate();
-
                 moUserApplyLeaveDetailsBL.Save(oUserApplyLeaveDetails);
                 if (btnSubmit.Text == "Submit")
                     base.DisplayMessage("Record Saved Successfully.", false, tdMessage);
@@ -128,12 +130,24 @@ public partial class ApplyLeaveUI : SchoolBase
     {
         try
         {
-            LeaveApprovalDetails oLeaveApprovalDetails = PopulateSubmitStatus(Constants.LeaveStatuses.Approved);
-            moUserApplyLeaveDetailsBL.SaveLeaveApprovalDetails(oLeaveApprovalDetails);
-            base.DisplayMessage("Leave request approved Successfully!!!", false, tdMessage);            
-            string sQueryString = "CategoryId=" + hidCategoryId.Value;
-            MasterPage oMasterPage = (MasterPage)this.Master;
-            oMasterPage.RedirectToNextPage("~/RITeSchool/Payroll/LeaveDeatilsUI.aspx?" + CommonUtility.EncryptQuerystring(sQueryString));
+            ProcessLeaveApproval(false); 
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+    
+    /// <summary>
+    ///  This event is used to final approve the leave.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnFinalApprove_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ProcessLeaveApproval(true);
         }
         catch (Exception ex)
         {
@@ -169,8 +183,9 @@ public partial class ApplyLeaveUI : SchoolBase
     {
         try
         {
+            
             LeaveApprovalDetails oLeaveApprovalDetails = PopulateSubmitStatus(Constants.LeaveStatuses.Rejected);
-            moUserApplyLeaveDetailsBL.SaveLeaveApprovalDetails(oLeaveApprovalDetails);
+            moUserApplyLeaveDetailsBL.SaveLeaveApprovalDetails(oLeaveApprovalDetails,false);
             base.DisplayMessage("Leave request rejected Successfully!!!", false, tdMessage);             
             string sQueryString = "CategoryId=" + hidCategoryId.Value;
             MasterPage oMasterPage = (MasterPage)this.Master;
@@ -248,6 +263,39 @@ public partial class ApplyLeaveUI : SchoolBase
         }
     }
 
+    protected void cvFileUpload_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        if (!fuDocumentPhoto.HasFile)
+        {
+            // Non-mandatory field
+            args.IsValid = true;
+            return;
+        }
+
+        CustomValidator oCustomValidator = source as CustomValidator;
+        string[] allowedExtensions = { ".bmp", ".jpg", ".jpeg", ".pdf", ".png" };
+        string extension = System.IO.Path.GetExtension(fuDocumentPhoto.FileName).ToLower();
+
+        if (!allowedExtensions.Contains(extension))
+        {
+            oCustomValidator.ErrorMessage = "Attachment file should be of type : BMP, JPG, JPEG, PDF, PNG.";
+            args.IsValid = false;
+            return;
+        }
+
+        int maxSize = 5 * 1024 * 1024; // 5 MB        
+        if (fuDocumentPhoto.PostedFile.ContentLength > maxSize)
+        {
+            oCustomValidator.ErrorMessage = "Atttachment size should not be more than 5 MB.";
+            args.IsValid = false;
+            return;
+        }
+
+        args.IsValid = true;
+        return;
+    }
+
+
     #endregion
 
     #region Private Method(s)
@@ -267,7 +315,8 @@ public partial class ApplyLeaveUI : SchoolBase
             ChargeHandoverTo = ddlUserName.SelectedValue.ToInt(),
             Description = txtDescription.Text,
             LeaveId = ddlleavetype.SelectedValue.ToInt(),
-            UserId = hidUserId.Value.ToInt()
+            UserId = hidUserId.Value.ToInt(),
+            DocumnetPhoto = GetFileName()
         };
         return oUserApplyLeaveDetails;
     }
@@ -279,14 +328,21 @@ public partial class ApplyLeaveUI : SchoolBase
     /// <param name="iCategoryId"></param>
     private void FillLeaveDetails(int iId, int iCategoryId)
     {
-        UserApplyLeaveDetails oUserApplyLeaveDetails = moUserApplyLeaveDetailsBL.GetLeaveDetailsCategory(iId, hidUserId.Value.ToInt());
+        UserApplyLeaveDetails oUserApplyLeaveDetails = moUserApplyLeaveDetailsBL.GetLeaveDetailsCategory(iId, hidUserId.Value.ToInt(),miUserId);
         if (iCategoryId == 1)
-            tblRemark.Visible = false;
-        else if (iCategoryId == 4)
+        tblRemark.Visible = false;
+          
+        else if (iCategoryId == 4 || iCategoryId == 3)
         {
             txtRemark.Enabled = false;
             btnApprove.Enabled = false;
             btnReject.Enabled = false;
+            btnFinalApprove.Enabled = false;
+            txtRemark.Text = oUserApplyLeaveDetails.ApproverRemark;
+        }
+        else if (iCategoryId == 5)
+        {
+            txtRemark.Text = oUserApplyLeaveDetails.ApproverRemark;
         }
         else
         {
@@ -302,14 +358,22 @@ public partial class ApplyLeaveUI : SchoolBase
                 }
             }
         }
-
         txtStartDate.Text = oUserApplyLeaveDetails.StartDate.ToString(Constants.S_DATE_FORMAT);
         txtEndDate.Text = oUserApplyLeaveDetails.EndDate.ToString(Constants.S_DATE_FORMAT);
         ddlleavetype.SelectedValue = oUserApplyLeaveDetails.LeaveId.ToString();
         txtTotalDays.Text = (oUserApplyLeaveDetails.TotalDays).ToString();
         ddlUserName.SelectedValue = oUserApplyLeaveDetails.ChargeHandoverTo.ToString();
         txtDescription.Text = oUserApplyLeaveDetails.Description;
-        
+        if (!string.IsNullOrEmpty(oUserApplyLeaveDetails.DocumnetPhoto))
+        {
+            btnView.Visible = true;
+            string fileUrl = ResolveUrl("~/RITeSchool/UPLOADS/LeaveDocuments/" + oUserApplyLeaveDetails.DocumnetPhoto);
+            btnView.Attributes["onclick"] ="window.open('" + fileUrl + "', '_blank', 'height=600,width=800'); return false;";
+        }
+        else
+        {
+            btnView.Visible = false;
+        }
         txtStartDate.Enabled = false;
         txtEndDate.Enabled = false;        
         ddlUserName.Enabled = false;
@@ -318,6 +382,7 @@ public partial class ApplyLeaveUI : SchoolBase
         btnSubmit.Visible = false;
         //a.Visible = false;
         btnCancel.Visible = false;
+        fuDocumentPhoto.Visible = false;
 
         if (QueryString["HasFullAccess"] != null && QueryString["HasFullAccess"].ToString() == Constants.S_YES)
         {
@@ -336,11 +401,17 @@ public partial class ApplyLeaveUI : SchoolBase
             ddlleavetype.Enabled = false;
 
 
-        if (oUserApplyLeaveDetails.IsFinalApprover)
-            btnApprove.Text = "Final Approve";
-        else
-            btnApprove.Text = "Approve";
+        //if (oUserApplyLeaveDetails.IsFinalApprover)
+        //    btnApprove.Text = "Final Approve";
+        //else
+        //    btnApprove.Text = "Approve";
 
+        if (oUserApplyLeaveDetails.IsFinalApprover)
+            btnFinalApprove.Visible = true;
+
+        if (oUserApplyLeaveDetails.LastApproverUserId == miUserId)
+            btnApprove.Visible = false;
+        
         GetLeaveTypeWiseLeaveBalance(oUserApplyLeaveDetails.UserId);
     }
     
@@ -435,6 +506,50 @@ public partial class ApplyLeaveUI : SchoolBase
         if (obj.Length > 0)
             lblLeaveBalance.Text = "Leave Balance : " + obj.ToString().Substring(2);        
     }
+    /// <summary>
+    /// these method is used to get file name.
+    /// </summary>
+    /// <returns></returns>
+    private string GetFileName()
+    {
+        string sFileName = string.Empty;
+        HttpFileCollection oCollection = Request.Files;
 
+        if (oCollection.Count > 0)
+        {
+            HttpPostedFile aoAttachment = oCollection[0];
+
+            if (!aoAttachment.FileName.Trim().Equals(string.Empty))
+            {
+                sFileName = aoAttachment.FileName;
+                string sPath = base.BasePath + S_FOLDER_PATH + sFileName;
+
+                if (File.Exists(sPath))
+                {
+                    sFileName = CommonUtility.GetFileNameForRenaming(sFileName);
+                    sPath = base.BasePath + S_FOLDER_PATH + sFileName;
+                }
+
+                aoAttachment.SaveAs(sPath);
+            }
+        }
+
+        return sFileName;
+    }
+
+    /// <summary>
+    ///  This event is used  approve the leave.
+    /// </summary>
+    /// <param name="IsFromFinalApproval"></param>
+    private void ProcessLeaveApproval(bool IsFromFinalApproval)
+    {
+        LeaveApprovalDetails oLeaveApprovalDetails = PopulateSubmitStatus(Constants.LeaveStatuses.Approved);
+        moUserApplyLeaveDetailsBL.SaveLeaveApprovalDetails(oLeaveApprovalDetails, IsFromFinalApproval);
+        base.DisplayMessage("Leave request approved Successfully!!!", false, tdMessage);
+        string sQueryString = "CategoryId=" + hidCategoryId.Value;
+        MasterPage oMasterPage = (MasterPage)this.Master;
+        oMasterPage.RedirectToNextPage("~/RITeSchool/Payroll/LeaveDeatilsUI.aspx?" + CommonUtility.EncryptQuerystring(sQueryString));
+    }
+    
     #endregion    
 }

@@ -112,6 +112,24 @@
                             </td>
                         </tr>
                         <tr>
+                            <td valign="middle" class="ClsBorderlight">
+                                <span class="ClsLabel">Attachment :</span>
+                            </td>
+                            <td align="left">
+                            <asp:FileUpload ID="fuDocumentPhoto" runat="server" ViewStateMode="Enabled" />
+                                <asp:ImageButton ID="btnView" runat="server"  ImageUrl="~/RITeSchool/images/iconGridSml_ViewGE.gif" 
+                                    Visible="false" ToolTip="View Attachment" />
+                            <asp:CustomValidator ID="cvFileUpload" runat="server" ControlToValidate="fuDocumentPhoto" ErrorMessage="Attachment file should be of type : BMP, JPG, JPEG, PDF, PNG." ClientValidationFunction="ValidateFileUpload"
+                                OnServerValidate="cvFileUpload_ServerValidate" Display="none" ForeColor="Red"></asp:CustomValidator>
+                              </td>
+                        </tr>
+                        <tr>
+                            <td align="left" colspan="2">
+                                <span class="LblSmlGray">(Attachment supports files of types - .BMP, .JPG, .JPEG, .PDF,
+                                    .PNG upto 5 MB.)</span>
+                            </td>
+                        </tr>
+                        <tr>
                             <td align="left" class="ClsBorderLight">
                                 <asp:Label ID="lblDescription" runat="server" CssClass="ClsLabel" Text="Description"
                                     Enabled="false"></asp:Label>
@@ -191,6 +209,7 @@
                                                 ValidationGroup="approve" />
                                             <asp:Button ID="btnUpdateLeaveRecord" CssClass="ClsBtn" runat="server" Text="Update Leave" Visible="false"
                                                 onclick="btnUpdateLeaveRecord_Click" />
+                                            <asp:Button ID="btnFinalApprove" CssClass="ClsBtn" runat="server" Text="Final Approve" ValidationGroup="approve" OnClick="btnFinalApprove_Click" Visible="false"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -291,6 +310,13 @@
 
         }
 
+        function ConfirmDelete() {
+            var bResult = true
+            if (!window.confirm('Are you sure you want to delete this record?')) {
+                bResult = false
+            }
+            return bResult
+        }
         function ClearMessages() {
             $get(_clientlblMessage).innerText = "";
             $get(_clientlblMessage).innerHTML = "";
@@ -398,7 +424,36 @@
                 return false
             }
         }
-       
+
+        function ValidateFileUpload(sender, args) {
+            var fileUpload = document.getElementById('<%= fuDocumentPhoto.ClientID %>');
+
+            // Non-mandatory: valid if no file selected
+            if (fileUpload.value === "") {
+                args.IsValid = true;
+                return;
+            }
+
+            var allowedExtensions = /\.(bmp|jpg|jpeg|pdf|png)$/i;
+            var fileName = fileUpload.value;
+
+            if (!allowedExtensions.test(fileName)) {
+                args.IsValid = false;
+                return;
+            }
+
+            var fileSize = fileUpload.files[0].size; // bytes
+            var maxSize = 5 * 1024 * 1024; // 5 MB
+
+            if (fileSize > maxSize) {
+                sender.errormessage = 'Atttachment size should not be more than 5 MB.';
+                args.IsValid = false;
+                return true;
+            }
+
+            args.IsValid = true;
+            return false;
+        }
        
     </script>
 </asp:Content>

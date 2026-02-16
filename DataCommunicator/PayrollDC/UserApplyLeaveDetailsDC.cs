@@ -50,6 +50,7 @@ namespace DataCommunicator.PayrollDC
                 oSQLServerDbUtility.AddParameter("TotalDays", oUserApplyLeaveDetails.TotalDays, SqlDbType.Decimal);
                 oSQLServerDbUtility.AddParameter("ChargeHandoverTo", oUserApplyLeaveDetails.ChargeHandoverTo, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("Description", oUserApplyLeaveDetails.Description, SqlDbType.NVarChar);
+                oSQLServerDbUtility.AddParameter("Attachment", oUserApplyLeaveDetails.DocumnetPhoto, SqlDbType.NVarChar);
                 oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("InsertedById", this.miInsertedById, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
@@ -59,7 +60,7 @@ namespace DataCommunicator.PayrollDC
         }
 
 
-        public void SaveLeaveApprovalDetails(LeaveApprovalDetails oLeaveApprovalDetails)
+        public void SaveLeaveApprovalDetails(LeaveApprovalDetails oLeaveApprovalDetails, bool IsFromFinalApproval)
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
@@ -71,6 +72,8 @@ namespace DataCommunicator.PayrollDC
                 oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("InsertedById", this.miInsertedById, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IsFromFinalApproval", IsFromFinalApproval, SqlDbType.Bit);
+
 
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SaveLeaveApprovalDetails");
             }
@@ -93,12 +96,9 @@ namespace DataCommunicator.PayrollDC
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
-
-
-                oSQLServerDbUtility.AddParameter("Id", Id, SqlDbType.Int);
-                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetAllLeaveCategory");
-
-            }
+              oSQLServerDbUtility.AddParameter("Id", Id, SqlDbType.Int);
+              return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetAllLeaveCategory");
+           }
         }
 
         //private List<UserApplyLeaveDetails> FillCategories(SqlDataReader aoSqlDataReader)
@@ -233,7 +233,7 @@ namespace DataCommunicator.PayrollDC
         //}
 
 
-        public UserApplyLeaveDetails GetLeaveDetailsCategory(int aiId, int aiUserId)
+        public UserApplyLeaveDetails GetLeaveDetailsCategory(int aiId, int aiUserId, int aiLoginUserId)
         {
             UserApplyLeaveDetails oUserApplyLeaveDetails = new UserApplyLeaveDetails();
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -241,7 +241,7 @@ namespace DataCommunicator.PayrollDC
                 oSQLServerDbUtility.AddParameter("Id", aiId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("UserId", aiUserId, SqlDbType.Int);
-
+                oSQLServerDbUtility.AddParameter("LoginUserId", aiLoginUserId, SqlDbType.Int);
                 using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetLeaveCategoryDetails"))
                 {
                     if (oSqlDataReader.Read())
@@ -257,9 +257,10 @@ namespace DataCommunicator.PayrollDC
                         oUserApplyLeaveDetails.UserName = (oSqlDataReader["UserName"]).ToString();
                         oUserApplyLeaveDetails.Status = (oSqlDataReader["Status"]).ToString();
                         oUserApplyLeaveDetails.IsFinalApprover = oSqlDataReader["IsFinalApprover"].ToBool();
+                        oUserApplyLeaveDetails.LastApproverUserId = oSqlDataReader["LastApproverUserId"].ToInt();
                         oUserApplyLeaveDetails.ApproverRemark = oSqlDataReader["ApproverRemark"].ToString();
-
-                    }
+                        oUserApplyLeaveDetails.DocumnetPhoto = oSqlDataReader["Attachment"].ToString();
+                   }
                     return oUserApplyLeaveDetails;
                 }
             }
@@ -338,6 +339,21 @@ namespace DataCommunicator.PayrollDC
                 oSQLServerDbUtility.AddParameter("LeaveConfigId", aiLeaveConfigId, SqlDbType.Int);
                 SqlParameter oSqlParameter = oSQLServerDbUtility.AddParameter("IsValid", false, SqlDbType.Bit, ParameterDirection.Output);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_ValidateLeaveDateOverlapping");
+                return oSqlParameter.Value.ToBool();
+            }
+        }
+
+
+        public bool AllowUserToViewAllLeaves()
+        {
+
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", this.miAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("LoginUserId", this.miInsertedById, SqlDbType.Int);                
+                SqlParameter oSqlParameter = oSQLServerDbUtility.AddParameter("AllowToViewAllLeave", false, SqlDbType.Bit, ParameterDirection.Output);
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_AllowUserToViewAllLeaves");
                 return oSqlParameter.Value.ToBool();
             }
         }

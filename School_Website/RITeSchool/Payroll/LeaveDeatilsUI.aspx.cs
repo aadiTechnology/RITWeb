@@ -22,7 +22,7 @@ public partial class LeaveDeatilsUI : SchoolBase
 
     #endregion
 
-    #region Private Method(s)
+    #region Event(s)
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -242,10 +242,20 @@ public partial class LeaveDeatilsUI : SchoolBase
     private void FillCategory()
     {
         DataTable dt = moUserApplyLeaveDetailsBL.GetCategory(miUserId);
-
         if (hidHasFullAccess.Value != Constants.S_YES)
         {
             DataRow[] dr = dt.Select("Id=4");
+            if (dr.Length > 0)
+            {
+                dr[0].Delete();
+                dt.AcceptChanges();
+            }
+        }
+
+        bool bAllowUserToViewAllLeaves = moUserApplyLeaveDetailsBL.AllowUserToViewAllLeaves();
+        if (!bAllowUserToViewAllLeaves)
+        {
+            DataRow[] dr = dt.Select("Id=5");
             if (dr.Length > 0)
             {
                 dr[0].Delete();
@@ -329,6 +339,7 @@ public partial class LeaveDeatilsUI : SchoolBase
             btnAdd.Visible = true;
         else
             btnAdd.Visible = false;
+        
         FillApprovalCategories();
 
         if (cmbReportingRole.SelectedValue == "4")

@@ -27,7 +27,9 @@ namespace SchoolEntities.Payroll
         public decimal LeaveBalance { get; set; }
         public string SortExpression { get; set; }
         public bool IsLeaveUpdatedInPayroll { get; set; }
-    }
+        public int LastApproverUserId { get; set; }
+        public string DocumnetPhoto { get; set; }
+     }
 
     public class LeaveApprovalCatgories
     {

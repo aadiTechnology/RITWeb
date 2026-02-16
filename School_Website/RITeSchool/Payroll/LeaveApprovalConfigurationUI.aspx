@@ -371,7 +371,7 @@
                 return true;
             }
             else if (IsMoreThanfinalApproverSortOrder) {
-                var isFinalApprover = $get(_clientchkfinalApprover).checked
+              var isFinalApprover = $get(_clientchkfinalApprover).checked
                 if (!isFinalApprover) {
                     oSrc.errormessage = "Approval Sort Order should not be greater than approval sort order of final approver."
                     args.IsValid = false;
@@ -389,7 +389,7 @@
         }
 
         function ValidateApprovalSortOrder(oSrc, args) {
-            var newSortOrder = $('#' + "<%=this.txtApprovalSortOrder.ClientID %>").val()
+         var newSortOrder = $('#' + "<%=this.txtApprovalSortOrder.ClientID %>").val()
             var isFinalApprover = $get(_clientchkfinalApprover).checked
 
             if (newSortOrder != "" && parseInt(newSortOrder) != 0) {
@@ -397,11 +397,14 @@
                 var isFound = false
                 var IsMoreThanfinalApproverSortOrder = false
                 var EditedUserId = $get(_clienthidEditedUserId);
+                var isExistingUserFinalApproval = 'N';
 
                 var hidUserId = document.getElementById(_clientlstvwConfiguration + "_ctrl" + iRowCount + "_hidUserId")
                 while (hidUserId != null) {
                     SortOrder = document.getElementById(_clientlstvwConfiguration + "_ctrl" + iRowCount + "_lblApprovalSortOrder").innerHTML
-                    if (parseInt(EditedUserId.value) != parseInt(hidUserId.value) && isFinalApprover && parseInt(SortOrder) > parseInt(newSortOrder)) {
+                    isExistingUserFinalApproval = document.getElementById(_clientlstvwConfiguration + "_ctrl" + iRowCount + "_hidIsFinalApprover").value
+                    
+                    if (parseInt(EditedUserId.value) != parseInt(hidUserId.value) && isFinalApprover && isExistingUserFinalApproval == 'N' && parseInt(SortOrder) > parseInt(newSortOrder)) {
                         isFound = true
                         break
                     }

@@ -35,9 +35,9 @@ namespace BusinessLogic.PayrollBL
            moUserApplyLeaveDetailsDC.Save(oUserApplyLeaveDetails);
        }
 
-      public void SaveLeaveApprovalDetails(LeaveApprovalDetails oLeaveApprovalDetails)
+      public void SaveLeaveApprovalDetails(LeaveApprovalDetails oLeaveApprovalDetails, bool IsFromFinalApproval)
       {
-          moUserApplyLeaveDetailsDC.SaveLeaveApprovalDetails(oLeaveApprovalDetails);
+          moUserApplyLeaveDetailsDC.SaveLeaveApprovalDetails(oLeaveApprovalDetails, IsFromFinalApproval);
       }
 
       public  DataTable GetStaffName(int aiUserId)
@@ -97,10 +97,10 @@ namespace BusinessLogic.PayrollBL
       {
           return miTotalRows;
       }
-      public UserApplyLeaveDetails GetLeaveDetailsCategory(int aiId, int aiUserId)
+      public UserApplyLeaveDetails GetLeaveDetailsCategory(int aiId, int aiUserId, int aiLoginUserId)
       {
 
-          return moUserApplyLeaveDetailsDC.GetLeaveDetailsCategory(aiId, aiUserId);
+          return moUserApplyLeaveDetailsDC.GetLeaveDetailsCategory(aiId, aiUserId, aiLoginUserId);
       }
 
        /// <summary>
@@ -126,6 +126,11 @@ namespace BusinessLogic.PayrollBL
       public bool ValidateDateOverlapping(DateTime adtStartDate, DateTime adtEndDate, int aiUserId, int aiLeaveConfigId)
       {
           return moUserApplyLeaveDetailsDC.ValidateDateOverlapping(adtStartDate, adtEndDate, aiUserId, aiLeaveConfigId);
+      }
+
+      public bool AllowUserToViewAllLeaves()
+      {
+          return moUserApplyLeaveDetailsDC.AllowUserToViewAllLeaves();
       }
     }
 }
