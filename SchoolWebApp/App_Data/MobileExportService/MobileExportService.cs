@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
+﻿using BusinessLogic;
 using CrystalDecisions.CrystalReports.Engine;
-using System.Configuration;
 using CrystalDecisions.Shared;
-using Utility;
-using System.Data;
-using BusinessLogic;
-using System.IO;
-using System.Web.Hosting;
 using SchoolEntities;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Web.Hosting;
+using Utility;
 
 
 namespace MobileExportService.Service
@@ -56,7 +52,12 @@ namespace MobileExportService.Service
         /// <returns></returns>
         public string GetReceiptFileName(int aiSchoolId, string asReceiptNo, int aiAcademicYearId, int aiAccountHeaderId, string aiIsRefundFee, int aiStudentId, string asSerialNo)
         {
-            return DisplayReport(aiSchoolId, asReceiptNo, aiAcademicYearId, aiAccountHeaderId, aiIsRefundFee, aiStudentId, asSerialNo);
+            return DisplayReport(aiSchoolId, asReceiptNo, aiAcademicYearId, aiAccountHeaderId, aiIsRefundFee, aiStudentId, asSerialNo, 0);
+        }
+
+        public string GetAdmissionReceiptFileName(int aiSchoolId, int aiAcademicYearId, int aiAdmissionId)
+        {
+            return DisplayReport(aiSchoolId, "0", aiAcademicYearId, 0, "0", 0, "0", aiAdmissionId);
         }
 
         /// <summary>
@@ -85,6 +86,159 @@ namespace MobileExportService.Service
             oReportDisplay.DisplayReport();
 
             return sFileName;
+        }
+
+        public string GetReportFileName(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs)        
+        {
+            if (aoParameterPairs.Count > 0)
+            {                
+                string sRecordSelectionFormula = GetRecordSelectionFormula(aiSchoolId, aiAcademicYearId, aiLoginUserId, aiReportId, aoExportReports, aoParameterPairs);
+
+                string sFileName = @"\RITeSchool\OtherDownloads\AllDownloads\" + aoExportReports.ToString() + "_" + GetDateFormat() + ".pdf";
+                string sDownloadPath = HostingEnvironment.ApplicationPhysicalPath + sFileName;
+
+                ReportDisplay oReportDisplay = new ReportDisplay(aoExportReports, sRecordSelectionFormula, ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                oReportDisplay.IsServiceCall = true;
+                oReportDisplay.BasePath = HostingEnvironment.ApplicationPhysicalPath;
+                oReportDisplay.SchoolId = aiSchoolId;
+                oReportDisplay.AcademicYearId = aiAcademicYearId;
+                oReportDisplay.SchoolName = string.Empty;
+                oReportDisplay.DisplayReport();
+
+                return "1:" + sFileName;
+            }
+            else
+                return "0:Parameter list is blank.";
+        }
+
+        private string GetRecordSelectionFormula(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs)
+        {
+            string sRecordSelectionFormula = string.Empty;
+            var aoDictParameters = aoParameterPairs != null
+            ? aoParameterPairs.ToDictionary(p => p.Name, p => p.Value)
+            : new Dictionary<string, string>();
+
+            if (aoExportReports == Constants.ExportReports.LessonPlan)
+            {
+                int iSubjectId = 0, iStdDivId = 0;
+
+                if (aoDictParameters["StartDate"] == null & aoDictParameters["EndDate"] == null)
+                {
+                    sRecordSelectionFormula = "(usp_GetLessonPlanDetailsForReport.SchoolId}=" + aiSchoolId + " AND  usp_GetLessonPlanDetailsForReport.AcademicYearId} =" + aiAcademicYearId + " AND usp_GetLessonPlanDetailsForReport.UserId}=" + aoDictParameters["UserId"] + " AND usp_GetLessonPlanDetailsForReport.SubjectId}=" + iSubjectId + " AND usp_GetLessonPlanDetailsForReport.StandardDivisionId}=" + iStdDivId +
+                            " AND usp_GetLessonPlanDetailsForReport.StartDate}=null" + "  AND  usp_GetLessonPlanDetailsForReport.EndDate}=null" + ")" + "@ ";
+                }
+                else if (aoDictParameters["StartDate"] != null && aoDictParameters["EndDate"] == null)
+                {
+                    sRecordSelectionFormula = "(usp_GetLessonPlanDetailsForReport.SchoolId}=" + aiSchoolId + " AND  usp_GetLessonPlanDetailsForReport.AcademicYearId} =" + aiAcademicYearId + " AND usp_GetLessonPlanDetailsForReport.UserId}=" + aoDictParameters["UserId"] + " AND usp_GetLessonPlanDetailsForReport.SubjectId}=" + iSubjectId + " AND usp_GetLessonPlanDetailsForReport.StandardDivisionId}=" + iStdDivId +
+                            " AND usp_GetLessonPlanDetailsForReport.StartDate}=" + aoDictParameters["StartDate"] + "  AND  usp_GetLessonPlanDetailsForReport.EndDate}=null" + ")" + "@ ";
+                }
+                else if (aoDictParameters["StartDate"] == null && aoDictParameters["EndDate"] != null)
+                {
+                    sRecordSelectionFormula = "(usp_GetLessonPlanDetailsForReport.SchoolId}=" + aiSchoolId + " AND  usp_GetLessonPlanDetailsForReport.AcademicYearId} =" + aiAcademicYearId + " AND usp_GetLessonPlanDetailsForReport.UserId}=" + aoDictParameters["UserId"] + " AND usp_GetLessonPlanDetailsForReport.SubjectId}=" + iSubjectId + " AND usp_GetLessonPlanDetailsForReport.StandardDivisionId}=" + iStdDivId +
+                            " AND usp_GetLessonPlanDetailsForReport.StartDate}=null" + "  AND  usp_GetLessonPlanDetailsForReport.EndDate}=" + aoDictParameters["EndDate"] + ")" + "@ ";
+                }
+                else
+                {
+                    sRecordSelectionFormula = "(usp_GetLessonPlanDetailsForReport.SchoolId}=" + aiSchoolId + " AND  usp_GetLessonPlanDetailsForReport.AcademicYearId} =" + aiAcademicYearId + " AND usp_GetLessonPlanDetailsForReport.UserId}=" + aoDictParameters["UserId"] + " AND usp_GetLessonPlanDetailsForReport.SubjectId}=" + iSubjectId + " AND usp_GetLessonPlanDetailsForReport.StandardDivisionId}=" + iStdDivId +
+                            " AND usp_GetLessonPlanDetailsForReport.StartDate}=" + aoDictParameters["StartDate"] + "  AND  usp_GetLessonPlanDetailsForReport.EndDate}=" + aoDictParameters["EndDate"] + ")" + "@ ";
+                }
+            }
+            else if (aoExportReports == Constants.ExportReports.CancellationFormDetails)
+            {
+                sRecordSelectionFormula = "(usp_GetCancellationFormDetails.School_Id}=" + aiSchoolId + "AND usp_GetCancellationFormDetails.Academic_Year_Id}=" + aiAcademicYearId + "AND usp_GetCancellationFormDetails.Standard_Id}=" + aoDictParameters["Standard_Id"] + "AND usp_GetCancellationFormDetails.Division_Id}=" + aoDictParameters["Division_Id"] + "AND usp_GetCancellationFormDetails.Student_Id}=" + aoDictParameters["Student_Id"] + "AND usp_GetCancellationFormDetails.SubmittedBy}=" + aoDictParameters["SubmittedBy"] + aoDictParameters["CancFormId"] + ") @";
+            }
+            else if (aoExportReports == Constants.ExportReports.AdmissionFormReport)
+            {
+                if (aiSchoolId == Constants.SchoolId.PPSH.ToInt())
+                    sRecordSelectionFormula = "(usp_GetAdmmissionFormReport.SchoolId}=" + aiSchoolId + " AND usp_GetAdmmissionFormReport.StudentAdmissionId}=" + aoDictParameters["StudentAdmissionId"] + " AND usp_GetAdmmissionFormReport.IsTeachersCopy}=" + aoDictParameters["IsTeachersCopy"] + " AND usp_GetAdmmissionFormReport.AdmissionForCurrentYear}=" + aoDictParameters["AdmissionForCurrentYear"] + ") @";
+                else
+                    sRecordSelectionFormula = "(usp_GetAdmmissionFormReport.SchoolId}=" + aiSchoolId + " AND usp_GetAdmmissionFormReport.StudentAdmissionId}=" + aoDictParameters["StudentAdmissionId"] + " AND usp_GetAdmmissionFormReport.AdmissionForCurrentYear}=" + aoDictParameters["AdmissionForCurrentYear"] + ") @";
+            }
+            else if (aoExportReports == Constants.ExportReports.LeavingCerificatePPSN
+                || aoExportReports == Constants.ExportReports.LeavingCertificateSS
+                || aoExportReports == Constants.ExportReports.LeavingCertificatePP
+                || aoExportReports == Constants.ExportReports.LeavingCertificateSNS
+                || aoExportReports == Constants.ExportReports.LeavingCertificateSSN
+                || aoExportReports == Constants.ExportReports.LeavingCertificateSSNMarathi
+                || aoExportReports == Constants.ExportReports.LeavingCertificateSPS
+                || aoExportReports == Constants.ExportReports.LeavingCertificateOWS
+                || aoExportReports == Constants.ExportReports.LeavingCertificatePPSH
+                || aoExportReports == Constants.ExportReports.LeavingCertificateMVPS
+                || aoExportReports == Constants.ExportReports.LeavingCertificateDPIS)
+            {
+                SchoolWiseAcademicYearMasterBL oSchoolAcademicYearBL = new SchoolWiseAcademicYearMasterBL();
+                DataTable oDTSchoolInfo = oSchoolAcademicYearBL.GetSchoolInfo(aiSchoolId, aiAcademicYearId);
+                string sAcademicYearName = "Year " + oDTSchoolInfo.Rows[Constants.I_ZERO]["Year"].ToString();
+                string sOrgName = oDTSchoolInfo.Rows[Constants.I_ZERO]["School_Orgn_Name"].ToString();
+                //string sSchoolName = Session[Constants.S_SESSION_SCHOOL_NAME].ToString();
+                string sSchoolName = oDTSchoolInfo.Rows[Constants.I_ZERO]["School_Name"].ToString();
+
+
+                if (aiSchoolId == Constants.SchoolId.LFS.ToInt())
+                    sRecordSelectionFormula = "(usp_LeavingCertificateForLFS.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificateForLFS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"]+ " AND  usp_LeavingCertificateForLFS.Academic_Year_Id} =" + aiAcademicYearId + " AND  usp_LeavingCertificate.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                else if (aiSchoolId == Constants.SchoolId.SSN.ToInt())
+                {
+                  
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_SSN.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_SSN.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_SSN.PrintDate} = " + aoDictParameters["PrintDate"] + " AND usp_LeavingCertificate_SSN.DisplayInMarathi } =" + aoDictParameters["DisplayInMarathi"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.SPS.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_SPS.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_SPS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_SPS.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.OWS.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_OWS.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_OWS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_OWS.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if ((aiSchoolId == Constants.SchoolId.CSNP.ToInt() || aiSchoolId == Constants.SchoolId.CSNS.ToInt()))
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_SSN.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_SSN.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_SSN.PrintDate} = " + aoDictParameters["PrintDate"] + " AND usp_LeavingCertificate_SSN.DisplayInMarathi } =" + Constants.S_ZERO + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.SVP.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_SVP.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_SVP.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_SVP.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.PPSH.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_TransferCertificate_PPSH.School_Id}=)" + aiSchoolId + "AND usp_TransferCertificate_PPSH.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + "AND usp_TransferCertificate_PPSH.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.HSP.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificateHSP.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateHSP.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateHSP.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.MVPS.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificateMVPS.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateMVPS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateMVPS.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.ZLSP.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificateDYP.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateDYP.Enrolment_Number =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateDYP;.PrintDate = " + aoDictParameters["PrintDate"]     + ") @";
+                }
+                else if (SchoolBase.Settings.IsAaryanSchool)
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificateForAryan.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateForAryan.Enrolment_Number =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateForAryan;.PrintDate = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.DYPV.ToInt()) //
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificateForDYPV.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateForDYPV.Enrolment_Number =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateForDYPV;.PrintDate = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.NPS.ToInt()) //NPS
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificateNurseryTo9th_NPS.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateNurseryTo9th_NPS.Enrolment_Number =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateNurseryTo9th_NPS;.PrintDate = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.VPMCPS.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_VPMCPS.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_VPMCPS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_VPMCPS.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else if (aiSchoolId == Constants.SchoolId.PIONEER.ToInt())
+                {
+                    sRecordSelectionFormula = "(usp_LeavingCertificate_Pioneer.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate_Pioneer.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate_Pioneer.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                }
+                else
+                    sRecordSelectionFormula = "(usp_LeavingCertificate.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificate.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificate.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+
+            }
+            return sRecordSelectionFormula;
+            
         }
 
         public string GetLessonPlanFileName(int aiSchoolId, int aiAcademicYearId, int aiUserId, string asStartDate, string asEndDate)
@@ -607,7 +761,7 @@ namespace MobileExportService.Service
         /// This method is used to display report
         /// </summary>
         /// <param name="msFilter"></param>
-        private string DisplayReport(int aiSchoolId, string asReceiptNo, int aiAcademicYearId, int aiAccountHeaderId, string asIsRefundFee, int aiStudentId, string asSerialNo)
+        private string DisplayReport(int aiSchoolId, string asReceiptNo, int aiAcademicYearId, int aiAccountHeaderId, string asIsRefundFee, int aiStudentId, string asSerialNo, int aiAdmissionId)
         {
             string sFilterString = GetFilterString(aiSchoolId, asReceiptNo, aiAcademicYearId, aiAccountHeaderId, asIsRefundFee);
 
@@ -656,7 +810,7 @@ namespace MobileExportService.Service
             string sDownloadPath = sBasePath + sFileName;
 
             crReportDocument.Load(sReportPath);
-            SetFeeRecieptDatascource(sFilterString, aiSchoolId, aiStudentId, asSerialNo);
+            SetFeeRecieptDatascource(sFilterString, aiSchoolId, aiStudentId, asSerialNo, aiAdmissionId);
 
             crReportDocument.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, sDownloadPath);
 
@@ -705,7 +859,7 @@ namespace MobileExportService.Service
         /// This method is used to set data source to report.
         /// </summary>
         /// <param name="asReportSelectionString"></param>
-        private void SetFeeRecieptDatascource(string asReportSelectionString, int aiSchoolId, int aiStudentId, string aiSerialNo)
+        private void SetFeeRecieptDatascource(string asReportSelectionString, int aiSchoolId, int aiStudentId, string aiSerialNo, int aiAdmissionId)
         {
             var dsFeeRecieptReportDetails = new DataSet();
             asReportSelectionString = FormatFilterString(asReportSelectionString);
@@ -757,7 +911,7 @@ namespace MobileExportService.Service
                 }
             }
 
-            if (aiSerialNo == Constants.S_ZERO)
+            if (aiAdmissionId == 0 && aiSerialNo == Constants.S_ZERO)
             {
                 if (aiSchoolId == Constants.SchoolId.SNS.ToInt())
                 {
@@ -771,6 +925,8 @@ namespace MobileExportService.Service
                 else
                     dsFeeRecieptReportDetails = StudentFeeDetailsBL.GetReceiptDetails(sRecieptNo, iAcademicYearId);
             }
+            else if (aiAdmissionId != 0)
+                dsFeeRecieptReportDetails = StudentFeeDetailsBL.GetAdmissionReceiptDetails(aiAdmissionId, iAcademicYearId);
             else if (aiSerialNo != Constants.S_ZERO)
                 dsFeeRecieptReportDetails = StudentFeeDetailsBL.GetReceiptDetails(aiSerialNo.ToInt());
 

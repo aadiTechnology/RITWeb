@@ -1,11 +1,8 @@
-﻿using System;
+﻿using SchoolEntities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 using System.ServiceModel.Web;
-using System.IO;
+using Utility;
 
 namespace MobileExportService.Service
 {
@@ -16,6 +13,10 @@ namespace MobileExportService.Service
         [OperationContract]
         [WebInvoke(UriTemplate = "GetReceiptFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         string GetReceiptFileName(int aiSchoolId, string asReceiptNo, int aiAcademicYearId, int aiAccountHeaderId, string aiIsRefundFee, int aiStudentId, string asSerialNo);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetAdmissionReceiptFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string GetAdmissionReceiptFileName(int aiSchoolId, int aiAcademicYearId, int aiAdmissionId);
 
         //[OperationContract]
         //[WebInvoke(UriTemplate = "GetProgressReportFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
@@ -32,6 +33,10 @@ namespace MobileExportService.Service
         [OperationContract]
         [WebInvoke(UriTemplate = "GetLessonPlanFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         string GetLessonPlanFileName(int aiSchoolId, int aiAcademicYearId, int aiUserId, string asStartDate, string asEndDate);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GetReportFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string GetReportFileName(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "GetITRFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]

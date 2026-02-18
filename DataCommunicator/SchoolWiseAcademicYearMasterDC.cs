@@ -444,7 +444,8 @@ namespace DataCommunicator
 									  " CAST(YEAR(SchoolWise_Academic_Year_Master.Start_date) AS varchar) + '-' + CAST(YEAR(SchoolWise_Academic_Year_Master.End_Date) " +
 									  " AS varchar) AS Year " +
 									  " , " +
-									  " School_Master.School_Orgn_Name " +
+									  " School_Master.School_Orgn_Name, " +
+                                      " School_Master.School_Name " +
 									  " FROM " +
 									  " SchoolWise_Academic_Year_Master " +
 									  " INNER JOIN " +
