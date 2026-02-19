@@ -392,6 +392,7 @@ public partial class SchoolReportsUI : ExportToExcel
     private const string S_TESTWISE_SUBJECT_TOPPERS = "323";
     private const string S_STUDENT_HALF_YEARLY_3TO9 = "324";
     private const string S_STUDENT_YEARWISE_PENDING_FEE_COUNT_DETAILS = "325";
+    private const string S_VEHICLES_FUEL_MAINTENANCE_EXPENSES = "326";
     
     private DataTable oDTUderDetails;
     private DataTable moDTStudentFinalProgressReports;
@@ -577,7 +578,7 @@ public partial class SchoolReportsUI : ExportToExcel
                 sFilterString = sFilterString.Replace("Xseed.", "");
 
             //This method is used to check report data availability.
-            if (msReportID != S_STUD_TERMWISE_RESULT && msReportID != "115" && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_TBS_ID && msReportID != S_DATEWISE_Fee_COLLECTION && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_SS_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_PPSH_ID && msReportID != S_STUD_FINAL_RESULT && msReportID != S_STUD_FINAL_RESULT_PPSN && msReportID != S_STUD_FINAL_RESULT_MCPS && msReportID != S_EXAM_RESULT && msReportID != S_EXAM_RESULT_FBS && msReportID != S_EXAM_RESULT_PPSN && msReportID != S_STUD_TERM2_RESULT && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_JOS_ID && msReportID != S_BANK_CHALLAN_REPORT && msReportID != S_STUD_EXAM_RESULT_PPSN && msReportID != S_MARK_ENTRY_FORM_REPORT && msReportID != S_STUD_EXAM_RESULT_MVPS_9 && msReportID != S_USER_LOGIN_DETAILS && msReportID != S_PRELIM_RESULT_SHEET && msReportID != S_STUD_FINAL_RESULT_PPSH_Old && msReportID != S_STUD_FINAL_RESULT_FOR_9 && msReportID != S_FINAL_PROGRESS_CARD_SNS_11_12 && !(msReportID == S_ANNUAL_CONSOLDATED_REPORT && miSchoolId == Constants.SchoolId.HSP.ToInt()) && msReportID != STUDENT_DOCUMNET_STATUS_DETAILS && msReportID != S_MONTHLY_FEE_COLLECTION_DETAILS && msReportID != S_STUDENT_FEE_REPORT && msReportID != S_STUDENT_NEWADMISSION_DETAILS_EXPORT && msReportID != S_LEAVING_CERTIFICATE_10TH_NPS_ID && msReportID != S_DYNAMIC_PENDING_FEE_REPORT && msReportID != S_PRELIM_REPORT_PP && msReportID != S_STUDENT_OBSERVATION_REPORT && msReportID != S_STUD_FINAL_RESULT_FOR_PPSN && msReportID != S_TRANSPORT_NOTIFICATIONS && msReportID != S_INAUGURAL_CERTIFICATE && msReportID != S_PENDING_FEE_STATEMENT_FOR_ALL_ACADEMICS_PPSN && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS && msReportID != S_PARENT_OCCUPATION_DETAILS && msReportID != S_USER_PAYROLL_DETAILS && msReportID != S_USER_PAYROLL_SALARY_DETAILS && msReportID != S_STUDENT_FINAL_PROGRESS_REPORT_MNS && msReportID != S_STUDENT_BONAFIDE_CERTIFICATE_VPMCPS && msReportID != S_STUDENT_FEE_DETAILS && msReportID != S_STUDENT_FEE_CONSOLIDATED_DETAILS && msReportID != S_TEST_CONSOLIDATED_REPORT && msReportID != S_TEST_TYPE_EXAM_RESULT && msReportID != S_STUDENT_TERM1_PROGRESS_REPORT && msReportID != S_FEE_RECONCILIATION_REPORT_PPSH && msReportID != S_EXPORT_FEE_DETAILS_SNS && msReportID != S_HOLISTIC_FINAL_PROGRESS_CARD && msReportID != S_TERM_PROGRESS_REPORT_PIONEER && msReportID != S_EXPORT_STUDENT_MONTHLY_STATUS && msReportID != S_EXPORT_STUDENTS_RECEIPTS_DETAILS && msReportID != S_CA_RECONSOLIDATION_DETAILS && msReportID != S_HOLISTIC_REPORT_FOR1TO3_PPSH && msReportID != S_STUDENT_HALF_YEARLY_3TO9 && msReportID != S_STUDENT_YEARWISE_PENDING_FEE_COUNT_DETAILS && msReportID != S_MUSTER_REPORT)
+            if (msReportID != S_STUD_TERMWISE_RESULT && msReportID != "115" && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_TBS_ID && msReportID != S_DATEWISE_Fee_COLLECTION && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_SS_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_PPSH_ID && msReportID != S_STUD_FINAL_RESULT && msReportID != S_STUD_FINAL_RESULT_PPSN && msReportID != S_STUD_FINAL_RESULT_MCPS && msReportID != S_EXAM_RESULT && msReportID != S_EXAM_RESULT_FBS && msReportID != S_EXAM_RESULT_PPSN && msReportID != S_STUD_TERM2_RESULT && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_JOS_ID && msReportID != S_BANK_CHALLAN_REPORT && msReportID != S_STUD_EXAM_RESULT_PPSN && msReportID != S_MARK_ENTRY_FORM_REPORT && msReportID != S_STUD_EXAM_RESULT_MVPS_9 && msReportID != S_USER_LOGIN_DETAILS && msReportID != S_PRELIM_RESULT_SHEET && msReportID != S_STUD_FINAL_RESULT_PPSH_Old && msReportID != S_STUD_FINAL_RESULT_FOR_9 && msReportID != S_FINAL_PROGRESS_CARD_SNS_11_12 && !(msReportID == S_ANNUAL_CONSOLDATED_REPORT && miSchoolId == Constants.SchoolId.HSP.ToInt()) && msReportID != STUDENT_DOCUMNET_STATUS_DETAILS && msReportID != S_MONTHLY_FEE_COLLECTION_DETAILS && msReportID != S_STUDENT_FEE_REPORT && msReportID != S_STUDENT_NEWADMISSION_DETAILS_EXPORT && msReportID != S_LEAVING_CERTIFICATE_10TH_NPS_ID && msReportID != S_DYNAMIC_PENDING_FEE_REPORT && msReportID != S_PRELIM_REPORT_PP && msReportID != S_STUDENT_OBSERVATION_REPORT && msReportID != S_STUD_FINAL_RESULT_FOR_PPSN && msReportID != S_TRANSPORT_NOTIFICATIONS && msReportID != S_INAUGURAL_CERTIFICATE && msReportID != S_PENDING_FEE_STATEMENT_FOR_ALL_ACADEMICS_PPSN && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS && msReportID != S_PARENT_OCCUPATION_DETAILS && msReportID != S_USER_PAYROLL_DETAILS && msReportID != S_USER_PAYROLL_SALARY_DETAILS && msReportID != S_STUDENT_FINAL_PROGRESS_REPORT_MNS && msReportID != S_STUDENT_BONAFIDE_CERTIFICATE_VPMCPS && msReportID != S_STUDENT_FEE_DETAILS && msReportID != S_STUDENT_FEE_CONSOLIDATED_DETAILS && msReportID != S_TEST_CONSOLIDATED_REPORT && msReportID != S_TEST_TYPE_EXAM_RESULT && msReportID != S_STUDENT_TERM1_PROGRESS_REPORT && msReportID != S_FEE_RECONCILIATION_REPORT_PPSH && msReportID != S_EXPORT_FEE_DETAILS_SNS && msReportID != S_HOLISTIC_FINAL_PROGRESS_CARD && msReportID != S_TERM_PROGRESS_REPORT_PIONEER && msReportID != S_EXPORT_STUDENT_MONTHLY_STATUS && msReportID != S_EXPORT_STUDENTS_RECEIPTS_DETAILS && msReportID != S_CA_RECONSOLIDATION_DETAILS && msReportID != S_HOLISTIC_REPORT_FOR1TO3_PPSH && msReportID != S_STUDENT_HALF_YEARLY_3TO9 && msReportID != S_STUDENT_YEARWISE_PENDING_FEE_COUNT_DETAILS && msReportID != S_MUSTER_REPORT && msReportID!=S_VEHICLES_FUEL_MAINTENANCE_EXPENSES)
                 IsReportEmpty(sFilterString);
 
             //set export option for opening reports.
@@ -868,7 +869,7 @@ public partial class SchoolReportsUI : ExportToExcel
                             else
                             {
                                 if (mlstPayrollReports.Contains(msReportID) || msReportID == S_STUDENT_NOT_SELECTED_IN_LOTTERY || (msReportID == S_IT_RECONCILIATION_RPT_ID && oDropDownListSender.ReportFieldId == 203) || msReportID == S_EMPLOYEE_DETAILS || msReportID == S_EMPLOYEE_INFORMATION_FOR_REPORT || msReportID == S_REQUISITION_DETAILS || msReportID == S_USER_ROLEWISE_IDENTITY_CARDS || msReportID == S_TASK_DETAILS || msReportID == S_STOPWISE_TRANSPORT_DETAILS || msReportID == S_USERROLEWISE_TRAVELLER_DETAILS || msReportID == S_USERROLEWISE_BOOK_ISSUED_USERS || msReportID == S_FEE_PAID_STUDENT_COUNT || msReportID == S_MUSTER_REPORT || msReportID == S_LECTUREWISE_STUDENT_ATTENDANCE || msReportID == S_PERFORMANCE_EVALUATION || msReportID == S_STUDENT_IDENTITY_CARDS || msReportID == S_SERVEY_ANALYSIS_COUNT_REPORT ||
-                                    msReportID == S_STUDENT_FEE_REPORT || msReportID == S_BANK_CHALLAN_REPORT || msReportID == S_DATEWISE_Fee_COLLECTION || msReportID == S_STUDENT_GENERAL_REGISTER_REPORT || msReportID == S_AREAWISE_PENDINGFEE_DETAILS || msReportID == S_STUDENT_PENDING_FFE_DETAILS || msReportID == S_CLASSWISE_WORKING_HOURS || msReportID == S_MATERIAL_ISSUE_DETAILS || msReportID == S_ITEMWISE_STOCK_DETAILS || msReportID == S_STANDARDWISE_TEST_DETAILS || msReportID == S_STAFF_SCREEN_ACCESS_DETAILS || msReportID == S_PARENT_IDENTITY_CARDS || msReportID == S_CLASS_CATELOG || msReportID == S_TEACHER_UDISE_DETAILS || msReportID == S_UDISE_DETAILS || msReportID == S_MARK_ENTRY_STATUS || msReportID == S_MARK_ENTRY_FORM_REPORT || (miSchoolId == Constants.SchoolId.SS.ToInt() && msReportID == S_DATEWISE_ATTENDANCE_COUNT) || msReportID == S_STUDENT_HEALTH_DETAILS || msReportID == S_GRADUTY_REPORT_DETAILS || msReportID == S_STUDENT_REGISTRATION_DEATILS || msReportID == S_EXTERNAL_STUDENT_FEE_DETAILS || msReportID == S_USERWISE_LOGIN_DURATION_DETAILS || msReportID == S_STUDENT_REFUND_FEE_DETAILS || msReportID == S_PAY_SCALE_STATEMENT || msReportID == S_HOUSEWISE_STUDENT_DETAILS || msReportID == STUDENT_DOCUMNET_STATUS_DETAILS || msReportID == S_MONTHLY_FEE_COLLECTION_DETAILS || msReportID == S_EXPORT_FEE_DETAILS || msReportID == S_CLASSWISE_STUDNET_PAID_FEE_REPORT || msReportID == S_CLASSWISE_STUDENT_PENDING_FEE_REPORT_ID || msReportID == S_STANDARDWISE_FEE_COLLETION || msReportID == S_STANDARDWISE_LATE_FEE_COLLECTION || msReportID == S_PENDING_FEE_STUDENTLIST || msReportID == S_EXAMWISE_REPORT_CARD || msReportID == S_LAST_ACADEMICYEAR_FEE_DETAILS || msReportID == S_CATEGORYWISE_ITEM_BARCODE || msReportID == S_STUDENT_NEWADMISSION_DETAILS_EXPORT || msReportID == S_EMPLOYEE_INFORMATION_DETAILS || (msReportID == S_TEACHER_JOINING_DATE) || (msReportID == S_USER_RETIREMENT_DETAILS_REPORT) || msReportID == S_USER_SALARY_DETAILS || msReportID == S_MATERIAL_ISSUE_DETAILS_BY_USER || msReportID == S_NEXT_YEAR_PAID_FEE || msReportID == S_ANNUAL_INCREMENT_LETTER || msReportID == S_CAUTION_MONEY_ADJUSTMENT_AMOUNT || msReportID == S_INAUGURAL_CERTIFICATE || msReportID == S_PENDING_FEE_STATEMENT_FOR_ALL_ACADEMICS_PPSN || msReportID == S_EMPLOYMENT_CONFIRMATION_LETTER || msReportID == S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS || msReportID == S_PARENT_OCCUPATION_DETAILS || msReportID == S_USER_PAYROLL_DETAILS || msReportID == S_USER_PAYROLL_SALARY_DETAILS || msReportID == S_STUDENT_FINAL_PROGRESS_REPORT_MNS || msReportID == S_STUDENT_BONAFIDE_CERTIFICATE_VPMCPS || msReportID == S_STUDENT_FEE_CONSOLIDATED_DETAILS || msReportID == S_TEST_TYPE_EXAM_RESULT || msReportID == S_ANNUAL_CONSOLDATED_SUB_TYPE_REPORT_SNS || msReportID == S_CLASSWISE_EXAM_PERFORMANCE || msReportID == S_TEST_CONSOLIDATED_REPORT || msReportID == S_FEE_RECONCILIATION_REPORT_PPSH || msReportID == S_FINAL_PROGRESS_CARD_SNS_11_12 || msReportID == S_EXPORT_FEE_DETAILS_SNS || msReportID == S_EXAMWISE_MARK_DETAILS || msReportID == S_EXPORT_STUDENT_MONTHLY_STATUS || msReportID == S_EXPORT_STUDENTS_RECEIPTS_DETAILS || msReportID == S_CA_RECONSOLIDATION_DETAILS)
+                                    msReportID == S_STUDENT_FEE_REPORT || msReportID == S_BANK_CHALLAN_REPORT || msReportID == S_DATEWISE_Fee_COLLECTION || msReportID == S_STUDENT_GENERAL_REGISTER_REPORT || msReportID == S_AREAWISE_PENDINGFEE_DETAILS || msReportID == S_STUDENT_PENDING_FFE_DETAILS || msReportID == S_CLASSWISE_WORKING_HOURS || msReportID == S_MATERIAL_ISSUE_DETAILS || msReportID == S_ITEMWISE_STOCK_DETAILS || msReportID == S_STANDARDWISE_TEST_DETAILS || msReportID == S_STAFF_SCREEN_ACCESS_DETAILS || msReportID == S_PARENT_IDENTITY_CARDS || msReportID == S_CLASS_CATELOG || msReportID == S_TEACHER_UDISE_DETAILS || msReportID == S_UDISE_DETAILS || msReportID == S_MARK_ENTRY_STATUS || msReportID == S_MARK_ENTRY_FORM_REPORT || (miSchoolId == Constants.SchoolId.SS.ToInt() && msReportID == S_DATEWISE_ATTENDANCE_COUNT) || msReportID == S_STUDENT_HEALTH_DETAILS || msReportID == S_GRADUTY_REPORT_DETAILS || msReportID == S_STUDENT_REGISTRATION_DEATILS || msReportID == S_EXTERNAL_STUDENT_FEE_DETAILS || msReportID == S_USERWISE_LOGIN_DURATION_DETAILS || msReportID == S_STUDENT_REFUND_FEE_DETAILS || msReportID == S_PAY_SCALE_STATEMENT || msReportID == S_HOUSEWISE_STUDENT_DETAILS || msReportID == STUDENT_DOCUMNET_STATUS_DETAILS || msReportID == S_MONTHLY_FEE_COLLECTION_DETAILS || msReportID == S_EXPORT_FEE_DETAILS || msReportID == S_CLASSWISE_STUDNET_PAID_FEE_REPORT || msReportID == S_CLASSWISE_STUDENT_PENDING_FEE_REPORT_ID || msReportID == S_STANDARDWISE_FEE_COLLETION || msReportID == S_STANDARDWISE_LATE_FEE_COLLECTION || msReportID == S_PENDING_FEE_STUDENTLIST || msReportID == S_EXAMWISE_REPORT_CARD || msReportID == S_LAST_ACADEMICYEAR_FEE_DETAILS || msReportID == S_CATEGORYWISE_ITEM_BARCODE || msReportID == S_STUDENT_NEWADMISSION_DETAILS_EXPORT || msReportID == S_EMPLOYEE_INFORMATION_DETAILS || (msReportID == S_TEACHER_JOINING_DATE) || (msReportID == S_USER_RETIREMENT_DETAILS_REPORT) || msReportID == S_USER_SALARY_DETAILS || msReportID == S_MATERIAL_ISSUE_DETAILS_BY_USER || msReportID == S_NEXT_YEAR_PAID_FEE || msReportID == S_ANNUAL_INCREMENT_LETTER || msReportID == S_CAUTION_MONEY_ADJUSTMENT_AMOUNT || msReportID == S_INAUGURAL_CERTIFICATE || msReportID == S_PENDING_FEE_STATEMENT_FOR_ALL_ACADEMICS_PPSN || msReportID == S_EMPLOYMENT_CONFIRMATION_LETTER || msReportID == S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS || msReportID == S_PARENT_OCCUPATION_DETAILS || msReportID == S_USER_PAYROLL_DETAILS || msReportID == S_USER_PAYROLL_SALARY_DETAILS || msReportID == S_STUDENT_FINAL_PROGRESS_REPORT_MNS || msReportID == S_STUDENT_BONAFIDE_CERTIFICATE_VPMCPS || msReportID == S_STUDENT_FEE_CONSOLIDATED_DETAILS || msReportID == S_TEST_TYPE_EXAM_RESULT || msReportID == S_ANNUAL_CONSOLDATED_SUB_TYPE_REPORT_SNS || msReportID == S_CLASSWISE_EXAM_PERFORMANCE || msReportID == S_TEST_CONSOLIDATED_REPORT || msReportID == S_FEE_RECONCILIATION_REPORT_PPSH || msReportID == S_FINAL_PROGRESS_CARD_SNS_11_12 || msReportID == S_EXPORT_FEE_DETAILS_SNS || msReportID == S_EXAMWISE_MARK_DETAILS || msReportID == S_EXPORT_STUDENT_MONTHLY_STATUS || msReportID == S_EXPORT_STUDENTS_RECEIPTS_DETAILS || msReportID == S_CA_RECONSOLIDATION_DETAILS || msReportID == S_VEHICLES_FUEL_MAINTENANCE_EXPENSES)
                                     sFilterFieldName = sFilterFieldName.Replace("[", string.Empty).Replace("]", string.Empty);
                                 oHashFilterParameters[sFilterFieldName] = oDropDownListSender.SelectedValue;
                                 if ((msReportID == S_MUSTER_REPORT || msReportID == S_LECTUREWISE_STUDENT_ATTENDANCE) && sFilterFieldName == "Year")
@@ -2940,6 +2941,7 @@ public partial class SchoolReportsUI : ExportToExcel
 					case S_EXPORT_FEE_DETAILS_SNS:
                     case S_EXPORT_STUDENT_MONTHLY_STATUS:
                     case S_CA_RECONSOLIDATION_DETAILS:
+                    case S_VEHICLES_FUEL_MAINTENANCE_EXPENSES:
                         asFormatType = "Excel";
                         break;
                 }
@@ -5734,6 +5736,7 @@ public partial class SchoolReportsUI : ExportToExcel
             case S_CA_RECONSOLIDATION_DETAILS:
             case S_STUDENT_PENDING_FEE_REMINDER:
             case S_STUDENT_HALF_YEARLY_3TO9:
+            case S_VEHICLES_FUEL_MAINTENANCE_EXPENSES:
                 oParameterFieldDefinition = null;
                 break;
             case S_PROVIDENT_FUND_OF_SALARY_DIFFERENCE:
@@ -12240,7 +12243,7 @@ public partial class SchoolReportsUI : ExportToExcel
         StudentFeeDetailsBL moStudentFeeDetailsBL = new StudentFeeDetailsBL();
         moStudentsYearwisePendingfeecount = moStudentFeeDetailsBL.GetYearwisePendingFeeStudent(miSchoolId, miAcademicYearId, sStandardId, sDivisionId);
 
-       string sFileName = "StudentsYearwisePendingfeecount_" + Guid.NewGuid() + ".xlsx";
+        string sFileName = "StudentsYearwisePendingfeecount_" + Guid.NewGuid() + ".xlsx";
         string filePath = base.BasePath + @"\RITeSchool\UPLOADS\ResultSheet\" + sFileName;
 
         using (SpreadsheetDocument document = SpreadsheetDocument.Create(filePath, SpreadsheetDocumentType.Workbook))
@@ -12288,30 +12291,30 @@ public partial class SchoolReportsUI : ExportToExcel
         columns1.Append(new Column() { Min = (UInt32Value)2U, Max = (UInt32Value)2U, Width = 25D, CustomWidth = true });
         columns1.Append(new Column() { Min = (UInt32Value)3U, Max = (UInt32Value)3U, Width = 20D, CustomWidth = true });
         columns1.Append(new Column() { Min = (UInt32Value)4U, Max = (UInt32Value)4U, Width = 35D, CustomWidth = true });
-        columns1.Append(new Column() { Min = (UInt32Value)5U, Max = (UInt32Value)5U, Width =35D, CustomWidth = true });
+        columns1.Append(new Column() { Min = (UInt32Value)5U, Max = (UInt32Value)5U, Width = 35D, CustomWidth = true });
         columns1.Append(new Column() { Min = (UInt32Value)6U, Max = (UInt32Value)6U, Width = 35D, CustomWidth = true });
 
         aoWorksheet1.Append(columns1);
     }
 
     private void AddStudentsYearwisePendingfeecountDetailsHeader(SheetData aoSheetData1)
-     {
-         Row rowClass = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow-1), CustomHeight = true, Height = 25 };
+    {
+        Row rowClass = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow - 1), CustomHeight = true, Height = 25 };
 
-         var ddlStd = grdDisplayParameter.Rows[0].FindControl("DDLRptParameter") as ComboRpt;
-         var ddlDiv = grdDisplayParameter.Rows[1].FindControl("DDLRptParameter") as ComboRpt;
+        var ddlStd = grdDisplayParameter.Rows[0].FindControl("DDLRptParameter") as ComboRpt;
+        var ddlDiv = grdDisplayParameter.Rows[1].FindControl("DDLRptParameter") as ComboRpt;
 
-         string sClass;
-         if (ddlStd.SelectedValue == Constants.S_ZERO)
-             sClass = "All";
-         else if (ddlStd.SelectedValue != Constants.S_ZERO && ddlDiv.SelectedValue == Constants.S_ZERO)
-             sClass = ddlStd.SelectedItem.Text + "-All";
-         else
-             sClass = ddlStd.SelectedItem.Text + "-" + ddlDiv.SelectedItem.Text;
+        string sClass;
+        if (ddlStd.SelectedValue == Constants.S_ZERO)
+            sClass = "All";
+        else if (ddlStd.SelectedValue != Constants.S_ZERO && ddlDiv.SelectedValue == Constants.S_ZERO)
+            sClass = ddlStd.SelectedItem.Text + "-All";
+        else
+            sClass = ddlStd.SelectedItem.Text + "-" + ddlDiv.SelectedItem.Text;
 
-         rowClass.Append(AddCell("Class : " + sClass, CellValues.String, StudentPaidFeeEnum.LeftHeader));
+        rowClass.Append(AddCell("Class : " + sClass, CellValues.String, StudentPaidFeeEnum.LeftHeader));
 
-         aoSheetData1.Append(rowClass);
+        aoSheetData1.Append(rowClass);
         /////////////////
         Row row = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 25 };
 
@@ -12323,35 +12326,36 @@ public partial class SchoolReportsUI : ExportToExcel
         row.Append(AddCell("Percentage of pending fees", CellValues.String, StudentPaidFeeEnum.CenterHeader));
 
         aoSheetData1.Append(row);
-     }
+    }
 
     private void AddStudentStudentsYearwisePendingfeecountDetailsDataRows(SheetData aoSheetData1)
-     {
+    {
         miStudentPaidFeeStartupRow++;
 
-        moStudentsYearwisePendingfeecount.AcademicYears .OrderBy(year => year.AcademicYearId) .ToList().ForEach(year =>
-            { Row row = new Row
-                {
-                    RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow),
-                    CustomHeight = true,
-                    Height = 15
-                };
+        moStudentsYearwisePendingfeecount.AcademicYears.OrderBy(year => year.AcademicYearId).ToList().ForEach(year =>
+            {
+                Row row = new Row
+                  {
+                      RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow),
+                      CustomHeight = true,
+                      Height = 15
+                  };
 
-           row.Append(AddCell(year.AcademicYearName, CellValues.String, StudentPaidFeeEnum.CenterData));
+                row.Append(AddCell(year.AcademicYearName, CellValues.String, StudentPaidFeeEnum.CenterData));
 
                 int totalStudents = 0;
                 int rteStudents = 0;
                 int pendingStudents = 0;
 
-                var StudentsCounts = moStudentsYearwisePendingfeecount.StudentCounts .Where(sc => sc.AcademicYearId == year.AcademicYearId) .ToList();
+                var StudentsCounts = moStudentsYearwisePendingfeecount.StudentCounts.Where(sc => sc.AcademicYearId == year.AcademicYearId).ToList();
 
                 StudentsCounts.ForEach(sc =>
                 {
-                    if (sc.CategoryId == 1)      
+                    if (sc.CategoryId == 1)
                         totalStudents = sc.Count;
-                    else if (sc.CategoryId == 2) 
+                    else if (sc.CategoryId == 2)
                         rteStudents = sc.Count;
-                    else if (sc.CategoryId == 3) 
+                    else if (sc.CategoryId == 3)
                         pendingStudents = sc.Count;
                 });
 
@@ -12364,8 +12368,8 @@ public partial class SchoolReportsUI : ExportToExcel
                 row.Append(AddCell(pendingStudents.ToString(), CellValues.Number, StudentPaidFeeEnum.CenterData));
 
                 decimal percentage = 0;
-                if(actualFeeReceivedStudents != 0)
-                percentage = (Convert.ToDecimal(pendingStudents) / actualFeeReceivedStudents) * 100;
+                if (actualFeeReceivedStudents != 0)
+                    percentage = (Convert.ToDecimal(pendingStudents) / actualFeeReceivedStudents) * 100;
                 row.Append(AddCell(percentage.ToString("0.00"), CellValues.Number, StudentPaidFeeEnum.CenterData));
 
                 aoSheetData1.Append(row);

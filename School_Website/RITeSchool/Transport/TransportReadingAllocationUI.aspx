@@ -318,7 +318,7 @@
                                                                 <tr runat="server" id="itemPlaceholder">
                                                                 </tr>
                                                                 <tr class="ClsBorderPager" id="trDataPager">
-                                                                    <td colspan="11">
+                                                                    <td colspan="12">
                                                                         <asp:DataPager ID="DtPgDropDown" runat="server" PagedControlID="lstvwVehicleReadingAllocationDetails"
                                                                             PageSize="20">
                                                                             <Fields>

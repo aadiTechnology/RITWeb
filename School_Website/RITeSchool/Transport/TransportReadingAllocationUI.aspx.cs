@@ -169,10 +169,10 @@ public partial class RITeSchool_Transport_TransportReadingAllocationUI : SchoolB
             DataRowView oDataRowView = (DataRowView)oCurrentItem.DataItem;
             int iReadingFrom = Convert.ToInt32(oDataRowView["ReadingFrom"]);
             int iReadingTo = Convert.ToInt32(oDataRowView["ReadingTo"]);
-            int iLitters = Convert.ToInt32(oDataRowView["Litters"]);
+            decimal iLitters = Convert.ToDecimal(oDataRowView["Litters"]);
 
             Label lblAverage = e.Item.FindControl("lblAverage") as Label;
-            lblAverage.Text = Convert.ToString(((iReadingTo - iReadingFrom) / iLitters).ToDecimal());
+            lblAverage.Text = Math.Round(((iReadingTo - iReadingFrom) / iLitters),1).ToString();
         }
     }
 
