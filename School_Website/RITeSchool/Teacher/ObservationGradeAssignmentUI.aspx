@@ -219,7 +219,7 @@
             var sContent = ''
             for(var k=0; k< filteredData.length; k++)
             {
-                sContent += '<li><a href="#" onclick="SetRemark(\''+filteredData[k].Remarks+'\',\''+rmkId+'\');return false;">'+filteredData[k].Remarks+'</a></li>'
+                sContent += '<li><a href="#" onclick="SetRemark(\''+filteredData[k].Remarks.replace('\'','$')+'\',\''+rmkId+'\');return false;">'+filteredData[k].Remarks+'</a></li>'
             }
 
             $('#divRemark').html('<ol>'+sContent+'</ol><a style="float:right;padding-right:10px;" href="#" onclick="CloseDiv(\''+rmkId+'\');return false;">Close</a>')
@@ -232,7 +232,8 @@
         }
 
         function SetRemark(rmk, rmkId)
-        {
+        {        
+            rmk = rmk.replace('$','\'')
             $('[id$='+rmkId+']').val(rmk)
             $('[id$='+rmkId+']').css('background-color','white');
             $('#divRemarkContainer').hide()

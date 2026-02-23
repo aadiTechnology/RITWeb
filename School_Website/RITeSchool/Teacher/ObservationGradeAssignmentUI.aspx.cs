@@ -174,6 +174,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     {
         valsum.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
         base.ApplyMouseHoverEffect(new List<Button> { btnSave, btnBack, btnSubmit });
+        //hidApplyGradeParamFilter.Value = (miSchoolId == Constants.SchoolId.SNS.ToInt()) ? "Y" : "N";
     }
 
     /// <summary>
@@ -286,7 +287,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                          {
                              Control ctrl = new Control();
 
-                             if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 3)
+                             if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3)
                              {
                                  DropDownList ddl = new DropDownList();
                                  ddl.ID = "cmb_" + parameter.Id;
@@ -372,8 +373,8 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                  {
                                      Control ctrl = new Control();
                                      var oGrade = moObservationDetailsBL.Observations.Where(obs => obs.StudentId == student.YearwiseStudentId && obs.ParameterId == parameter.Id).FirstOrDefault();
-
-                                     if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 3)
+                                     
+                                     if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 2 ||parameter.ControlTypeId == 3)
                                      {
                                          DropDownList ddl = new DropDownList();
                                          ddl.ID = "cmb_" + student.YearwiseStudentId + "_" + parameter.Id;
@@ -408,12 +409,14 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                          txtRemark.Height = Unit.Pixel(50);
                                          txtRemark.Style.Add("margin-bottom", "5px");
                                          txtRemark.ToolTip = student.StudentName + " [" + parameter.Parameter + "]";
-
+                                             
                                          Button btnPlus = new Button();
                                          btnPlus.ID = "btnPlus_" + student.YearwiseStudentId + "_" + parameter.Id;
                                          btnPlus.Text = "+";
                                          btnPlus.CssClass = "smlBtn";
                                          btnPlus.Style.Add("margin-left", "5px");
+                                         //btnPlus.Attributes.Add("onclick", "return FillRemarksDynamic(this," + skill.Id + "," +  parameter.Id + ",'" + txtRemark.ClientID + "');");
+
                                          btnPlus.Attributes.Add("onclick", "FillRemarks(this," + skill.Id + ",'" + txtRemark.ClientID + "'); return false;");
 
                                          if (oGrade != null)
