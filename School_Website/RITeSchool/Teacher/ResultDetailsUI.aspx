@@ -138,7 +138,8 @@
                                                     <table align="center" width="80%">
                                                         <tr>
                                                             <td valign="top" align="center">
-                                                                <asp:ListView ID="lstvwResultDetails" runat="server" DataKeyNames="StudentId" OnItemDataBound="lstvwResultDetails_ItemDataBound">
+                                                                <asp:ListView ID="lstvwResultDetails" runat="server" DataKeyNames="StudentId" OnItemDataBound="lstvwResultDetails_ItemDataBound"
+                                                                     OnDataBound="lstvwResultDetails_DataBound">
                                                                     <LayoutTemplate>
                                                                         <table id="Table1" width="100%" runat="server" cellpadding="0" cellspacing="1" class="GridBorder">
                                                                             <tr id="trHeader" runat="server" class="ClsGridHeader">
@@ -148,7 +149,7 @@
                                                                                 <th align="left" class="paddingLR">
                                                                                     Student Name
                                                                                 </th>
-                                                                                <th align="center" class="paddingLR" width="180px">
+                                                                                <th align="center" class="paddingLR" width="180px" id="thConduct" runat="server">
                                                                                     Conduct
                                                                                 </th>
                                                                                 <th align="center" class="paddingLR" width="180px">
@@ -170,7 +171,7 @@
                                                                             <td align="center" class="ClspaddingLR">
                                                                                 <asp:Label ID="lblStudentName" runat="server" CssClass="ClsLabel" Text='<%#Eval("StudentName") %>'></asp:Label>
                                                                             </td>
-                                                                            <td align="center">
+                                                                            <td align="center" id="tdConduct" runat="server">
                                                                                 <asp:DropDownList ID="ddlConduct" runat="server" CssClass="MidCombo" ViewStateMode="Enabled">
                                                                                 </asp:DropDownList>
                                                                             </td>

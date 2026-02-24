@@ -874,9 +874,9 @@ namespace BusinessLogic
             return oDS;
         }
 
-        public static DataSet GetDetailsForPrePrimaryTerm1Report(int aiSchoolId, int aiAcademicYearId, int aiStdId, int aiDivId, int aiStudentId)
+        public static DataSet GetDetailsForPrePrimaryTerm1Report(int aiSchoolId, int aiAcademicYearId, int aiStdId, int aiDivId, int aiStudentId,int aiTermId)
         {
-            DataSet oDS = ReportsDC.GetDetailsForPrePrimaryTerm1Report(aiSchoolId, aiAcademicYearId, aiStdId, aiDivId, aiStudentId);
+            DataSet oDS = ReportsDC.GetDetailsForPrePrimaryTerm1Report(aiSchoolId, aiAcademicYearId, aiStdId, aiDivId, aiStudentId,aiTermId);
             oDS.Tables[0].TableName = "StudentDetails";
             oDS.Tables[1].TableName = "StudentSkillDetails";
             oDS.Tables[2].TableName = "StudentMarkDetails";

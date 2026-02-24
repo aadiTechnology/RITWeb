@@ -2863,6 +2863,15 @@ public partial class SchoolReportsUI : ExportToExcel
                 if (miAcademicYearId >= 2)
                     msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentIdentityCardPioneer.rpt";
             }
+            if (msReportID == S_PREPRIMARY_STUDENT_TERM1 && moSchool == Constants.SchoolId.VPMCPS)
+            {
+                var cmbTerm = grdDisplayParameter.Rows[3].FindControl("DDLRptParameter") as ComboRpt;
+
+                if (cmbTerm.SelectedItem.Text == "Term-II")
+                {
+                    msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentTerm2PrePrimaryReport.rpt";
+                }
+            }
 
             if (msReportID == S_STUD_FINAL_RESULT_PPSH_Old && moSchool == Constants.SchoolId.DPIS && miAcademicYearId >= 6)
                 msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentWiseFinalProgressReportForDPIS2025.rpt";
@@ -3081,7 +3090,7 @@ public partial class SchoolReportsUI : ExportToExcel
                 dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReport(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTestId);
                 break;
             case S_PREPRIMARY_STUDENT_TERM1:
-                dsProgressReportDetails = ReportsBL.GetDetailsForPrePrimaryTerm1Report(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId);
+                dsProgressReportDetails = ReportsBL.GetDetailsForPrePrimaryTerm1Report(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId,iTermId);
                 break;
             case S_HOLISTIC_REPORT_FOR1TO3_PPSH:
                 dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPPSH(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);

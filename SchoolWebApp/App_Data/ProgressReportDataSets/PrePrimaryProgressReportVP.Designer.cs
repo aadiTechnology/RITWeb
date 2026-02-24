@@ -430,6 +430,16 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             private global::System.Data.DataColumn columnClassTeacherName;
             
+            private global::System.Data.DataColumn columnAttendance;
+            
+            private global::System.Data.DataColumn columnTerm2Remark;
+            
+            private global::System.Data.DataColumn columnPromotingToStd;
+            
+            private global::System.Data.DataColumn columnReopenDate;
+            
+            private global::System.Data.DataColumn columnTermId;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StudentDetailsDataTable() {
@@ -593,6 +603,46 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AttendanceColumn {
+                get {
+                    return this.columnAttendance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Term2RemarkColumn {
+                get {
+                    return this.columnTerm2Remark;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PromotingToStdColumn {
+                get {
+                    return this.columnPromotingToStd;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ReopenDateColumn {
+                get {
+                    return this.columnReopenDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TermIdColumn {
+                get {
+                    return this.columnTermId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -644,7 +694,12 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                         string SchoolOrgName, 
                         System.DateTime PrintDate, 
                         string PrincipalName, 
-                        string ClassTeacherName) {
+                        string ClassTeacherName, 
+                        string Attendance, 
+                        string Term2Remark, 
+                        string PromotingToStd, 
+                        string ReopenDate, 
+                        int TermId) {
                 StudentDetailsRow rowStudentDetailsRow = ((StudentDetailsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         YearWise_Student_Id,
@@ -662,7 +717,12 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                         SchoolOrgName,
                         PrintDate,
                         PrincipalName,
-                        ClassTeacherName};
+                        ClassTeacherName,
+                        Attendance,
+                        Term2Remark,
+                        PromotingToStd,
+                        ReopenDate,
+                        TermId};
                 rowStudentDetailsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStudentDetailsRow);
                 return rowStudentDetailsRow;
@@ -701,6 +761,11 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                 this.columnPrintDate = base.Columns["PrintDate"];
                 this.columnPrincipalName = base.Columns["PrincipalName"];
                 this.columnClassTeacherName = base.Columns["ClassTeacherName"];
+                this.columnAttendance = base.Columns["Attendance"];
+                this.columnTerm2Remark = base.Columns["Term2Remark"];
+                this.columnPromotingToStd = base.Columns["PromotingToStd"];
+                this.columnReopenDate = base.Columns["ReopenDate"];
+                this.columnTermId = base.Columns["TermId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -738,6 +803,16 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                 base.Columns.Add(this.columnPrincipalName);
                 this.columnClassTeacherName = new global::System.Data.DataColumn("ClassTeacherName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClassTeacherName);
+                this.columnAttendance = new global::System.Data.DataColumn("Attendance", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAttendance);
+                this.columnTerm2Remark = new global::System.Data.DataColumn("Term2Remark", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTerm2Remark);
+                this.columnPromotingToStd = new global::System.Data.DataColumn("PromotingToStd", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPromotingToStd);
+                this.columnReopenDate = new global::System.Data.DataColumn("ReopenDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReopenDate);
+                this.columnTermId = new global::System.Data.DataColumn("TermId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTermId);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -883,6 +958,8 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             private global::System.Data.DataColumn columnGrade;
             
+            private global::System.Data.DataColumn columnTerm2Grade;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StudentSkillDetailsDataTable() {
@@ -966,6 +1043,14 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Term2GradeColumn {
+                get {
+                    return this.columnTerm2Grade;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1001,7 +1086,7 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StudentSkillDetailsRow AddStudentSkillDetailsRow(StudentDetailsRow parentStudentDetailsRowByStudentDetails_StudentSkillDetails, int SkillSortOrder, string SkillName, int ParameterSortOrder, string ParameterName, string Grade) {
+            public StudentSkillDetailsRow AddStudentSkillDetailsRow(StudentDetailsRow parentStudentDetailsRowByStudentDetails_StudentSkillDetails, int SkillSortOrder, string SkillName, int ParameterSortOrder, string ParameterName, string Grade, string Term2Grade) {
                 StudentSkillDetailsRow rowStudentSkillDetailsRow = ((StudentSkillDetailsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1009,7 +1094,8 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                         SkillName,
                         ParameterSortOrder,
                         ParameterName,
-                        Grade};
+                        Grade,
+                        Term2Grade};
                 if ((parentStudentDetailsRowByStudentDetails_StudentSkillDetails != null)) {
                     columnValuesArray[0] = parentStudentDetailsRowByStudentDetails_StudentSkillDetails[0];
                 }
@@ -1041,6 +1127,7 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                 this.columnParameterSortOrder = base.Columns["ParameterSortOrder"];
                 this.columnParameterName = base.Columns["ParameterName"];
                 this.columnGrade = base.Columns["Grade"];
+                this.columnTerm2Grade = base.Columns["Term2Grade"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1058,6 +1145,8 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                 base.Columns.Add(this.columnParameterName);
                 this.columnGrade = new global::System.Data.DataColumn("Grade", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGrade);
+                this.columnTerm2Grade = new global::System.Data.DataColumn("Term2Grade", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTerm2Grade);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1201,6 +1290,8 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             private global::System.Data.DataColumn columnTotal_Marks_Scored;
             
+            private global::System.Data.DataColumn columnColumnSortOrder;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StudentMarkDetailsDataTable() {
@@ -1276,6 +1367,14 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ColumnSortOrderColumn {
+                get {
+                    return this.columnColumnSortOrder;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1311,14 +1410,15 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StudentMarkDetailsRow AddStudentMarkDetailsRow(StudentDetailsRow parentStudentDetailsRowByStudentDetails_StudentMarkDetails, int SubjectSortOrder, string Subject_Name, string ColumnHeader, string Total_Marks_Scored) {
+            public StudentMarkDetailsRow AddStudentMarkDetailsRow(StudentDetailsRow parentStudentDetailsRowByStudentDetails_StudentMarkDetails, int SubjectSortOrder, string Subject_Name, string ColumnHeader, string Total_Marks_Scored, int ColumnSortOrder) {
                 StudentMarkDetailsRow rowStudentMarkDetailsRow = ((StudentMarkDetailsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         SubjectSortOrder,
                         Subject_Name,
                         ColumnHeader,
-                        Total_Marks_Scored};
+                        Total_Marks_Scored,
+                        ColumnSortOrder};
                 if ((parentStudentDetailsRowByStudentDetails_StudentMarkDetails != null)) {
                     columnValuesArray[0] = parentStudentDetailsRowByStudentDetails_StudentMarkDetails[0];
                 }
@@ -1349,6 +1449,7 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                 this.columnSubject_Name = base.Columns["Subject_Name"];
                 this.columnColumnHeader = base.Columns["ColumnHeader"];
                 this.columnTotal_Marks_Scored = base.Columns["Total_Marks_Scored"];
+                this.columnColumnSortOrder = base.Columns["ColumnSortOrder"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1364,6 +1465,8 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
                 base.Columns.Add(this.columnColumnHeader);
                 this.columnTotal_Marks_Scored = new global::System.Data.DataColumn("Total_Marks_Scored", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotal_Marks_Scored);
+                this.columnColumnSortOrder = new global::System.Data.DataColumn("ColumnSortOrder", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnColumnSortOrder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2051,6 +2154,86 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Attendance {
+                get {
+                    try {
+                        return ((string)(this[this.tableStudentDetails.AttendanceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Attendance\' in table \'StudentDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentDetails.AttendanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Term2Remark {
+                get {
+                    try {
+                        return ((string)(this[this.tableStudentDetails.Term2RemarkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Term2Remark\' in table \'StudentDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentDetails.Term2RemarkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PromotingToStd {
+                get {
+                    try {
+                        return ((string)(this[this.tableStudentDetails.PromotingToStdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PromotingToStd\' in table \'StudentDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentDetails.PromotingToStdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ReopenDate {
+                get {
+                    try {
+                        return ((string)(this[this.tableStudentDetails.ReopenDateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ReopenDate\' in table \'StudentDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentDetails.ReopenDateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int TermId {
+                get {
+                    try {
+                        return ((int)(this[this.tableStudentDetails.TermIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TermId\' in table \'StudentDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentDetails.TermIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsYearWise_Student_IdNull() {
                 return this.IsNull(this.tableStudentDetails.YearWise_Student_IdColumn);
             }
@@ -2243,6 +2426,66 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAttendanceNull() {
+                return this.IsNull(this.tableStudentDetails.AttendanceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAttendanceNull() {
+                this[this.tableStudentDetails.AttendanceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTerm2RemarkNull() {
+                return this.IsNull(this.tableStudentDetails.Term2RemarkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTerm2RemarkNull() {
+                this[this.tableStudentDetails.Term2RemarkColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPromotingToStdNull() {
+                return this.IsNull(this.tableStudentDetails.PromotingToStdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPromotingToStdNull() {
+                this[this.tableStudentDetails.PromotingToStdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsReopenDateNull() {
+                return this.IsNull(this.tableStudentDetails.ReopenDateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetReopenDateNull() {
+                this[this.tableStudentDetails.ReopenDateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTermIdNull() {
+                return this.IsNull(this.tableStudentDetails.TermIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTermIdNull() {
+                this[this.tableStudentDetails.TermIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StudentSkillDetailsRow[] GetStudentSkillDetailsRows() {
                 if ((this.Table.ChildRelations["StudentDetails_StudentSkillDetails"] == null)) {
                     return new StudentSkillDetailsRow[0];
@@ -2378,6 +2621,22 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Term2Grade {
+                get {
+                    try {
+                        return ((string)(this[this.tableStudentSkillDetails.Term2GradeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Term2Grade\' in table \'StudentSkillDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentSkillDetails.Term2GradeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StudentDetailsRow StudentDetailsRow {
                 get {
                     return ((StudentDetailsRow)(this.GetParentRow(this.Table.ParentRelations["StudentDetails_StudentSkillDetails"])));
@@ -2457,6 +2716,18 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGradeNull() {
                 this[this.tableStudentSkillDetails.GradeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTerm2GradeNull() {
+                return this.IsNull(this.tableStudentSkillDetails.Term2GradeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTerm2GradeNull() {
+                this[this.tableStudentSkillDetails.Term2GradeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2558,6 +2829,22 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ColumnSortOrder {
+                get {
+                    try {
+                        return ((int)(this[this.tableStudentMarkDetails.ColumnSortOrderColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ColumnSortOrder\' in table \'StudentMarkDetails\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableStudentMarkDetails.ColumnSortOrderColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StudentDetailsRow StudentDetailsRow {
                 get {
                     return ((StudentDetailsRow)(this.GetParentRow(this.Table.ParentRelations["StudentDetails_StudentMarkDetails"])));
@@ -2625,6 +2912,18 @@ namespace SchoolWebApp.App_Data.ProgressReportDataSets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTotal_Marks_ScoredNull() {
                 this[this.tableStudentMarkDetails.Total_Marks_ScoredColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsColumnSortOrderNull() {
+                return this.IsNull(this.tableStudentMarkDetails.ColumnSortOrderColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetColumnSortOrderNull() {
+                this[this.tableStudentMarkDetails.ColumnSortOrderColumn] = global::System.Convert.DBNull;
             }
         }
         

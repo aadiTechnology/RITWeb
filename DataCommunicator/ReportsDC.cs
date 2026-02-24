@@ -877,7 +877,7 @@ namespace DataCommunicator
             }
         }
 
-        public static DataSet GetDetailsForPrePrimaryTerm1Report(int aiSchoolId, int aiAcademicYearId, int aiStdId, int aiDivId, int aiStudentId)
+        public static DataSet GetDetailsForPrePrimaryTerm1Report(int aiSchoolId, int aiAcademicYearId, int aiStdId, int aiDivId, int aiStudentId,int aiTermId)
         {
             using (var oSQLServerDbUtility = new SQLServerDbUtility())
             {
@@ -886,6 +886,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("Standard_Id", aiStdId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("Division_Id", aiDivId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("Student_Id", aiStudentId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Term_Id", aiTermId, SqlDbType.Int);
                 return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataSet("usp_GetDetailsForPrePrimaryReport");
             }
         }

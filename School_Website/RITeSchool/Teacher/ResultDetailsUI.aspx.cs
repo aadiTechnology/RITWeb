@@ -13,6 +13,7 @@ using BusinessLogic.Exceptions;
 using SchoolEntities;
 using Utility;
 using System.Linq;
+using System.Web.UI.HtmlControls;
 
 public partial class ResultDetailsUI : SchoolBase
 {
@@ -50,6 +51,7 @@ public partial class ResultDetailsUI : SchoolBase
                 FillPunctuationList();
                 FillResultList();
                 FillResultDetails();
+                HideConductColumnForVpSchool();
             }
         }
         catch (Exception ex)
@@ -168,18 +170,43 @@ public partial class ResultDetailsUI : SchoolBase
 
                     ddlResult.SelectedValue = oResultDetails.ResultId.ToString();
                 }
+
+                HtmlTableCell tdConduct = e.Item.FindControl("tdConduct") as HtmlTableCell;
+                if (tdConduct != null)
+                {
+                    if (miSchoolId == Constants.SchoolId.VPMCPS.ToInt())
+                        tdConduct.Visible = false;
+                    else
+                        tdConduct.Visible = true;
+                }
+               
             }
+
         }
         catch (Exception ex)
         {
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
         }
     }
-
+    /// <summary>
+    /// these event is used to hide column
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void lstvwResultDetails_DataBound(object sender, EventArgs e)
+    {
+        try
+        {
+            HideConductColumnForVpSchool();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
     #endregion
 
     #region methods
-
     /// <summary>
     /// This method is used to fill result details listview.
     /// </summary>
@@ -379,6 +406,22 @@ public partial class ResultDetailsUI : SchoolBase
             DataTable oDataTable = oMasterDataCollectionBL.GetClassTeachers(miSchoolId, miAcademicYearId);
             DataRow[] oDataRow = oDataTable.Select("Teacher_Id=" + Convert.ToString(Session[Constants.S_SESSION_TEACHER_ID]));
             ViewState[S_TEACHER_DATA] = oDataRow.CopyToDataTable();
+        }
+    }
+
+    /// <summary>
+    /// this method is used to hide conduct column for vp school
+    /// </summary>
+    private void HideConductColumnForVpSchool()
+    {
+        HtmlTableRow trHeader = lstvwResultDetails.FindControl("trHeader") as HtmlTableRow;
+        if (trHeader != null)
+        {
+            HtmlTableCell thConduct = trHeader.FindControl("thConduct") as HtmlTableCell;
+            if (thConduct != null)
+            {
+                thConduct.Visible = (miSchoolId != Constants.SchoolId.VPMCPS.ToInt());
+            }
         }
     }
 
