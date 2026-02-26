@@ -328,7 +328,9 @@ namespace DataCommunicator
                         new ObservationRemarks
                         {
                             Id = Convert.ToInt32(aoSqlDataReader["SkillId"]),
-                            Remarks = Convert.ToString(aoSqlDataReader["Remarks"]),
+                            Remarks = Convert.ToString(aoSqlDataReader["Remarks"])//,
+                            //ParameterId = Convert.ToInt32(aoSqlDataReader["ParameterId"]),
+                            //GradeId = Convert.ToInt32(aoSqlDataReader["GradeId"]),
                         }
                     );
             }

@@ -36,7 +36,12 @@
         <table id="tblNote" runat="server" style="margin:auto; width:50%;margin-top:25px;" class="LblNoRecord" visible="false">
             <tr>
                 <td align="center">
-                    <span>Observation parameters have not yet been submitted.</span>
+                    <span id="spnNote" runat="server">Observation parameters have not yet been submitted.</span>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <asp:Button ID="btnNoteBack" runat="server" Text="Back" CssClass="ClsBtn" CausesValidation="false" />
                 </td>
             </tr>
         </table>

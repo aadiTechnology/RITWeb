@@ -165,6 +165,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     {
         string sQueryString = CommonUtility.EncryptQuerystring("TeacherId=" + hidTeacherId.Value + "&TestId=" + hidTestId.Value + "&IsClassTeacher=" + hidIsClassTeacher.Value + "&FilteredStdDivId=" + hidFilterStdDivId.Value);
         btnBack.PostBackUrl = "~/RITeSchool/Teacher/AssignGradesUI.aspx?" + sQueryString;
+        btnNoteBack.PostBackUrl = "~/RITeSchool/Teacher/AssignGradesUI.aspx?" + sQueryString;
     }
 
     /// <summary>
@@ -184,27 +185,36 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     {
         mlstStudents = moObservationDetailsBL.GetObservationDetails(hidTestId.Value.ToInt(), hidStdDivId.Value.ToInt(), hidSubjectId.Value.ToInt());
 
-        if (moObservationDetailsBL.Parameters.Count == 0)
+        if (mlstStudents.Count > 0)
         {
-            tblNote.Visible = true;
-            tblData.Visible = false;
+            if (moObservationDetailsBL.Parameters.Count == 0)
+            {
+                tblNote.Visible = true;
+                tblData.Visible = false;
+            }
+            else
+            {
+                tblNote.Visible = false;
+                tblData.Visible = true;
+                tblParameters.Rows.Clear();
+                SetLegends();
+                FillSkills();
+                FillHeaders();
+                FillHeaderControls();
+                FillStudents();
+                SetButtonState();
+
+                ViewState[S_PARAMETERS] = moObservationDetailsBL.Parameters;
+
+                var jsSerializer = new JavaScriptSerializer();
+                hidRemarks.Value = jsSerializer.Serialize(moObservationDetailsBL.Remarks);
+            }
         }
         else
         {
-            tblNote.Visible = false;
-            tblData.Visible = true;
-            tblParameters.Rows.Clear();
-            SetLegends();
-            FillSkills();
-            FillHeaders();
-            FillHeaderControls();
-            FillStudents();
-            SetButtonState();
-
-            ViewState[S_PARAMETERS] = moObservationDetailsBL.Parameters;
-
-            var jsSerializer = new JavaScriptSerializer();
-            hidRemarks.Value = jsSerializer.Serialize(moObservationDetailsBL.Remarks);
+            spnNote.InnerText = "This Optional Subject is not marked for any student.";
+            tblNote.Visible = true;
+            tblData.Visible = false;
         }
     }
 

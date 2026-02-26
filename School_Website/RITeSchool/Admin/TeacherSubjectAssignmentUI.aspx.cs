@@ -247,6 +247,10 @@ public partial class TeacherSubjectAssignmentUI : SchoolBase
         int iTeacherAssignmentCount = 0;        
         CreateGridHeader();
 
+        var oCombinationSet = new HashSet<string>(
+            moDSAllStdandardDivisions.Tables[I_TEACHER].AsEnumerable().Select(r => r.Field<int>("SchoolWise_Standard_Division_Id") + "|" + r.Field<int>("Subject_Id"))
+        );
+        
         //this loop is used for generating new table cells for respective subjects and standard-division.
         for (int iRowIndex = 0; iRowIndex < grdStandardDivision.Rows.Count; iRowIndex++)
         {
@@ -267,8 +271,9 @@ public partial class TeacherSubjectAssignmentUI : SchoolBase
                 DataRow[] oArrDivSubjects = moDSAllStdandardDivisions.Tables[I_STANDARD_DIVISION_SUBJECT_ASSOCIATION].Select("Standard_Division_Id =" + iStandardDivisionId + " AND subject_id = " + iSubjectId);
                 if (oArrDivSubjects.Length > 0)
                 {  
-                    DataRow[] oArrTeacherSubjects = moDSAllStdandardDivisions.Tables[I_TEACHER].Select("SchoolWise_Standard_Division_Id =" + iStandardDivisionId + " AND subject_id = " + iSubjectId);
-                    if (oArrTeacherSubjects.Length > 0)
+                    //DataRow[] oArrTeacherSubjects = moDSAllStdandardDivisions.Tables[I_TEACHER].Select("SchoolWise_Standard_Division_Id =" + iStandardDivisionId + " AND subject_id = " + iSubjectId);
+                    string sKey = iStandardDivisionId + "|" + iSubjectId;                    
+                    if (oCombinationSet.Contains(sKey))
                     {
                         DataRow[] oArrSubjectTeachers = moDSAllStdandardDivisions.Tables[I_TEACHER_STANDARD_DIVISION_SUBJECT_ASSOCIATION].Select("Standard_Division_Id =" + iStandardDivisionId + " AND subject_id = " + iSubjectId);                     
                         if (oArrSubjectTeachers.Length > 0)
