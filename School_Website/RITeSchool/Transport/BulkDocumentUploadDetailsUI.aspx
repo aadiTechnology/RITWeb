@@ -72,7 +72,7 @@
         <tr align="center" style="text-align: center; margin: 0px auto;">
             <td align="center" style="text-align: center;">
                 <table align="center">
-                    <tr>
+                  <tr>
                         <td class="ClsBorderLight" align="left">
                             <asp:Label ID="lblDocuments" runat="server" Text="Document: " CssClass="ClsLabel"></asp:Label>
                         </td>
@@ -106,8 +106,28 @@
                     <tr align="center">
                         <td align="center">
                             <table width="98%">
+                             <tr>
+                               <td align="left">
+                                        <table id="LegendTable" runat="server">
+                                            <tr>
+                                                <td align="left" width="55px" valign="middle">
+                                                    <span class="ClsLblLgnd">Legend : </span>
+                                                </td>
+                                                <td align="left">
+                                                    <asp:Label ID="TextBox1" runat="server" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" style="padding-right: 5px;padding-left:5px;"
+                                                        TabIndex="3" ForeColor="Navy" Font-Bold="true" ReadOnly="True" Text="EXPIRING SOON"></asp:Label>
+                                                </td>  
+                                                <td align="left">
+                                                    <asp:Label ID="Label2" runat="server" BorderColor="Black" BorderStyle="Solid" BorderWidth="1px" style="padding-right: 5px;padding-left:5px;"
+                                                        TabIndex="3" ForeColor="Red" Font-Bold="true" ReadOnly="True" Text="EXPIRED"></asp:Label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                              </tr>
                                 <tr id="Tr2" runat="server">
                                     <td align="center">
+                            
                                         <asp:ListView ID="lstvwBulkDocumentDetails" runat="server" ViewStateMode="Enabled"
                                             DataKeyNames="Id, VehicleId, FileName" OnItemDataBound="lstvwBulkDocumentDetails_ItemDataBound"
                                             OnDataBound="lstvwBulkDocumentDetails_DataBound" OnItemCommand="lstvwBulkDocumentDetails_ItemCommand">

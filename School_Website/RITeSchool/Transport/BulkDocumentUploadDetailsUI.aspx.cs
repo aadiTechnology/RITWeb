@@ -24,6 +24,7 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
     private const string S_SAVE_MSG = "Document Details saved successfully !!!";
     private const string S_COMMAND_DELETE = "DeleteDocumentDetails";
     private const string S_DOCUMENT_FOLDER_LOCATION = "\\DOWNLOADS\\TransportModule\\VehicleDocuments\\";
+    private const int EXPIRY_WARNING_DAYS = 30;
     
     #endregion
 
@@ -46,9 +47,9 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
        {
            moBulkDocumentDetailsBL = new BulkDocumentDetailsBL(miSchoolId, miAcademicYearId, miUserId);
            if (!IsPostBack)
-           {
+           {   
                SetDefaultValues();
-               FillDocuments();                                                                                                                                                                                                                                                                                              
+               FillDocuments();               
            }
        }
        catch (Exception ex)
@@ -73,7 +74,7 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
 
                 HiddenField hidDocFile = (HiddenField)oCurrentItem.FindControl("hidDocFile");
                 ImageButton imgbtnView = (ImageButton)e.Item.FindControl("imgbtnView");
-                ImageButton imgbtnDelete = (ImageButton)e.Item.FindControl("imgbtnDelete");                
+                ImageButton imgbtnDelete = (ImageButton)e.Item.FindControl("imgbtnDelete");
                 TextBox txtTitle = e.Item.FindControl("txtTitle") as TextBox;
                 TextBox txtStartDate = e.Item.FindControl("txtStartDate") as TextBox;
                 TextBox txtEndDate = e.Item.FindControl("txtEndDate") as TextBox;
@@ -81,6 +82,7 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
                 string sFilePath = lstvwBulkDocumentDetails.DataKeys[oCurrentItem.DisplayIndex]["FileName"].ToString();
                 DropDownList cmbAction = e.Item.FindControl("cmbAction") as DropDownList;
                 Label lblRowNo = e.Item.FindControl("lblRowNo") as Label;
+                Label lblVehicleNumber = e.Item.FindControl("lblVehicleNumber") as Label;
 
                 lblRowNo.Text = (e.Item.DisplayIndex + 1).ToString();
 
@@ -150,9 +152,22 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
                     else
                         tdEndDate.Visible = true;
                 }
+                if (oBulkDocumentDetails.EndDate != DateTime.MinValue && lblVehicleNumber != null)
+                {
+                    if (oBulkDocumentDetails.EndDate.Date < DateTime.Today.Date)
+                    {
+                        lblVehicleNumber.Style["color"] = "red";
+                        lblVehicleNumber.Style["font-weight"] = "bold";
+                    }
+                    else if (oBulkDocumentDetails.EndDate.Date >= DateTime.Today.Date && oBulkDocumentDetails.EndDate.Date <= DateTime.Today.AddDays(EXPIRY_WARNING_DAYS).Date)
+                    {
+                        lblVehicleNumber.Style["color"] = "navy";
+                        lblVehicleNumber.Style["font-weight"] = "bold";
+                    }
+                }
             }
         }
-        catch (Exception ex)    
+        catch (Exception ex)
         {
             ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
         }
@@ -423,6 +438,15 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
         List<GetBulkDocumentDetails> lstBulkDocumentDetails = moBulkDocumentDetailsBL.GetDocumentsDetails(ddlDocuments.SelectedValue.ToInt(), txtSearch.Text.Trim(), chkShowAll.Checked);
         lstvwBulkDocumentDetails.DataSource = lstBulkDocumentDetails;
         lstvwBulkDocumentDetails.DataBind();
+        
+		if (lstBulkDocumentDetails != null && lstBulkDocumentDetails.Count > 0)
+        {
+            LegendTable.Visible = true;
+        }
+        else
+        {
+            LegendTable.Visible = false;
+        }
 
         if (ddlDocuments.SelectedValue == DocumentType.Invoice.ToInt().ToString() || ddlDocuments.SelectedValue == DocumentType.RCBook.ToInt().ToString())
             custValEndDate.Enabled = false;
@@ -496,6 +520,7 @@ public partial class BulkDocumentUploadDetailsUI : SchoolBase
         valSumFilter.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
         btnSave.Attributes.Add("onclick", "ResetMessage();");
         base.SetDefaultButton(null);
+        LegendTable.Visible = false;
     }
 
     protected void DocumentDate_Validate(object obj, ServerValidateEventArgs e)
