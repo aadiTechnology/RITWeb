@@ -49,7 +49,7 @@ namespace SchoolEntities
     {
         public int Id { get; set; }
         public string Remarks { get; set; }
-        //public int ParameterId { get; set; }
-        //public int GradeId { get; set; }
+        public int ParameterId { get; set; }
+        public int GradeId { get; set; }
     }
 }

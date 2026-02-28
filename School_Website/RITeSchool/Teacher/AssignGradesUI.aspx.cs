@@ -97,18 +97,28 @@ public partial class AssignGradesUI : SchoolBase
             {
                 int iStdDivId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Standard_Division_Id"].ToInt();
                 int iSubjectId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Subject_Id"].ToInt();
-                string sQuerystring = "StandardDivisionId=" + iStdDivId + "&SubjectId=" + iSubjectId + "&TestId=" + cmbExams.SelectedValue + "&TeacherId=" + cmbTeachers.SelectedValue + "&IsClassTeacher=" + hidIsClassTeacher.Value + "&FilteredStdDivId=" + cmbClass.SelectedValue;
+                string sQuerystring = "StandardDivisionId=" + iStdDivId + "&SubjectId=" + iSubjectId + "&TestId=" + cmbExams.SelectedValue + "&TeacherId=" + cmbTeachers.SelectedValue + "&IsClassTeacher=" + hidIsClassTeacher.Value + "&FilteredStdDivId=" + cmbClass.SelectedValue + "&IsSummaryMode=N";
                 sQuerystring = CommonUtility.EncryptQuerystring(sQuerystring);
                 Response.Redirect("ObservationGradeAssignmentUI.aspx?" + sQuerystring, false);
             }
-
             else 
             {
-                int iStdDivId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Standard_Division_Id"].ToInt();
-                int iSubjectId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Subject_Id"].ToInt();
-                string sQuerystring = "StandardDivisionId=" + iStdDivId + "&SubjectId=" + iSubjectId + "&TestId=" + cmbExams.SelectedValue + "&TeacherId=" + cmbTeachers.SelectedValue + "&IsClassTeacher=" + hidIsClassTeacher.Value + "&FilteredStdDivId=" + cmbClass.SelectedValue;
-                sQuerystring = CommonUtility.EncryptQuerystring(sQuerystring);
-                Response.Redirect("AssignSummaryGradesUI.aspx?" + sQuerystring, false);
+                if (moSchool == Constants.SchoolId.PPSH)
+                {
+                    int iStdDivId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Standard_Division_Id"].ToInt();
+                    int iSubjectId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Subject_Id"].ToInt();
+                    string sQuerystring = "StandardDivisionId=" + iStdDivId + "&SubjectId=" + iSubjectId + "&TestId=" + cmbExams.SelectedValue + "&TeacherId=" + cmbTeachers.SelectedValue + "&IsClassTeacher=" + hidIsClassTeacher.Value + "&FilteredStdDivId=" + cmbClass.SelectedValue;
+                    sQuerystring = CommonUtility.EncryptQuerystring(sQuerystring);
+                    Response.Redirect("AssignSummaryGradesUI.aspx?" + sQuerystring, false);
+                }
+                else if (moSchool == Constants.SchoolId.SNS)
+                {
+                    int iStdDivId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Standard_Division_Id"].ToInt();
+                    int iSubjectId = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["Subject_Id"].ToInt();
+                    string sQuerystring = "StandardDivisionId=" + iStdDivId + "&SubjectId=" + iSubjectId + "&TestId=" + cmbExams.SelectedValue + "&TeacherId=" + cmbTeachers.SelectedValue + "&IsClassTeacher=" + hidIsClassTeacher.Value + "&FilteredStdDivId=" + cmbClass.SelectedValue+"&IsSummaryMode=Y";
+                    sQuerystring = CommonUtility.EncryptQuerystring(sQuerystring);
+                    Response.Redirect("ObservationGradeAssignmentUI.aspx?" + sQuerystring, false);
+                }
             }
         }
         catch (Exception ex)
@@ -180,7 +190,11 @@ public partial class AssignGradesUI : SchoolBase
 
                 bool bIsSubmited = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["IsSubmitted"].ToBool();
                 bool bIsSubjectTeacher = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["IsSubjectTeacher"].ToBool();
+                bool bIsCoCurricularSubject = lstvwSubjects.DataKeys[e.Item.DisplayIndex]["IsCoCurricularSubject"].ToBool();
+
                 ImageButton btnSelect = e.Item.FindControl("btnSelect") as ImageButton;
+                ImageButton btnAddSummary = e.Item.FindControl("btnAddSummary") as ImageButton;
+
                 Label lblDash = e.Item.FindControl("lblDash") as Label;
 
                 if (hidIsClassTeacher.Value == "Y")
@@ -201,6 +215,26 @@ public partial class AssignGradesUI : SchoolBase
                     HtmlTableCell tdSummary = e.Item.FindControl("tdSummary") as HtmlTableCell;
                     if (tdSummary != null)
                         tdSummary.Visible = true;
+                }
+                else if (moSchool == Constants.SchoolId.SNS)
+                {
+                    if (miAcademicYearId >= 11)
+                    {
+                        HtmlTableCell tdSummary = e.Item.FindControl("tdSummary") as HtmlTableCell;
+                        if (tdSummary != null)
+                        {
+                            if (cmbExams.SelectedItem.Text == "Term II")
+                            {
+                                tdSummary.Visible = true;
+                                if (bIsCoCurricularSubject)
+                                    btnAddSummary.Visible = false;
+                                else
+                                    btnAddSummary.Visible = true;
+                            }
+                            else
+                                tdSummary.Visible = false;
+                        }
+                    }
                 }
             }
         }
@@ -409,6 +443,22 @@ public partial class AssignGradesUI : SchoolBase
             if (thGradeAll != null)
                 thGradeAll.Visible = true;
         }
+        else if (moSchool == Constants.SchoolId.SNS)
+        {
+            if (miAcademicYearId >= 11)
+            {
+                HtmlTableCell thGradeAll = lstvwSubjects.FindControl("thSummary") as HtmlTableCell;
+                if (thGradeAll != null)
+                {
+                    if (cmbExams.SelectedItem.Text == "Term II")
+                        thGradeAll.Visible = true;
+                    else
+                        thGradeAll.Visible = false;
+                }
+            }
+        }
+
+        
     } 
 
     #endregion

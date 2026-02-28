@@ -93,9 +93,9 @@ namespace BusinessLogic
         /// <param name="aiStdDivId"></param>
         /// <param name="aiSubjectId"></param>
         /// <returns></returns>
-        public List<StudentBasicDetails> GetObservationDetails(int aiTestId, int aiStdDivId, int aiSubjectId)
+        public List<StudentBasicDetails> GetObservationDetails(int aiTestId, int aiStdDivId, int aiSubjectId, bool abIsSummaryMode)
         {
-            return this.moObservationDetailsDC.GetObservationDetails(aiTestId, aiStdDivId, aiSubjectId);
+            return this.moObservationDetailsDC.GetObservationDetails(aiTestId, aiStdDivId, aiSubjectId, abIsSummaryMode);
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace BusinessLogic
         /// <param name="aiSubjectId"></param>
         /// <param name="aiStdDivId"></param>
         /// <param name="asObservationXml"></param>
-        public void Save(int aiTestId, int aiSubjectId, int aiStdDivId, string asObservationXml)
+        public void Save(int aiTestId, int aiSubjectId, int aiStdDivId, string asObservationXml, bool abIsSummaryMode)
         {
-            moObservationDetailsDC.Save(aiTestId, aiSubjectId, aiStdDivId, asObservationXml);
+            moObservationDetailsDC.Save(aiTestId, aiSubjectId, aiStdDivId, asObservationXml, abIsSummaryMode);
         }
 
         /// <summary>
@@ -116,9 +116,9 @@ namespace BusinessLogic
         /// <param name="aiTestId"></param>
         /// <param name="aiSubjectId"></param>
         /// <param name="aiStdDivId"></param>
-        public void Submit(int aiTestId, int aiSubjectId, int aiStdDivId, int aiIsSubmitted)
+        public void Submit(int aiTestId, int aiSubjectId, int aiStdDivId, int aiIsSubmitted, bool abIsSummaryMode)
         {
-            moObservationDetailsDC.Submit(aiTestId, aiSubjectId, aiStdDivId, aiIsSubmitted);
+            moObservationDetailsDC.Submit(aiTestId, aiSubjectId, aiStdDivId, aiIsSubmitted, abIsSummaryMode);
         } 
 
         #endregion

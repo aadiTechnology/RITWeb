@@ -2,6 +2,7 @@ using System.Data;
 using DataCommunicator;
 using SchoolEntities;
 using System.Collections.Generic;
+using SchoolEntities.Admin;
 
 namespace BusinessLogic
 {
@@ -127,7 +128,12 @@ namespace BusinessLogic
             get { return moConfigureMenuStruct.mApplyAllSubMenu; }
             set { moConfigureMenuStruct.mApplyAllSubMenu = value; }
         }
-       
+
+        public string AssoiciatedStandards
+        {
+            get { return moConfigureMenuStruct.mAssociatedStandards; }
+            set { moConfigureMenuStruct.mAssociatedStandards = value; }
+        }
         
         #endregion -- PROPERTIES --
         
@@ -158,12 +164,12 @@ namespace BusinessLogic
         {
             return moConfigureMenuDC.GetUserRolesForSelectedMenuId(aiMenuId);
         }
-        
-        public int InsertConfigureMenu(string sEndDate)
+
+        public int InsertConfigureMenu(string sEndDate, int aiAcademicYearId)
         {
 
             moConfigureMenuDC.ConfigureMenuStructDetails = moConfigureMenuStruct;
-            return moConfigureMenuDC.InsertConfigureMenu(sEndDate);
+            return moConfigureMenuDC.InsertConfigureMenu(sEndDate, aiAcademicYearId);
         }
 
         public string GetInsetStatementForDefaultConfigureMenu()
@@ -172,10 +178,10 @@ namespace BusinessLogic
             return moConfigureMenuDC.GetInsetStatementForDefaultConfigureMenu();
         }
 
-        public void UpdateConfigureMenu(bool abIncludeParent, string asUpdateEndDate)
+        public void UpdateConfigureMenu(bool abIncludeParent, string asUpdateEndDate, int aiAcademicYearId)
         {
             moConfigureMenuDC.ConfigureMenuStructDetails = moConfigureMenuStruct;
-            moConfigureMenuDC.UpdateConfigureMenu(abIncludeParent, asUpdateEndDate);
+            moConfigureMenuDC.UpdateConfigureMenu(abIncludeParent, asUpdateEndDate, aiAcademicYearId);
         }
 
         public void UpdateChildNodes(string asUpdateEndDate)
@@ -247,8 +253,20 @@ namespace BusinessLogic
 		}
         
 		#endregion -- PUBLIC METHOD(s) --
-    
-	}
+        /// <summary>
+        /// this method is used to get associated standard and divisions.
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiMenuId"></param>
+        /// <returns></returns>
+
+        public List<ConfigMenuAssociatedClasses> GetConfigMenuAssociatedClasses(int aiSchoolId, int aiAcademicYearId,int aiMenuId)
+        {
+            return moConfigureMenuDC.GetConfigMenuAssociatedClasses(aiSchoolId, aiAcademicYearId, aiMenuId);
+
+        }
+    }
 
     public class ConfigureCollectionMenuBL
     {

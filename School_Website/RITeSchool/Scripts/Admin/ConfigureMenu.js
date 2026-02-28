@@ -31,6 +31,8 @@ function CheckAllUncheckAlls() {
         iRowCount = iRowCount + 1;
         chk = document.getElementById(_clientchkListRoles + "_" + iRowCount);
     }
+
+    ShowAssociatedClassUpdate();
 }
 
 function CheckAllUncheckAllsForAdd() {
@@ -45,6 +47,8 @@ function CheckAllUncheckAllsForAdd() {
         iRowCount = iRowCount + 1;
         chk = document.getElementById(_clientchkAddListRoles + "_" + iRowCount);
     }
+    
+   ShowAssociatedClassAdd();
 }
 
 function ShowPreview() {

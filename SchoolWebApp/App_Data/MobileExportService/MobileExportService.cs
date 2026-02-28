@@ -88,16 +88,26 @@ namespace MobileExportService.Service
             return sFileName;
         }
 
-        public string GetReportFileName(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs)        
+        public string GetReportFileNameInFormat(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs, int aiExportFormatType)
         {
             if (aoParameterPairs.Count > 0)
-            {                
+            {
                 string sRecordSelectionFormula = GetRecordSelectionFormula(aiSchoolId, aiAcademicYearId, aiLoginUserId, aiReportId, aoExportReports, aoParameterPairs);
 
-                string sFileName = @"\RITeSchool\OtherDownloads\AllDownloads\" + aoExportReports.ToString() + "_" + GetDateFormat() + ".pdf";
+                 ExportFormatType oExportFormatType = ExportFormatType.PortableDocFormat;
+                if (aiExportFormatType != 0)
+                    oExportFormatType = (ExportFormatType)aiExportFormatType;
+
+                string sExtension = ".pdf";
+                if (oExportFormatType == ExportFormatType.RichText)
+                    sExtension = ".doc";
+                else if (oExportFormatType == ExportFormatType.Excel)
+                    sExtension = ".xls";
+
+                string sFileName = @"\RITeSchool\OtherDownloads\AllDownloads\" + aoExportReports.ToString() + "_" + GetDateFormat() + sExtension;
                 string sDownloadPath = HostingEnvironment.ApplicationPhysicalPath + sFileName;
 
-                ReportDisplay oReportDisplay = new ReportDisplay(aoExportReports, sRecordSelectionFormula, ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                ReportDisplay oReportDisplay = new ReportDisplay(aoExportReports, sRecordSelectionFormula, oExportFormatType, sDownloadPath, false);
                 oReportDisplay.IsServiceCall = true;
                 oReportDisplay.BasePath = HostingEnvironment.ApplicationPhysicalPath;
                 oReportDisplay.SchoolId = aiSchoolId;
@@ -109,6 +119,34 @@ namespace MobileExportService.Service
             }
             else
                 return "0:Parameter list is blank.";
+        }
+
+        public string GetReportFileName(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs)        
+        {
+            if (aoParameterPairs.Count > 0)
+            {                
+                string sRecordSelectionFormula = GetRecordSelectionFormula(aiSchoolId, aiAcademicYearId, aiLoginUserId, aiReportId, aoExportReports, aoParameterPairs);
+                ExportFormatType oExportFormatType = GetFileType(aoExportReports,aiSchoolId,aiReportId); 
+
+                string sFileName = @"\RITeSchool\OtherDownloads\AllDownloads\" + aoExportReports.ToString() + "_" + GetDateFormat() + ".pdf";
+                string sDownloadPath = HostingEnvironment.ApplicationPhysicalPath + sFileName;
+                ReportDisplay oReportDisplay = new ReportDisplay(aoExportReports, sRecordSelectionFormula, oExportFormatType, sDownloadPath, false);
+                oReportDisplay.IsServiceCall = true;
+                oReportDisplay.BasePath = HostingEnvironment.ApplicationPhysicalPath;
+                oReportDisplay.SchoolId = aiSchoolId;
+                oReportDisplay.AcademicYearId = aiAcademicYearId;
+                oReportDisplay.SchoolName = string.Empty;
+                oReportDisplay.DisplayReport();
+
+                return "1:" + sFileName;
+            }
+            else
+                return "0:Parameter list is blank.";
+        }
+
+        private ExportFormatType GetFileType(Constants.ExportReports aoExportReports, int aiSchoolId, int aiReportId)
+        {           
+            return ExportFormatType.PortableDocFormat;
         }
 
         private string GetRecordSelectionFormula(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs)
@@ -154,6 +192,24 @@ namespace MobileExportService.Service
                 else
                     sRecordSelectionFormula = "(usp_GetAdmmissionFormReport.SchoolId}=" + aiSchoolId + " AND usp_GetAdmmissionFormReport.StudentAdmissionId}=" + aoDictParameters["StudentAdmissionId"] + " AND usp_GetAdmmissionFormReport.AdmissionForCurrentYear}=" + aoDictParameters["AdmissionForCurrentYear"] + ") @";
             }
+            else if (aoExportReports == Constants.ExportReports.ConsolidatedStudentAdmissionList)
+            {
+                sRecordSelectionFormula = "(usp_GetConsolidatedStudentAdmissionList.School_Id}=" + aiSchoolId + " AND  usp_GetConsolidatedStudentAdmissionList.Academic_Year_Id} =" + aiAcademicYearId +
+             " AND usp_GetConsolidatedStudentAdmissionList.StandardId}=" + aoDictParameters["StandardId"] +
+              " AND  usp_GetAllStudentOfAdmissionsLottery.SchoolName} =" + aoDictParameters["SchoolName"] +
+              " AND  usp_GetAllStudentOfAdmissionsLottery.AcademicYear} =" + aoDictParameters["AcademicYear"] +
+              " AND  usp_GetAllStudentOfAdmissionsLottery.OrganisationName} =" + aoDictParameters["OrganisationName"] + ")" + "@";
+            }
+            else if (aoExportReports == Constants.ExportReports.AdmissionLotteryDetails)
+            {
+                sRecordSelectionFormula = "(usp_GetAllStudentOfAdmissionsLottery.School_Id}=" + aiSchoolId + " AND  usp_GetAllStudentOfAdmissionsLottery.Academic_Year_Id} =" + aiAcademicYearId +
+      " AND usp_GetAllStudentOfAdmissionsLottery.Standard_Id}=" + aoDictParameters["Standard_Id"] + " AND  usp_GetAllStudentOfAdmissionsLottery.cSelectedInLottery} =" + aoDictParameters["cSelectedInLottery"]
+       + " AND  usp_GetAllStudentOfAdmissionsLottery.IsConfirmed} =" + aoDictParameters["IsConfirmed"] +
+       " AND  usp_GetAllStudentOfAdmissionsLottery.SchoolName} =" + aoDictParameters["SchoolName"] +
+       " AND  usp_GetAllStudentOfAdmissionsLottery.AcademicYear} =" + aoDictParameters["AcademicYear"] +
+       " AND  usp_GetAllStudentOfAdmissionsLottery.OrganisationName} =" + aoDictParameters["OrganisationName"] +
+       " AND  usp_GetAllStudentOfAdmissionsLottery.ListName} =" + aoDictParameters["ListName"] + ")" + "@";
+            }
             else if (aoExportReports == Constants.ExportReports.LeavingCerificatePPSN
                 || aoExportReports == Constants.ExportReports.LeavingCertificateSS
                 || aoExportReports == Constants.ExportReports.LeavingCertificatePP
@@ -175,7 +231,7 @@ namespace MobileExportService.Service
 
 
                 if (aiSchoolId == Constants.SchoolId.LFS.ToInt())
-                    sRecordSelectionFormula = "(usp_LeavingCertificateForLFS.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificateForLFS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"]+ " AND  usp_LeavingCertificateForLFS.Academic_Year_Id} =" + aiAcademicYearId + " AND  usp_LeavingCertificate.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
+                    sRecordSelectionFormula = "(usp_LeavingCertificateForLFS.School_Id}=" + aiSchoolId + " AND  usp_LeavingCertificateForLFS.Enrolment_Number} =" + aoDictParameters["Enrolment_Number"] + " AND  usp_LeavingCertificateForLFS.Academic_Year_Id} =" + aiAcademicYearId + " AND  usp_LeavingCertificate.PrintDate} = " + aoDictParameters["PrintDate"] + ") @";
                 else if (aiSchoolId == Constants.SchoolId.SSN.ToInt())
                 {
                   
@@ -211,7 +267,7 @@ namespace MobileExportService.Service
                 }
                 else if (aiSchoolId == Constants.SchoolId.ZLSP.ToInt())
                 {
-                    sRecordSelectionFormula = "(usp_LeavingCertificateDYP.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateDYP.Enrolment_Number =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateDYP;.PrintDate = " + aoDictParameters["PrintDate"]     + ") @";
+                    sRecordSelectionFormula = "(usp_LeavingCertificateDYP.School_Id}=)" + aiSchoolId + "AND usp_LeavingCertificateDYP.Enrolment_Number =" + aoDictParameters["Enrolment_Number"] + "AND usp_LeavingCertificateDYP;.PrintDate = " + aoDictParameters["PrintDate"] + ") @";
                 }
                 else if (SchoolBase.Settings.IsAaryanSchool)
                 {

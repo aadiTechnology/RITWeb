@@ -110,7 +110,7 @@ namespace DataCommunicator
         /// <param name="aiStdDivId"></param>
         /// <param name="aiSubjectId"></param>
         /// <returns></returns>
-        public List<StudentBasicDetails> GetObservationDetails(int aiTestId, int aiStdDivId, int aiSubjectId)
+        public List<StudentBasicDetails> GetObservationDetails(int aiTestId, int aiStdDivId, int aiSubjectId, bool abIsSummaryMode)
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
@@ -119,6 +119,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("TestId", aiTestId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("StdDivId", aiStdDivId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("SubjectId", aiSubjectId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IsSummaryMode", abIsSummaryMode, SqlDbType.Bit);
                 using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetObservationDetails"))
                 {
 
@@ -157,7 +158,7 @@ namespace DataCommunicator
         /// <param name="aiSubjectId"></param>
         /// <param name="aiStdDivId"></param>
         /// <param name="asObservationXml"></param>
-        public void Save(int aiTestId, int aiSubjectId, int aiStdDivId, string asObservationXml)
+        public void Save(int aiTestId, int aiSubjectId, int aiStdDivId, string asObservationXml, bool abIsSummaryMode)
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
@@ -168,6 +169,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("SubjectId", aiSubjectId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("StdDivId", aiStdDivId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("ObservationXml", asObservationXml, SqlDbType.Xml);
+                oSQLServerDbUtility.AddParameter("IsSummaryMode", abIsSummaryMode, SqlDbType.Bit);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SaveObservationDetails");
             }
         }
@@ -178,7 +180,7 @@ namespace DataCommunicator
         /// <param name="aiTestId"></param>
         /// <param name="aiSubjectId"></param>
         /// <param name="aiStdDivId"></param>
-        public void Submit(int aiTestId, int aiSubjectId, int aiStdDivId, int aiIsSubmitted)
+        public void Submit(int aiTestId, int aiSubjectId, int aiStdDivId, int aiIsSubmitted, bool abIsSummaryMode)
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
@@ -189,6 +191,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("SubjectId", aiSubjectId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("StdDivId", aiStdDivId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("IsSubmitted", aiIsSubmitted, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IsSummaryMode", abIsSummaryMode, SqlDbType.Bit);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SubmitObservationDetails");
             }
         } 
@@ -328,9 +331,9 @@ namespace DataCommunicator
                         new ObservationRemarks
                         {
                             Id = Convert.ToInt32(aoSqlDataReader["SkillId"]),
-                            Remarks = Convert.ToString(aoSqlDataReader["Remarks"])//,
-                            //ParameterId = Convert.ToInt32(aoSqlDataReader["ParameterId"]),
-                            //GradeId = Convert.ToInt32(aoSqlDataReader["GradeId"]),
+                            Remarks = Convert.ToString(aoSqlDataReader["Remarks"]),
+                            ParameterId = Convert.ToInt32(aoSqlDataReader["ParameterId"]),
+                            GradeId = Convert.ToInt32(aoSqlDataReader["GradeId"]),
                         }
                     );
             }

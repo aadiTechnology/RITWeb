@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ConfigureMenu.aspx.cs" Inherits="ConfigureMenu"
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ConfigureMenu.aspx.cs" Inherits="ConfigureMenu"
     MasterPageFile="../MasterPages/MasterPage.master" ViewStateMode="Disabled" %>
 
 <%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
@@ -34,7 +34,7 @@
                                 <div id="DivViewMenues" runat="server">
                                     <table width="100%" cellpadding="0" cellspacing="1">
                                         <tr>
-                                            <td align="left" width="10%" rowspan="5" valign="top" class="ClsBorderlight td-vertical-align-top">
+                                            <td align="left" rowspan="5" valign="top" class="ClsBorderlight td-vertical-align-top" style="width: 10%">
                                                 <table cellpadding="0" cellspacing="1">
                                                     <tr id="trInternalMenus" runat="server">
                                                         <td class="ConfigHeadBG">
@@ -194,14 +194,74 @@
                                                                         <span class="ClsMdtStar">*</span>
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
+                                                                 <tr>
                                                                     <td>
                                                                         <asp:CustomValidator ID="cstRoleValidate" runat="server" ClientValidationFunction="CheckBoxListRoles"
                                                                             ErrorMessage="At least one user role should be selected." Display="None" ValidationGroup="valEdit"
                                                                             CssClass="LblErrorMsg"></asp:CustomValidator>
                                                                     </td>
                                                                 </tr>
-                                                            </table>
+                                                                 <tr id="trUpdateAssociatedClasses"  runat="server">
+                                                                   <td align="right" class="ClsBorderlight" valign="middle">
+                                                                     <span class="LblRht colonPadding">:</span>
+                                                                    <asp:Label ID="lblAssociatedClassUpdated" runat="server" Text= "<%$ Resources:LocalizedResources, AssociatedClass%>" CssClass="LblRht" 
+                                                                        EnableViewState="False"></asp:Label><br /> <br />        
+                                                                    <asp:CheckBox ID="chkSelectAll" runat="server" AutoPostBack="false" Text= "<%$ Resources:LocalizedResources, SelectAll%>" onclick="CheckAll1(this);" TabIndex="7" style="padding-right:5px" />                                                              
+                                                                    </td>
+                                                                      <td colspan="2" align="left">
+                                                                        <asp:ListView ID="lstvwUpdateStandardDivision" runat="server" DataKeyNames="StandardId" 
+                                                                            OnItemDataBound="lstvwUpdateStandardDivision_ItemDataBound">
+                                                                            <LayoutTemplate>
+                                                                                <table align="right" width="100%" runat="server" id="tblStaffInfoUpdate" style="color: #333333"
+                                                                                    cellpadding="0" cellspacing="1" class="GridBorder">                                                        
+                                                                                    <tr id="itemPlaceholder" runat="server">
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </LayoutTemplate>
+                                                                            <ItemTemplate>
+                                                                                <tr id="trGridRow" runat="server" class="ClsGridAltRow">
+                                                                                    <td align="left" style="padding-left: 5px">
+                                                                                        <asp:CheckBox ID="chkStandard" runat="server" Text='<%# Eval("StandardName") %>'/>                                                            
+                                                                                    </td>
+                                                                                    <td align="left" style="padding-left: 5px">                                                        
+                                                                                        <asp:CheckBoxList ID="chkStandardDivLst" runat="server" RepeatDirection="Horizontal"
+                                                                                            CssClass="ClsLabel" RepeatColumns="15">
+                                                                                        </asp:CheckBoxList>
+                                                                                    </td>                                
+                                                                                </tr>
+                                                                            </ItemTemplate>
+                                                                            <AlternatingItemTemplate>
+                                                                                <tr id="trGridRow" runat="server" class="ClsGridAltRow" style="height:10px">
+                                                                                    <td align="left" style="padding-left: 5px">
+                                                                                        <asp:CheckBox ID="chkStandard" runat="server" Text='<%# Eval("StandardName") %>' />                                                           
+                                                                                    </td>
+                                                                                    <td align="left" style="padding-left: 5px">                                                            
+                                                                                        <asp:CheckBoxList ID="chkStandardDivLst" runat="server" RepeatDirection="Horizontal"
+                                                                                            CssClass="ClsLabel" RepeatColumns="15">
+                                                                                        </asp:CheckBoxList>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </AlternatingItemTemplate>
+                                                                            <EmptyDataTemplate>
+                                                                                <table width="100%">
+                                                                                    <tr>
+                                                                                        <td class="LblNoRecord" align="center">
+                                                                                          <asp:Label ID="lblNoRecord" runat="server" Text= "<%$ Resources:LocalizedResources, NoRecordsFound%>" 
+                                                                                            EnableViewState="False"></asp:Label>       
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                             </EmptyDataTemplate>
+                                                                        </asp:ListView>
+                                                                    </td>
+                                                                    <td>
+                                                                      <span class="ClsMdtStar" style="color: Red">*
+                                                                      <asp:CustomValidator ID="CustomValidator1" runat="server" ClientValidationFunction="ValidateClassSelectioninEdit"
+                                                                            ErrorMessage="At least one class should be selected." Display="None" ValidationGroup="valEdit"
+                                                                            CssClass="LblErrorMsg"></asp:CustomValidator>
+                                                                    </td>
+                                                               </tr>
+                                                           </table>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -335,15 +395,77 @@
                                                     RepeatColumns="2" RepeatDirection="Horizontal" Width="50%">
                                                 </asp:CheckBoxList>
                                             </td>
-                                            <td width="1%">
+                                             <td width="1%">
                                                 <span class="ClsMdtStar">*</span>
                                             </td>
-                                        </tr>
+                                         </tr>
                                         <tr>
                                             <td>
                                                 <asp:CustomValidator ID="cstRoleValidatetoAdd" runat="server" ClientValidationFunction="CheckBoxListRoles"
                                                     ErrorMessage="At least one user role should be selected." Display="None" ValidationGroup="valAdd"
                                                     CssClass="LblErrorMsg"></asp:CustomValidator>
+                                                 <asp:CustomValidator ID="cstvalStandards" runat="server" Display="None" ClientValidationFunction="ValidateStandards"
+                                                     SetFocusOnError="True" ErrorMessage= "<%$ Resources:LocalizedResources, valClassSelected%>">
+                                                 </asp:CustomValidator>
+                                            </td>
+                                        </tr>
+                                          <tr id="trAssociatedClasses" runat="server">
+                                            <td align="right" class="ClsBorderlight" valign="middle">
+                                                <span class="LblRht colonPadding">:</span>
+                                              <asp:Label ID="Label2" runat="server" Text= "<%$ Resources:LocalizedResources, AssociatedClass%>" CssClass="LblRht" 
+                                                EnableViewState="False"></asp:Label><br /> <br />        
+                                              <asp:CheckBox ID="chkSelectAllAdd" runat="server" Text= "<%$ Resources:LocalizedResources, SelectAll%>" onclick="CheckSelectAllAdd(this);" TabIndex="7" style="padding-right:5px" />                                                              
+                                            </td>
+                                               <td colspan="2" align="left">
+                                                <asp:ListView ID="lstvwStandardDivisions" runat="server" DataKeyNames="StandardId" 
+                                                    OnItemDataBound="lstvwStandardDivisions_ItemDataBound">
+                                                    <LayoutTemplate>
+                                                        <table align="right" width="100%" runat="server" id="tblStaffInfo" style="color: #333333"
+                                                            cellpadding="0" cellspacing="1" class="GridBorder">                                                        
+                                                            <tr id="itemPlaceholder" runat="server">
+                                                            </tr>
+                                                        </table>
+                                                    </LayoutTemplate>
+                                                    <ItemTemplate>
+                                                        <tr id="trGridRow" runat="server" class="ClsGridAltRow">
+                                                            <td align="left" style="padding-left: 5px">
+                                                                <asp:CheckBox ID="chkStandard" runat="server" Text='<%# Eval("StandardName") %>'/>                                                            
+                                                            </td>
+                                                            <td align="left" style="padding-left: 5px">                                                        
+                                                                <asp:CheckBoxList ID="chkStandardDivLst" runat="server" RepeatDirection="Horizontal"
+                                                                    CssClass="ClsLabel" RepeatColumns="15">
+                                                                </asp:CheckBoxList>
+                                                            </td>                                
+                                                        </tr>
+                                                    </ItemTemplate>
+                                                    <AlternatingItemTemplate>
+                                                        <tr id="trGridRow" runat="server" class="ClsGridAltRow" style="height:10px">
+                                                            <td align="left" style="padding-left: 5px">
+                                                                <asp:CheckBox ID="chkStandard" runat="server" Text='<%# Eval("StandardName") %>'   />                                                           
+                                                            </td>
+                                                            <td align="left" style="padding-left: 5px">                                                            
+                                                                <asp:CheckBoxList ID="chkStandardDivLst" runat="server" RepeatDirection="Horizontal"
+                                                                    CssClass="ClsLabel" RepeatColumns="15">
+                                                                </asp:CheckBoxList>
+                                                            </td>
+                                                        </tr>
+                                                    </AlternatingItemTemplate>
+                                                    <EmptyDataTemplate>
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td class="LblNoRecord" align="center">
+                                                                <asp:Label ID="lblNoRecord" runat="server" Text= "<%$ Resources:LocalizedResources, NoRecordsFound%>" 
+                                                                     EnableViewState="False"></asp:Label>       
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                  </EmptyDataTemplate>
+                                                </asp:ListView>
+                                            </td>
+                                            <td>
+                                                <span class="ClsMdtStar" style="color: Red">*
+                                                <asp:CustomValidator ID="CustomValidator2" runat="server" ClientValidationFunction="ValidateClassSelectioninAdd"
+                                                ErrorMessage="At least one class should be selected." Display="None" ValidationGroup="valAdd" CssClass="LblErrorMsg"></asp:CustomValidator>
                                             </td>
                                         </tr>
                                         <tr>
@@ -385,13 +507,18 @@
     <script lang="javascript" type="text/javascript">
         _clienttxtDateUpdate = "<%=this.txtDateUpdate.ClientID %>"
         _clienttxtEndDate = "<%=this.txtEndDate.ClientID %>"
-        _clientchkAll = "<%=this.chkAll.ClientID %>";
+        _clientchkSelectAllAdd = "<%= chkSelectAllAdd.ClientID %>";
         _clientchkListRoles = "<%=this.chkListRoles.ClientID %>";
         _clientchkAddAll = "<%=this.chkAddAll.ClientID %>";
         _clientchkAddListRoles = "<%=this.chkAddListRoles.ClientID %>";
         _clienthidMenuId = "<%=this.hidMenuId.ClientID %>";
         _clientoptTopAdd = "<%=this.optTopAdd.ClientID %>"
         _clientoptTopUpdate = "<%=this.optTopUpdate.ClientID %>"
+        _clientcstvalStandards = "<%=this.cstvalStandards.ClientID %>"
+        _clientlstvwStandardDivisions = "<%=this.lstvwStandardDivisions.ClientID %>"
+        _clientlstvwUpdateStandardDivision = "<%=this.lstvwUpdateStandardDivision.ClientID %>"
+        _clientchkSelectAllUpdate = "<%= chkSelectAll.ClientID %>";
+        _clientchkAll = "<%=this.chkAll.ClientID %>"
 
         function ShowAllCountAdd() {
             if ($get(_clientoptTopAdd).checked) {
@@ -409,7 +536,223 @@
                 $("#trshowtopAll").hide();
             }
         }
-       
-    </script>
-    <script src="../Scripts/Admin/ConfigureMenu.js" type="text/javascript"></script>
+
+        function ShowAssociatedClassAdd() {            
+            var isChecked = $('[id$=_chkAddListRoles_2]').is(':checked');
+            var tr = '<%=trAssociatedClasses.ClientID %>'
+            if (isChecked)
+                $('#' + tr).show();
+            else
+                $('#' + tr).hide();
+        }
+        
+        function ShowAssociatedClassUpdate() {
+            var isChecked = $('[id$=_chkListRoles_2]').is(':checked');
+            var tr = '<%=trUpdateAssociatedClasses.ClientID %>'
+            if (isChecked)
+                $('#' + tr).show();
+            else
+                $('#' + tr).hide();
+        }
+
+        function ValidateClassSelectioninAdd(src, args) {        
+            var isChecked = $('[id$=_chkAddListRoles_2]').is(':checked');
+            if (isChecked) {
+                if ($("[id*=lstvwStandardDivisions] [id*=_chkStandardDivLst_]:checked").length == 0) {
+                    args.IsValid = false;
+                    return true
+                }
+            }
+
+            args.IsValid = true;
+            return false
+        }
+
+        function ValidateClassSelectioninEdit(src, args) {        
+        var isChecked = $('[id$=_chkListRoles_2]').is(':checked');        
+            if (isChecked) {
+                if ($("[id*=lstvwUpdateStandardDivision] [id*=_chkStandardDivLst_]:checked").length == 0) {
+                    args.IsValid = false;
+                    return true
+                }                
+            }
+
+            args.IsValid = true;
+            return false
+        }
+
+//        function ShowHideClasses(val) {        
+//            if (val)
+//                $('#trAssociatedClasses').show();
+//            else
+//                $('#trAssociatedClasses').hide();
+//        }
+
+        function isOptionChecked(value) {
+            var checkboxes = document.querySelectorAll(
+                'input[id*=chkListRoles][type="checkbox"][value="' + value + '"]'
+            );
+
+            return checkboxes.length > 0 && checkboxes[0].checked;
+        }
+
+        function CheckAllAdd(obj, iRowCount) {
+            var chk
+            var iRowCnt = 0
+            chk = document.getElementById(_clientlstvwStandardDivisions + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            while (chk != null) {
+                chk.checked = obj.checked;
+                iRowCnt = iRowCnt + 1
+                chk = document.getElementById(_clientlstvwStandardDivisions + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            }
+            CheckAllDependancy();
+        }
+
+        function CheckAllCheckAdd(obj, iRowCount) {
+            var chk
+            var isChecked = 0, isUnchecked = 0
+            var iRowCnt = 0
+            obj = document.getElementById(_clientlstvwStandardDivisions + "_ctrl" + iRowCount + "_chkStandard");
+            chk = document.getElementById(_clientlstvwStandardDivisions + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            while (chk != null) {
+                if (chk.checked)
+                    isChecked = 1;
+                else
+                    isUnchecked = 1;
+                iRowCnt = iRowCnt + 1
+
+                chk = document.getElementById(_clientlstvwStandardDivisions + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            }
+            if ((isChecked == 1 && isUnchecked == 1) || isUnchecked == 1)
+                obj.checked = false;
+            else if (isChecked == 1)
+                obj.checked = true;
+
+            CheckAllDependancyAdd();
+        }
+
+        function CheckAllDependancyAdd() {
+          //  var CheckAll = document.getElementById(_clientchkAll).value;
+            var v1 = 0;
+
+            var listView = document.getElementById('<%= lstvwStandardDivisions.FindControl("tblStaffInfo").ClientID %>');
+
+            for (var i = 0; i < listView.rows.length; i++) {
+                var inputs = listView.rows[i].getElementsByTagName('input');
+                for (var j = 0; j < inputs.length; j++) {
+                    if (inputs[j].type == "checkbox") {
+                        if (!inputs[j].checked) {
+                            v1 = 1;
+                        }
+                    }
+                }
+            }
+            if (v1 == 1)
+                document.getElementById(_clientchkSelectAllAdd).checked = false;
+            else
+                document.getElementById(_clientchkSelectAllAdd).checked = true;
+        }
+
+        function CheckSelectAllAdd() {
+            var table = document.getElementById('<%= lstvwStandardDivisions.FindControl("tblStaffInfo").ClientID %>');
+            if (!table) return;
+
+            var checkboxes = table.querySelectorAll("input[type='checkbox']");
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = src.checked;
+            }
+        }
+
+      function CheckAll1(src) {
+            var table = document.getElementById('<%= lstvwUpdateStandardDivision.FindControl("tblStaffInfoUpdate").ClientID %>');
+            if (!table) return;
+
+            var checkboxes = table.querySelectorAll("input[type='checkbox']");
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = src.checked;
+            }
+        }
+
+        function CheckAllUpdate(obj, iRowCount) {
+            var chk
+            var iRowCnt = 0
+            chk = document.getElementById(_clientlstvwUpdateStandardDivision + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            while (chk != null) {
+                chk.checked = obj.checked;
+                iRowCnt = iRowCnt + 1
+                chk = document.getElementById(_clientlstvwUpdateStandardDivision + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            }
+            CheckAllDependancyUpdate();
+        }
+
+        function CheckAllCheckUpdate(obj, iRowCount) {
+            var chk
+            var isChecked = 0, isUnchecked = 0
+            var iRowCnt = 0
+            obj = document.getElementById(_clientlstvwUpdateStandardDivision + "_ctrl" + iRowCount + "_chkStandard");
+            chk = document.getElementById(_clientlstvwUpdateStandardDivision + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            while (chk != null) {
+                if (chk.checked)
+                    isChecked = 1;
+                else
+                    isUnchecked = 1;
+                iRowCnt = iRowCnt + 1
+
+                chk = document.getElementById(_clientlstvwUpdateStandardDivision + "_ctrl" + iRowCount + "_chkStandardDivLst_" + iRowCnt);
+            }
+            if ((isChecked == 1 && isUnchecked == 1) || isUnchecked == 1)
+                obj.checked = false;
+            else if (isChecked == 1)
+                obj.checked = true;
+
+            CheckAllDependancyUpdate();
+        }
+
+        function CheckAllDependancyUpdate() {
+         var v1 = 0;
+
+            var listView = document.getElementById('<%= lstvwUpdateStandardDivision.FindControl("tblStaffInfoUpdate").ClientID %>');
+
+            for (var i = 0; i < listView.rows.length; i++) {
+                var inputs = listView.rows[i].getElementsByTagName('input');
+                for (var j = 0; j < inputs.length; j++) {
+                    if (inputs[j].type == "checkbox") {
+                        if (!inputs[j].checked) {
+                            v1 = 1;
+                        }
+                    }
+                }
+            }
+            if (v1 == 1)
+                document.getElementById(_clientchkSelectAllUpdate).checked = false;
+            else
+                document.getElementById(_clientchkSelectAllUpdate).checked = true;
+        }
+
+      function ValidateStandards(aSrc, args) {
+            var j = 0;
+            var checks = document.forms[0].elements;
+            var boxLength = checks.length;
+
+            for (i = 0; i < boxLength; i++) {
+                if (checks[i].type == 'checkbox') {
+                    if (checks[i].checked == true) {
+                        j++;
+                    }
+                }
+            }
+
+            if (j > 0) {
+                args.IsValid = true;
+                return false;
+            }
+            else {
+                args.IsValid = false;
+                return true;
+            }
+        }
+ </script>
+    <script src="../Scripts/Admin/ConfigureMenu.js?version=1.1" type="text/javascript"></script>
 </asp:Content>

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using SchoolEntities;
 using Utility;
+using SchoolEntities.Admin;
 
 namespace DataCommunicator
 {
@@ -30,6 +31,7 @@ namespace DataCommunicator
             public int miSubMenuCount;
             public bool mApplyAllSubMenu;
             public bool mIsApplicable;
+            public string mAssociatedStandards;
            
 		}
 
@@ -154,7 +156,7 @@ namespace DataCommunicator
             }
         }
 
-		public Int32 InsertConfigureMenu(string sEndDate)
+		public Int32 InsertConfigureMenu(string sEndDate, int aiAcademicYearId)
 		{
 			string sInsertStatement;
 			if (sEndDate != Constants.S_EMPTY_STRING)
@@ -233,8 +235,8 @@ namespace DataCommunicator
                     " , N'" + DateTime.Now + "'" +
                      " , N'" + moConfigureMenuStruct.miSubMenuCount + "'" +
                      " , N'" + moConfigureMenuStruct.mApplyAllSubMenu + "'" +
-                       " ) ";
-			}
+                  " ) ";
+           }
 
             using (var oSQLServerDbUtility = new SQLServerDbUtility())
             {
@@ -244,9 +246,18 @@ namespace DataCommunicator
                oSQLServerDbUtility.AddParameter("UpdatedById ", moConfigureMenuStruct.miUpdatedById, SqlDbType.Int);
                oSQLServerDbUtility.AddParameter("UserRoleIds", moConfigureMenuStruct.msUserRoleIds, SqlDbType.NVarChar);
                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_InsertConfigureMenuDetails");
+
+               oSQLServerDbUtility.AddParameter("ConfigureMenuId", iMenuId, SqlDbType.Int);               
+               oSQLServerDbUtility.AddParameter("UpdatedById", moConfigureMenuStruct.miUpdatedById, SqlDbType.Int);               
+               oSQLServerDbUtility.AddParameter("AssociatedStdDivIds", moConfigureMenuStruct.mAssociatedStandards, SqlDbType.NVarChar);
+               oSQLServerDbUtility.AddParameter("SchoolId", moConfigureMenuStruct.miSchoolId, SqlDbType.Int);
+               oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+               oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SaveConfigMenuAssociatedClasses");
+
                return iMenuId;
             }
-
+         
+           
 		}
 
 		public string GetInsetStatementForDefaultConfigureMenu()
@@ -287,7 +298,7 @@ namespace DataCommunicator
 			return sInsertStatement;
 		}
 
-		public void UpdateConfigureMenu(bool abIncludeParent, string sUpdateEndDate)
+		public void UpdateConfigureMenu(bool abIncludeParent, string sUpdateEndDate, int aiAcademicYearId)
 		{
 			string sUpdateStatement;
 			if (sUpdateEndDate != null)
@@ -344,6 +355,15 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("UpdatedById ", moConfigureMenuStruct.miUpdatedById, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("UserRoleIds", moConfigureMenuStruct.msUserRoleIds, SqlDbType.NVarChar);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_InsertConfigureMenuDetails");
+
+                
+                oSQLServerDbUtility.AddParameter("ConfigureMenuId", moConfigureMenuStruct.miConfigureMenuId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("UpdatedById", moConfigureMenuStruct.miUpdatedById, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AssociatedStdDivIds", moConfigureMenuStruct.mAssociatedStandards, SqlDbType.NVarChar);
+                oSQLServerDbUtility.AddParameter("SchoolId", moConfigureMenuStruct.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);                
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SaveConfigMenuAssociatedClasses");
+                
             }
 		}
 
@@ -394,7 +414,15 @@ namespace DataCommunicator
                                        " , UpdateDate  = N'" + DateTime.Now + "'" +
                                        "WHERE" +
                                        " configuremenuid =  " + moConfigureMenuStruct.miConfigureMenuId+
-                                       "AND  IsDeleted=0"; 
+                                        "AND  IsDeleted=0" +
+                                        ";" +
+                                        " UPDATE ConfigMenuAssociatedClasses SET " +
+                                        " IsDeleted = 1, " +
+                                        " UpdatedById = " + moConfigureMenuStruct.miUpdatedById + ", " +
+                                        " UpdatedDate = GETDATE() " +
+                                        " WHERE ConfigMenuId = " + moConfigureMenuStruct.miConfigureMenuId +
+                                        " AND IsDeleted = 0";
+
 			using (var oSQLServerDbUtility = new SQLServerDbUtility())
 				oSQLServerDbUtility.ExecuteTransaction(sUpdateStatement);
 		}
@@ -586,11 +614,48 @@ namespace DataCommunicator
 			return oMenu;
 		}
 
+        /// <summary>
+        /// this method is used to get associated standard and divisions.
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiMenuId"></param>
+        /// <returns></returns>
+        public List<ConfigMenuAssociatedClasses> GetConfigMenuAssociatedClasses(int aiSchoolId, int aiAcademicYearId, int aiMenuId)
+        {
+            List<ConfigMenuAssociatedClasses> lstConfigMenuAssociatedClasses = new List<ConfigMenuAssociatedClasses>();
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("MenuId", aiMenuId, SqlDbType.Int);
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetAllConfigMenuAssociatedClasses"))
+                {
+                    while (oSqlDataReader.Read())
+                    {
+                        ConfigMenuAssociatedClasses oStandardDivisionMaster = new ConfigMenuAssociatedClasses
+                        {
+                            StandardwiseDivisionId = oSqlDataReader["SchoolWise_Standard_Division_Id"].ToInt(),
+                            StandardId = oSqlDataReader["Standard_Id"].ToInt(),
+                            StandardName = oSqlDataReader["Standard_Name"].ToString(),
+                            DivisionId = oSqlDataReader["Division_Id"].ToInt(),
+                            DivisionName = oSqlDataReader["Division_Name"].ToString(),
+                            SavedStandardDivisionId = oSqlDataReader["SavedStandardDivisionId"].ToInt(),
+                            IsRecordSaved = oSqlDataReader["IsRecordSaved"].ToBool(),
+
+                        };
+                        lstConfigMenuAssociatedClasses.Add(oStandardDivisionMaster);
+                    }
+                    return lstConfigMenuAssociatedClasses;
+                }
+            }
+
+        }
+    }
+
 		#endregion -- PUBLIC METHO(s) --
 
-	}
-
-	public class ConfigureCollectionMenuDC
+  public class ConfigureCollectionMenuDC
 	{
 		#region -- PUBLIC METHOD(s) --
 

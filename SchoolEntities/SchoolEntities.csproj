@@ -80,6 +80,7 @@
     <Compile Include="Admin\BirthDaySMS.cs" />
     <Compile Include="Admin\BlackListedStudent.cs" />
     <Compile Include="Admin\CancellationForm.cs" />
+    <Compile Include="Admin\ConfigMenuAssociatedClasses.cs" />
     <Compile Include="Admin\ExternalLectures.cs" />
     <Compile Include="Admin\FileUploadDetails.cs" />
     <Compile Include="Admin\HouseConfigurationDetails.cs" />

@@ -26,6 +26,11 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
 
     #endregion
 
+    private bool IsSummaryMode
+    {
+        get { return hidIsSummaryMode.Value == Constants.S_YES ? true : false; }
+    }
+
     #region Event(s)
 
     /// <summary>
@@ -104,7 +109,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     {
         try
         {
-            moObservationDetailsBL.Submit(hidTestId.Value.ToInt(), hidSubjectId.Value.ToInt(), hidStdDivId.Value.ToInt(), 1);
+            moObservationDetailsBL.Submit(hidTestId.Value.ToInt(), hidSubjectId.Value.ToInt(), hidStdDivId.Value.ToInt(), 1, IsSummaryMode);
             base.DisplayMessage("Observation details submitted successfully !!!", false, tdMessage);
             FillObservations();
         }
@@ -122,7 +127,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     {
         try
         {            
-            moObservationDetailsBL.Submit(hidTestId.Value.ToInt(), hidSubjectId.Value.ToInt(), hidStdDivId.Value.ToInt(), 0);
+            moObservationDetailsBL.Submit(hidTestId.Value.ToInt(), hidSubjectId.Value.ToInt(), hidStdDivId.Value.ToInt(), 0, IsSummaryMode);
             base.DisplayMessage("Observation details Unsubmitted successfully !!!", false, tdMessage);
             FillObservations();
         }
@@ -146,6 +151,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
             hidSubjectId.Value = Convert.ToString(Request.Params[hidSubjectId.ClientID.Replace("_", "$")]);
             hidStdDivId.Value = Convert.ToString(Request.Params[hidStdDivId.ClientID.Replace("_", "$")]);
             hidFilterStdDivId.Value = Convert.ToString(Request.Params[hidFilterStdDivId.ClientID.Replace("_", "$")]);
+            hidIsSummaryMode.Value = Convert.ToString(Request.Params[hidIsSummaryMode.ClientID.Replace("_", "$")]);
         }
         else
         {
@@ -154,7 +160,8 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
             hidSubjectId.Value = QueryString["SubjectId"];
             hidTeacherId.Value = QueryString["TeacherId"];
             hidIsClassTeacher.Value = QueryString["IsClassTeacher"];
-            hidFilterStdDivId.Value = QueryString["FilteredStdDivId"];            
+            hidFilterStdDivId.Value = QueryString["FilteredStdDivId"];
+            hidIsSummaryMode.Value = QueryString["IsSummaryMode"];
         }
     }
 
@@ -182,8 +189,8 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     /// this method is used to fill observation details.
     /// </summary>
     private void FillObservations()
-    {
-        mlstStudents = moObservationDetailsBL.GetObservationDetails(hidTestId.Value.ToInt(), hidStdDivId.Value.ToInt(), hidSubjectId.Value.ToInt());
+    {        
+        mlstStudents = moObservationDetailsBL.GetObservationDetails(hidTestId.Value.ToInt(), hidStdDivId.Value.ToInt(), hidSubjectId.Value.ToInt(), IsSummaryMode);
 
         if (mlstStudents.Count > 0)
         {
@@ -235,7 +242,17 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
         {
             btnSave.Enabled = true;
             if (moObservationDetailsBL.Observations.Count > 0)
-                btnSubmit.Enabled = true;
+            {
+                if (IsSummaryMode)
+                {
+                    if (moObservationDetailsBL.Observations.Count(obs => obs.Remark.TrimAll() != string.Empty) > 0)
+                        btnSubmit.Enabled = true;
+                    else
+                        btnSubmit.Enabled = false;
+                }
+                else
+                    btnSubmit.Enabled = true;
+            }
            
             btnUnSubmit.Visible = true;
             btnUnSubmit.Enabled = false;            
@@ -283,70 +300,73 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     /// </summary>
     private void FillHeaderControls()
     {
-        HtmlTableRow trRow = new HtmlTableRow();
-        this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "right");
-        this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "left", 2, "width:200px");
+        if (!IsSummaryMode)
+        {
+            HtmlTableRow trRow = new HtmlTableRow();
+            this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "right");
+            this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "left", 2, "width:200px");
 
-        moObservationDetailsBL.Skills.OrderBy(skl => skl.SortOrder).ToList().ForEach
-            (
-             skill =>
-             {
-                 moObservationDetailsBL.Parameters.Where(prm => prm.SkillId == skill.Id).OrderBy(prm => prm.SortOrder).ToList().ForEach
-                     (
-                         parameter =>
-                         {
-                             Control ctrl = new Control();
-
-                             if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3)
+            moObservationDetailsBL.Skills.OrderBy(skl => skl.SortOrder).ToList().ForEach
+                (
+                 skill =>
+                 {
+                     moObservationDetailsBL.Parameters.Where(prm => prm.SkillId == skill.Id).OrderBy(prm => prm.SortOrder).ToList().ForEach
+                         (
+                             parameter =>
                              {
-                                 DropDownList ddl = new DropDownList();
-                                 ddl.ID = "cmb_" + parameter.Id;
-                                 ddl.CssClass = "smlCombo";
-                                 ListSource.FillDropDownList(moObservationDetailsBL.Grades, ddl, "ShortName", "Id", Constants.S_SELECT);
-                                 ddl.Attributes.Add("onchange", "SelectAll(this)");
+                                 Control ctrl = new Control();
 
-                                 if (moObservationDetailsBL.IsSubmitted)
+                                 if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3)
                                  {
-                                     if (hidIsClassTeacher.Value == Constants.S_YES)
+                                     DropDownList ddl = new DropDownList();
+                                     ddl.ID = "cmb_" + parameter.Id;
+                                     ddl.CssClass = "smlCombo";
+                                     ListSource.FillDropDownList(moObservationDetailsBL.Grades, ddl, "ShortName", "Id", Constants.S_SELECT);
+                                     ddl.Attributes.Add("onchange", "SelectAll(this)");
+
+                                     if (moObservationDetailsBL.IsSubmitted)
+                                     {
+                                         if (hidIsClassTeacher.Value == Constants.S_YES)
+                                             ddl.Enabled = true;
+                                         else
+                                             ddl.Enabled = false;
+                                     }
+                                     else
                                          ddl.Enabled = true;
-                                     else
-                                         ddl.Enabled = false;
+
+                                     ctrl.Controls.Add(ddl);
                                  }
-                                 else
-                                     ddl.Enabled = true;
-
-                                 ctrl.Controls.Add(ddl);
-                             }
-                             if (parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3)
-                             {
-                                 TextBox txtRemark = new TextBox();
-                                 txtRemark.ID = "txtHeaderRemark_" + parameter.Id;
-                                 txtRemark.CssClass = "LrgTxtBox";
-                                 txtRemark.TextMode = TextBoxMode.MultiLine;
-                                 txtRemark.Height = Unit.Pixel(50);
-                                 txtRemark.Attributes.Add("onchange", "ChangeAllRemark(this," + parameter.Id + ");");
-
-                                 if (moObservationDetailsBL.IsSubmitted)
+                                 if (parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3)
                                  {
-                                     if (hidIsClassTeacher.Value == Constants.S_YES)
-                                         txtRemark.Enabled = true;
-                                     else
-                                         txtRemark.Enabled = false;
-                                 }
-                                 else
-                                     txtRemark.Enabled = true;
+                                     TextBox txtRemark = new TextBox();
+                                     txtRemark.ID = "txtHeaderRemark_" + parameter.Id;
+                                     txtRemark.CssClass = "LrgTxtBox";
+                                     txtRemark.TextMode = TextBoxMode.MultiLine;
+                                     txtRemark.Height = Unit.Pixel(50);
+                                     txtRemark.Attributes.Add("onchange", "ChangeAllRemark(this," + parameter.Id + ");");
 
-                                 ctrl.Controls.Add(txtRemark);
+                                     if (moObservationDetailsBL.IsSubmitted)
+                                     {
+                                         if (hidIsClassTeacher.Value == Constants.S_YES)
+                                             txtRemark.Enabled = true;
+                                         else
+                                             txtRemark.Enabled = false;
+                                     }
+                                     else
+                                         txtRemark.Enabled = true;
+
+                                     ctrl.Controls.Add(txtRemark);
+                                 }
+
+                                 this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, "width:50px", ctrl);
                              }
 
-                             this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, "width:50px", ctrl);
-                         }
+                         );
+                 }
 
-                     );
-             }
-
-        );
-        tblParameters.Rows.Add(trRow);
+            );
+            tblParameters.Rows.Add(trRow);
+        }
     }
         
     /// <summary>
@@ -364,6 +384,10 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     /// </summary>
     private void FillStudents()
     {
+        string sTDWidth = "250";
+        if (!IsSummaryMode && !moObservationDetailsBL.Parameters.Any(prm => prm.ControlTypeId == 2 || prm.ControlTypeId == 3) && moObservationDetailsBL.Parameters.Count(prm => prm.Parameter.Length <= 15) == moObservationDetailsBL.Parameters.Count)
+            sTDWidth = "150";
+        
         mlstStudents.OrderBy(std => std.RollNo).ToList().ForEach
             (
             student =>
@@ -384,7 +408,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                      Control ctrl = new Control();
                                      var oGrade = moObservationDetailsBL.Observations.Where(obs => obs.StudentId == student.YearwiseStudentId && obs.ParameterId == parameter.Id).FirstOrDefault();
                                      
-                                     if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 2 ||parameter.ControlTypeId == 3)
+                                     if (parameter.ControlTypeId == 1 || parameter.ControlTypeId == 2 ||parameter.ControlTypeId == 3 || IsSummaryMode)
                                      {
                                          DropDownList ddl = new DropDownList();
                                          ddl.ID = "cmb_" + student.YearwiseStudentId + "_" + parameter.Id;
@@ -407,10 +431,13 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                          else
                                              ddl.Enabled = true;
 
+                                         if(IsSummaryMode)
+                                             ddl.Enabled = false;
+
                                          ctrl.Controls.Add(ddl);
                                      }
 
-                                     if (parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3)
+                                     if (parameter.ControlTypeId == 2 || parameter.ControlTypeId == 3 || IsSummaryMode)
                                      {
                                          TextBox txtRemark = new TextBox();
                                          txtRemark.ID = "txtRemark_" + student.YearwiseStudentId + "_" + parameter.Id;
@@ -427,7 +454,15 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                          btnPlus.Style.Add("margin-left", "5px");
                                          //btnPlus.Attributes.Add("onclick", "return FillRemarksDynamic(this," + skill.Id + "," +  parameter.Id + ",'" + txtRemark.ClientID + "');");
 
-                                         btnPlus.Attributes.Add("onclick", "FillRemarks(this," + skill.Id + ",'" + txtRemark.ClientID + "'); return false;");
+                                         if (moSchool != Constants.SchoolId.SNS)
+                                             btnPlus.Attributes.Add("onclick", "FillRemarks(this," + skill.Id + ",'" + txtRemark.ClientID + "'); return false;");
+                                         else
+                                         {
+                                             if (miAcademicYearId >= 11 && IsSummaryMode)
+                                                 btnPlus.Attributes.Add("onclick", "return FillRemarksDynamic(this," + skill.Id + "," + parameter.Id + ",'" + txtRemark.ClientID + "');");
+                                             else
+                                                 btnPlus.Attributes.Add("onclick", "FillRemarks(this," + skill.Id + ",'" + txtRemark.ClientID + "'); return false;");
+                                         }
 
                                          if (oGrade != null)
                                              txtRemark.Text = oGrade.Remark;
@@ -456,7 +491,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                          ctrl.Controls.Add(txtRemark);
                                      }
 
-                                     this.AddTableCell(trRow, string.Empty, "ClsMarksCell", "center", 1, "width:250px", ctrl);
+                                     this.AddTableCell(trRow, string.Empty, "ClsMarksCell", "center", 1, "width:"+ sTDWidth + "px", ctrl);
                                  }
 
                              );
@@ -549,7 +584,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
             lstParameters = ViewState[S_PARAMETERS] as List<ObservationParameter>;
         else
         {
-            moObservationDetailsBL.GetObservationDetails(hidTestId.Value.ToInt(), hidStdDivId.Value.ToInt(), hidSubjectId.Value.ToInt());
+            moObservationDetailsBL.GetObservationDetails(hidTestId.Value.ToInt(), hidStdDivId.Value.ToInt(), hidSubjectId.Value.ToInt(), IsSummaryMode);
             lstParameters = moObservationDetailsBL.Parameters;
         }
 
@@ -587,7 +622,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
             }
         }
 
-        moObservationDetailsBL.Save(hidTestId.Value.ToInt(), hidSubjectId.Value.ToInt(), hidStdDivId.Value.ToInt(), base.GenerateXml(lstObservations));
+        moObservationDetailsBL.Save(hidTestId.Value.ToInt(), hidSubjectId.Value.ToInt(), hidStdDivId.Value.ToInt(), base.GenerateXml(lstObservations), IsSummaryMode);
     } 
 
     #endregion

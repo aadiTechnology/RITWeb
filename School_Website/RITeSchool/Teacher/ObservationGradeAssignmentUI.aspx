@@ -117,7 +117,8 @@
                     <asp:HiddenField ID="hidTeacherId" runat="server" Value="0" />
                     <asp:HiddenField ID="hidIsClassTeacher" runat="server" Value="N" />
                     <asp:HiddenField ID="hidFilterStdDivId" runat="server" Value="0" />
-                    <asp:HiddenField ID="hidRemarks" runat="server" Value="" />                    
+                    <asp:HiddenField ID="hidRemarks" runat="server" Value="" />     
+                    <asp:HiddenField ID="hidIsSummaryMode" runat="server" Value="N" />
                 </td>
             </tr>               
          </table>      
@@ -228,6 +229,8 @@
             }
 
             $('#divRemark').html('<ol>'+sContent+'</ol><a style="float:right;padding-right:10px;" href="#" onclick="CloseDiv(\''+rmkId+'\');return false;">Close</a>')
+
+
         }
 
         function CloseDiv(rmkId)
@@ -243,6 +246,45 @@
             $('[id$='+rmkId+']').css('background-color','white');
             $('#divRemarkContainer').hide()
             $('[id$='+rmkId+']').focus();
+        }
+
+        function FillRemarksDynamic(btn, skillId, parameterId, txtClientId) {         
+            var td = btn.closest('td');
+            var ddl = td.querySelector('select');
+
+            var gradeId = ddl ? ddl.value : 0;
+
+            if (gradeId == 0 || gradeId === "0") {
+                if (ddl) {
+                    ddl.focus();
+                    ddl.style.backgroundColor = 'lightyellow';
+                }
+                return false;
+            }
+            
+           var rmkId = txtClientId
+
+           gradeId = gradeId || $('#' + rmkId.replace('_txtRemark_', '_cmb_')).val();
+            $('#divRemarkContainer').fadeIn(500)
+            $('#divRemarkContainer').css({"left":((window.screen.width/2)-350)+'px'})            
+            $('[id*=txtRemark]').css('background-color','white');
+            $('[id$='+rmkId+']').css('background-color','lightyellow');
+
+            var remarks = $('[id$=hidRemarks]').val()
+            var remarkData = JSON.parse(remarks)
+
+            var filteredData = remarkData.filter(rmk => rmk.Id == skillId && rmk.ParameterId == parameterId && rmk.GradeId == gradeId);
+
+            var sContent = ''
+         
+            for(var k=0; k< filteredData.length; k++)
+            {
+                sContent += '<li><a href="#" onclick="SetRemark(\''+filteredData[k].Remarks+'\',\''+rmkId+'\');return false;">'+filteredData[k].Remarks+'</a></li>'
+            }
+
+            $('#divRemark').html('<ol>'+sContent+'</ol><a style="float:right;padding-right:10px;" href="#" onclick="CloseDiv(\''+rmkId+'\');return false;">Close</a>')
+
+            return false;
         }
 
     </script>

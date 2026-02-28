@@ -39,6 +39,10 @@ namespace MobileExportService.Service
         string GetReportFileName(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "GetReportFileNameInFormat", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        string GetReportFileNameInFormat(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, Constants.ExportReports aoExportReports, List<ParameterPair> aoParameterPairs, int aiExportFormatType);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "GetITRFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         string GetITRFileName(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiValueMember, int aiSelectAcademicYearId, int aiCategoryId);
 

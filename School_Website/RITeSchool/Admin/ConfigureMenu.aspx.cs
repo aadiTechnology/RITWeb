@@ -17,11 +17,15 @@ using BusinessLogic;
 using Utility;
 using System.Collections;
 using System.Web.UI.HtmlControls;
+using System.Text;
+using SchoolEntities.Admin;
+using System.Linq;
 
 
 public partial class ConfigureMenu : SchoolBase
 {
     #region Event(s)
+    List<ConfigMenuAssociatedClasses> molstConfigMenuAssociatedClasses = new List<ConfigMenuAssociatedClasses>();
 
     /// <summary>
     /// This event is used to fill parent combobox and menu controls.
@@ -46,8 +50,7 @@ public partial class ConfigureMenu : SchoolBase
                 SetQueryString();
                 SetJavascriptAttributes();
                 ClearRoles();
-                
-            }
+             }
             SetDefaultValues();
         }
         catch (Exception ex)
@@ -111,7 +114,7 @@ public partial class ConfigureMenu : SchoolBase
 
             if (oSelectedNode != null)
                 oSelectedNode.Selected = false;
-
+              
             MasterPage oMaster = (MasterPage)this.Master;
             oMaster.FillMenuControl();
             FillParentMenuCombobox();
@@ -123,7 +126,7 @@ public partial class ConfigureMenu : SchoolBase
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
         }
     }
-
+      
     /// <summary>
     /// This event is used to save detals of newly added menu item.
     /// </summary>
@@ -140,7 +143,7 @@ public partial class ConfigureMenu : SchoolBase
                 string sEndDate;
 
                 sEndDate = Convert.ToString(txtEndDate.Text.Trim());
-                int iReturnId = oConfigureMenuBL.InsertConfigureMenu(sEndDate);
+                int iReturnId = oConfigureMenuBL.InsertConfigureMenu(sEndDate, miAcademicYearId);
                 lblMsg.Text = "Menu item saved successfully.";
                 lblMsg.CssClass = "ClsHilightBGB";
                 lblMsg.Visible = true;
@@ -159,7 +162,7 @@ public partial class ConfigureMenu : SchoolBase
                 MasterPage oMaster = (MasterPage)this.Master;
                 oMaster.FillMenuControl();
                 SetQueryString();
-               
+                FillStandardChkLstBox(iReturnId);
             }
             else
             {
@@ -247,6 +250,8 @@ public partial class ConfigureMenu : SchoolBase
             ClearRoles();
             MasterPage oMaster = (MasterPage)this.Master;
             oMaster.FillMenuControl();
+            FillStandardChkLstBox(0);
+            trAssociatedClasses.Style.Add("display","none");
         }
         catch (Exception ex)
         {
@@ -283,8 +288,7 @@ public partial class ConfigureMenu : SchoolBase
             ConfigureCollectionMenuBL oConfigureCollectionMenuBL = new ConfigureCollectionMenuBL();
             Session[Constants.S_SESSION_SCHOOL_MENUS] = oConfigureCollectionMenuBL.FetchAllActiveInternalMenus(miSchoolId, moUserRole.ToInt());
 			MasterPage oMaster = (MasterPage)this.Master;
-			oMaster.FillMenuControl();      
-
+			oMaster.FillMenuControl();
         }
         catch (Exception ex)
         {
@@ -414,6 +418,69 @@ public partial class ConfigureMenu : SchoolBase
         DataTable oDT = oConfigureCollectionMenuBL.GetAllSubMenus(cmbParentMenuAdd.SelectedValue.ToInt(), miSchoolId);
         cmbSubMenuAdd.Bind(oDT, "ConfigureMenuId", "ConfigureMenuName", Constants.S_SELECT);   
     }
+
+    protected void lstvwStandardDivisions_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+        try
+        {
+            ListViewDataItem oCurrentItem = (ListViewDataItem)e.Item;
+            int iRowId = oCurrentItem.DisplayIndex;            
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                CheckBox chkStandard = oCurrentItem.FindControl("chkStandard") as CheckBox;
+                CheckBoxList chkStandardDivLst = oCurrentItem.FindControl("chkStandardDivLst") as CheckBoxList;
+                int iStandardId = lstvwStandardDivisions.DataKeys[iRowId]["StandardId"].ToInt();
+
+                var oDivision = molstConfigMenuAssociatedClasses.Where(sd => sd.StandardId == iStandardId).Select(sd => new { DivisionName = sd.DivisionName, Id = sd.StandardwiseDivisionId });
+                chkStandardDivLst.DataSource = oDivision;
+                chkStandardDivLst.DataTextField = "DivisionName";
+                chkStandardDivLst.DataValueField = "Id";
+                chkStandardDivLst.DataBind();
+                chkStandard.Attributes.Add("onclick", "CheckAllAdd(this,'" + iRowId + "')");
+                chkStandardDivLst.Attributes.Add("onclick", "CheckAllCheckAdd('" + chkStandard + "','" + iRowId + "')");
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }
+
+    protected void lstvwUpdateStandardDivision_ItemDataBound(object sender, ListViewItemEventArgs e)
+    {
+        try
+        {
+            ListViewDataItem oCurrentItem = (ListViewDataItem)e.Item;
+            int iRowId = oCurrentItem.DisplayIndex;
+            ConfigMenuAssociatedClasses oConfigMenuAssociatedClasses = oCurrentItem.DataItem as ConfigMenuAssociatedClasses;
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                CheckBox chkStandard = oCurrentItem.FindControl("chkStandard") as CheckBox;
+                CheckBoxList chkStandardDivLst = oCurrentItem.FindControl("chkStandardDivLst") as CheckBoxList;
+                int iStandardId = lstvwUpdateStandardDivision.DataKeys[iRowId]["StandardId"].ToInt();
+
+                var oDivision = molstConfigMenuAssociatedClasses.Where(sd => sd.StandardId == iStandardId).Select(sd => new { DivisionName = sd.DivisionName, Id = sd.StandardwiseDivisionId });
+                chkStandardDivLst.DataSource = oDivision;
+                chkStandardDivLst.DataTextField = "DivisionName";
+                chkStandardDivLst.DataValueField = "Id";
+                chkStandardDivLst.DataBind();
+                var AssociatedDivisions = molstConfigMenuAssociatedClasses
+                    .Where(sd => sd.StandardId == iStandardId && sd.IsRecordSaved == Constants.I_ONE.ToBool())
+                    .Select(sd => sd.StandardwiseDivisionId)
+                    .ToList();
+               foreach (ListItem item in chkStandardDivLst.Items)
+                {
+                    item.Selected = AssociatedDivisions.Contains(item.Value.ToInt());
+                } 
+                chkStandard.Attributes.Add("onclick", "CheckAllUpdate(this,'" + iRowId + "')");
+                chkStandardDivLst.Attributes.Add("onclick", "CheckAllCheckUpdate('" + chkStandard + "','" + iRowId + "')");
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+        }
+    }    
     #endregion//Event(s)
 
     #region Method(s)
@@ -446,6 +513,9 @@ public partial class ConfigureMenu : SchoolBase
         optTopAdd.Attributes.Add("onclick", "ShowAllCountAdd()");
         optAllUpdate.Attributes.Add("onclick", "ShowAllCountUpdate()");
         optTopUpdate.Attributes.Add("onclick", "ShowAllCountUpdate()");
+        chkAddListRoles.Attributes.Add("onclick", "ShowAssociatedClassAdd()");
+        chkListRoles.Attributes.Add("onclick", "ShowAssociatedClassUpdate()");
+        imgbtnAdd.Attributes.Add("onclick", "ShowHideClasses(false);");        
     }
 
     /// <summary>
@@ -504,11 +574,12 @@ public partial class ConfigureMenu : SchoolBase
         aoConfigureMenuBL.UpdatedById = miUserId;
 
         aoConfigureMenuBL.UserRoleIds = string.Join(",", GetSelectedRolesforUpdate());
-
+        aoConfigureMenuBL.AssoiciatedStandards = GetSelectedStandardDivisionsForUpdate();
+       
         if (Menu_Configure.SelectedValue != string.Empty)
-            aoConfigureMenuBL.UpdateConfigureMenu(true, sUpdateEndDate);
+            aoConfigureMenuBL.UpdateConfigureMenu(true, sUpdateEndDate,miAcademicYearId);
         else
-            aoConfigureMenuBL.UpdateConfigureMenu(false, sUpdateEndDate);
+            aoConfigureMenuBL.UpdateConfigureMenu(false, sUpdateEndDate, miAcademicYearId);
 
         if (Menu_Configure.SelectedNode != null || Menu_Configure.SelectedNode.Parent != null || Menu_Configure.SelectedNode.Parent.Parent != null)
             aoConfigureMenuBL.UpdateChildNodes(sUpdateEndDate);
@@ -516,7 +587,7 @@ public partial class ConfigureMenu : SchoolBase
         return aoConfigureMenuBL;
     }
 
-    /// <summary>
+   /// <summary>
     /// This method is used to set default values.
     /// </summary>
     private void SetDefaultValues()
@@ -821,6 +892,7 @@ public partial class ConfigureMenu : SchoolBase
             SetButtonVisibility(false);
         else
             SetButtonVisibility(true);
+      
         FillMenuItemContents();
     }
 
@@ -856,7 +928,7 @@ public partial class ConfigureMenu : SchoolBase
     private ConfigureMenuBL InitializeConfigureMenuBL(int aiSchoolId)
     {
         ConfigureMenuBL oConfigureMenuBL = new ConfigureMenuBL();
-
+        oConfigureMenuBL.AssoiciatedStandards = GetSelectedStandardDivList();
         oConfigureMenuBL.ConfigureMenuName = txtMenuName.Text;
         oConfigureMenuBL.ConfigureMenuContent = HttpUtility.HtmlEncode(FCKNewMenu.Text);
         oConfigureMenuBL.Priority = Convert.ToInt32(NmBoxPriority.Text);
@@ -1219,6 +1291,20 @@ public partial class ConfigureMenu : SchoolBase
             if (oItemCurrent != null)
                 cmbParentMenu.Items.Remove(oItemCurrent);
             txtMenuNameUpdate.Focus();
+    
+        }
+
+        if (chkListRoles.Items.FindByValue("3") != null && chkListRoles.Items.FindByValue("3").Selected)
+        {
+            FillStandardChkLstBox(iMenuId);
+            trAssociatedClasses.Style.Add("display", "");
+            trUpdateAssociatedClasses.Style.Add("display", "");
+        }
+        else
+        {
+            FillStandardChkLstBox(0);
+            trAssociatedClasses.Style.Add("display", "none");
+            trUpdateAssociatedClasses.Style.Add("display", "none");
         }
     }
 
@@ -1316,8 +1402,75 @@ public partial class ConfigureMenu : SchoolBase
         NmcBxPriorityUpdate.ReadOnly = ablnValue;
         txtShowTopUpdate.ReadOnly = ablnValue;
     }
+    /// <summary>
+    /// this method is used to collect selected standard division list
+    /// </summary>
+    /// <returns></returns>
+    private string GetSelectedStandardDivList()
+    {
+        if (chkAddListRoles.Items.FindByValue("3") != null && chkAddListRoles.Items.FindByValue("3").Selected)
+        {
+            StringBuilder oStandards = new StringBuilder();
 
-    #endregion//Method(s)   
-   
-    
+            foreach (ListViewDataItem Item in lstvwStandardDivisions.Items)
+            {
+                CheckBoxList chkStandardDivLst = Item.FindControl("chkStandardDivLst") as CheckBoxList;
+                for (int iCount = 0; iCount < chkStandardDivLst.Items.Count; iCount++)
+                {
+                    if (chkStandardDivLst.Items[iCount].Selected)
+                        oStandards.Append(chkStandardDivLst.Items[iCount].Value + ",");
+                }
+            }
+
+            return oStandards.ToString();
+        }
+        else
+            return string.Empty;
+    }
+
+    /// <summary>
+   /// thise method is collect selected standard division list for update 
+    /// </summary>
+    /// <returns></returns>
+  private string GetSelectedStandardDivisionsForUpdate()
+  {
+      List<string> selectedIds = new List<string>();
+
+      if (chkListRoles.Items.FindByValue("3") != null && chkListRoles.Items.FindByValue("3").Selected)
+      {
+          foreach (ListViewDataItem item in lstvwUpdateStandardDivision.Items)
+          {
+              CheckBoxList chkList = item.FindControl("chkStandardDivLst") as CheckBoxList;
+              if (chkList != null)
+              {
+                  foreach (ListItem li in chkList.Items)
+                  {
+                      if (li.Selected)
+                          selectedIds.Add(li.Value);
+                  }
+              }
+          }
+
+          return string.Join(",", selectedIds);
+      }
+      else
+          return string.Empty;
+  }
+    /// <summary>
+    /// This method is used to fill standard check box list.
+    /// </summary>
+  private void FillStandardChkLstBox(int aiMenuId)
+  {
+      ConfigureMenuBL oConfigureMenuBL = new ConfigureMenuBL();
+      molstConfigMenuAssociatedClasses = oConfigureMenuBL.GetConfigMenuAssociatedClasses(miSchoolId, miAcademicYearId, aiMenuId);
+      var oStandards = molstConfigMenuAssociatedClasses.Select(sd => new { StandardName = sd.StandardName, StandardId = sd.StandardId }).Distinct().ToList();
+
+      lstvwStandardDivisions.DataSource = oStandards;
+      lstvwStandardDivisions.DataBind();
+      lstvwUpdateStandardDivision.DataSource = oStandards;
+      lstvwUpdateStandardDivision.DataBind();
+  }
+
+#endregion//Method(s)
+
 }
