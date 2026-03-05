@@ -51,7 +51,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("CategoryId", aiCategoryId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("StdDivId", aiStdDivId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("SortExpression", asSortExpression, SqlDbType.NVarChar);
-                oSQLServerDbUtility.AddParameter("IncludeLeftStudents", asIncludeLeftStudents, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IncludeLeftStudents", asIncludeLeftStudents, SqlDbType.Bit);
                 using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetAllPanAttachmentDetails"))
                     return LoadPANDetails(oSqlDataReader);
             }
@@ -79,7 +79,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("ShowAllDetails", aiShowAllDetails, SqlDbType.Bit);
                 oSQLServerDbUtility.AddParameter("CategoryId", aiCategoryId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("StdDivId", aiStdDivId, SqlDbType.Int);
-                oSQLServerDbUtility.AddParameter("IncludeLeftStudents", asIncludeLeftStudents, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IncludeLeftStudents", asIncludeLeftStudents, SqlDbType.Bit);
                 SqlParameter oSqlParameter = oSQLServerDbUtility.AddParameter("count", 0, SqlDbType.Int, ParameterDirection.Output);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_GetCountAllPanAttachmentDetails");
                 return Convert.ToInt32(oSqlParameter.Value);
@@ -177,6 +177,7 @@ namespace DataCommunicator
                     PanNo = Convert.ToString(aoSqlDataReader["PanNo"]),
                     PanAttachment = Convert.ToString(aoSqlDataReader["PanAttachment"]),
                     RollNo = Convert.ToInt32(aoSqlDataReader["Roll_No"]),
+                    IsLeftStudent = Convert.ToBoolean(aoSqlDataReader["IsLeftStudent"]),
                     ClassName = Convert.ToString(aoSqlDataReader["ClassName"])
                 };
                 lstPANAttachmentDetails.Add(oPANAttachmentDetails);

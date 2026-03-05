@@ -98,7 +98,7 @@
                                                                         <th align="left" width="150px">
                                                                             <asp:LinkButton ID="LinkButton1" runat="server" CssClass="ClsLabel" CommandName="Sort"
                                                                                 CommandArgument="Enrolment_Number" CausesValidation="false" ForeColor="Black"
-                                                                                Text="Enrolment No."></asp:LinkButton>
+                                                                                Text="Registration No."></asp:LinkButton>
                                                                         </th>
                                                                         <th align="left" width="250px">
                                                                             <asp:LinkButton ID="LinkButton2" runat="server" CssClass="ClsLabel" CommandName="Sort"
