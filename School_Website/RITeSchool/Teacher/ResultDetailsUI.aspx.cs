@@ -405,6 +405,7 @@ public partial class ResultDetailsUI : SchoolBase
             MasterDataCollectionBL oMasterDataCollectionBL = new MasterDataCollectionBL();
             DataTable oDataTable = oMasterDataCollectionBL.GetClassTeachers(miSchoolId, miAcademicYearId);
             DataRow[] oDataRow = oDataTable.Select("Teacher_Id=" + Convert.ToString(Session[Constants.S_SESSION_TEACHER_ID]));
+            if (oDataRow != null && oDataRow.Length > 0)
             ViewState[S_TEACHER_DATA] = oDataRow.CopyToDataTable();
         }
     }
