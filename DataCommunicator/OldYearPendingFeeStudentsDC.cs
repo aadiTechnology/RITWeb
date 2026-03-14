@@ -27,7 +27,7 @@ namespace DataCommunicator
         }
         #endregion
 
-        public OldYearPendingFeeReport GetOldYearPendingFeeDetails(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiStandardId, int aiDivisionId, int aiFromYear, int aiToYear, int aiIncludeLateFee, string asStartDate, string asEndDate)
+        public OldYearPendingFeeReport GetOldYearPendingFeeDetails(int aiSchoolId, int aiAcademicYearId, int aiStudentId, int aiStandardId, int aiDivisionId, int aiFromYear, int aiToYear, int aiIncludeLateFee, string asPendingTillDate, string asStartDate, string asEndDate)
         {
             OldYearPendingFeeReport oOldYearPendingFeeReport = new OldYearPendingFeeReport();
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -40,12 +40,15 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("FromYear", aiFromYear, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("ToYear", aiToYear, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("IncludeLateFee", aiIncludeLateFee, SqlDbType.NVarChar);
-                
+
+                if (!string.IsNullOrWhiteSpace(asPendingTillDate))
+                    oSQLServerDbUtility.AddParameter("PendingTillDate", asPendingTillDate, SqlDbType.Date);
                 if(!string.IsNullOrWhiteSpace(asStartDate))
                     oSQLServerDbUtility.AddParameter("StartDate", asStartDate, SqlDbType.Date);
 
                 if (!string.IsNullOrWhiteSpace(asEndDate))
                     oSQLServerDbUtility.AddParameter("EndDate", asEndDate, SqlDbType.Date);
+               
 
                 using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetOldPendingFeeDetailsForAllYears"))
                 {

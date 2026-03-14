@@ -356,8 +356,20 @@ public partial class AdmissionFormDocuments : SchoolBase
                 liGrade2to8.Visible = true;
                 bPPSN2to8.InnerText = "Friday, 24th April, 2026";
             }
-
-        }
+            if (sStandardName == "6")
+            {
+                PPSN6STD.Visible = true;
+                trProcessfor6STD.Visible = true;
+                trProcessforSTD.Visible = false;
+            }
+            else
+            {
+                PPSN6STD.Visible = false;
+                trProcessfor6STD.Visible = false;
+                trProcessforSTD.Visible = true;
+            }
+               
+          }
         
         if (ConfigurationManager.AppSettings["SchoolID"].ToInt() == Constants.SchoolId.PPS.ToInt())
         {

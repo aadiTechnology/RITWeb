@@ -2872,7 +2872,15 @@ public partial class SchoolReportsUI : ExportToExcel
                     msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentTerm2PrePrimaryReport.rpt";
                 }
             }
+            if (msReportID == S_TERM_PROGRESS_REPORT_PIONEER && moSchool == Constants.SchoolId.PIONEER)
+            {
+                var cmbTerm = grdDisplayParameter.Rows[3].FindControl("DDLRptParameter") as ComboRpt;
 
+                if (cmbTerm.SelectedItem.Text == "Yearly Exam")
+                {
+                    msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentwiseTerm2ProgressReportPrimaryPioneer.rpt";
+                }
+            }
             if (msReportID == S_STUD_FINAL_RESULT_PPSH_Old && moSchool == Constants.SchoolId.DPIS && miAcademicYearId >= 6)
                 msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentWiseFinalProgressReportForDPIS2025.rpt";
             else if (msReportID == S_EXAMWISE_MARK_DETAILS)
@@ -11694,7 +11702,7 @@ public partial class SchoolReportsUI : ExportToExcel
     private void ExportStudentPendingFeeDetailsReport(string asFilterString)  //
     {
         int iStandardId = 0, iDivisionId = 0, iStudentId = 0, iFromYear = 0, iToYear = 0, iIncludeLateFee = 0;
-        string sStartDate = "", sEndDate = "";
+        string sStartDate = "", sEndDate = "" ,sPendingTillDate = "";
         //var oFilters = asFilterString.Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace("AND", "@").TrimAll().Replace("usp_GetStudentPaidFeeDetailsForReport;1.", "").Split('@');
         var oFilters = asFilterString.Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace("AND", "@").Replace("OR", "@").TrimAll().Replace("usp_GetOldPendingFeeDetailsForAllYears;1.", "").Split('@');
         
@@ -11715,10 +11723,13 @@ public partial class SchoolReportsUI : ExportToExcel
                     iToYear = (oData[1].Trim() == "null" ? 0 : oData[1].ToInt());
                 else if (oData[0].Trim().ToUpper() == "INCLUDELATEFEE")
                     iIncludeLateFee = (oData[1].Trim() == "null" ? 0 : oData[1].Trim().ToInt());
-                else if (oData[0].Trim().ToUpper() == "DATESTARTDATE")
+                else if (oData[0].Trim().ToUpper() == "DATEPENDINGTILLDATE")
+                    sPendingTillDate = (oData[1].Trim() == "null" ? string.Empty : oData[1].ToString().TrimAll());
+               else if (oData[0].Trim().ToUpper() == "DATESTARTDATE")
                     sStartDate = (oData[1].Trim() == "null" ? string.Empty : oData[1].ToString().TrimAll());
                 else if (oData[0].Trim().ToUpper() == "DATEENDDATE")
                     sEndDate = (oData[1].Trim() == "null" ? string.Empty : oData[1].ToString().TrimAll());
+                
             }
         }
 
@@ -11730,7 +11741,7 @@ public partial class SchoolReportsUI : ExportToExcel
 
         S_SHEET_NAME = "StudentPaidFeeDetailsReport";
         OldYearPendingFeeStudentsBL moFeeReportBL = new OldYearPendingFeeStudentsBL(miSchoolId, miAcademicYearId);
-        moPendingFee = moFeeReportBL.GetOldYearPendingFeeDetails(miSchoolId, miAcademicYearId, iStudentId, iStandardId, iDivisionId, iFromYear, iToYear, iIncludeLateFee, sStartDate, sEndDate);
+        moPendingFee = moFeeReportBL.GetOldYearPendingFeeDetails(miSchoolId, miAcademicYearId, iStudentId, iStandardId, iDivisionId, iFromYear, iToYear, iIncludeLateFee, sPendingTillDate ,sStartDate, sEndDate);
 
         string sFileName = "StudentPendingFeeDetails_" + Guid.NewGuid() + ".xlsx";
         string filePath = base.BasePath + @"\RITeSchool\UPLOADS\ResultSheet\" + sFileName;
@@ -11825,7 +11836,7 @@ public partial class SchoolReportsUI : ExportToExcel
     {
         miStudentPaidFeeStartupRow++;
 
-        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderBy(fee => fee.AcademicYearId).ToList();
 
         moPendingFee.OldYearPendingFeeStudents.OrderBy(stud => stud.OriginalStandardId).ThenBy(stud => stud.OriginalDivisionId).ThenBy(stud => stud.RollNo).ToList().ForEach
             (
@@ -11889,7 +11900,7 @@ public partial class SchoolReportsUI : ExportToExcel
     {
         if (moPendingFee.PaidFees.Count > 0)
         {
-            var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+            var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderBy(fee => fee.AcademicYearId).ToList();
 
             miStudentPaidFeeStartupRow++;
             Row rowHeaderTitle = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
@@ -11981,7 +11992,7 @@ public partial class SchoolReportsUI : ExportToExcel
     /// <param name="iColCount"></param>
     private void AddPendingFeeHeader(SheetData aoSheetData1, int iColCount)   //////
     {
-        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderByDescending(fee => fee.AcademicYearId).ToList();
+        var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderBy(fee => fee.AcademicYearId).ToList();
 
         Row rowHeaderTitle = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow-1), CustomHeight = true, Height = 15 };
         rowHeaderTitle.Append(AddCell("Pending Fee Details", CellValues.String, StudentPaidFeeEnum.CenterHeader));

@@ -279,6 +279,19 @@
                         <td align="left">
                         </td>
                     </tr>
+                    <tr id="PPSN6STD" runat="server" visible="false">
+                      <td colspan="4" align="left" class="TxtNormal" style="line-height: 1.6; text-align: justify;">
+                          <ol>
+                          <li><b>Forms open for only Nanded City Residents(Nanded City Landowners/ Shareholders & Nanded City Resident)</b></li>
+                         <li><b>Please note that only Nanded City residents form will be entertained.Non Nanded City resident forms will not be considered.</b></li>
+                         <li> Preference for Admission:(*If all dues are cleared of sibling and if seat is available). Std. VI admissions will be given only on a merit basis. <br />
+                                    a. Wards of: Landowners/ Shareholders. (*Bonafide certificate from Nanded City is required).<br />
+                                    b. Wards of: Nanded City Flat owners. (*Bonafide certificate from Nanded City is required). <br />
+                                    c. If seats remain, Nanded City tenants. (*Bonafide certificate from Nanded City is required). <br />
+                                    d. If any seats remain vacant, forms may be opened for non–Nanded City residents <br /></li>
+                         </ol>
+                      </td>
+                    </tr>
                     <tr id="tr1" runat="server">
                         <td class="HeadTxtBWOPadding borderBtm" style="height: 25px; color: Red;" align="left"
                             colspan="4">
@@ -398,7 +411,7 @@
                                         <asp:Label ID="lblAdmissionProcess" runat="server"></asp:Label>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trProcessforSTD" runat="server">
                                     <td class="TxtNormal" style="line-height: 1.6; text-align: justify;">
                                         <ul>
                                             <%-- <li id="NursaryCriteria" runat ="server">Eligibility : 3 years complete as on 31<sup>st</sup> December, 2021.(All children born on or between 1<sup>st</sup> January, 2018 and 31<sup>st</sup> December, 2018).</li>
@@ -447,6 +460,17 @@
                                                 <%--5. If seats remain, then Non-Nanded City residents.--%>
                                             </li>
                                         </ul>
+                                    </td>
+                                </tr>
+                                <tr id="trProcessfor6STD" runat="server" runat="server">
+                                    <td  class="TxtNormal" style="line-height: 1.6; text-align: justify;">
+                                        <ul>
+                                           <li>For Std. VI admissions will be given only on merit basis.</li>
+                                           <li> There will be an activity paper for students seeking admission to Std. VI. The activity paper will be taken for English and Mathematics. Each paper will be of 20 marks. The activity will be based on the previous Std’s syllabus. Admissions to Std.VI will be based on the performance in the activity and passed and promoted certificate of previous Std. of previous recognized school.</li>
+                                           <li> An activity paper of 1 hour will be conducted on Tuesday,<b>17<sup>th</sup> March 2026</b> or Wednesday, <b>18<sup>th</sup> March 2026 at 09.00 a.m.</b> The Form numbers of selected students in <b>(merit list) will be declared on 23<sup>rd</sup> March 2026 at 03:00 pm on website and notice board.</b> </li>
+                                           <li>Only parents of candidates whose names are selected in merit list of activity will be informed by phone call or form number list will be displayed on notice board.</li>
+                                           <li> Admission to Std. VI will be treated as provisional till the receipt of the Original School Leaving / Transfer Certificate from the previous recognized school. The last date for submission of the same is<b> Friday, 24<sup>th</sup> April, 2026.</b></li>
+                                       </ul>
                                     </td>
                                 </tr>
                             </table>

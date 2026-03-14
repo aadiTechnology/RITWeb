@@ -908,9 +908,11 @@ public partial class AdmissionFormStudentDetails : SchoolBase
         
         if(!IsPostBack)
 		ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_LOCATION_AREA], ref cmbLivingLocation, "LivingLocationId", "LivingLocationName", Constants.S_SELECT);
-
+     
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_BLOOD_GROUPS], ref cmbStudentBloodGroup, "Id", "BloodGroup", Constants.S_SELECT);
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_RESIDENCE_TYPES], ref cmbResidenceType, "ResidenceTypeId", "Name", Constants.S_SELECT);
+        RemoveResidenceOptionsForStd6();
+        
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_SECOND_LANGUAGE], ref cmbSecondSLanguageSubjectId, "Subject_Id", "Subject_Name", Constants.S_SELECT);
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_THIRD_LANGUAGE], ref cmbThirdLanguage, "Subject_Id", "Subject_Name", Constants.S_SELECT);
        
@@ -2719,7 +2721,24 @@ public partial class AdmissionFormStudentDetails : SchoolBase
 
         return sReturnErrorMsg;
     }
+    private void RemoveResidenceOptionsForStd6()
+    {
+        int iSchoolId = ConfigurationManager.AppSettings["SchoolID"].ToInt();
+        if (iSchoolId == Constants.SchoolId.PPSN.ToInt() && cmbStd.SelectedItem.Text == "6")
+        {
+            
+            var livingItem = cmbLivingLocation.Items.FindByText("Other");
+            if (livingItem != null)
+                cmbLivingLocation.Items.Remove(livingItem);
 
+           foreach (var text in new[] { "Others", "Sibling of existing student" })
+            {
+                var item = cmbResidenceType.Items.FindByText(text);
+                if (item != null)
+                    cmbResidenceType.Items.Remove(item);
+            }
+        }
+    }
     #endregion " Private Methods "	        
 
 }

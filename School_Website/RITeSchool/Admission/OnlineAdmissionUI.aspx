@@ -767,7 +767,7 @@
                             </tr>
                             <tr>
                                 <td align="justify" class="clsMainPoints">
-                                    1. Forms will be available <u>ONLINE ONLY</u> to ALL ELIGIBLE candidates. The cost of the form is <b>Rs. 2500/- (Non-refundable)</b>
+                                    1. Forms will be available <u>ONLINE ONLY</u> to ALL ELIGIBLE candidates. The cost of the form is <b>Rs. 2500/- (Non-refundable)</b> The form fees will not be refunded under any circumstances.
                                 </td>
                             </tr>
                             <tr class="Height5">
