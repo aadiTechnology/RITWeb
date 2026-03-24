@@ -579,10 +579,17 @@ public partial class StudentProgressSheet : SchoolBase
 
             else if (miSchoolId == Constants.SchoolId.PIONEER.ToInt())
             {
-                if (mlstPioneerGradeReportStandards.Contains(hidStandardName.Value))
-                    oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPioneer_NurseryTO2nd, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
-                else
-                    oReportDisplay = new ReportDisplay(Constants.ExportReports.HalfYearlyReportFor3To9Pioneer, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
+               StudentProgress oStudentProgress = new StudentProgress();
+               bool IsFinalExamPublished = oStudentProgress.IsFinalResultPublished(miStdDivId);
+               int TermId = IsFinalExamPublished ? 2 : 1;
+
+               if (mlstPioneerGradeReportStandards.Contains(hidStandardName.Value))
+               {
+                   oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPioneer_NurseryTO2nd, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
+                   oReportDisplay.TermId = TermId;
+               }
+               else
+                   oReportDisplay = new ReportDisplay(Constants.ExportReports.HalfYearlyReportFor3To9Pioneer, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
             }
             
             oReportDisplay.DisplayReport();

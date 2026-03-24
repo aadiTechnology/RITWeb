@@ -386,6 +386,13 @@ namespace DataCommunicator
                                               " WHERE [INTEGRATION_REFERENCE] IN (" + sEmployeeNos + ") AND CONVERT(DATE,[EventDateTime_D]) >= Convert(DATE,'" + dtFromDate.ToString(Constants.S_DATE_FORMAT).ToDateTime() + "') AND CONVERT(DATE,[EventDateTime_D]) <= CONVERT(DATE,'" + dtToDate.ToString(Constants.S_DATE_FORMAT).ToDateTime() + "')" +
                                               " ORDER BY CONVERT(DATE,EventDateTime_D) ASC";
                     }
+                    else if (aiSchoolId == Constants.SchoolId.PPSH.ToInt())
+                    {
+                        sEntitiesDetails = "SELECT " + aiSchoolId + " AS SchoolId, [EmpCode] as Employee_No,[EntryDateTime] as InDateTime,'' as UserName" +
+                                              " FROM [dbo].[Mx_VEW_APIUserAccessCtrlEvts]" +
+                                              " WHERE [EmpCode] IN (" + sEmployeeNos + ") AND CONVERT(DATE,[EntryDateTime]) >= Convert(DATE,'" + dtFromDate.ToString(Constants.S_DATE_FORMAT).ToDateTime() + "') AND CONVERT(DATE,[EntryDateTime]) <= CONVERT(DATE,'" + dtToDate.ToString(Constants.S_DATE_FORMAT).ToDateTime() + "')" +
+                                              " ORDER BY CONVERT(DATE,EntryDateTime) ASC";
+                    }
                     else
                     {
                         sEntitiesDetails = "SELECT " + aiSchoolId + " AS SchoolId " +

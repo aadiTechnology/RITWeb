@@ -1727,6 +1727,9 @@ public partial class ControlPanel : SchoolBase
             if (HidAttendanceAlert.Value == Constants.S_YES && moUserRole == Constants.UserRoles.Supervisor)
                 MissingAttendanceLink(aoMenuTable);
 
+            if (moUserRole == Constants.UserRoles.Supervisor)
+                ShowBitaURLLinkForAdminStaff(aoMenuTable);
+
 
             if (hidShowAttendanceDiv.Value == "YES" ||(ISABSENT_STUDENT__LINK_VISIBEL == true && moUserRole == Constants.UserRoles.Supervisor))
                 AbsentStudentDetailsLink(aoMenuTable);
@@ -2967,7 +2970,53 @@ public partial class ControlPanel : SchoolBase
         aoMenuTable.Controls.Add(tRow);
     }
 
+
     /// <summary>
+    /// this is used to generate bita URL.
+    /// </summary>
+    private void ShowBitaURLLinkForAdminStaff(Table aoMenuTable)
+    {
+        if (!String.IsNullOrEmpty(Settings.BetaVersionURL))
+        {
+            HtmlAnchor link = new HtmlAnchor();
+            link.InnerText = "Beta Version";
+            link.Attributes.Add("class", "SubTitleMenu");
+
+            Label lblNew = new Label();
+            lblNew.Text = " NEW";
+            lblNew.CssClass = "menu-new-badge";
+
+            link.HRef = Settings.BetaVersionURL + CommonUtility.EncryptQuerystring("SchoolId=" + miSchoolId + "&UserId=" + miUserId).Replace("+", "%20").Replace("/", "%2F");
+            link.Target = "_blank";
+            link.Style.Add("cursor", "pointer");
+
+            Image imgNew = new Image();
+            imgNew.ImageUrl = "~/images/newLink.gif";
+            imgNew.AlternateText = "NEW";
+            imgNew.Style.Add("margin-left", "5px");
+            imgNew.Style.Add("vertical-align", "middle");
+
+            var tRow = new TableRow();
+            var tCell = new TableCell
+            {
+                CssClass = "ClsBorderlight",
+                ColumnSpan = 1,
+                HorizontalAlign = HorizontalAlign.Left
+            };
+
+            tCell.Controls.Add(link);
+            tCell.Controls.Add(imgNew);
+
+            tRow.Controls.Add(tCell);
+
+            if (aoMenuTable.Controls.Count > 2)
+                aoMenuTable.Controls.AddAt(2, tRow);
+            else
+                aoMenuTable.Controls.Add(tRow);
+        }
+    }
+
+     /// <summary>
     /// This used to dynamicall generate Absent Student Details Link.
     /// </summary>
     private void AbsentStudentDetailsLink(Table aoMenuTable)
