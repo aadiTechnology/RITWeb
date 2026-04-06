@@ -48,6 +48,7 @@ public partial class StudentProgressSheet : SchoolBase
     private const string S_NO_EXAM_PUBLISH_MSG = "No exam of this class has been published for the current academic year.";
     private const int I_PPS_2022_23 = 53;
     private const int I_PPS_2023_24 = 54;
+    private const int I_PPS_2025_26 = 56;
     #endregion
 
     #region Members
@@ -2587,7 +2588,18 @@ public partial class StudentProgressSheet : SchoolBase
             {
                 if (bIsGradingstandard)
                 {
-                    if (iAccYrId >= I_PPS_2022_23)
+                    if (iAccYrId >= I_PPS_2025_26)
+                    {
+                        if (sStandardName == "5")
+                        {
+                            oReportDisplay.FileName = "StudentFinalProgressReportGradingFor5th_2026.rpt";
+                        }
+                        else if (sStandardName == "1" || sStandardName == "2" || sStandardName == "3" || sStandardName == "4")
+                        {
+                            oReportDisplay.FileName = "StudentFinalProgressReportGrading2026.rpt";
+                        }
+                    }
+                    else   if (iAccYrId >= I_PPS_2022_23)
                     {
                         if (iAccYrId >= I_PPS_2023_24 && sStandardName == "5")
                             oReportDisplay.FileName = "StudentFinalProgressReportGradingFor5th_2024.rpt";
@@ -2599,7 +2611,14 @@ public partial class StudentProgressSheet : SchoolBase
                 }
                 else
                 {
-                    if (iAccYrId >= I_PPS_2022_23)
+                    if (iAccYrId >= I_PPS_2025_26)
+                    {
+                       if (sStandardName == "6" || sStandardName == "7" || sStandardName == "8" || sStandardName == "9" || sStandardName == "10")
+                        {
+                            oReportDisplay.FileName = "FinalProgressReportPP2026.rpt";
+                        }
+                    }
+                    else   if (iAccYrId >= I_PPS_2022_23)
                     {
                         oReportDisplay.FileName = "FinalProgressReportPP.rpt";
                     }

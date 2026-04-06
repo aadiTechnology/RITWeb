@@ -29,10 +29,13 @@ public partial class PayInternalFeeOnlinePopup : SchoolBase
     #region -- CONSTANT(s) --
 
     private const string S_CHECK_BOX_STUDENTPAY = "chkSelect";
+    private const string S_HIDDEN_DUEDATEKEY = "hidDueDateKey";
     
     #endregion -- CONSTANT(s) --    
 
     #region -- DataMember --
+
+    private string msPreviousDueDateKey;
 
     private bool IsNextYearPayment
     {
@@ -81,6 +84,7 @@ public partial class PayInternalFeeOnlinePopup : SchoolBase
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
                 CheckBox chkSelect = oCurrentItem.FindControl("chkSelect") as CheckBox;                
+                HiddenField hidDueDateKey = oCurrentItem.FindControl(S_HIDDEN_DUEDATEKEY) as HiddenField;
                 HyperLink hlnkReceipt = oCurrentItem.FindControl("hlnkReceipt") as HyperLink;                
                 HyperLink ohlnkReceipt = oCurrentItem.FindControl("hlnkReceipt") as HyperLink;
                 Label lblPaidDate = oCurrentItem.FindControl("lblPaidDate") as Label;
@@ -123,6 +127,26 @@ public partial class PayInternalFeeOnlinePopup : SchoolBase
                 if (iReceiptNo.ToString() == "888888")
                     chkSelect.Visible = false;
 
+                if (moSchool == Constants.SchoolId.PPS &&
+                    chkSelect != null &&
+                    chkSelect.Visible &&
+                    hidIsOnlinePayment.Value == Constants.S_ONE &&
+                    oInternalFeeDebitDetails != null &&
+                    oInternalFeeDebitDetails.IsDueDateApplicable)
+                {
+                    string sCurrentDueDateKey = string.Empty;
+                    if (hidDueDateKey != null && !hidDueDateKey.Value.IsNull())
+                        sCurrentDueDateKey = hidDueDateKey.Value.Trim();
+
+                    if (!sCurrentDueDateKey.IsNull())
+                    {
+                        bool bIsFirstInDueDateGroup = (msPreviousDueDateKey == null || !string.Equals(msPreviousDueDateKey, sCurrentDueDateKey, StringComparison.Ordinal));
+                        chkSelect.Visible = bIsFirstInDueDateGroup;
+                        if (bIsFirstInDueDateGroup)
+                            msPreviousDueDateKey = sCurrentDueDateKey;
+                    }
+                }
+
                 chkSelect.Attributes.Add("onclick", "CheckSelected(this,'" + iRowId + "')");                
 
                 if (!chkSelect.Checked && chkSelect.Visible && oInternalFeeDebitDetails.IsDueDateApplicable && lblPaidDate.Text.ToDateTime() < DateTime.Today)
@@ -154,14 +178,52 @@ public partial class PayInternalFeeOnlinePopup : SchoolBase
             StringBuilder strInternalFeeIds = new StringBuilder();            
             int iTotalAmount = Constants.I_ZERO;            
 
-            for (int iRowCnt = 0; iRowCnt < lstvwInternalFee.Items.Count; iRowCnt++)
+            bool bIsPpsSchool = (moSchool == Constants.SchoolId.PPS);
+            if (bIsPpsSchool)
             {
-                var oChkPay = lstvwInternalFee.Items[iRowCnt].FindControl(S_CHECK_BOX_STUDENTPAY) as CheckBox;
+                HashSet<string> oSelectedDueDateKeys = new HashSet<string>(StringComparer.Ordinal);
 
-                if (oChkPay.Checked)
+                for (int iRowCnt = 0; iRowCnt < lstvwInternalFee.Items.Count; iRowCnt++)
                 {
-                    strInternalFeeIds = strInternalFeeIds.Append("," + Convert.ToString(lstvwInternalFee.DataKeys[iRowCnt]["InternalFeeDetailsId"]));                    
-                    iTotalAmount = iTotalAmount + lstvwInternalFee.DataKeys[iRowCnt]["Amount"].ToInt();
+                    var oChkPay = lstvwInternalFee.Items[iRowCnt].FindControl(S_CHECK_BOX_STUDENTPAY) as CheckBox;
+                    if (oChkPay == null || !oChkPay.Checked)
+                        continue;
+
+                    var hidDueDateKey = lstvwInternalFee.Items[iRowCnt].FindControl(S_HIDDEN_DUEDATEKEY) as HiddenField;
+                    if (hidDueDateKey != null && !hidDueDateKey.Value.IsNull())
+                        oSelectedDueDateKeys.Add(hidDueDateKey.Value.Trim());
+                }
+
+                for (int iRowCnt = 0; iRowCnt < lstvwInternalFee.Items.Count; iRowCnt++)
+                {
+                    var oChkPay = lstvwInternalFee.Items[iRowCnt].FindControl(S_CHECK_BOX_STUDENTPAY) as CheckBox;
+                    var hidDueDateKey = lstvwInternalFee.Items[iRowCnt].FindControl(S_HIDDEN_DUEDATEKEY) as HiddenField;
+
+                    bool bIncludeRow = false;
+                    if (oChkPay != null && oChkPay.Checked)
+                        bIncludeRow = true;
+
+                    if (!bIncludeRow && hidDueDateKey != null && !hidDueDateKey.Value.IsNull())
+                        bIncludeRow = oSelectedDueDateKeys.Contains(hidDueDateKey.Value.Trim());
+
+                    if (bIncludeRow)
+                    {
+                        strInternalFeeIds = strInternalFeeIds.Append("," + Convert.ToString(lstvwInternalFee.DataKeys[iRowCnt]["InternalFeeDetailsId"]));
+                        iTotalAmount = iTotalAmount + lstvwInternalFee.DataKeys[iRowCnt]["Amount"].ToInt();
+                    }
+                }
+            }
+            else
+            {
+                for (int iRowCnt = 0; iRowCnt < lstvwInternalFee.Items.Count; iRowCnt++)
+                {
+                    var oChkPay = lstvwInternalFee.Items[iRowCnt].FindControl(S_CHECK_BOX_STUDENTPAY) as CheckBox;
+
+                    if (oChkPay.Checked)
+                    {
+                        strInternalFeeIds = strInternalFeeIds.Append("," + Convert.ToString(lstvwInternalFee.DataKeys[iRowCnt]["InternalFeeDetailsId"]));
+                        iTotalAmount = iTotalAmount + lstvwInternalFee.DataKeys[iRowCnt]["Amount"].ToInt();
+                    }
                 }
             }
 
@@ -276,6 +338,7 @@ public partial class PayInternalFeeOnlinePopup : SchoolBase
     /// </summary>
     private void DisplayFeeDetails()
     {
+        msPreviousDueDateKey = null;
         InternalFeeDetailsBL oInternalFeeDetailsBL = new InternalFeeDetailsBL();
         List<InternalFeeDebitDetails> lstInternalFeeDebitDetails = oInternalFeeDetailsBL.GetInternalFeeDebitDetailsForOnlinePayment(miSchoolId, cmbAcademicYrId.SelectedValue.ToInt(), hidStudentId.Value.ToInt(), IsNextYearPayment);
         lstvwInternalFee.DataSource = lstInternalFeeDebitDetails;

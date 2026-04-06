@@ -89,6 +89,7 @@
                                                         <tr id="trlstvwRow" runat="server" class="ClsMarksGridAltRowN">
                                                             <td id="tdchk" runat="server" align="center">
                                                                 <asp:CheckBox ID="chkSelect" runat="server" />
+                                                                <asp:HiddenField ID="hidDueDateKey" runat="server" Value='<%# Eval("PaidDate","{0:yyyyMMdd}") %>' />
                                                             </td>
                                                             <td id="tdFeeType" runat="server" align="left" style="padding-left: 5px">
                                                                 <asp:Label ID="lblFeeType" runat="server" Text='<%# Eval("FeeType") %>' />
@@ -202,18 +203,20 @@
                  var first = true;
                  var i = 0
                  var chk = $get(_clientlstvwInternalFee + "_ctrl" + i + "_chkSelect");
-                 while (chk != null) {
+                 var feeType = $get(_clientlstvwInternalFee + "_ctrl" + i + "_lblFeeType");
+                 while (feeType != null) {
                      
-//                     if (chk != null) {
+                     if (chk != null) {
                          chk.checked = Src.checked;
                          if (first) {                            
                              first = false;
                          }
                          CheckSelected(chk, i);
-//                     }
+                     }
 
                      i++;
                      chk = $get(_clientlstvwInternalFee + "_ctrl" + i + "_chkSelect");
+                     feeType = $get(_clientlstvwInternalFee + "_ctrl" + i + "_lblFeeType");
                  }
              }
 

@@ -239,7 +239,8 @@ namespace DataCommunicator
                                             " WHERE " +
                                             "IsDeleted =" + Constants.S_ZERO +
                                             "AND AcademicYearId=" + aiAcemicYearId +
-                                            "AND SchoolId=" + miSchoolId+
+                                            "AND SchoolId=" + miSchoolId +
+                                            "AND Id<=28" +
                                             " ORDER BY SortOrder";
                 using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                     return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(sSelectStatement);

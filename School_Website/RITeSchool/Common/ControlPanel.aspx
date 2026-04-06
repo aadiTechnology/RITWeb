@@ -4411,7 +4411,7 @@
                             background-repeat: repeat-x; color: Black; width: 50%; height:auto; text-align: right;" id="divNoticeImage" runat="server" viewstatemode="Enabled">
                             <div style="font-size: 12px; width: 270px; letter-spacing: 1px; padding-left: 8px;
                                 font-weight: bold; color: darkgreen; float: left; height: 10px" align="left">
-                                <asp:Label ID="lblFeeStructure" runat="server" Text="Fee Structure Notice of AY 2025-26"></asp:Label>
+                                <asp:Label ID="lblFeeStructure" runat="server" Text="Fee Structure Notice of AY 2026-27"></asp:Label>
                             </div>
                             <span style="cursor: hand" onclick="javascript:HideFeeNoticeDiv();">
                                 <img alt="Hide Popup" class="img-align-top" src="../images/close_vista.gif" 
@@ -4420,7 +4420,7 @@
                             </span>
                         </div>   
                     <%--<img src="../images/Fee%20Structure%202024-2025.png" id="imgFeeStructure2019" style="width:100%;height:600px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />--%>
-                    <img src="../images/PPSNFeeStructure2025-26.png" style="display: block; width: auto; height: 450px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />
+                    <img src="~/images/PPSN_Fee_Structure_2026_27.png" style="display: block; width: auto; height: 450px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />
                    <%-- <img src="../images/new%20fee%20structure%20for%20ppsn.jpg" id="imgFeeStructure2022-23" style="width:100%;height:600px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />--%>
                 </div>
             </td>
@@ -6523,7 +6523,7 @@ function HideTeacherDetails() {
 
 
 		function OpenFeeStructure() {
-		    window.open('../images/PPSNFeeStructure2025-26.png?version=2.3', '_blank')
+		    window.open('../../images/PPSN_Fee_Structure_2026_27.png', '_blank')
 		}
 
 		function OpenResult() {

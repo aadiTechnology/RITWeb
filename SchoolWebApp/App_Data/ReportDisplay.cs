@@ -666,7 +666,10 @@ public class ReportDisplay : SchoolBase
             case Constants.ExportReports.PrelimReportPP:
                 return "\\RITeSchool\\Report\\Exam\\PrelimProgressReportPP.rpt";
             case Constants.ExportReports.FinalReportPP :
-                return "\\riteschool\\report\\Exam\\FinalProgressReportPP.rpt";
+                if (string.IsNullOrEmpty(msFileName))
+                    return "\\riteschool\\report\\Exam\\FinalProgressReportPP.rpt";
+                else
+                    return "\\RITeSchool\\Report\\Exam\\"+FileName;
             case Constants.ExportReports.IncomeTaxReconciliation:
                 return "\\RITeSchool\\Report\\Fee\\IncomeTaxReconciliationStatement.rpt";
             case Constants.ExportReports.CancellationFormDetails:
@@ -694,7 +697,10 @@ public class ReportDisplay : SchoolBase
 			case Constants.ExportReports.StudentFeeReceipt:
                 return "\\RITeSchool\\Report\\Fee\\FeeReceiptVPMCPS.rpt";
             case Constants.ExportReports.StudentwiseProgressReportPioneer_NurseryTO2nd:
-                return "\\RITeSchool\\Report\\Exam\\StudentwiseTermProgressReportPrimaryPioneer.rpt";
+                if(TermId == 1)
+                    return "\\RITeSchool\\Report\\Exam\\StudentwiseTermProgressReportPrimaryPioneer.rpt";
+                else
+                    return "\\RITeSchool\\Report\\Exam\\StudentwiseTerm2ProgressReportPrimaryPioneer.rpt";
             case Constants.ExportReports.HalfYearlyReportFor3To9Pioneer:
                 return "\\RITeSchool\\Report\\Exam\\StudentHalfYearlyReportFor3To9ForPioneer.rpt";
             case Constants.ExportReports.HolosticProgressReportPPSNFor3to5:

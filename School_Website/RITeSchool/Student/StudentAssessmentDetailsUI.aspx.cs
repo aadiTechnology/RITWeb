@@ -174,7 +174,7 @@ public partial class StudentAssessmentDetailsUI : SchoolBase
            bool bSubmitStudentAssessmentDetails = true;
            moStudentAssessmentBL.SubmitStudentAssessmentDetails(ddlAcademicYear.SelectedValue.ToInt(), ddlCategory.SelectedValue.ToInt(), ddlTest.SelectedValue.ToInt(),bSubmitStudentAssessmentDetails, ddlStudentName.SelectedValue.ToInt());
            lblMessage.Text = "Student assessment details submited successfully !!!";
-           FillStudentFavDetailsListview();
+            FillStudentFavDetailsListview();
            FillStudentAssessmentDetails();
         }
         catch (Exception ex)
@@ -379,6 +379,10 @@ public partial class StudentAssessmentDetailsUI : SchoolBase
             DisplayLegends(false);
             btnSave.Enabled = false;
             btnSubmit.Enabled = false;
+        }
+        if (moUserRole == Constants.UserRoles.Teacher && miSchoolId.ToInt()==Constants.SchoolId.SNS.ToInt())
+        {
+            btnSave.Enabled = true;
         }
      }
 

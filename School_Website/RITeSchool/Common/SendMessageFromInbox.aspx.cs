@@ -2044,7 +2044,12 @@ public partial class SendMessageFromInbox : SchoolBase
             if (msForm != null && msForm != Constants.S_EMPTY_STRING && msForm.Equals("SMSUI"))
                 RecieversListFromSMSUI();
         }
-    }
+        if (moUserRole == Constants.UserRoles.Student && miSchoolId == Constants.SchoolId.SNS.ToInt())
+        {
+            optTeachers.Text = "School Heads";
+            optTeachers.Width = Unit.Pixel(110);
+        }
+     }
 
     private void FeesPayableStudentsForStds()
     {

@@ -9,7 +9,7 @@
             .trHeight {
                 height:30px;
             }
-        </style>
+         </style>
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="90%">
             <tr align="center" style="text-align: center; margin: 0px auto;">
                 <td id="tdMessage" runat="server" align="center" colspan="6">
@@ -344,18 +344,36 @@
                             <td>
                                 <asp:TextBox ID="txtFFirstName" runat="server" CssClass="MidTxtNormalAdmission" MaxLength="100"
                                     Width="110px" />
+                                 <asp:RequiredFieldValidator ID="reqFFirstName" runat="server" ErrorMessage="Student's Father Name should not be blank."
+                                    Display="None" ControlToValidate="txtFFirstName" ValidationGroup="Save"></asp:RequiredFieldValidator>
+                               <span id="spnFFirstName" runat="server" class="ClsMdtStar">*</span>
                                 <asp:TextBox ID="txtFMiddleName" runat="server" CssClass="MidTxtNormalAdmission"
                                     MaxLength="100" Width="110px" />
+                                 <asp:RequiredFieldValidator ID="reqFMiddleName" runat="server" ErrorMessage="Student's father's Middle Name should not be blank."
+                                    Display="None" ControlToValidate="txtFMiddleName" ValidationGroup="Save"></asp:RequiredFieldValidator>
+                               <span id="spnFMiddleName" runat="server" class="ClsMdtStar">*</span>
                                 <asp:TextBox ID="txtFLastName" runat="server" CssClass="MidTxtNormalAdmission" MaxLength="100"
                                     Width="110px" />
+                                 <asp:RequiredFieldValidator ID="reqFLastName" runat="server" ErrorMessage="Student's father's Last Name should not be blank."
+                                    Display="None" ControlToValidate="txtFLastName" ValidationGroup="Save"></asp:RequiredFieldValidator>
+                                <span id="spnFLastName" runat="server" class="ClsMdtStar">*</span>
                             </td>
                             <td>
                                 <asp:TextBox ID="txtMFirstName" runat="server" CssClass="MidTxtNormalAdmission" MaxLength="100"
                                     Width="110px" />
+                                <asp:RequiredFieldValidator ID="reqMFirstName" runat="server" ErrorMessage="Student's Mother Name should not be blank."
+                                    Display="None" ControlToValidate="txtMFirstName" ValidationGroup="Save"></asp:RequiredFieldValidator>
+                               <span id="spnMFirstName" runat="server" class="ClsMdtStar">*</span>
                                 <asp:TextBox ID="txtMMiddleName" runat="server" CssClass="MidTxtNormalAdmission"
                                     MaxLength="100" Width="110px" />
+                                 <asp:RequiredFieldValidator ID="reqMMiddleName" runat="server" ErrorMessage="Student's Mother's Middle Name should not be blank."
+                                    Display="None" ControlToValidate="txtMMiddleName" ValidationGroup="Save"></asp:RequiredFieldValidator>
+                                  <span id="spnMMiddleName" runat="server" class="ClsMdtStar">*</span>
                                 <asp:TextBox ID="txtMLastName" runat="server" CssClass="MidTxtNormalAdmission" MaxLength="100"
                                     Width="110px" />
+                                 <asp:RequiredFieldValidator ID="reqMLastName" runat="server" ErrorMessage="Student's Mother's Last Name should not be blank."
+                                    Display="None" ControlToValidate="txtMLastName" ValidationGroup="Save"></asp:RequiredFieldValidator>
+                                   <span id="spnMLastName" runat="server" class="ClsMdtStar">*</span>
                             </td>
                         </tr>
                         <tr>
@@ -395,7 +413,7 @@
                                 <span class="ClsMdtStar">* </span>
                             </td>
                             <td>
-                                <asp:DropDownList ID="cmbMOccupation" runat="server" CssClass="TxtNormalAdmission"
+                                <asp:DropDownList ID="cmbMOccupation" runat="server" CssClass="TxtNormalAdmission" onselectedindexchanged="cmbMOccupation_SelectedIndexChanged" AutoPostBack="True"
                                     ViewStateMode="Enabled" Width="100px" BackColor="#ffffa0">
                                 </asp:DropDownList>
                                 <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="cmbMOccupation"
@@ -417,7 +435,10 @@
                             </td>
                             <td>
                                 <asp:TextBox ID="txtMOrgAddress" runat="server" CssClass="TxtNormalAdmission" MaxLength="200"
-                                    TextMode="MultiLine" Columns="20" Rows="4" Width="300px" />                               
+                                    TextMode="MultiLine" Columns="20" Rows="4" Width="300px" />  
+                                 <asp:RequiredFieldValidator ID="reqMOrgAddress" runat="server"  ControlToValidate="txtMOrgAddress"  ErrorMessage="Mother Organization Address should not be blank."
+                                 Display="None"  ValidationGroup="Save"> </asp:RequiredFieldValidator>  
+                                <span id="spnMOrgAddress" runat="server" class="ClsMdtStar">*</span>                          
                             </td>
                         </tr>
                         <tr>
@@ -430,16 +451,19 @@
                                     onkeyup="extractNumber(this,0,false);" onpaste="event.returnValue=false" BackColor="#ffffa0"/>
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator15" runat="server" ErrorMessage="FatherOffice Telephone No. should not be blank."
                                     Display="None" ControlToValidate="txtFOffPhone" ValidationGroup="Save"></asp:RequiredFieldValidator>
-                                <span class="ClsMdtStar">* </span>
+                                <span  class="ClsMdtStar">*</span>     
                             </td>
                             <td>
                                 <asp:TextBox ID="txtMOffPhone" runat="server" CssClass="TxtNormalAdmission" MaxLength="20"
                                     onblur="extractNumber(this,0,false);" ondrop="event.returnValue=false" onkeypress="return blockNonNumbers (this, event, false, false);"
-                                    onkeyup="extractNumber(this,0,false);" onpaste="event.returnValue=false" />                               
+                                    onkeyup="extractNumber(this,0,false);" onpaste="event.returnValue=false" />  
+                                <asp:RequiredFieldValidator ID="reqMOffPhone" runat="server"  ControlToValidate="txtMOffPhone"
+                                      ErrorMessage="Mother Office Phone should not be blank." Display="None" ValidationGroup="Save"></asp:RequiredFieldValidator> 
+                                 <span id="spnMOffPhone" runat="server" class="ClsMdtStar">*</span>                            
                             </td>
                         </tr>
                         <tr>
-                            <td class="TxtNormal" style="font-size: 10pt">
+                            <td class="auto-style1" style="font-size: 10pt">
                                 Mobile Number :
                             </td>
                             <td>
@@ -480,7 +504,9 @@
                                     TextMode="SingleLine" Columns="20" Rows="4" Width="200px" />
                                 <asp:RegularExpressionValidator ID="regvalMEmail" runat="server" ControlToValidate="txtMEmail"
                                     Display="None" ErrorMessage="Mother Email Address should be in valid format(For Example :\&quot; john.smith@yahoo.com \&quot;)."
-                                    ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>                               
+                                    ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                                <asp:RequiredFieldValidator ID="reqMEmail" runat="server" ControlToValidate="txtMEmail" ErrorMessage="Mother Email should not be blank." Display="None" ValidationGroup="Save"></asp:RequiredFieldValidator>    
+                                <span id="spnMEmail" runat="server" class="ClsMdtStar">*</span>                           
                             </td>
                         </tr>
                     </table>

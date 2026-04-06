@@ -89,7 +89,7 @@ public partial class StudentRegistrationDetails : SchoolBase
                 LoadPageControls(sender,e);
                 FillControls();
                 SetJavascriptAttributes();
-
+             
                 SetStreamDetails();
                 SetLastSchoolState();
                 SetEnquiryVisibility();
@@ -244,12 +244,13 @@ public partial class StudentRegistrationDetails : SchoolBase
             SetStreamDetails();
             SetAadharCardValidationState();
             SetLastSchoolState();
-        }
+         }
         catch (Exception ex)
         {
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
         }
     }
+
 
     protected void BlackListStudent_Validate(object obj, ServerValidateEventArgs e)
     {
@@ -278,6 +279,10 @@ public partial class StudentRegistrationDetails : SchoolBase
             ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
         }
     }
+    protected void cmbMOccupation_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      SetEnquiryVisibility();
+    }
 
     #endregion
 
@@ -291,16 +296,24 @@ public partial class StudentRegistrationDetails : SchoolBase
         int iSchoolId = ConfigurationManager.AppSettings["SchoolId"].ToInt();
         if (iSchoolId == Constants.SchoolId.SNS.ToInt())
         {
-            List<string> lstStd = new List<string> { "PLAY GROUP","NURSERY", "LKG", "UKG", "1" };
-            if (!lstStd.Contains(cmbStd.SelectedItem.Text.ToUpper()))
+            if (hidIsEnquiry.Value.ToInt() == 1)
             {
                 txtAadharCardNumber.Style.Add("background-color", "#ffffa0");
                 hidValidateAadharCard.Value = Constants.S_YES;
             }
-            else
+            else if (hidIsEnquiry.Value.ToInt() == 0)
             {
-                txtAadharCardNumber.Style.Add("background-color", "white");
-                hidValidateAadharCard.Value = Constants.S_NO;
+                List<string> lstStd = new List<string> { "PLAY GROUP", "NURSERY", "LKG", "UKG", "1" };
+                if (!lstStd.Contains(cmbStd.SelectedItem.Text.ToUpper()))
+                {
+                    txtAadharCardNumber.Style.Add("background-color", "#ffffa0");
+                    hidValidateAadharCard.Value = Constants.S_YES;
+                }
+                else
+                {
+                    txtAadharCardNumber.Style.Add("background-color", "white");
+                    hidValidateAadharCard.Value = Constants.S_NO;
+                }
             }
         }
         else
@@ -1100,6 +1113,54 @@ public partial class StudentRegistrationDetails : SchoolBase
             trEnquiry.Visible = true;
             tdReceiptNo.Visible = false;
             tdReceiptNo1.Visible = false;
+            reqFFirstName.Visible = true;
+            reqFMiddleName.Visible = true;
+            reqFLastName.Visible = true;
+            reqMFirstName.Visible = true;
+            reqMMiddleName.Visible = true;
+            reqMLastName.Visible = true;
+            txtMFirstName.Style.Add("background-color", "#ffffa0");
+            txtMMiddleName.Style.Add("background-color", "#ffffa0");
+            txtMLastName.Style.Add("background-color", "#ffffa0");
+            txtFFirstName.Style.Add("background-color", "#ffffa0");
+            txtFMiddleName.Style.Add("background-color", "#ffffa0");
+            txtFLastName.Style.Add("background-color", "#ffffa0");
+            txtAadharCardNumber.Style.Add("background-color", "#ffffa0");
+            hidValidateAadharCard.Value = Constants.S_YES;
+            spnFFirstName.Visible = true;
+            spnFMiddleName.Visible = true;
+            spnFLastName.Visible = true;
+            spnMFirstName.Visible = true;
+            spnMMiddleName.Visible = true;
+            spnMLastName.Visible = true;
+            spnMOrgAddress.Visible = true;
+            spnMOffPhone.Visible = true;
+            spnMEmail.Visible = true;
+
+            if (cmbMOccupation.SelectedItem.Text == "House Wife" || cmbMOccupation.SelectedItem.Text == "Other")
+              {
+                reqMOffPhone.Enabled = false;
+                reqMOrgAddress.Enabled = false;
+                reqMEmail.Enabled = false;
+
+                spnMOffPhone.Visible = false;
+                spnMEmail.Visible = false;
+                spnMOrgAddress.Visible = false;
+
+                txtMOrgAddress.BackColor = System.Drawing.Color.White;
+                txtMOffPhone.BackColor = System.Drawing.Color.White;
+                txtMEmail.BackColor = System.Drawing.Color.White;
+               }
+          else
+              {
+                reqMOffPhone.Enabled = true;
+                reqMOrgAddress.Enabled = true;
+                reqMEmail.Enabled = true;
+
+                txtMOrgAddress.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffffa0");
+                txtMOffPhone.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffffa0");
+                txtMEmail.BackColor = System.Drawing.ColorTranslator.FromHtml("#ffffa0");   
+            }
 
             if (miUserId != 0)
                 txtEnqNo.Enabled = false;
@@ -1111,7 +1172,34 @@ public partial class StudentRegistrationDetails : SchoolBase
             trEnquiry.Visible = false;
             tdReceiptNo.Visible = true;
             tdReceiptNo1.Visible = true;
-        }
+
+            reqFFirstName.Visible = false;
+            reqFMiddleName.Visible = false;
+            reqFLastName.Visible = false;
+            reqMFirstName.Visible = false;
+            reqMMiddleName.Visible = false;
+            reqMLastName.Visible = false;
+            txtMFirstName.BackColor = System.Drawing.Color.White;
+            txtMMiddleName.BackColor = System.Drawing.Color.White;
+            txtMLastName.BackColor = System.Drawing.Color.White;
+            txtFFirstName.BackColor = System.Drawing.Color.White;
+            txtFMiddleName.BackColor = System.Drawing.Color.White;
+            txtFLastName.BackColor = System.Drawing.Color.White;
+            txtAadharCardNumber.BackColor = System.Drawing.Color.White;
+            hidValidateAadharCard.Value = Constants.S_NO;
+            spnFFirstName.Visible = false;
+            spnFMiddleName.Visible = false;
+            spnFLastName.Visible = false;
+            spnMFirstName.Visible = false;
+            spnMMiddleName.Visible = false;
+            spnMLastName.Visible = false;
+            spnMOrgAddress.Visible = false;
+            spnMOffPhone.Visible = false;
+            spnMEmail.Visible = false;
+            reqMOffPhone.Enabled = false;
+            reqMOrgAddress.Enabled = false;
+            reqMEmail.Enabled = false;
+          }
     }
     /// <summary>
     /// these method gives next enquiry no.
@@ -1147,6 +1235,5 @@ public partial class StudentRegistrationDetails : SchoolBase
             }
         }
     }
-
-    #endregion   
+  #endregion   
 }

@@ -2881,6 +2881,11 @@ public partial class SchoolReportsUI : ExportToExcel
                     msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentwiseTerm2ProgressReportPrimaryPioneer.rpt";
                 }
             }
+            if (msReportID == S_STUD_TERM2_RESULT  && moSchool == Constants.SchoolId.BFS )
+            {
+                 if (miAcademicYearId >= 12)
+                msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentTerm1ProgressReport_BFS.rpt";
+            }
             if (msReportID == S_STUD_FINAL_RESULT_PPSH_Old && moSchool == Constants.SchoolId.DPIS && miAcademicYearId >= 6)
                 msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\StudentWiseFinalProgressReportForDPIS2025.rpt";
             else if (msReportID == S_EXAMWISE_MARK_DETAILS)
