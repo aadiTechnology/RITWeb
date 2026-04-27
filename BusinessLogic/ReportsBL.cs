@@ -892,5 +892,16 @@ namespace BusinessLogic
             oDS.Tables[2].TableName = "StudentSkillSummary";
             return oDS;
         }
+
+        public static DataSet GetDetailsForHolisticReportFor6to8SNS(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, int aiStudentId)
+        {
+            DataSet oDS = ReportsDC.GetDetailsForHolisticReportFor6to8SNS(aiSchoolId, aiAcademicYearId, aiStandardId, aiDivisionId, aiStudentId);
+            oDS.Tables[0].TableName = "StudentInformation";
+            oDS.Tables[1].TableName = "AttendanceDetails";
+            oDS.Tables[2].TableName = "SkillDetails";
+            oDS.Tables[3].TableName = "MarkDetails";
+            oDS.Tables[4].TableName = "PercentageGrade";            
+            return oDS;
+        }
     }
 }

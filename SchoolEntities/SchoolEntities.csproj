@@ -191,6 +191,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishStatus.cs" />
     <Compile Include="QualificatoinDetails.cs" />
+    <Compile Include="ReportExportEntity.cs" />
     <Compile Include="ResultDetails.cs" />
     <Compile Include="RiteSchoolUsage.cs" />
     <Compile Include="SchoolEntity.cs" />

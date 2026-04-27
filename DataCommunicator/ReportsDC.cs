@@ -905,5 +905,18 @@ namespace DataCommunicator
                 return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataSet("usp_GetDetailsForHolisticReportFor3To5Std");
             }
         }
+
+        public static DataSet GetDetailsForHolisticReportFor6to8SNS(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, int aiStudentId)
+        {
+            using (var oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("School_Id", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Academic_Year_Id", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Standard_Id", aiStandardId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Division_Id", aiDivisionId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StudentId", aiStudentId, SqlDbType.Int);
+                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataSet("usp_GetHolisticProgressReportDetailsFor6To8SNS");
+            }
+        }
     }
 }
