@@ -261,12 +261,12 @@ public partial class ReassignRegNoUI : SchoolBase
                 if (grdvwRegNo.DataKeys[e.Row.RowIndex]["SchoolLeft_Date"] != DBNull.Value)
                     e.Row.ForeColor = System.Drawing.Color.Red;
 
-                if (e.Row.RowIndex >= 1)
-                {
-                    TextBox txtNewRegNo = ((TextBox)grdvwRegNo.Rows[e.Row.RowIndex-1].Cells[3].FindControl("txtNewRegNo"));
-                    if (txtNewRegNo != null && txtNewRegNo.Text.Trim() != string.Empty && moSchool == Constants.SchoolId.PPSN)
-                        txtNewRegNo.Enabled = false;
-                }
+                //if (e.Row.RowIndex >= 1)
+                //{
+                //    TextBox txtNewRegNo = ((TextBox)grdvwRegNo.Rows[e.Row.RowIndex-1].Cells[3].FindControl("txtNewRegNo"));
+                //    if (txtNewRegNo != null && txtNewRegNo.Text.Trim() != string.Empty && moSchool == Constants.SchoolId.PPSN)
+                //        txtNewRegNo.Enabled = false;
+                //}
             }
         }
         catch (Exception ex)

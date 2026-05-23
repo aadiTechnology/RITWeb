@@ -410,6 +410,8 @@ public partial class AssignGradesUI : SchoolBase
 
             dtClasses.DefaultView.Sort = "OrgStdId ASC, OrgDivId ASC, Sort_Order ASC";
 
+            char sHasEditAccess = CommonUtility.IsUserHasEditAccess(Constants.SchoolConfigurations.AssignGradesResult);
+
             if (hidIsClassTeacher.Value == Constants.S_YES)
             {
                 if (bIsPublished)
@@ -418,7 +420,7 @@ public partial class AssignGradesUI : SchoolBase
                     btnPublish.Enabled = true;
                     btnPublish.Text = S_UNPUBLISH_TEXT;
                 }
-                else if (bIsClasssTeacher)
+                else if (bIsClasssTeacher || sHasEditAccess == Constants.C_YES)
                 {
                     btnPublish.Visible = true;
 

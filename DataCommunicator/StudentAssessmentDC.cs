@@ -229,6 +229,22 @@ namespace DataCommunicator
                 using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                     return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(s1SelectStatement);
             }
+            else if (miSchoolId == Constants.SchoolId.SNS.ToInt())
+            {
+                string sSelectStatement = " SELECT " +
+                                           " Id " +
+                                           " ,Name " +
+                                           " FROM " +
+                                           " ObservationGrades " +
+                                           " WHERE " +
+                                           "IsDeleted =" + Constants.S_ZERO +
+                                           "AND AcademicYearId=" + aiAcemicYearId +
+                                           "AND SchoolId=" + miSchoolId +
+                                           "AND Id<=28" +
+                                           " ORDER BY SortOrder";
+                using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+                    return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(sSelectStatement);
+            }
             else
             {
                 string sSelectStatement = " SELECT " +
@@ -239,8 +255,7 @@ namespace DataCommunicator
                                             " WHERE " +
                                             "IsDeleted =" + Constants.S_ZERO +
                                             "AND AcademicYearId=" + aiAcemicYearId +
-                                            "AND SchoolId=" + miSchoolId +
-                                            "AND Id<=28" +
+                                            "AND SchoolId=" + miSchoolId +                                            
                                             " ORDER BY SortOrder";
                 using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                     return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(sSelectStatement);

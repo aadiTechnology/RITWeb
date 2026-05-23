@@ -562,6 +562,8 @@ public partial class StudentProgressSheet : SchoolBase
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentFinalProgressReport9thStd_PPSH_AY10, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
                 else if (hidStandardName.Value == "9" && !IsFinalExamPublished)
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH_9th, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
+
+                oReportDisplay.AcademicYearId = iAccYearId;
             }
             else if (miSchoolId == Constants.SchoolId.SNS.ToInt())
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseTermProgressReportSNS_1rdTO5th2024, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
@@ -684,7 +686,7 @@ public partial class StudentProgressSheet : SchoolBase
             bool bIsFinalPublished = oStudentProgress.IsFinalResultPublished(iStdDivId);
 
             if (iAcademicYearId>=14 && (hidStandardName.Value == "3" || hidStandardName.Value == "4" || hidStandardName.Value == "5"))
-                sFilterStr = "(usp_GetDetailsForHolisticReportFor3To5Std.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Student_Id}=" + iStudentId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Standard_Id}=" + iStdid + "AND usp_GetDetailsForHolisticReportFor3To5Std.Term_Id}=1AND usp_GetDetailsForHolisticReportFor3To5Std.IsFromReportScreen}=0AND usp_GetDetailsForHolisticReportFor3To5Std.Division_Id}=" + iStdDivId + ") @";
+                sFilterStr = "(usp_GetDetailsForHolisticReportFor3To5Std.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Student_Id}=" + iStudentId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Standard_Id}=" + iStdid + "AND usp_GetDetailsForHolisticReportFor3To5Std.Term_Id}=" + (bIsFinalPublished?2:1) + " AND usp_GetDetailsForHolisticReportFor3To5Std.IsFromReportScreen}=0AND usp_GetDetailsForHolisticReportFor3To5Std.Division_Id}=" + iStdDivId + ") @";
             else if (hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8")
                 sFilterStr = "(usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.School_Id}=" + miSchoolId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.StudentId}=" + iStudentId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Standard_Id}=" + iStdid + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Term_Id}=1AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.IsFromStudnetLogin}=1AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Division_Id}=" + iStdDivId + ") @";
             else if(hidStandardName.Value == "9")

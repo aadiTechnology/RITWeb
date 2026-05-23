@@ -85,6 +85,7 @@ public partial class UploadNoticesUI :SchoolBase
                 FillApplicableRoles();
                 trDtPgCount.Visible = true;
                 SetJavaScriptAttributes();
+                SetValidationVisibility();
                 FillDisplayLocationComboboxes();
                 DisableRoles(true);
                 InitailizeHiddenField();
@@ -500,7 +501,7 @@ public partial class UploadNoticesUI :SchoolBase
                         oNoticeDetails.SchoolId = Session[Constants.S_SESSION_SCHOOL_ID].ToInt();
                         oNoticeDetails.AcademicYearId = Session[Constants.S_SESSION_CURRENT_ACADEMIC_YEAR_ID].ToInt();
                         oNoticeDetails.DisplayLocation = cmbDisplayLocationTextNotice.SelectedValue;
-                        oNoticeDetails.SortOrder = txtSortOrderTextNotice.Text.ToInt();
+                        oNoticeDetails.SortOrder = string.IsNullOrWhiteSpace(txtSortOrderTextNotice.Text) ? 0 : txtSortOrderTextNotice.Text.ToInt();
                         txtStartTimeTextNotice.Text = string.IsNullOrEmpty(txtStartTimeTextNotice.Text) ? S_START_TIME : txtStartTimeTextNotice.Text;
                         txtEndDateTextNotice.Text = string.IsNullOrEmpty(txtEndTimeTextNotice.Text) ? S_END_TIME : txtEndDateTextNotice.Text;
                         oNoticeDetails.StartDate = Convert.ToDateTime(txtStartDateTextNotice.Text + ' ' + txtStartTimeTextNotice.Text).ToString();
@@ -1278,7 +1279,30 @@ public partial class UploadNoticesUI :SchoolBase
         chkLstClasses.Attributes.Add("onclick", "CheckOrUncheckAllCheckBox()");
         chkLstClassesText.Attributes.Add("onclick", "CheckOrUncheckAllCheckBoxForText()");
         txtLinkName.Focus();
+       
     }
+    /// <summary>
+    /// This method is used to hide validation for vp school.
+    /// </summary>
+    private void SetValidationVisibility()
+    {
+        if (miSchoolId == Constants.SchoolId.VPMCPS.ToInt())
+        {
+            reqEndDateText.Visible = false;
+            reqValSortOrderText.Visible = false;
+            spnEndDate.Visible = false;
+            spnSortOrder.Visible = false;
+        }
+        else
+        {
+            reqEndDateText.Visible = true;
+            reqValSortOrderText.Visible = true;
+            spnEndDate.Visible = true;
+            spnSortOrder.Visible = true;
+
+        }
+    }
+
 
     /// <summary>
     /// This methos is used to check file size and then check correct file to specified location

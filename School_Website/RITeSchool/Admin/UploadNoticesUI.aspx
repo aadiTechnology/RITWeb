@@ -401,7 +401,7 @@
                                                 <asp:RequiredFieldValidator ID="reqEndDateText" runat="server" ErrorMessage="End date should not be blank."
                                                     ValidationGroup="TextNotice" Display="None" ControlToValidate="txtEndDateTextNotice">
                                                 </asp:RequiredFieldValidator>
-                                                <span class="ClsMdtStar">*&nbsp;</span>
+                                                <span class="ClsMdtStar"  runat="server" id="spnEndDate" visible="false">*&nbsp;</span>
                                             </td>
                                             <td align="left" class="ClsBorderlight paddingL" style="width: 111px">
                                                 <span class="ClsLabel">End Time :</span>
@@ -423,7 +423,7 @@
                                                 <asp:TextBox runat="server" ID="txtSortOrderTextNotice" CssClass="MidTxtBox" MaxLength="3"
                                                     onblur="extractNumber(this,2,false);" ondrop="event.returnValue=false" onkeypress="return blockNonNumbers(this, event, false, false);"
                                                     onkeyup="extractNumber(this,2,false);" onpaste="event.returnValue=false">
-                                                </asp:TextBox> <span class="ClsMdtStar">*&nbsp;</span>
+                                                </asp:TextBox> <span class="ClsMdtStar" runat="server" id="spnSortOrder" visible="false">*&nbsp;</span>
                                                 <asp:RequiredFieldValidator ID="reqValSortOrderText" runat="server" ValidationGroup="TextNotice"
                                                     ErrorMessage="Sort order should not be blank." ControlToValidate="txtSortOrderTextNotice"
                                                     Display="None">

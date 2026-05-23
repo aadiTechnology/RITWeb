@@ -309,7 +309,7 @@ public class ReportDisplay : SchoolBase
                 dsProgressReportDetails = ReportsBL.GetPrelimProgressReportDataSetForPP(miSchoolId, iAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 2, false);
                 break;
             case Constants.ExportReports.HolosticProgressReportPPSNFor3to5:
-                dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPPSH(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, false);
+                dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPPSH(miSchoolId, iAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, false);
                 break;
         }
 
@@ -768,7 +768,7 @@ public class ReportDisplay : SchoolBase
                         }
 
                         oParameterFieldDefinition = (ParameterFieldDefinition)ApplyParameterFieldDefinations[sParameterField];
-                        if (sParameterValue.Trim() == "null")
+                        if (sParameterValue.Trim().ToLower() == "null") 
                         {
                             ApplyParameterDiscreteValue.Value = null;
                             crReportDocument.SetParameterValue(sParameterField, null);

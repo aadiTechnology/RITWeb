@@ -410,6 +410,8 @@ namespace Utility
         public const string S_SESSION_DO_REFRESH_PAGE = "DorefreshPage";
         public const string S_SESSION_SELECTED_YEAR = "SelectedAcademicYearId";
 
+        public const string S_SESSION_ARE_MANDATORY_FIELD_SUBMITTED_BY_STUDENT = "AreMandatoryFieldsSubmittedByStudent";
+
         #endregion
 
         #region  Language Related
@@ -762,6 +764,7 @@ namespace Utility
             OnlineExamConfiguration = 310,
             OnlineExamResult = 311,
             OnlineExamProgressReport = 312,
+            AssignGradesResult = 313,
             DescriptiveIndicators = 314,
             StockManagement = 106,
 			LecturewiseAttendanceScreen = 317,

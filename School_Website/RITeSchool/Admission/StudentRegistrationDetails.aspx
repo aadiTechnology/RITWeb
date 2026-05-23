@@ -689,15 +689,17 @@
                                                                             1
                                                                         </td>
                                                                         <td class="TxtNormal" style="font-size: 10pt;">
-                                                                            English, Business Studies, Accounts, Economics
-                                                                         </td>
+                                                                          <asp:Label runat = "server" ID = "lblCommerceSubjects"> English, Business Studies, Accounts, Economics</asp:Label> 
+                                                                        </td>
                                                                          <td class="TxtNormal" style="font-size: 12pt; font-family:Cambria; text-align:left;">
-                                                                            <asp:RadioButton ID="rdoStream_ComMaths" Text="Maths" runat="server" Font-Size="12" GroupName="Commerce"></asp:RadioButton> <br /><br />
-                                                                            <asp:RadioButton ID="rdoStream_ComPhyEdu" Text="Physical education" runat="server" GroupName="Commerce"></asp:RadioButton> <br /><br />
+                                                                            <asp:RadioButton ID="rdoStream_ComMaths" Text="Maths" runat="server" Font-Size="12" GroupName="Maths"></asp:RadioButton> <br /><br />
                                                                             <asp:RadioButton ID="rdoStream_ComLeagalStudies" Text="Legal Studies" runat="server" GroupName="Commerce"></asp:RadioButton>
+                                                                            <asp:RadioButton ID="rdoStream_ComPhyEdu" Text="Physical education" runat="server" GroupName="Commerce"></asp:RadioButton> <br /><br />
+
                                                                          </td>
                                                                          <td class="TxtNormal" style="font-size: 12pt; font-family:Cambria; text-align:left;">    
                                                                             <asp:CheckBox ID="chkStream_ComCA" runat="server" CssClass="LblSml" Text="CA" />
+                                                                              <asp:CheckBox ID="chkUGEntrance" runat="server" CssClass="LblSml" Text="UG Entrance" Visible="false" />
                                                                             <asp:CheckBox ID="chkStream_ComExtraCo" runat="server" CssClass="LblSml" Text="EXTRACOACHING" />                                                                                                                                                                                                                                
                                                                          </td>
                                                                     </tr>
@@ -717,7 +719,7 @@
                                                                         <td class="TxtNormal" style="font-size: 10pt; width:250pt;">
                                                                             <asp:Label runat = "server" ID = "Label18"><b>OPTIONAL SUBJECTS</b></asp:Label> 
                                                                         </td>
-                                                                        <td class="TxtNormal" style="font-size: 10pt;">
+                                                                        <td class="TxtNormal" style="font-size: 10pt;" id="tdArtExamCoaching" runat="server">
                                                                             <asp:Label runat = "server" ID = "Label19"><b>COMPETITIVE EXAMS COACHING</b></asp:Label> 
                                                                         </td>
                                                                     </tr>
@@ -726,7 +728,7 @@
                                                                             1
                                                                         </td>
                                                                         <td class="TxtNormal" style="font-size: 10pt; width:300pt;">
-                                                                            English, History, Psychology
+                                                                         <asp:Label runat = "server" ID = "lblArtsSubjects">English, History, Psychology</asp:Label> 
                                                                          </td>
                                                                          <td class="TxtNormal" style="font-size: 12pt; font-family:Cambria; width:250pt; text-align:left;">
                                                                             <asp:RadioButton ID="rdoStream_ArtLegalSci" Text="Legal Studies <b>OR</b>" runat="server" Font-Size="12" GroupName="ArtLegalStud"></asp:RadioButton><br />
@@ -735,7 +737,7 @@
                                                                             <asp:RadioButton ID="rdoStream_ArtGerman" Text="German <b>OR</b>" runat="server" Font-Size="12" GroupName="ArtGerman"></asp:RadioButton><br />
                                                                             <asp:RadioButton ID="rdoStream_ArtEconomics" Text="Economics" runat="server" GroupName="ArtGerman"></asp:RadioButton>
                                                                          </td>
-                                                                         <td class="TxtNormal" style="font-size: 12pt; font-family:Cambria; text-align:left;">     
+                                                                         <td class="TxtNormal" style="font-size: 12pt; font-family:Cambria; text-align:left;"  id="tdArtExamCoaching1" runat="server">     
                                                                             <asp:CheckBox ID="chkStream_ArtClat" runat="server" CssClass="LblSml" Text="CLAT" />
                                                                             <asp:CheckBox ID="chkStream_ArtExtraCo" runat="server" CssClass="LblSml" Text="EXTRACOACHING" />                                                                            
                                                                          </td>

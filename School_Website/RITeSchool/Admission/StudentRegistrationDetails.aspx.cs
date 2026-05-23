@@ -89,11 +89,11 @@ public partial class StudentRegistrationDetails : SchoolBase
                 LoadPageControls(sender,e);
                 FillControls();
                 SetJavascriptAttributes();
-             
                 SetStreamDetails();
+                SetStreamVisibility();
                 SetLastSchoolState();
                 SetEnquiryVisibility();
-            }
+               }
             hidSchoolId.Value = SchoolId.ToString();
             hidSNSSchoolId.Value = Constants.SchoolId.SNS.ToInt().ToString();
          }
@@ -221,6 +221,8 @@ public partial class StudentRegistrationDetails : SchoolBase
                     trArtsStream.Attributes.Add("style", "display:none");
                     trAbroadEducation.Attributes.Add("style", "display:none");
                 }
+
+                SetStreamVisibility();
 
         }
         catch (Exception ex)
@@ -456,21 +458,33 @@ public partial class StudentRegistrationDetails : SchoolBase
             iGroupId = Constants.I_ONE;
 
             if (rdoStream_ComMaths.Checked)
-                sOptionalSubjectID = Constants.S_ONE;   
+                sOptionalSubjectID = Constants.S_ONE;
             else if (rdoStream_ComPhyEdu.Checked)
-                sOptionalSubjectID = Constants.S_TWO;   
+                sOptionalSubjectID = Constants.S_TWO;
             else if (rdoStream_ComLeagalStudies.Checked)
-                sOptionalSubjectID = Constants.S_THREE; 
-        
-          if (chkStream_ComCA.Checked && chkStream_ComExtraCo.Checked)
+                sOptionalSubjectID = Constants.S_THREE;
+           
+
+            if (chkStream_ComCA.Checked && chkUGEntrance.Checked && chkStream_ComExtraCo.Checked)
+                sCompitativeExamIds = "1,2,3";
+            else if (chkStream_ComCA.Checked && chkUGEntrance.Checked)
+                sCompitativeExamIds = "1,3";
+            else if (chkStream_ComCA.Checked && chkStream_ComExtraCo.Checked)
                 sCompitativeExamIds = "1,2";
+            else if (chkUGEntrance.Checked && chkStream_ComExtraCo.Checked)
+                sCompitativeExamIds = "2,3";   
             else if (chkStream_ComCA.Checked)
                 sCompitativeExamIds = "1";
             else if (chkStream_ComExtraCo.Checked)
                 sCompitativeExamIds = "2";
+            else if (chkUGEntrance.Checked)
+                sCompitativeExamIds = "3";
 
+            if (miSchoolId == Constants.SchoolId.SNS.ToInt() && miAcademicYearId >= 13)
+                sCompulsorySubjet = "English, Business Studies, Accountancy, Economics";
+           else
             sCompulsorySubjet = "English, Business Studies, Accounts, Economics";
-        }
+         }
         else if (iStreamId == 3) // Atrs Stream
         {
             iGroupId = Constants.I_ONE;
@@ -490,8 +504,11 @@ public partial class StudentRegistrationDetails : SchoolBase
             else if (chkStream_ArtExtraCo.Checked)
                 sCompitativeExamIds = "2";
 
-            sCompulsorySubjet = "English, History, Psychology";
-        }
+            if (miSchoolId ==Constants.SchoolId.SNS.ToInt() && miAcademicYearId>=13)
+                sCompulsorySubjet = "English,Business Studies, Psychology";
+             else
+                sCompulsorySubjet = "English,Histroy, Psychology";
+          }
         else if (iStreamId == 4) // Abroad Education
         {
             iGroupId = Constants.I_ONE;
@@ -602,9 +619,7 @@ public partial class StudentRegistrationDetails : SchoolBase
                     hidIsSubjectSectionApplicable.Value = "Y";
                     trSNSStrimwiseSubjects.Visible = true;
                     //cmbStream.Attributes.Add("onChange", "ChangeStreamDetails(this)");//
-
-
-                }
+               }
                 else
                     trSNSStrimwiseSubjects.Visible = false;
             }
@@ -786,17 +801,6 @@ public partial class StudentRegistrationDetails : SchoolBase
                                 string[] sExam = sCompitativeExam.Split(',');
                                 int iExam1 = Constants.I_ZERO;
                                 int iExam2 = Constants.I_ZERO;
-                                //if (sExam.Length > Constants.I_ZERO)
-                                //{
-                                //    iExam1 = sExam[0].ToInt();
-                                //    iExam2 = sExam[1].ToInt();
-                                //}
-
-                                //if (iExam1 != Constants.I_ZERO)
-                                //    chkStream_SciGr2Neet.Checked = true;
-
-                                //if (iExam2 != Constants.I_ZERO)
-                                //    chkStream_SciGr2ExtraCO.Checked = true;
                                 if (sExam.Length == Constants.I_ONE) //
                                 {
                                     if (sExam[0].ToInt() == 1)
@@ -817,9 +821,10 @@ public partial class StudentRegistrationDetails : SchoolBase
                             }
                         }
                     }
-                    else if (iStreamId == 2) // Commerse
+                   
+                else if (iStreamId == 2) // Commerse
                     {
-                        trCommerceStream.Style.Add("display", "block"); //
+                        trCommerceStream.Style.Add("display", "block");
                         trArtsStream.Style.Add("display", "none");
                         trScienceStream.Style.Add("display", "none");
 
@@ -827,7 +832,7 @@ public partial class StudentRegistrationDetails : SchoolBase
                             rdoStream_ComMaths.Checked = true;
                         else if (sOptionalSubject == "2")
                             rdoStream_ComPhyEdu.Checked = true;
-                         else if (sOptionalSubject == "3")
+                        else if (sOptionalSubject == "3")
                             rdoStream_ComLeagalStudies.Checked = true;
 
                         if (sCompitativeExam != string.Empty)
@@ -835,30 +840,49 @@ public partial class StudentRegistrationDetails : SchoolBase
                             string[] sExam = sCompitativeExam.Split(',');
                             int iExam1 = Constants.I_ZERO;
                             int iExam2 = Constants.I_ZERO;
-                            if (sExam.Length == Constants.I_ONE) //
+                            int iExam3 = Constants.I_ZERO; // NEW
+
+                          if (sExam.Length == Constants.I_ONE)
                             {
-                                if (sExam[0].ToInt() == 1)
+                                int exam = sExam[0].ToInt();
+
+                                if (exam == 1)
                                     chkStream_ComCA.Checked = true;
-                                else
+                                else if (exam == 2)
                                     chkStream_ComExtraCo.Checked = true;
+                                else if (exam == 3)
+                                    chkUGEntrance.Checked = true;
                             }
-                            if (sExam.Length > Constants.I_ONE)  //
+                         if (sExam.Length > Constants.I_ONE)
                             {
                                 iExam1 = sExam[0].ToInt();
                                 iExam2 = sExam[1].ToInt();
-                                if (iExam1 != Constants.I_ZERO)
+
+                                if (iExam1 == 1)
                                     chkStream_ComCA.Checked = true;
-
-                                if (iExam2 != Constants.I_ZERO)
+                                else if (iExam1 == 2)
                                     chkStream_ComExtraCo.Checked = true;
+                                else if (iExam1 == 3)
+                                    chkUGEntrance.Checked = true;
+
+                                if (iExam2 == 1)
+                                    chkStream_ComCA.Checked = true;
+                                else if (iExam2 == 2)
+                                    chkStream_ComExtraCo.Checked = true;
+                                else if (iExam2 == 3)
+                                    chkUGEntrance.Checked = true;
                             }
+                          if (sExam.Length > 2)
+                            {
+                                iExam3 = sExam[2].ToInt();
 
-
-                            //if (iExam1 != Constants.I_ZERO)
-                            //    chkStream_ComCA.Checked = true;
-
-                            //if (iExam2 != Constants.I_ZERO)
-                            //    chkStream_ComExtraCo.Checked = true;
+                                if (iExam3 == 1)
+                                    chkStream_ComCA.Checked = true;
+                                else if (iExam3 == 2)
+                                    chkStream_ComExtraCo.Checked = true;
+                                else if (iExam3 == 3)
+                                    chkUGEntrance.Checked = true;
+                            }
                         }
                     }
                     else if (iStreamId == 3) //Art
@@ -1233,6 +1257,19 @@ public partial class StudentRegistrationDetails : SchoolBase
             {
                 hidIsEnquiry.Value = "0";                
             }
+        }
+    }
+
+    private void SetStreamVisibility()
+    {
+        if (miSchoolId == Constants.SchoolId.SNS.ToInt() && miAcademicYearId == 13)
+        {
+            lblCommerceSubjects.Text = "English, Business Studies, Accountancy, Economic";
+            rdoStream_ComMaths.Text = "Applied Mathematics";
+            chkUGEntrance.Visible = true;
+            lblArtsSubjects.Text = "English, Business Studies, Psychology";
+            rdoStream_SciGr2CompSci.Visible = false;
+            chkStream_ComCA.Text = "CA Foundation";
         }
     }
   #endregion   

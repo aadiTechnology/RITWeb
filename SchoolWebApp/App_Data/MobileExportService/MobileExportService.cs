@@ -187,6 +187,27 @@ namespace MobileExportService.Service
             {
                 sRecordSelectionFormula = "(usp_GetCancellationFormDetails.School_Id}=" + aiSchoolId + "AND usp_GetCancellationFormDetails.Academic_Year_Id}=" + aiAcademicYearId + "AND usp_GetCancellationFormDetails.Standard_Id}=" + aoDictParameters["Standard_Id"] + "AND usp_GetCancellationFormDetails.Division_Id}=" + aoDictParameters["Division_Id"] + "AND usp_GetCancellationFormDetails.Student_Id}=" + aoDictParameters["Student_Id"] + "AND usp_GetCancellationFormDetails.SubmittedBy}=" + aoDictParameters["SubmittedBy"] + aoDictParameters["CancFormId"] + ") @";
             }
+            else if (aoExportReports == Constants.ExportReports.FormNo16Report)
+            {
+                sRecordSelectionFormula = "(usp_GetIncomeTaxDetailsForReort.School_Id}=" + aiSchoolId + " AND  usp_GetIncomeTaxDetailsForReort.Academic_Year_Id} =" + aiAcademicYearId + " AND usp_GetIncomeTaxDetailsForReort.FinancialYearId}=" + aoDictParameters["FinancialYearId"] +
+               " AND  usp_GetIncomeTaxDetailsForReort.StaffGroupsId} = null AND  usp_GetIncomeTaxDetailsForReort.HasFullAccess} = 1 AND usp_GetIncomeTaxDetailsForReort.UserId}=" + aoDictParameters["UserId"] + ")" + "@ ";
+            }
+            else if (aoExportReports == Constants.ExportReports.AppointmentLetter)
+            {
+                sRecordSelectionFormula = "(usp_GetAppointmentDetailsForReport.School_Id}=" + aiSchoolId + " AND usp_GetAppointmentDetailsForReport.Academic_Year_Id}=" + aiAcademicYearId + " AND usp_GetAppointmentDetailsForReport.AppointmentId}=" + aoDictParameters["AppointmentId"] + ")" + "@ ";
+            }
+            else if (aoExportReports == Constants.ExportReports.ServiceContract)
+            {
+                sRecordSelectionFormula = "(usp_GetServiceContractDetails.School_Id}=" + aiSchoolId + " AND usp_GetServiceContractDetails.AppointmentId}=" + aoDictParameters["AppointmentId"] + ")" + "@ ";
+            }
+            else if (aoExportReports == Constants.ExportReports.SalarySlipReport)
+            {
+                sRecordSelectionFormula = "(usp_GetSalarySlipDetails.School_Id}=" + aiSchoolId + " AND  usp_GetSalarySlipDetails.Academic_Year_Id} =" + aiAcademicYearId + " AND usp_GetSalarySlipDetails.FromDate}=" + aoDictParameters["FromDate"] + " AND usp_GetSalarySlipDetails.StaffGroupsId} = null AND usp_GetSalarySlipDetails.UserId} = null AND usp_GetSalarySlipDetails.LoginUserId} = " + aoDictParameters["LoginUserId"] + " AND  usp_GetSalarySlipDetails.ToDate} =" + aoDictParameters["ToDate"] + ")" + "@ ";
+            }
+            else if (aoExportReports == Constants.ExportReports.MaterialwiseStockDetails)
+            {
+                sRecordSelectionFormula = "(usp_GetMaterialwiseStockDetails.School_Id}=" + aiSchoolId + "AND usp_GetMaterialwiseStockDetails.Academic_Year_Id}=" + aiAcademicYearId + " AND usp_GetMaterialwiseStockDetails.CategoryId}=" + aoDictParameters["CategoryId"] + " AND usp_GetMaterialwiseStockDetails.ItemIds}=" + aoDictParameters["ItemIds"] + ") @";
+            }
             else if (aoExportReports == Constants.ExportReports.AdmissionFormReport)
             {
                 if (aiSchoolId == Constants.SchoolId.PPSH.ToInt())
