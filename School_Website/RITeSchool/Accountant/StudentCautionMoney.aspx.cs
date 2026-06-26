@@ -136,6 +136,8 @@ public partial class StudentCautionMoney : SchoolBase
 				string sdtPaidDate = grdStudents.DataKeys[e.Row.RowIndex]["Payment_Date"].ToString();
                 string sElectronicPaymentId = grdStudents.DataKeys[e.Row.RowIndex]["ElectronicPaymentId"].ToString();
                 string iNetBankingPaymentTransactionID = Convert.ToString(grdStudents.DataKeys[e.Row.RowIndex]["NetBankingPaymentTransactionID"].ToInt());
+                string sStudentCautionMoneyId = grdStudents.DataKeys[e.Row.RowIndex]["Student_Caution_Money_Id"].ToString();
+                   
                 hidPaidDate.Value = sdtPaidDate;
 				string sAmount = e.Row.Cells[I_COLUMN_INDEX_AMOUNT].Text;
 				string sUploadURL = string.Empty;
@@ -149,7 +151,7 @@ public partial class StudentCautionMoney : SchoolBase
 				var sQueryString = new StringBuilder();
 				sQueryString.Append(sPaidByStudentId == "False" ? "Mode=AddPaid" : "Mode=EditPaid");
 
-                sQueryString.AppendFormat("&StudentId={0}&Payment_Cheque_Id={1}&Amount={2}&CautionMode={3}{4}&PageIndex={5}&AdmissionDate={6}&PostBackUrl={7}&ElectronicPaymentId={8}",
+                sQueryString.AppendFormat("&StudentId={0}&Payment_Cheque_Id={1}&Amount={2}&CautionMode={3}{4}&PageIndex={5}&AdmissionDate={6}&PostBackUrl={7}&ElectronicPaymentId={8}&StudentCautionMoneyId={9}",
 										   sStudentId,
 										   sPaymentChequeId,
 										   sAmount,
@@ -158,7 +160,8 @@ public partial class StudentCautionMoney : SchoolBase
 										   grdStudents.PageIndex,
 										   sdtAdmissionDate,
 										   sUploadURL,
-                                           sElectronicPaymentId);
+                                           sElectronicPaymentId,
+                                           sStudentCautionMoneyId);
 
 				string sEncrypt = CommonUtility.EncryptQuerystring(sQueryString.ToString());
 				var oPayBtn = e.Row.Cells[I_COLUMN_INDEX_PAY].Controls[Constants.I_ZERO] as ImageButton;
@@ -167,7 +170,7 @@ public partial class StudentCautionMoney : SchoolBase
 				sQueryString = new StringBuilder();
 				sQueryString.Append(sReturnedBySchoolId == "False" ? "Mode=AddReturn" : "Mode=EditReturn");
 
-                sQueryString.AppendFormat("&StudentId={0}&Payment_Cheque_Id={1}&Return_Cheque_Id={2}&Amount={3}&CautionMode={4}{5}&PageIndex={6}&AdmissionDate={7}&PostBackUrl={8}&ReturnElectronicPaymentId={9}",
+                sQueryString.AppendFormat("&StudentId={0}&Payment_Cheque_Id={1}&Return_Cheque_Id={2}&Amount={3}&CautionMode={4}{5}&PageIndex={6}&AdmissionDate={7}&PostBackUrl={8}&ReturnElectronicPaymentId={9}&StudentCautionMoneyId={10}",
 										   sStudentId,
 										   sPaymentChequeId,
 										   sReturnChequeId,
@@ -177,7 +180,8 @@ public partial class StudentCautionMoney : SchoolBase
 										   grdStudents.PageIndex,
 										   sdtAdmissionDate,
 										   sUploadURL,
-                                           sElectronicPaymentId);
+                                           sElectronicPaymentId,
+                                          sStudentCautionMoneyId);
 
 				sEncrypt = CommonUtility.EncryptQuerystring(sQueryString.ToString());
 				var oReturnBtn = e.Row.Cells[I_COLUMN_INDEX_RETURN].Controls[Constants.I_ZERO] as ImageButton;
@@ -223,7 +227,7 @@ public partial class StudentCautionMoney : SchoolBase
                 {                   
                     if (!sdtPaidDate.IsNullOrEmpty())
                     {
-                        string sQueryStr = string.Format("StudentId={0}&IsReturnMode={1}", sStudentId, (optCMReturned.Checked ? 1 : 0));
+                        string sQueryStr = string.Format("StudentId={0}&StudentCautionMoneyId={1}&IsReturnMode={2}", sStudentId, sStudentCautionMoneyId, (optCMReturned.Checked ? 1 : 0));
                         sQueryStr = CommonUtility.EncryptQuerystring(sQueryStr);
 
                         oHyperLinkField.Visible = true;

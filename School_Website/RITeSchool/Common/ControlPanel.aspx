@@ -855,6 +855,8 @@
                                                 <td style="width: 25%; padding-left: 25px">
                                                     <asp:HyperLink ID="HyperLink83" runat="server" CssClass="SubTitleMenuAdmin" EnableViewState="False"
                                                         NavigateUrl="~/RITeSchool/Payroll/LeaveDeatilsUI.aspx" Text="Leave Details"></asp:HyperLink>
+                                                      <span visible="false" class="clsCount" runat="server" viewstatemode="Enabled" id="spnLeaveRequestCount" title=""></span>
+
                                                 </td>
                                             </tr>
                                         </table>
@@ -1797,6 +1799,12 @@
                                                 <td align="left" class="auto-style1">
                                                     <asp:HyperLink ID="HyperLink175" runat="server" ViewStateMode="Enabled" CssClass="SubTitleMenu" NavigateUrl="~/RITeSchool/Student/ExportStudentMonthlyActivityDetailsUI.aspx"
                                                      EnableViewState="false" Text="Student Monthly Activity Details"></asp:HyperLink>
+                                                </td>
+                                            </tr>
+                                              <tr runat="server" id="trStudentMandatoryDetails" viewstatemode="Enabled" visible="false">
+                                                <td align="left" class="auto-style1">
+                                                    <asp:HyperLink ID="HyperLink179" runat="server" ViewStateMode="Enabled" CssClass="SubTitleMenu" NavigateUrl="~/RITeSchool/Student/StudentMandatoryDetailsUI.aspx"
+                                                     EnableViewState="false" Text="Student Mandatory Details"></asp:HyperLink>
                                                 </td>
                                             </tr>
                                              <tr runat="server" id="trStudentExamWiseSubjectMarkDetails" viewstatemode="Enabled" visible="false">

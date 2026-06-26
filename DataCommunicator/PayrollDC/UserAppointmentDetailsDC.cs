@@ -107,6 +107,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("ParameterXmL", aoUserAppointmentDetails.EarningDeductionXml, SqlDbType.Xml);
                 oSQLServerDbUtility.AddParameter("PaymentGroupId", aoUserAppointmentDetails.PaymentGroupId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("EmployeeNo", aoUserAppointmentDetails.EmployeeNo, SqlDbType.NVarChar);
+                oSQLServerDbUtility.AddParameter("LetterNoPostfix",string.IsNullOrEmpty(aoUserAppointmentDetails.LetterNoPostfix) ? (object)DBNull.Value : aoUserAppointmentDetails.LetterNoPostfix,SqlDbType.NVarChar);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SaveUserAppointmentDetails");
             }
         }
@@ -177,7 +178,8 @@ namespace DataCommunicator
                             SalutationId = Convert.ToInt32(aoSqlDataReader["SalutationId"]),
                             PaymentGroupId = Convert.ToInt32(aoSqlDataReader["PaymentGroupId"]),
                             Status = new StaffStatusDetails { StatusId = Convert.ToInt32(aoSqlDataReader["StatusId"]), StatusName = Convert.ToString(aoSqlDataReader["StatusName"]) },
-                            EmployeeNo = Convert.ToString(aoSqlDataReader["EmployeeNo"])
+                            EmployeeNo = Convert.ToString(aoSqlDataReader["EmployeeNo"]),
+                            LetterNoPostfix = aoSqlDataReader["LetterNoPostfix"] == DBNull.Value? string.Empty: Convert.ToString(aoSqlDataReader["LetterNoPostfix"])
                         }
                     );
             }

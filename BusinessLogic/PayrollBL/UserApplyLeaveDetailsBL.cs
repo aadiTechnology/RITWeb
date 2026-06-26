@@ -132,5 +132,17 @@ namespace BusinessLogic.PayrollBL
       {
           return moUserApplyLeaveDetailsDC.AllowUserToViewAllLeaves();
       }
+       /// <summary>
+      /// This method is used to count pending approval leaves.
+       /// </summary>
+       /// <param name="aiSchoolId"></param>
+       /// <param name="aiAcademicYearId"></param>
+       /// <param name="aiUserId"></param>
+       /// <returns></returns>
+      public static int CountRowsOfWatingAppLeaves(int aiSchoolId, int aiAcademicYearId, int aiUserId)
+      {
+          return UserApplyLeaveDetailsDC.CountRowsOfRequisition(aiSchoolId, aiAcademicYearId , aiUserId);
+
+      }
     }
 }

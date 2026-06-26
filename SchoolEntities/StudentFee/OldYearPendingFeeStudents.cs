@@ -25,6 +25,7 @@ namespace SchoolEntities
         public int YearWiseStudentId { get; set; }
         public int OriginalStandardId { get; set; }
         public int OriginalDivisionId { get; set; }
+        public string HasSibling { get; set; }
     }
 
      [Serializable]

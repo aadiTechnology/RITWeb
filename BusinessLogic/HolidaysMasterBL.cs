@@ -122,6 +122,18 @@ namespace BusinessLogic
             }
         }
 
+        public bool AllowOverLapping
+        {
+            get
+            {
+                return moHolidaysMasterStruct.mbAllowOverLapping;
+            }
+            set
+            {
+                moHolidaysMasterStruct.mbAllowOverLapping = value;
+            }
+        }
+
         public string IsDeleted
         {
             get

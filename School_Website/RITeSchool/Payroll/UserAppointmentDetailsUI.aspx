@@ -130,6 +130,9 @@
                                         onblur="extractNumber(this,2,false);" ondrop="event.returnValue=false" onkeypress="return blockNonNumbers(this, event, false, false);"
                                         onkeyup="extractNumber(this,2,false);" onpaste="event.returnValue=false">
                                         </asp:TextBox>
+                                        <asp:TextBox ID="txtLetterNoPostfix" runat="server" CssClass="MidTxtBox"
+                                            MaxLength="20" Width="100px">
+                                        </asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>

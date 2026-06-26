@@ -1726,7 +1726,8 @@ public partial class StudentUI : SchoolBase
         moStudentBL.BoardRegistrationNo = txtBoardRegNo.Text;
         moStudentBL.RFID = txtRFID.Text.Trim();
         moStudentBL.SralNo = txtSaralNo.Text;
-        
+        moStudentBL.BusPickupCity = txtBusPickupCity.Text;
+
         if ((Session[Constants.S_SESSION_ACADEMIC_YEAR_IS_NEWLYCREATED] != null) &&
              (Convert.ToChar(Session[Constants.S_SESSION_ACADEMIC_YEAR_IS_NEWLYCREATED]) == Constants.C_YES) && (Convert.ToChar(Session[Constants.S_SESSION_IS_FINALYEAR_GENERATED]) == Constants.C_NO))
             moStudentBL.Is_Dummy_Admission = Constants.C_YES;
@@ -2076,6 +2077,7 @@ public partial class StudentUI : SchoolBase
         txtBoardRegNo.Text = moStudentBL.BoardRegistrationNo;
         hidUserId.Value = Convert.ToString(moStudentBL.UserId);
         btnRemovePhoto.Enabled = HidIsBinaryImage.Value == string.Empty ? false : true;
+        txtBusPickupCity.Text = moStudentBL.BusPickupCity;
         
         chkRiseAndShine.Checked = moStudentBL.IsRiseAndShine;
 

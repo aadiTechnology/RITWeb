@@ -35,6 +35,8 @@ using System.Collections;
 using System.Configuration;
 using MasterEntities;
 using PayrollReportingUserEntities;
+using BusinessLogic.PayrollBL;
+
 
 public partial class ControlPanel : SchoolBase
 {
@@ -108,6 +110,7 @@ public partial class ControlPanel : SchoolBase
     private string msDate;
     public int miAdmissionCnt;
     private int miRequisitionCnt;
+    private int miWaitingLeaveCnt;
     public string msSupervisorDesignationName;
 
     #endregion -- MEMBER(s) --
@@ -147,6 +150,7 @@ public partial class ControlPanel : SchoolBase
             S_SHOW_ADMISSIONS_FOR_CURRENT_YEAR = Settings.ShowAdmissionForCurrentYear ? Constants.S_YES : Constants.S_NO;
             miAdmissionCnt = StudentBL.GetNewAdmissionCount(miSchoolId, S_SHOW_ADMISSIONS_FOR_CURRENT_YEAR, miAcademicYearId);
             miRequisitionCnt = RequisitionBL.CountRowsOfRequisition(miSchoolId, 4, miUserId);
+            miWaitingLeaveCnt = UserApplyLeaveDetailsBL.CountRowsOfWatingAppLeaves(miSchoolId, miAcademicYearId , miUserId);
             trNonPermenantTeachers.Visible = false;            
             if (Settings.ExternalLibrarySite != string.Empty)
             {
@@ -225,6 +229,11 @@ public partial class ControlPanel : SchoolBase
                 else
                     trStudentMonthlyDetails.Visible = false;
 
+
+                if (Settings.ForceStudentToSubmitMandatoryFields && moUserRole == Constants.UserRoles.Student)
+                    trStudentMandatoryDetails.Visible = true;
+                else
+                    trStudentMandatoryDetails.Visible = false;
 				
                 if (miSchoolId == Constants.SchoolId.PPSN.ToInt() && (Session[Constants.S_SESSION_IS_FIRST_LOGIN] != null && Session[Constants.S_SESSION_IS_FIRST_LOGIN].ToString() != Constants.S_NO))
                 {
@@ -397,6 +406,7 @@ public partial class ControlPanel : SchoolBase
 
             DisplayNewAdmissionCount();
             DisplayRequisitionCount();
+            DisplayPendingApprovalLeaveCount();
             cmbAcademicYearID.Focus();
             this.RemoveSession(Constants.S_SESSION_USER_IMAGE_DATA);
 
@@ -433,6 +443,7 @@ public partial class ControlPanel : SchoolBase
                 trUserDocument.Visible = true;
             else
                 trUserDocument.Visible = false;
+          
         }
         catch (Exception ex)
         {
@@ -713,7 +724,7 @@ public partial class ControlPanel : SchoolBase
             DataRow[] oDataRow = moDtAcademicAndYearInfo.Select(S_ACADEMIC_YEAR_ID + " =" + cmbAcademicYearID.SelectedValue);
             CheckIfSelectedYearIsclosed(oDataRow);
 
-            FillFinancialYearCombo();
+           FillFinancialYearCombo();
 
             
            
@@ -2045,7 +2056,30 @@ public partial class ControlPanel : SchoolBase
                 spnCount.Visible = false;
         }
 
+        if (aoDataRow["Configure_Name"].ToString() == "Leave Details")
+        {
+            var spnCount = new System.Web.UI.HtmlControls.HtmlGenericControl("label");
+            if (miWaitingLeaveCnt > 0)
+            {                
+                spnCount.Attributes.Add("class", "clsCount");
+                spnCount.Attributes.Add("runat", "server");
+                spnCount.Attributes.Add("id", "spnCount1");
+                spnCount.Attributes["title"] = "Waiting Approval Count";
+                spnCount.Style.Add(HtmlTextWriterStyle.Cursor, "pointer");
+                tCell.Attributes.Add("margin-bottom", "3px");
+                tCell.Controls.Add(ohlinkPageName);
+                tCell.Controls.Add(spnCount);
+           
+                spnCount.InnerHtml = miWaitingLeaveCnt.ToString();
+                spnCount.Attributes.Add("title", "Waiting Approval Count");
+                spnCount.Visible = true;
+            }
+            else
+                spnCount.Visible = false;
+        }
         tRow.Controls.Add(tCell);
+      
+
         tblSupervisorMenu.Controls.Add(tRow);
     }
 
@@ -2947,8 +2981,27 @@ public partial class ControlPanel : SchoolBase
             }
         }
     }
+   /// <summary>
+  /// This method is used to get and display pending approval leaves count.
+   /// </summary>
+    private void DisplayPendingApprovalLeaveCount()
+    {
+        if (moUserRole == Constants.UserRoles.Teacher || moUserRole == Constants.UserRoles.Admin || moUserRole == Constants.UserRoles.Supervisor)
+        {
+            if (miWaitingLeaveCnt > 0)
+            {
+                spnLeaveRequestCount.InnerHtml = miWaitingLeaveCnt.ToString();
+                spnLeaveRequestCount.Attributes.Add("title", "Waiting Approval Count");
+                spnLeaveRequestCount.Visible = true;
+            }
+            else
+            {
+                spnLeaveRequestCount.Visible = false;
+            }
+        }
+    }
 
-    /// <summary>
+    ///// <summary>
     /// This used to dynamicall generate Missing Attendance Link
     /// </summary>
     private void MissingAttendanceLink(Table aoMenuTable)

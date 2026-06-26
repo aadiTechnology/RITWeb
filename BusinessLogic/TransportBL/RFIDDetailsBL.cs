@@ -6,6 +6,7 @@ using DataCommunicator;
 using SchoolEntities.Transport;
 using Utility;
 using DataCommunicator.TransportDC;
+using System.Data;
 
 namespace BusinessLogic.TransportBL
 {
@@ -29,8 +30,7 @@ namespace BusinessLogic.TransportBL
         {
             moRFIDDetailsDC = new RFIDDetailsDC(aiSchoolId, aiUserId);
         }
-
-        #endregion
+       #endregion
         #region Methods
 
         /// <summary>
@@ -54,8 +54,13 @@ namespace BusinessLogic.TransportBL
         /// <param name="MaximumRows"></param>
         /// <param name="StartRowIndex"></param>
         /// <returns></returns>
-        public List<RFIDDetails> GetAllStudents(int aiSchoolId, int aiAcademicYearId, string asFilter, string SortExpression, string SortDirection, int MaximumRows, int StartRowIndex)
+        public List<RFIDDetails> GetAllStudents(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, string asFilter, string SortExpression, string SortDirection, int MaximumRows, int StartRowIndex, string asIsResetCall)
         {
+            if (asIsResetCall == Constants.S_ONE)
+            {
+                miTotalRows = 0;
+                return new List<RFIDDetails>();
+            }
             int iEndIndex = StartRowIndex + MaximumRows;
 
             if (asFilter == null)
@@ -64,7 +69,7 @@ namespace BusinessLogic.TransportBL
             if (SortExpression == null || SortExpression == string.Empty)
                 SortExpression = "Roll_No desc";
 
-            List<RFIDDetails> lstSearchedStudent = moRFIDDetailsDC.GetAllStudents(aiSchoolId, aiAcademicYearId, asFilter, SortExpression, StartRowIndex, iEndIndex);
+            List<RFIDDetails> lstSearchedStudent = moRFIDDetailsDC.GetAllStudents(aiSchoolId, aiAcademicYearId, aiStandardId,aiDivisionId,asFilter, SortExpression, StartRowIndex, iEndIndex);
 
             if (lstSearchedStudent.Count > 0)
                 miTotalRows = lstSearchedStudent[0].TotalRows;
@@ -85,7 +90,7 @@ namespace BusinessLogic.TransportBL
         /// <param name="MaximumRows"></param>
         /// <param name="StartRowIndex"></param>
         /// <returns></returns>
-        public int GetCountStudent(int aiSchoolId, int aiAcademicYearId, string asFilter, string SortExpression, string SortDirection, int MaximumRows, int StartRowIndex)
+        public int GetCountStudent(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, string asFilter, string SortExpression, string SortDirection, int MaximumRows, int StartRowIndex, string asIsResetCall)
         {           
             return miTotalRows;
         }
@@ -100,7 +105,21 @@ namespace BusinessLogic.TransportBL
         {
             return moRFIDDetailsDC.ValidateRFID(aiSchoolwiseStudentId, asRFID);
         }
+        /// <summary>
+        /// This method is used to save Students RFID details through import.
+        /// </summary>
+        /// <param name="aiUpdatedById"></param>
+        /// <param name="asStudentDetails"></param>
 
+        public void ImportRFIDDetails(int aiUpdatedById, string asStudentDetails ,int aiAcademicYearId)
+        {
+            moRFIDDetailsDC.ImportRFIDDetails(aiUpdatedById, asStudentDetails, aiAcademicYearId);
+        }
+
+        public List<string> GetRegistrationNumbers(int iAcademicYearId)
+        {
+            return moRFIDDetailsDC.GetRegistrationNumbers(iAcademicYearId);
+        }
         #endregion        
-    }
+     }
 }

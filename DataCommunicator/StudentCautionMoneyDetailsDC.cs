@@ -166,7 +166,8 @@ namespace DataCommunicator
 											sWhere +
 									" WHERE  " +
 										" School_Id=" + moStudentCautionMoneyDetailsStruct.miSchoolId +
-										" AND Schoolwise_Student_Id= " + moStudentCautionMoneyDetailsStruct.miSchoolwiseStudentId;
+										" AND Schoolwise_Student_Id= " + moStudentCautionMoneyDetailsStruct.miSchoolwiseStudentId +
+                                        " AND Student_Caution_Money_Id= " + moStudentCautionMoneyDetailsStruct.miStudentCautionMoneyId;
 
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                 oSQLServerDbUtility.ExecuteTransaction(sUpdateStatement);
@@ -198,7 +199,8 @@ namespace DataCommunicator
 											sWhere +
 									 " WHERE  " +
 										" School_Id=" + moStudentCautionMoneyDetailsStruct.miSchoolId +
-										" AND Schoolwise_Student_Id= " + moStudentCautionMoneyDetailsStruct.miSchoolwiseStudentId;
+										" AND Schoolwise_Student_Id= " + moStudentCautionMoneyDetailsStruct.miSchoolwiseStudentId +
+                                       " AND Student_Caution_Money_Id= " + moStudentCautionMoneyDetailsStruct.miStudentCautionMoneyId;
 
 			using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
 				oSQLServerDbUtility.ExecuteTransaction(sUpdateStatement);

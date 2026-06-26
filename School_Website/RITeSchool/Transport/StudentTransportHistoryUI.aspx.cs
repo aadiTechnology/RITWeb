@@ -65,9 +65,13 @@ public partial class StudentTransportHistoryUI : SchoolBase
 
                 if (oTransportHistoryDetails.EffectiveFromDate != null)
                     lblEffectiveFromDate.Text = oTransportHistoryDetails.EffectiveFromDate.ToDateTime().ToString(Constants.S_DATE_FORMAT);
+                else
+                    lblEffectiveToDate.Text = "-";
 
-                if (oTransportHistoryDetails.EffectiveToDate != null)
+                if (oTransportHistoryDetails.EffectiveToDate != Convert.ToDateTime("01/01/0001"))
                     lblEffectiveToDate.Text = oTransportHistoryDetails.EffectiveToDate.ToDateTime().ToString(Constants.S_DATE_FORMAT);
+                else
+                    lblEffectiveToDate.Text = "-";
             }
         }
         catch (Exception ex)

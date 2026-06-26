@@ -55,6 +55,7 @@ namespace DataCommunicator
             public int iParentOcupation;
             public string sOtherOcupation;
             public string sAddress;
+            public string sBusPickupCity;
             public string sCity;
             public string sState;
             public string sPincode;
@@ -384,7 +385,7 @@ namespace DataCommunicator
 
                 if (moStudentInfo.AreAdditionalDetailsApplicable == false)
                 {
-                    string sAdditionalDetails = "INSERT INTO StudentAdditionalDetails(SchoolwiseStudentId, Religion,IsDeleted) SELECT Student_Id, '" + moStudentInfo.sReligion + "',0 FROM YearWise_Student_Details WHERE School_Id = " + moStudentInfo.SchoolId + " AND Academic_Year_ID = " + moStudentInfo.iAcademicYearId + " AND YearWise_Student_Id = " + iYrwiseStudentId;
+                    string sAdditionalDetails = "INSERT INTO StudentAdditionalDetails(SchoolwiseStudentId, Religion,City,IsDeleted) SELECT Student_Id, '" + moStudentInfo.sReligion + "','" + moStudentInfo.sBusPickupCity + "',0 FROM YearWise_Student_Details WHERE School_Id = " + moStudentInfo.SchoolId + " AND Academic_Year_ID = " + moStudentInfo.iAcademicYearId + " AND YearWise_Student_Id = " + iYrwiseStudentId;
                     using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                         oSQLServerDbUtility.ExecuteTransaction(sAdditionalDetails);
                 }
@@ -1136,7 +1137,7 @@ namespace DataCommunicator
             sUpdateJoiningDateStmt += " Update " +
                                   " StudentAdditionalDetails SET " +
                                    "  Religion= N'" + Utility.StringUtility.ReplaceSingleQuoteInString(moStudentInfo.sReligion, true) + "' " +
-
+                                   ",   City= N'" + Utility.StringUtility.ReplaceSingleQuoteInString(moStudentInfo.sBusPickupCity, true) + "' " +
                                   " WHERE " +
                                       " SchoolwiseStudentId = " + moYearWiseStudentInfo.iStudentId;
             //);
@@ -1753,6 +1754,7 @@ namespace DataCommunicator
                                ", ResidenceName" +
                                ",'' as AdmissionStandard" +    //////////////////
                                ",RFID" +
+                               ",BusPickupCity" +
                 " FROM vw_GetAllStudentsForStandardDivision " +
                 " WHERE Is_Deleted= N'" + Constants.C_NO + "' ";
         }
@@ -2242,6 +2244,8 @@ namespace DataCommunicator
                 moStudentInfo.sParentName = aDoTable.Rows[0]["Parent_Name"].ToString();
             if (aDoTable.Rows[0]["Address"] != DBNull.Value)
                 moStudentInfo.sAddress = aDoTable.Rows[0]["Address"].ToString();
+           if (aDoTable.Rows[0]["BusPickupCity"] != DBNull.Value)
+                moStudentInfo.sBusPickupCity = Convert.ToString(aDoTable.Rows[0]["BusPickupCity"]);
             if (aDoTable.Rows[0]["State"] != DBNull.Value)
                 moStudentInfo.sState = Convert.ToString(aDoTable.Rows[0]["State"]);
             if (aDoTable.Rows[0]["City"] != DBNull.Value)

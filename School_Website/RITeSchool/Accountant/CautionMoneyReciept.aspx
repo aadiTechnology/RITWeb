@@ -415,6 +415,8 @@
                     <asp:HiddenField ID="hidQueryString" runat="server" />
                     <asp:HiddenField ID="hidPostBackUrl" runat="server" />
                     <asp:HiddenField ID="hidIsReturnMode" runat="server" Value="0" />
+                    <asp:HiddenField ID="hidStudentCautionMoneyId" runat="server" />
+                    
                 </td>
             </tr>
         </tbody>

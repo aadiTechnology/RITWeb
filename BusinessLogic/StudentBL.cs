@@ -390,6 +390,18 @@ namespace BusinessLogic
                 moStudentInfo.sAddress = value;
             }
         }
+
+       public string BusPickupCity
+        {
+            get
+            {
+                return moStudentInfo.sBusPickupCity;
+            }
+            set
+            {
+                moStudentInfo.sBusPickupCity = value;
+            }
+        }
         public string City
         {
             get

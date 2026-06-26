@@ -456,10 +456,10 @@
             return false;
         }
 
-        function OpenLeftPopup() {
-            var QryString = document.getElementById(_clienthidQueryString).value;            
-            window.open('MarkLeftForTransportPopup.aspx?' + QryString, '_new', 'scrollbars=yes,resizable=no,top=100,left=100,width=500,height=400')
-        } 
+        function OpenLeftPopup(QryString) {
+            window.open( 'MarkLeftForTransportPopup.aspx?' + QryString,  '_new',  'scrollbars=yes,resizable=no,top=100,left=100,width=500,height=400' );
+           return false;
+        }
     </script>
 
     <script language="javascript" type="text/javascript">

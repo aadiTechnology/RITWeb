@@ -110,8 +110,7 @@
                                                 </asp:DropDownList>
                                                 <span style="color: #ff0000">*</span>
                                                 <asp:CustomValidator ID="cstcmbRTECategory" runat="server" Display="None" ErrorMessage=""
-                                                    SetFocusOnError="True" ValidateEmptyText="True" CssClass="ClsMdtStar" ClientValidationFunction="ValidateRTECategory">
-                                                </asp:CustomValidator>
+                                                    SetFocusOnError="True" ValidateEmptyText="True" CssClass="ClsMdtStar" ClientValidationFunction="ValidateRTECategory"> </asp:CustomValidator>
                                             </td>
                                         </tr>
                                         <tr id="trRTEFormNo" runat= "server" style="visibility: hidden; display: none;">
@@ -134,8 +133,7 @@
                                                     onkeyup="extractNumber(this,0,false);" onkeypress="return blockNonNumbers (this, event, false, false);"
                                                     ondrop="event.returnValue=false"></asp:TextBox>
                                                 <asp:CustomValidator ID="CustomValidator7" runat="server" Display="None" ErrorMessage=""
-                                                    SetFocusOnError="True" ValidateEmptyText="True" CssClass="ClsMdtStar" ClientValidationFunction="ValidateRTEIncome">
-                                                </asp:CustomValidator>                                                    
+                                                    SetFocusOnError="True" ValidateEmptyText="True" CssClass="ClsMdtStar" ClientValidationFunction="ValidateRTEIncome"> </asp:CustomValidator>                                                    
                                                 </td>
                                         </tr>
                                         <tr id="trRTENote" runat="server">
@@ -1506,18 +1504,48 @@
                                                 <td align="left" colspan="1" style="width: 25%">
                                                     <asp:CheckBox ID="chkAdditionalIsHandicapped" runat="server" />
                                                 </td>
-                                                <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
-                                                    <asp:Label ID="Label23" runat="server" CssClass="ClsLabel" EnableViewState="False"
-                                                        Text="House No. / Plot No."></asp:Label>
-                                                    <span class="colonPadding">:</span>
+                                               <td id="tdlblFeeArea" visible="false" runat="server" align="left" class="ClsBorderlight"
+                                                    colspan="1" style="width: 25%">
+                                                    <asp:Label ID="Label29" runat="server" CssClass="ClsLabel" EnableViewState="False"
+                                                        Text="Fee Area Name"></asp:Label>
+                                                    <span class="colonPadding">:</span>&nbsp;&nbsp;
+                                                </td>
+                                                <td id="tdCmbFeeArea" visible="false" runat="server" align="left" colspan="1">
+                                                    <asp:DropDownList ID="cmbAdditionalFeeAreaName" runat="server" CssClass="MidCombo"
+                                                        Width="170px">
+                                                    </asp:DropDownList>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td align="left" colspan="1" style="width: 25%">
+                                                    &nbsp;
                                                 </td>
                                                 <td align="left" colspan="1">
-                                                    <asp:TextBox ID="txtAdditionalHouseNoPlotNo" runat="server" CssClass="MidTxtBox"
-                                                        onblur="formatName(this)" MaxLength="200" Width="89%"></asp:TextBox>
+                                                    &nbsp;
+                                                </td>
+                                                <td align="left" colspan="1" style="width: 25%">
+                                                    &nbsp;
+                                                </td>
+                                                <td align="left" colspan="1" style="width: 25%">
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td align="left" style="width: 25%; text-decoration: underline;">
+                                                 Correspondance & Bus Pick Up :
+                                                 </td>
+                                                <td align="left" colspan="1">
+                                                    &nbsp;
+                                                </td>
+                                                <td align="left" colspan="1" style="width: 25%">
+                                                    &nbsp;
+                                                </td>
+                                                <td align="left" colspan="1" style="width: 25%">
+                                                    &nbsp;
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
+                                               <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
                                                     <asp:Label ID="Label24" runat="server" CssClass="ClsLabel" EnableViewState="False"
                                                         Text="Main Area"></asp:Label>
                                                     <span class="colonPadding">:</span>
@@ -1526,6 +1554,7 @@
                                                     <asp:TextBox ID="txtAdditionalMainArea" runat="server" CssClass="MidTxtBox" onblur="formatName(this)"
                                                         MaxLength="200" Width="89%"></asp:TextBox>
                                                 </td>
+                                                
                                                 <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
                                                     <asp:Label ID="Label25" runat="server" CssClass="ClsLabel" EnableViewState="False"
                                                         Text="Subarea Name"></asp:Label>
@@ -1535,8 +1564,17 @@
                                                     <asp:TextBox ID="txtAdditionalSubareaName" runat="server" CssClass="MidTxtBox" MaxLength="200"
                                                         onblur="formatName(this)" Width="89%"></asp:TextBox>
                                                 </td>
-                                            </tr>
-                                            <tr>
+                                             </tr>
+                                              <tr>
+                                                <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
+                                                    <asp:Label ID="Label23" runat="server" CssClass="ClsLabel" EnableViewState="False"
+                                                        Text="House No. / Plot No."></asp:Label>
+                                                    <span class="colonPadding">:</span>
+                                                </td>
+                                                <td align="left" colspan="1">
+                                                    <asp:TextBox ID="txtAdditionalHouseNoPlotNo" runat="server" CssClass="MidTxtBox"
+                                                        onblur="formatName(this)" MaxLength="200" Width="89%"></asp:TextBox>
+                                                </td>
                                                 <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
                                                     <asp:Label ID="Label26" runat="server" CssClass="ClsLabel" EnableViewState="False"
                                                         Text="Landmark"></asp:Label>
@@ -1546,7 +1584,18 @@
                                                     <asp:TextBox ID="txtAdditionalLandMark" runat="server" CssClass="MidTxtBox" MaxLength="200"
                                                         onblur="formatName(this)" Width="89%"></asp:TextBox>
                                                 </td>
-                                                <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
+                                            </tr>
+                                            <tr>
+                                                 <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
+                                                    <asp:Label ID="lblBusPickupCity" runat="server" CssClass="ClsLabel" EnableViewState="False"
+                                                        Text="City" Height="18px" Width="20px"></asp:Label>
+                                                    <span class="colonPadding">:</span>
+                                                </td>
+                                                <td align="left" colspan="1" style="width: 25%">
+                                                    <asp:TextBox ID="txtBusPickupCity" runat="server" CssClass="MidTxtBox" MaxLength="200"
+                                                        onblur="formatName(this)" Width="89%"></asp:TextBox>
+                                                </td>
+                                                 <td align="left" class="ClsBorderlight" colspan="1" style="width: 25%">
                                                     <asp:Label ID="Label27" runat="server" CssClass="ClsLabel" EnableViewState="False"
                                                         Text="Taluka"></asp:Label>
                                                     <span class="colonPadding">:</span>&nbsp;
@@ -1566,19 +1615,8 @@
                                                     <asp:TextBox ID="txtAdditionalDistrict" runat="server" CssClass="MidTxtBox" MaxLength="200"
                                                         onblur="formatName(this)" Width="89%"></asp:TextBox>
                                                 </td>
-                                                <td id="tdlblFeeArea" visible="false" runat="server" align="left" class="ClsBorderlight"
-                                                    colspan="1" style="width: 25%">
-                                                    <asp:Label ID="Label29" runat="server" CssClass="ClsLabel" EnableViewState="False"
-                                                        Text="Fee Area Name"></asp:Label>
-                                                    <span class="colonPadding">:</span>&nbsp;&nbsp;
-                                                </td>
-                                                <td id="tdCmbFeeArea" visible="false" runat="server" align="left" colspan="1">
-                                                    <asp:DropDownList ID="cmbAdditionalFeeAreaName" runat="server" CssClass="MidCombo"
-                                                        Width="170px">
-                                                    </asp:DropDownList>
-                                                </td>
                                             </tr>
-                                            <tr>
+                                             <tr>
                                                 <td align="left" colspan="1" style="width: 25%">
                                                     &nbsp;
                                                 </td>

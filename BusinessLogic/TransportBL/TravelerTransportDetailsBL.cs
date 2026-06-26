@@ -250,5 +250,13 @@ namespace BusinessLogic
         {
             moTravelerTransportDetailsDC.LeftTransportService(aiUserId, adtLeftDate, asLeftReason);
         }
+        /// <summary>
+        /// thsee method is used to get Transport Service Dates
+        /// </summary>
+        /// <returns></returns>
+        public TransportServiceDate GetTransportServiceDate()
+        {
+            return moTravelerTransportDetailsDC.GetTransportServiceDate();
+        }
     }
 }

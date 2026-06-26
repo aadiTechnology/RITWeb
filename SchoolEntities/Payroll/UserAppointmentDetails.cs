@@ -48,6 +48,7 @@ namespace PayrollEntities
         public StaffStatusDetails Status { get; set; }
         public List<EarningDeductionGroup> EarningDeductions { get; set; }
         public string EarningDeductionXml { get; set; }
-        public string EmployeeNo { get; set; } 
+        public string EmployeeNo { get; set; }
+        public string LetterNoPostfix { get; set; }
     }
 }

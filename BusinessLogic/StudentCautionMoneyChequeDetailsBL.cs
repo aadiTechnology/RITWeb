@@ -73,7 +73,11 @@ namespace BusinessLogic
 			get { return moStudentCautionMoneyChequeDetailsStruct.miStudentId; }
 			set { moStudentCautionMoneyChequeDetailsStruct.miStudentId = value; }
 		}
-
+        public int StudentCautionMoneyId
+        {
+            get { return moStudentCautionMoneyChequeDetailsStruct.miStudentCautionMoneyId; }
+            set { moStudentCautionMoneyChequeDetailsStruct.miStudentCautionMoneyId = value; }
+        }
 		public int DepositBankId
 		{
 			get { return moStudentCautionMoneyChequeDetailsStruct.miDepositBankId; }

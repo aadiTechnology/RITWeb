@@ -27,6 +27,7 @@ namespace DataCommunicator
             public string AssociatedStandards;
             public string msRemarks;
             public string msIsDeleted;
+            public bool mbAllowOverLapping;
             public DateTime mdtInsertDate;
             public DateTime mdtUpdateDate;
             public int miSchoolId;
@@ -103,6 +104,8 @@ namespace DataCommunicator
                                 moHolidaysMasterStruct.msRemarks = oDR["Remarks"].ToString();
                             if (oDR["Is_Deleted"] != DBNull.Value)
                                 moHolidaysMasterStruct.msIsDeleted = oDR["Is_Deleted"].ToString();
+                            if (oDR["AllowOverLapping"] != DBNull.Value)
+                                moHolidaysMasterStruct.mbAllowOverLapping = oDR["AllowOverLapping"].ToBool();
                             moHolidaysMasterStruct.miSchoolId = aiSchoolId;
                             moHolidaysMasterStruct.miAcademicYearId = aiAcademicYearId;
                         }
@@ -153,6 +156,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("AcademicYearId", moHolidaysMasterStruct.miAcademicYearId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("InsertedById", moHolidaysMasterStruct.miInsertedById, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AssociatedStandard", moHolidaysMasterStruct.AssociatedStandards, SqlDbType.VarChar);
+                oSQLServerDbUtility.AddParameter("AllowOverLapping", moHolidaysMasterStruct.mbAllowOverLapping, SqlDbType.Bit);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_InsertHolidays");
             }
         }
@@ -326,6 +330,8 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("InsertedById",moHolidaysMasterStruct.miInsertedById , SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AssociatedStandard", moHolidaysMasterStruct.AssociatedStandards, SqlDbType.VarChar);
                 oSQLServerDbUtility.AddParameter("HolidaysId", moHolidaysMasterStruct.miHolidayId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AllowOverLapping", moHolidaysMasterStruct.mbAllowOverLapping, SqlDbType.Bit);
+
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_InsertHolidays");
             }
         }

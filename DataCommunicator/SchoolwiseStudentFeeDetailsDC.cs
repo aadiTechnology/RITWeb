@@ -3473,7 +3473,24 @@ namespace DataCommunicator
                     return oStudentsYearwisePendingfeecount;
                 }
             }
-        }        
+        }
+               
+        /// <summary>
+        /// Gets NetBankingPaymentTransactionID and TPSLTransactionID for ids in TxnIds XML (usp_GetTransactionDetails).
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="asTxnIds">XML: TransactionIdList/Transaction/@NetBankingPaymentTransactionID</param>
+        /// <returns></returns>
+        public DataTable GetTransactionDetails(int aiSchoolId,int aiFinancialYearId, string asTxnIds)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("FinancialYearId", aiFinancialYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("TxnIds", asTxnIds, SqlDbType.Xml);
+                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetTransactionDetails");
+            }
+        }
     }
 
     public class StudentFeeDetailsCollectionDC
@@ -3533,14 +3550,13 @@ namespace DataCommunicator
             }
         }
 
-
         /// <summary>
         /// Get fee summary details to show in fee status widget.
         /// </summary>
         /// <param name="aiSchoolId"></param>
         /// <param name="aiAcademicYearId"></param>
         /// <returns></returns>
-         public static FeeSummary GetFeeSummary(int aiSchoolId, int aiAcademicYearId, bool abIsServiceCall = false)
+        public static FeeSummary GetFeeSummary(int aiSchoolId, int aiAcademicYearId, bool abIsServiceCall = false)
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility(aiSchoolId, aiAcademicYearId , Constants.I_ZERO, abIsServiceCall))
             {

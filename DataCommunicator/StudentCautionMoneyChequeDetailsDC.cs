@@ -228,12 +228,13 @@ namespace DataCommunicator
 		// This function is used to fetch the StudentCautionMoneyChequeDetails Details
 		private string FetchStudentCautionMoneyChequeDetailsDetailsFromDatabase(int miStudentCautionMoneyChequeId)
 		{
-			return string.Format("SELECT Student_Caution_Money_Cheque_Id,Cheque_Number,Cheque_Date,Bank_Id,Remarks,DepositBankId FROM Student_Caution_Money_Cheque_Details WHERE Student_Caution_Money_Cheque_Id={0} AND Is_Deleted = 0", miStudentCautionMoneyChequeId);
-		}
+		 return string.Format("SELECT Student_Caution_Money_Cheque_Id,Cheque_Number,Cheque_Date,Bank_Id,Remarks,DepositBankId FROM Student_Caution_Money_Cheque_Details WHERE Student_Caution_Money_Cheque_Id={0} AND Is_Deleted = 0", miStudentCautionMoneyChequeId);
+         }
 
 		public struct StudentCautionMoneyChequeDetailsStruct
 		{
 			public int miStudentCautionMoneyChequeId;
+            public int miStudentCautionMoneyId;
 			public string msChequeNumber;
 			public System.DateTime mdtChequeDate;
 			public int miBankId;

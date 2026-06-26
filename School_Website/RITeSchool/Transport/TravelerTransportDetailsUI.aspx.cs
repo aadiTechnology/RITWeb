@@ -150,9 +150,9 @@ public partial class TravelerTransportDetailsUI : ExportDataTable
                     btnDelete.Visible = false;                                    
                 else
                 {
-                    string sQryStr = string.Format("UserId={0}&StdId={1}&DivId={2}&SearchText={3}&UserRoleId={4}&RouteId={5}&StopId={6}&ShiftId{7}&IncludeNotAssociated{8}&UserName={9}", iUserId, ddlStandard.SelectedValue, ddlDivision.SelectedValue, txtSearch.Text.TrimAll(), cmbUserRole.SelectedValue, cmbRoute.SelectedValue, cmbStop.SelectedValue, cmbShift.SelectedValue, chkIncludeAll.Checked,lblName.Text);
-                    hidQueryString.Value = CommonUtility.EncryptQuerystring(sQryStr);
-                    btnDelete.Attributes.Add("onclick", "if(!OpenLeftPopup()) return false;");                    
+                    string sQryStr = string.Format("UserId={0}&StdId={1}&DivId={2}&SearchText={3}&UserRoleId={4}&RouteId={5}&StopId={6}&ShiftId={7}&IncludeNotAssociated={8}&UserName={9}", iUserId, ddlStandard.SelectedValue, ddlDivision.SelectedValue, txtSearch.Text.TrimAll(), cmbUserRole.SelectedValue, cmbRoute.SelectedValue, cmbStop.SelectedValue, cmbShift.SelectedValue, chkIncludeAll.Checked,lblName.Text);
+                    string sEncryptedQry = CommonUtility.EncryptQuerystring(sQryStr);
+                   btnDelete.Attributes.Add( "onclick",  "return OpenLeftPopup('" + sEncryptedQry + "');");
                 }
 
                 if (bIsHistoryExists)

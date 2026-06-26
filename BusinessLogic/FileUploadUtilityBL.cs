@@ -518,6 +518,11 @@ namespace BusinessLogic
                 // Employee file upload.
                 SaveRecordsIfValidFileUploaded();
             }
+            if (meFileType.ToString().Trim() == Constants.UploadFileType.RFID.ToString())
+            {
+                // RFID file upload.
+                sErrorMessage = SaveStudentsRFIDIfValidFileUploaded();
+            }
             else if (meFileType.ToString().Trim() == Constants.UploadFileType.Teacher.ToString())
             {
                 // Employee file upload.
@@ -547,9 +552,6 @@ namespace BusinessLogic
             return sErrorMessage;
         }
 
-
-
-
         /// <summary>
         /// This function checks if the extention of the file to be uploaded is .XLS
         /// Reason - only excel files can be uploaded for employee type file upload.
@@ -568,9 +570,7 @@ namespace BusinessLogic
             SaveRecordDetails();
         }
 
-
-
-        private void SaveFileOnServer()
+       private void SaveFileOnServer()
         {
             msServerFilePath = msServerFolderPath;
         }
@@ -641,13 +641,9 @@ namespace BusinessLogic
             }
             else
                 ThrowAppropriateException(I_XLS_NO_DATA_IN_TABLE, "0");
+          }
 
-
-        }
-
-
-
-        private void SaveAdminStaffIfValidFileUploaded()
+    private void SaveAdminStaffIfValidFileUploaded()
         {
             // This procedure accepts parameter as aoAgentBusinessUploadBL. 
 
@@ -930,8 +926,97 @@ namespace BusinessLogic
             return string.Empty;
         }
 
-        private string GetXMLForStudentFeeIds(string asStudentFeeIds)
+        private string SaveStudentsRFIDIfValidFileUploaded()
         {
+            DataSet oDSStudentRFIDDetails = CommonUtility.ReadExcelSheetAndFetchData(msServerFilePath, "", "Student RFID Details");
+
+            DataTable oDTRFIDDetails = oDSStudentRFIDDetails.Tables[0].Copy();
+            oDTRFIDDetails = CommonUtility.DeleteEmptyRows(oDTRFIDDetails);
+
+            if (oDTRFIDDetails.Rows.Count < 1)
+                return "No records found.";
+
+            List<string> sErrorMessages = new List<string>();
+            int iRowIndex = 2;
+
+            string sBlankRegNoRows = string.Empty;
+            string sBlankRFIDRows = string.Empty;
+
+            foreach (DataRow oRow in oDTRFIDDetails.Rows)
+            {
+                string sRegistrationNo = Convert.ToString(oRow["Enrolment No"]).Trim();
+                string sRFID = Convert.ToString(oRow["RFID"]).Trim();
+
+                if (string.IsNullOrWhiteSpace(sRegistrationNo))
+                {
+                    sBlankRegNoRows += iRowIndex + ",";
+                }
+
+                if (string.IsNullOrWhiteSpace(sRFID))
+                {
+                    sBlankRFIDRows += iRowIndex + ",";
+                }
+
+                iRowIndex++;
+            }
+
+            string sErrorMessage = string.Empty;
+
+            if (!string.IsNullOrEmpty(sBlankRegNoRows))
+            {
+                sErrorMessage += "Enrolment No blank rows are - "  + sBlankRegNoRows.TrimEnd(',') + "<br>";
+            }
+
+            if (!string.IsNullOrEmpty(sBlankRFIDRows))
+            {
+                sErrorMessage += "RFID blank rows are - "  + sBlankRFIDRows.TrimEnd(',')  + "<br>";
+            }
+
+            if (!string.IsNullOrEmpty(sErrorMessage))
+            {
+                return sErrorMessage;
+            }
+
+            ValidateRegistrationNumbersExist(oDTRFIDDetails);
+
+            string sStudentDetails = GetXMLStringForRFIDDetailsFromXLSRows( oDTRFIDDetails, "StudentRFIDDetails","StudentRFIDDetails");
+
+            RFIDDetailsBL moRFIDDetailsBL = new RFIDDetailsBL( moStudentInfoStruct.iSchoolId, moStudentInfoStruct.iUserId);
+
+            moRFIDDetailsBL.ImportRFIDDetails( moStudentInfoStruct.iUserId, sStudentDetails, moStudentInfoStruct.iAcademicYearId);
+
+           return string.Empty;
+        }
+
+          private bool ValidateRegistrationNumbersExist(DataTable aoDataTable)
+            {
+                string sInvalidRows = string.Empty;
+
+                RFIDDetailsBL oRFIDDetailsBL = new RFIDDetailsBL( moStudentInfoStruct.iSchoolId,moStudentInfoStruct.iUserId);
+
+                List<string> lstRegNumbers = oRFIDDetailsBL.GetRegistrationNumbers( moStudentInfoStruct.iAcademicYearId);
+
+                for (int iRowCount = 0; iRowCount < aoDataTable.Rows.Count; iRowCount++)
+                {
+                    string sRegNo = aoDataTable.Rows[iRowCount]["Enrolment No"].ToString() .Trim();
+                    if (!lstRegNumbers.Contains(sRegNo))
+                    {
+                        sInvalidRows += (iRowCount + 1) + ", ";
+                    }
+                }
+
+                if (sInvalidRows != string.Empty)
+                {
+                    sInvalidRows = sInvalidRows.Substring(0, sInvalidRows.Length - 2);
+
+                    throw new Exception( "Registration Number does not exist in the database at row(s): " + sInvalidRows + ".");
+                }
+
+                return true;
+            }
+
+          private string GetXMLForStudentFeeIds(string asStudentFeeIds)
+         {
             const string S_STUDENT_FEE_ID = "Student_Fee_Id";
             const string S_STUDENT_LATE_FEE = "Late_Fee_Amt";
             const string S_STUDENT_FEE_LIST = "StudentFeeList";
@@ -1818,8 +1903,53 @@ namespace BusinessLogic
             // return the string generated.
             return root.InnerXml;
         }
+      
+       public string GetXMLStringForRFIDDetailsFromXLSRows( DataTable aoDataTable, string asRootElementName, string asElementName)
+        {
+            const string S_ELEMENT = "element";
 
+            XmlDocument oDoc = new XmlDocument();
 
+            string sAtrrName;
+            XmlAttribute attr;
+
+            XmlElement root = oDoc.CreateElement(asRootElementName);
+            XmlNode oXmlRootNode = oDoc.CreateNode(S_ELEMENT, asRootElementName, "");
+
+            ArrayList oArrayList = new ArrayList();
+
+            oArrayList.Add("EnrolmentNo");
+            oArrayList.Add("RFID");
+
+            for (int iRowCount = 0; iRowCount <= aoDataTable.Rows.Count - 1; iRowCount++)
+            {
+                XmlNode oXmlNode = oDoc.CreateNode(S_ELEMENT, asElementName, "");
+
+                for (int iCount = 0; iCount < oArrayList.Count; iCount++)
+                {
+                    sAtrrName = oArrayList[iCount].ToString().Trim();
+
+                    attr = oDoc.CreateAttribute(sAtrrName);
+
+                    if (sAtrrName == "EnrolmentNo")
+                    {
+                        attr.Value =  aoDataTable.Rows[iRowCount]["Enrolment No"] .ToString() .Trim();
+                    }
+                    else if (sAtrrName == "RFID")
+                    {
+                        attr.Value = aoDataTable.Rows[iRowCount]["RFID"] .ToString() .Trim();
+                    }
+
+                    oXmlNode.Attributes.Append(attr);
+                }
+
+                oXmlRootNode.AppendChild(oXmlNode);
+            }
+
+            root.AppendChild(oXmlRootNode);
+
+            return root.InnerXml;
+        }
 
         public string GetChallanXMLStringFromXLSRows(DataTable aoDataTable, string asRootElementName, string asElementName)
         {

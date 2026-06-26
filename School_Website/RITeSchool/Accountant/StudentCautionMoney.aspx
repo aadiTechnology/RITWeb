@@ -244,7 +244,7 @@
                                                 <td align="right" valign="top" colspan="2">
                                                     <asp:GridView ID="grdStudents" runat="server" Width="100%" AutoGenerateColumns="False"
                                                         CellPadding="0" CellSpacing="1" OnRowDataBound="grdStudents_RowDataBound" ForeColor="#333333"
-                                                        GridLines="None" BackColor="White" AllowSorting="True" DataKeyNames="Schoolwise_Student_Id,Return_Cheque_Id,Payment_Cheque_Id,Paid_By_Student,Returned_By_School,SchoolLeft_Date,Admission_Date,Payment_Date,Is_RTE_Student,ElectronicPaymentId,NetBankingPaymentTransactionID,ReceiptNumber"
+                                                        GridLines="None" BackColor="White" AllowSorting="True" DataKeyNames="Schoolwise_Student_Id,Return_Cheque_Id,Payment_Cheque_Id,Paid_By_Student,Returned_By_School,SchoolLeft_Date,Admission_Date,Payment_Date,Is_RTE_Student,ElectronicPaymentId,NetBankingPaymentTransactionID,ReceiptNumber,Student_Caution_Money_Id"
                                                         CssClass="GridBorder" AllowPaging="True" OnPageIndexChanging="grdStudents_PageIndexChanging"
                                                         OnSorting="grdStudents_Sorting" OnRowCreated="grdStudents_RowCreated" 
                                                         onrowcommand="grdStudents_RowCommand">

@@ -83,7 +83,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("UpdatedById", this.miUpdatedById, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("UserId", aiUserId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("Xml", asXml, SqlDbType.Xml);
-                oSQLServerDbUtility.AddParameter("RegimId", aiRegimId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("RegimeId", aiRegimId, SqlDbType.Int);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_SaveIncomeDeclaration");
             }
         } 

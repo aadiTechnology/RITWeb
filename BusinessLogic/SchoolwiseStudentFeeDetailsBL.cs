@@ -1833,6 +1833,17 @@ namespace BusinessLogic
         {
             return moStudentFeeDetailsDC.GetYearwisePendingFeeStudent(aiSchoolId, aiAcademicYearId, asStandardId, asDivisionId);
         }
+                
+        /// <summary>
+        /// Gets NetBankingPaymentTransactionID and TPSLTransactionID for ids in TxnIds XML (usp_GetTransactionDetails).
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="asTxnIds">XML: TransactionIdList/Transaction/@NetBankingPaymentTransactionID</param>
+        /// <returns></returns>
+        public DataTable GetTransactionDetails(int aiSchoolId,int aiFinancialYearId, string asTxnIds)
+        {
+            return moStudentFeeDetailsDC.GetTransactionDetails(aiSchoolId,aiFinancialYearId, asTxnIds);
+        }
     }
 
 	public class StudentFeeDetailsCollectionBL

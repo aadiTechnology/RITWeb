@@ -529,6 +529,8 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 		{
 			StudentCautionMoneyChequeDetailsBL oStudentCautionMoneyChequeDetailsBL = PopulateChequeDetails();
 			oStudentCautionMoneyChequeDetailsBL.StudentId = hidStudentId.Value.ToInt();
+            oStudentCautionMoneyChequeDetailsBL.StudentCautionMoneyId = hidStudentCautionMoneyId.Value.ToInt();
+
 			int iPaymentChequeId = oStudentCautionMoneyChequeDetailsBL.InsertStudentCautionMoneyChequeDetails();
 			oStudentCautionMoneyDetailsBL.Payment_Cheque_Id = iPaymentChequeId;
 			oStudentCautionMoneyDetailsBL.UpdateStudentCautionMoneyPaidDetails();
@@ -537,6 +539,8 @@ public partial class CautionMoneyChequePopUp : SchoolBase
         {
             StudentCautionMoneyChequeDetailsBL oStudentCautionMoneyElectronicDetails = PopulateElectronicDetails(false);
             oStudentCautionMoneyElectronicDetails.SchoolwiseStudentId = hidStudentId.Value.ToInt();
+            oStudentCautionMoneyElectronicDetails.StudentCautionMoneyId = hidStudentCautionMoneyId.Value.ToInt();
+
             int iPaymentId = oStudentCautionMoneyElectronicDetails.InsertStudentCautionMoneyElectronicDetails();
             oStudentCautionMoneyDetailsBL.UpdateStudentCautionMoneyPaidDetails();
         }
@@ -645,12 +649,20 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 		{
 			StudentCautionMoneyChequeDetailsBL oStudentCautionMoneyChequeDetailsBL = PopulateChequeDetails();
 			oStudentCautionMoneyChequeDetailsBL.StudentId = hidStudentId.Value.ToInt();
+            oStudentCautionMoneyChequeDetailsBL.StudentCautionMoneyId = hidStudentCautionMoneyId.Value.ToInt();
+
 
 			// We update the BankId here because when the Accounts module is enabled, the original bankname dropdownlist is hidden.
 			// And in the new list, the value field is the LedgerId instead of the BankId. Hence we need to get the corresponding BankId for the LedgerId.
-			if (IsAccountsModuleEnabled)
-				oStudentCautionMoneyChequeDetailsBL.Bank_Id = GetBankList().FirstOrDefault(bank => bank.Id == ddlAcBankList.SelectedValue.ToInt()).Bank.Id;
+            //if (IsAccountsModuleEnabled)
+            //    oStudentCautionMoneyChequeDetailsBL.Bank_Id = GetBankList().FirstOrDefault(bank => bank.Id == ddlAcBankList.SelectedValue.ToInt()).Bank.Id;
 
+            if (IsAccountsModuleEnabled && !ddlAcBankList.SelectedValue.IsNullOrEmpty())
+            {
+                BankAccount oBankAccount = GetBankList().FirstOrDefault(bank => bank.Id == ddlAcBankList.SelectedValue.ToInt());
+                  if (oBankAccount != null)
+                    oStudentCautionMoneyChequeDetailsBL.Bank_Id = oBankAccount.Bank.Id;
+            }
 			oStudentCautionMoneyChequeDetailsBL.Student_Caution_Money_Cheque_Id = hidReturnChequeId.Value == String.Empty ? Constants.I_ZERO : hidReturnChequeId.Value.ToInt();
 			//   This method is used to check is there any duplicate cheque number or not.
 			oStudentCautionMoneyChequeDetailsBL.IsChequeNoDuplicate();
@@ -671,6 +683,8 @@ public partial class CautionMoneyChequePopUp : SchoolBase
         else if (optElectronic.Checked)
         {
             StudentCautionMoneyChequeDetailsBL oStudentCautionMoneyElectronicDetails = PopulateElectronicDetails(true);
+            oStudentCautionMoneyElectronicDetails.StudentCautionMoneyId = hidStudentCautionMoneyId.Value.ToInt();
+
             if (hidElectronicPaymentId.Value != String.Empty && hidElectronicPaymentId.Value != Constants.S_ZERO)
             {
                 oStudentCautionMoneyElectronicDetails.ElePaymentId = hidElectronicPaymentId.Value.ToInt();
@@ -774,7 +788,8 @@ public partial class CautionMoneyChequePopUp : SchoolBase
             EleTypeId = cmbElectronicTypes.SelectedValue.ToInt(),
             TxnNumber = txtTxnNumber.Text,
             EleBankId = ddlBankNameCard.SelectedValue.ToInt(),            
-            EleDepositBankId = IsAccountsModuleEnabled ? ddlAcCardBank.SelectedValue.ToInt() : Constants.I_ZERO,
+          //  EleDepositBankId = IsAccountsModuleEnabled ? ddlAcCardBank.SelectedValue.ToInt() : Constants.I_ZERO,
+            EleDepositBankId = IsAccountsModuleEnabled ? (string.IsNullOrEmpty(ddlAcCardBank.SelectedValue) ? 0 : ddlAcCardBank.SelectedValue.ToInt())  : Constants.I_ZERO,
             Remarks = txtRemarks.Text,
             aiSChoolId = miSchoolId,
             InsertedByid = miUserId,
@@ -782,7 +797,6 @@ public partial class CautionMoneyChequePopUp : SchoolBase
             UpdateDate = DateTime.Now,
             InsertDate = DateTime.Now,
             IsReturnRecord = abIsReturnRecord,
-
         };
     }
 
@@ -809,6 +823,7 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 												Amount = iAmount,
                                                 ConcessionAmount = iConcessionAmount,
 												Schoolwise_Student_Id = hidStudentId.Value.ToInt(),
+                                                Student_Caution_Money_Id = hidStudentCautionMoneyId.Value.ToInt(),
 												Inserted_By_id = miUserId,
 												Updated_By_Id = miUserId,
 												Update_Date =  DateTime.Now,
@@ -866,6 +881,7 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 		txtAmount.Text = QueryString["Amount"];
         txtActualAmt.Text = QueryString["Amount"].ToString();
 		hidStudentId.Value = QueryString["StudentId"];
+        hidStudentCautionMoneyId.Value = QueryString["StudentCautionMoneyId"];
 
 		if (hidPostBackUrl.Value != "~/StudentPayFeeUI.aspx")
 		{
@@ -884,7 +900,9 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 			if (!QueryString["Return_Cheque_Id"].IsNull())
 				hidReturnChequeId.Value = QueryString["Return_Cheque_Id"];
 
-			if (!QueryString["ChequeNo"].IsNull())
+            if (!QueryString["StudentCautionMoneyId"].IsNull())
+                hidStudentCautionMoneyId.Value = QueryString["StudentCautionMoneyId"];
+            if (!QueryString["ChequeNo"].IsNull())
 				hidChequeNo.Value = !QueryString["ChequeNo"].IsNullOrEmpty() ? QueryString["ChequeNo"] : "-9999";
 
 			if (!QueryString["FromDate"].IsNull())

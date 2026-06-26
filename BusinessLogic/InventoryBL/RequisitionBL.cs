@@ -36,6 +36,7 @@ namespace BusinessLogic
     {
 
         private RequisitionDC.RequisitionStruct moRequisitionStruct;
+        private int miTotalRows = 0;
 
         private RequisitionDC moRequisitionDC;
 
@@ -257,17 +258,25 @@ namespace BusinessLogic
             return RequisitionDC.CountItemsFromAllRequisition(aiSchoolId, asPOId);
         }
 
-        public static DataTable GetApproveRequisitionForPO(Int32 aiSchoolId,string asPOId, String sortExpression, int maximumRows, int startRowIndex)
+        public DataTable GetApproveRequisitionForPO(Int32 aiSchoolId,string asPOId, String sortExpression, int maximumRows, int startRowIndex)
         {
             int iStartIndex = startRowIndex;
             int iEndIndex = iStartIndex + maximumRows;
 
-            return RequisitionDC.GetApproveRequisitionForPO(aiSchoolId,asPOId, sortExpression, iEndIndex, iStartIndex);
+            DataTable oDTData = RequisitionDC.GetApproveRequisitionForPO(aiSchoolId,asPOId, sortExpression, iEndIndex, iStartIndex);
+
+            if (oDTData.Rows.Count > 0 && oDTData.Rows[0]["TotalRows"] != DBNull.Value)
+                miTotalRows = Convert.ToInt32(oDTData.Rows[0]["TotalRows"]);
+            else
+                miTotalRows = 0;
+
+            return oDTData;
         }
 
-        public static int CountRowsOfApproveRequisitionForPO(Int32 aiSchoolId, string asPOId)
+        public int CountRowsOfApproveRequisitionForPO(Int32 aiSchoolId, string asPOId)
         {
-            return RequisitionDC.CountRowsOfApproveRequisitionForPO(aiSchoolId, asPOId);
+            //return RequisitionDC.CountRowsOfApproveRequisitionForPO(aiSchoolId, asPOId);
+            return miTotalRows;
         }
 
         public DataTable GetRequisitionsOfItem(int aiItemID, int aiSchoolID, int aiPOId)

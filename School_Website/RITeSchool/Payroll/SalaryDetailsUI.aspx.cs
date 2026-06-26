@@ -939,6 +939,14 @@ public partial class SalaryDetailsUI : ExportDataTable
             hidSelectedPageIndex.Value = iPageIndex.ToString();
             oDataTable = GetSalaryDetails(iMonthId, iYear, iStaffGroupId, abReloadGrid, sFilter, iPageIndex);
 
+            if (mbIsExportAll && miSchoolId == Constants.SchoolId.PPSH.ToInt())
+            {
+                DataRow[] drRows = oDataTable.Select("StaffGroupId <>'23'");
+
+                if (drRows.Length > 0)
+                    oDataTable = drRows.CopyToDataTable();
+            }
+
             if (oDataTable.IsNonEmpty())
                 oDataTable.Columns.Add(S_FORM_NO_16);
 

@@ -364,6 +364,7 @@
                             <asp:HiddenField ID="hidFinancialYearJSON" runat="server" />
                             <asp:HiddenField ID="hidCanEditOldFinancialYear" runat="server" />
                             <asp:HiddenField ID="hidElectronicPaymentId" runat="server" />
+                            <asp:HiddenField ID= "hidStudentCautionMoneyId" runat="server" />
                             <table>
                                 <tr>
                                     <td>

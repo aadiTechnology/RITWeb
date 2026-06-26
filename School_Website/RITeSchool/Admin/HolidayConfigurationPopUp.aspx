@@ -154,7 +154,18 @@
                                         <td>
                                             <span class="ClsMdtStar" style="color: Red">*
                                         </td>
-                                    </tr>
+                                      </tr>
+                                      <tr>
+                                            <td>
+                                                <span class="LblRht colonPadding" style="vertical-align: middle">Allow OverLapping ? :</span>
+                                            </td>
+                                            <td>
+                                                <span class="ClsLabel" style="vertical-align: middle">
+                                                    <asp:CheckBox ID="chkConfirmOverLapping" runat="server" 
+                                                        AutoPostBack="true" TabIndex="2" />
+                                                 </span>
+                                          </td>
+                                     </tr>                                    
                                     <tr>
                                         <td valign="top">
                                         </td>

@@ -357,5 +357,24 @@ namespace DataCommunicator.PayrollDC
                 return oSqlParameter.Value.ToBool();
             }
         }
-    }
-}
+        /// <summary>
+        ///This method is used to count pending approval leaves.
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiUserId"></param>
+        /// <returns></returns>
+        public static int CountRowsOfRequisition(int aiSchoolId, int aiAcademicYearId, int aiUserId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("UserId", aiUserId, SqlDbType.Int);
+                SqlParameter oSqlParameter = oSQLServerDbUtility.AddParameter("Cnt", 0, SqlDbType.Int, ParameterDirection.Output);
+                oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_CountWaitingApprovalLeaves");
+                return Convert.ToInt32(oSqlParameter.Value);
+            }
+        }
+      }
+  }

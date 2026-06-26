@@ -85,7 +85,8 @@ public partial class CautionMoneyReciept : SchoolBase
 
 			if (!QueryString["StudentRegNo"].IsNullOrEmpty())
 				hidStudentRegNo.Value = QueryString["StudentRegNo"];
-
+            if (!QueryString["StudentCautionMoneyId"].IsNullOrEmpty())
+                hidStudentCautionMoneyId.Value = QueryString["StudentCautionMoneyId"];
 			if (!QueryString["StudentRegNo"].IsNullOrEmpty())
 				hidPostBackUrl.Value = QueryString["PostBackUrl"];
 
@@ -243,6 +244,7 @@ public partial class CautionMoneyReciept : SchoolBase
 
             kvp.Add("SchoolId", miSchoolId.ToString());
             kvp.Add("StudentId", hidStudentId.Value);
+            kvp.Add("StudentCautionMoneyId", hidStudentCautionMoneyId.Value);
             
             ReportDisplay oReportDisplay = new ReportDisplay();
             if (moSchool == Constants.SchoolId.SNS && moUserRole == Constants.UserRoles.Student)

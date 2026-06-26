@@ -452,5 +452,35 @@ namespace DataCommunicator
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("[Transport].[usp_MarkLeftTransportService]");
             }
         }
+        /// <summary>
+        /// thsee method is used to get Transport Service Dates
+        /// </summary>
+        /// <returns></returns>
+        public TransportServiceDate GetTransportServiceDate()
+        {
+            TransportServiceDate oTransportServiceDate = new TransportServiceDate();
+            string sSelectStatement = " SELECT  " +
+                                 " StartDate AS EffectiveFromDate, " +
+                                 " EndDate AS EffectiveToDate " +
+                                 " FROM TransportServiceDates " +
+                                 " WHERE AcademicYearId = " + miAcademicYearId +
+                                 " AND IsDeleted = 0 ";
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteSqlStatementAndGetResults(sSelectStatement))
+                {
+                    if (oSqlDataReader.Read())
+                    {
+                        if (oSqlDataReader["EffectiveFromDate"] != DBNull.Value)
+                            oTransportServiceDate.StartDate = Convert.ToDateTime(oSqlDataReader["EffectiveFromDate"]);
+                        if (oSqlDataReader["EffectiveToDate"] != DBNull.Value)
+                            oTransportServiceDate.EndDate = Convert.ToDateTime(oSqlDataReader["EffectiveToDate"]);
+                    }
+                }
+            }
+
+            return oTransportServiceDate;
+        }
+
     }
 }

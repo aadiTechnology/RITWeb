@@ -30,7 +30,7 @@ namespace DataCommunicator.TransportDC
         {
         }
 
-        #endregion
+   #endregion
 
         #region Methods
 
@@ -60,12 +60,14 @@ namespace DataCommunicator.TransportDC
         /// <param name="aiStartIndex"></param>
         /// <param name="aiEndIndex"></param>
         /// <returns></returns>
-        public List<RFIDDetails> GetAllStudents(int aiSchoolId, int aiAcademicYearId, string asFilter, string asSortExpression, int aiStartIndex, int aiEndIndex)
+        public List<RFIDDetails> GetAllStudents(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, string asFilter, string asSortExpression, int aiStartIndex, int aiEndIndex)
         {
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
                 oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StandardId", aiStandardId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("DivisionId", aiDivisionId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("Filter", asFilter, SqlDbType.NVarChar);
                 oSQLServerDbUtility.AddParameter("SortExpression", asSortExpression, SqlDbType.NVarChar);
                 oSQLServerDbUtility.AddParameter("StartIndex", aiStartIndex, SqlDbType.Int);
@@ -110,7 +112,59 @@ namespace DataCommunicator.TransportDC
                 return oSqlParameter.Value.ToString();
             }
         }
+        /// <summary>
+        /// This method is used to save Students RFID details through import.
+        /// </summary>
+        /// <param name="aiUpdatedById"></param>
+        /// <param name="asStudentHealthDetails"></param>
+        public void ImportRFIDDetails(int aiUpdatedById, string asStudentDetails ,int aiAcademicYearId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("SchoolId", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("UpdatedById", aiUpdatedById, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StudentDetails", asStudentDetails, SqlDbType.Xml);
 
+                oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_ImportRFIDDetails");
+            }
+        }
+
+        /// <summary>
+        /// These method is used to get registration numbers.
+        /// </summary>
+        /// <param name="aiAcademicYearId"></param>
+        /// <returns></returns>
+        public List<string> GetRegistrationNumbers(int aiAcademicYearId)
+        {
+            List<string> lstRegNumbers = new List<string>();
+
+            string sSelectStmt = @"SELECT BSD.Enrolment_Number
+                           FROM vw_BaseStudentDetails BSD
+                           INNER JOIN Yearwise_Student_Details YSD
+                               ON BSD.Schoolwise_Student_ID = YSD.Student_Id
+                           WHERE YSD.Academic_Year_ID = " + aiAcademicYearId +
+                                 @" AND BSD.School_Id = " + this.miSchoolId +
+                                 @" AND BSD.Is_Deleted = 'N'
+                            AND YSD.Is_Deleted = 'N'";
+
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                using (SqlDataReader oSqlDataReader =
+                    oSQLServerDbUtility.ExecuteSqlStatementAndGetResults(sSelectStmt))
+                {
+                    while (oSqlDataReader.Read())
+                    {
+                        lstRegNumbers.Add(
+                            oSqlDataReader["Enrolment_Number"].ToString().Trim());
+                    }
+                }
+            }
+
+            return lstRegNumbers;
+        }
         #endregion        
+      
+        
     }
 }

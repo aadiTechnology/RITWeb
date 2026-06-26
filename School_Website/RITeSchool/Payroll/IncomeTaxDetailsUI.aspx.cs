@@ -157,6 +157,11 @@ public partial class IncomeTaxDetailsUI : SchoolBase
                 {
                     HtmlTableRow oHtmlTableHeaderRow = e.Item.FindControl("Tr2") as HtmlTableRow;
                     oHtmlTableHeaderRow.Style.Add("background-color", "#FFCCCC");
+
+                    foreach (HtmlTableCell cell in oHtmlTableHeaderRow.Cells)
+                    {
+                        cell.Style.Add("background-color", "#FFCCCC");
+                    }
                 }
 
                 string sQueryString = "UserId=" + sUserId + "&StaffGroupId=" + sStaffGroupId + "&PageIndex="+hidPageNo.Value.ToString()+"&UserName="+hidName.Value.ToString();

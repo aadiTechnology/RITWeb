@@ -227,4 +227,10 @@ using SchoolEntities.StudentFee;
         public string WeekdayIds { get; set; }
         public int TypeId { get; set; }
     }
+
+    public class TransportServiceDate
+    {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+    }
 }

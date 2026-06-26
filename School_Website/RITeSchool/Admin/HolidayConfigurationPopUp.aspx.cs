@@ -79,29 +79,33 @@ public partial class HolidayConfigurationPopup : SchoolBase
         {
             HolidaysMasterBL oHolidaysMasterBL = SetAllFieldToHolidayMaster();
             oHolidaysMasterBL.IsHolidayNameDuplicate();
-            oHolidaysMasterBL.IsHolidayStartAndEndDatePredefined();
-
-            // To insert  data into Holidays_Master.            
-            if (hidActionFlag.Value == Convert.ToString(Constants.I_ZERO))
+            if (!chkConfirmOverLapping.Checked)
             {
-                oHolidaysMasterBL.InsertHolidaysMaster();
-                iInsertOrUpdateFlag = 1;
-            }
-            else  //To Update data into Holidays_Master
-            {
-                oHolidaysMasterBL.UpdateHolidaysMaster();
-                iInsertOrUpdateFlag = 1;
+                oHolidaysMasterBL.IsHolidayStartAndEndDatePredefined();
             }
 
-            if (iInsertOrUpdateFlag == 1)
-            {
-                if (hidIsConfig.Value != "Y")
-                    SaveConfigDetails(Convert.ToInt32(Constants.SchoolConfigurations.HolidaysManagement));
-                Response.Write("<Script language='Javascript'>window.opener.location.reload(true); window.close();window.opener.focus(); </Script>");
-            }
-            cEndDate.DateValue = Convert.ToDateTime(hidEndDate.Value);
-        }
-        catch (BusinessLogic.HolidaysMasterBL.DuplicateHolidayName ex)
+              // To insert  data into Holidays_Master.            
+                if (hidActionFlag.Value == Convert.ToString(Constants.I_ZERO))
+                {
+                    oHolidaysMasterBL.InsertHolidaysMaster();
+                    iInsertOrUpdateFlag = 1;
+                }
+                else  //To Update data into Holidays_Master
+                {
+                    oHolidaysMasterBL.UpdateHolidaysMaster();
+                    iInsertOrUpdateFlag = 1;
+                }
+
+                if (iInsertOrUpdateFlag == 1)
+                {
+                    if (hidIsConfig.Value != "Y")
+                        SaveConfigDetails(Convert.ToInt32(Constants.SchoolConfigurations.HolidaysManagement));
+                    Response.Write("<Script language='Javascript'>window.opener.location.reload(true); window.close();window.opener.focus(); </Script>");
+                }
+                cEndDate.DateValue = Convert.ToDateTime(hidEndDate.Value);
+            
+           }
+            catch (BusinessLogic.HolidaysMasterBL.DuplicateHolidayName ex)
         {
             ShowErrorMessage(oResourceManager.GetString(ex.Message.Replace(" ", string.Empty)));            
             cEndDate.DateValue = Convert.ToDateTime(hidEndDate.Value);
@@ -151,8 +155,8 @@ public partial class HolidayConfigurationPopup : SchoolBase
         {
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
         }
-    }    
-    
+    }
+
     #endregion
 
     #region Private Method
@@ -224,6 +228,7 @@ public partial class HolidayConfigurationPopup : SchoolBase
         oHolidaysMasterBL.AssoiciatedStandards = sStandardDiv;
         oHolidaysMasterBL.HolidayName = txtNameofHoliday.Text;
         oHolidaysMasterBL.Remarks = txtRemarks.Text;
+        oHolidaysMasterBL.AllowOverLapping = chkConfirmOverLapping.Checked;
         oHolidaysMasterBL.InsertedById = miUserId;
         return oHolidaysMasterBL;
     }
@@ -267,6 +272,7 @@ public partial class HolidayConfigurationPopup : SchoolBase
         TimeSpan oT = oHolidaysMasterBL.HolidayEndDate.Subtract(oHolidaysMasterBL.HolidayStartDate);
         lblTotaldays.Text = (oT.Days + 1).ToString();
         txtRemarks.Text = oHolidaysMasterBL.Remarks;
+       chkConfirmOverLapping.Checked = oHolidaysMasterBL.AllowOverLapping;      
         string sStandards=string.Empty;
        
 

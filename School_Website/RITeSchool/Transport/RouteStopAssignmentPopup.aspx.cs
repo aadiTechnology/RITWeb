@@ -452,6 +452,20 @@ public partial class RouteStopAssignmentPopup : SchoolBase
                 cmbDropVehile.SelectedValue = oTransportDetails.VehicleId.ToString();
             }
         }
+        else
+        {
+            TransportServiceDate oTransportServiceDate = oTravelerTransportDetailsBL.GetTransportServiceDate();
+
+            if (oTransportServiceDate != null && oTransportServiceDate.StartDate != DateTime.MinValue)
+            {
+                txtPaymentDate.Text = oTransportServiceDate.StartDate.ToString(Constants.S_DATE_FORMAT);
+            }
+
+            if (oTransportServiceDate != null && oTransportServiceDate.EndDate != DateTime.MinValue)
+            {
+                txtEndDate.Text = oTransportServiceDate.EndDate.ToString(Constants.S_DATE_FORMAT);
+            }
+        }
     }
 
 

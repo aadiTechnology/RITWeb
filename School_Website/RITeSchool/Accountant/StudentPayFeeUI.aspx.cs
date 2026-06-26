@@ -474,9 +474,11 @@ public partial class StudentPayFeeUI : SchoolBase
             int iStudentID = hidStudentId.Value.ToInt();
             DataTable odt = oStudentCautionMoneyDetailsBL.GetStudentCautionMoneyDetails(iStudentID, miAcademicYearId, miSchoolId);
             string sStudentID = odt.Rows[0]["Schoolwise_Student_Id"].ToString();
+            string sStudentCautionMoneyId = odt.Rows[0]["Student_Caution_Money_Id"].ToString();
+
             string sAmount = odt.Rows[0]["Amount"].ToString();
             var sQueryString = new StringBuilder();
-            sQueryString.AppendFormat("&StudentId={0}&Amount={1}&PostBackUrl={2}", sStudentID, sAmount, sUploadURL);
+            sQueryString.AppendFormat("&StudentId={0}&Amount={1}&StudentCautionMoneyId={2}&PostBackUrl={3}", sStudentID, sAmount, sStudentCautionMoneyId, sUploadURL);
             string sEncrypt = CommonUtility.EncryptQuerystring(sQueryString.ToString());
             hidQueryString.Value = sEncrypt;
         }
@@ -1545,6 +1547,8 @@ public partial class StudentPayFeeUI : SchoolBase
         hidSchoolwiseStudentId.Value = oDsDebitDetails.Tables[7].Rows[Constants.I_ZERO]["SchoolwiseStudentId"].ToString();
 		if (oDsDebitDetails.Tables[Constants.I_THREE].Rows.Count > Constants.I_ZERO)
             sConcessionRule = oDsDebitDetails.Tables[Constants.I_THREE].Rows[Constants.I_ZERO]["ConcessionRule"].ToString();
+
+
         txtAmtPaid.Text = sAmtPaid;
         txtAmtPayable.Text = sAmtPayable;
         txtLateFee.Text = sLateFee;
@@ -1561,18 +1565,18 @@ public partial class StudentPayFeeUI : SchoolBase
 
         if (Settings.IsCautionMoneyApplicable)
         {
-            if (hidCautionMoneyButton.Value != Constants.S_YES && !(hidIsRTEStudent.Value == "True"))
+            if (hidCautionMoneyButton.Value != Constants.S_YES && hidIsCautionMoneyExist.Value == Constants.S_YES && !(hidIsRTEStudent.Value == "True"))
                 btnPayCautionMoney.Visible = true;
             else
                 btnPayCautionMoney.Visible = false;
 
-            if (hidIsRTEStudent.Value.ToLower() == "false")
+            if (hidIsRTEStudent.Value.ToLower() == "false" && hidIsCautionMoneyExist.Value == Constants.S_YES)
             {
                 btnPayCautionMoney.Text = (hidIsCautionMoneyPaid.Value == Constants.S_ONE ? "Show Caution Money Receipt" : "Pay Caution Money");
                 btnPayCautionMoney.Attributes.Remove("onclick");
                 if (hidIsCautionMoneyPaid.Value == Constants.S_ONE)
                 {
-                    string sQueryStr = string.Format("StudentId={0}", hidStudIdForCautionMoney.Value);
+                    string sQueryStr = string.Format( "StudentId={0}&StudentCautionMoneyId={1}", hidStudIdForCautionMoney.Value,0 ); 
                     sQueryStr = CommonUtility.EncryptQuerystring(sQueryStr);
                     btnPayCautionMoney.Attributes.Add("onclick", string.Format("window.open('CautionMoneyReciept.aspx?{0}','_blank','scrollbars=yes,resizable=no,top=0,left=0,width=800,height=470'); return false;", sQueryStr));
                 }
@@ -2060,7 +2064,7 @@ public partial class StudentPayFeeUI : SchoolBase
                 }
             }
 			
-            if (Settings.EnableOnlinePaymentForCautionMoney)
+            if (Settings.EnableOnlinePaymentForCautionMoney &&  hidIsCautionMoneyExist.Value == Constants.S_YES)
             {
                 btnOnlineCautionMoneyPayment.Visible = true;
                 trOnlinePaymentWaitingMsg.Visible = true;
@@ -2249,6 +2253,8 @@ public partial class StudentPayFeeUI : SchoolBase
     /// </summary>
     private void DisplayCautionMoneyDetails()
     {
+        lblVerifyNote4.Text = string.Empty;
+        lblVerifyNote4.Visible = false;
         const string S_BACKGROUND_COLOR = "background-color";
         int iStudentId = moUserRole == Constants.UserRoles.Student ? Session[Constants.S_SESSION_STUDENT_ID].ToInt() : hidStudentId.Value.ToInt();
 
@@ -2294,7 +2300,7 @@ public partial class StudentPayFeeUI : SchoolBase
                     string sChequeNumber = string.Format(", Number: {0}", Convert.ToString(oDRCautionMoney["Cheque_Number"]));
                     string sBankName = string.Format(", Bank Name: {0}", Convert.ToString(oDRCautionMoney["Bank_Name"]));
                     sVerifyNote3 = string.Format("{0} Cheque Details ({1}{2}{3})", sMode, sChequeDate, sChequeNumber, sBankName);
-                    lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount,sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
+                    lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
                     if (moUserRole != Constants.UserRoles.Student && oDRCautionMoney["ClearanceDate"] == DBNull.Value)
                         tdVerifyNote3.Style.Add(S_BACKGROUND_COLOR, "#f98972");
                     else
@@ -2330,12 +2336,12 @@ public partial class StudentPayFeeUI : SchoolBase
                         string sMode = string.Format(" and cleared on Date {0}.", sClearanceDate);
 
                         // lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}.", sVerifyNote4, sReceiptNumberNode, sAmount) : string.Format("{0}.", sVerifyNote3);  //old line 
-                        lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}{4}.", sVerifyNote4, sMode, sReceiptNumberNode, sAmount,sConcessionAmount) : string.Format("{0}.", sVerifyNote3); //
+                        lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}{4}.", sVerifyNote4, sMode, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3); //
                         tdVerifyNote3.Style.Add(S_BACKGROUND_COLOR, "White");                                                                                                          // old line
                     }                                                                                                                         // 
                     else     //
                     {  //
-                        lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote4, sReceiptNumberNode, sAmount,sConcessionAmount) : string.Format("{0}.", sVerifyNote3);  //
+                        lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote4, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);  //
                         tdVerifyNote3.Style.Add(S_BACKGROUND_COLOR, "White");     //
                     }   //
                 }
@@ -2363,7 +2369,126 @@ public partial class StudentPayFeeUI : SchoolBase
         }
         else
             ShowHideCautionMoneyDetails(false);
+
+        if (oDTCautionMoney.Rows.Count > 1)
+        {
+            DataRow oDRCautionMoney = oDTCautionMoney.Rows[1];
+            string sAmount = string.Empty;
+
+            string sConcessionAmount = string.Empty;
+            if (oDRCautionMoney["ConcessionAmount"] != DBNull.Value && oDRCautionMoney["ConcessionAmount"].ToString().Trim() != Constants.S_ZERO)
+                sConcessionAmount = ", Concession : " + oDRCautionMoney["ConcessionAmount"].ToString();
+
+            if (moUserRole != Constants.UserRoles.Student)
+                sAmount = string.Format(", Amount : {0}", oDRCautionMoney["Amount"].ToString());
+
+            if (oDRCautionMoney["Paid_By_Student"].ToString() == "True")
+            {
+                string sPaymentDate = oDRCautionMoney["Payment_Date"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT);
+                string sVerifyNote3 = string.Format("Caution Money paid by Cash on date {0}", sPaymentDate);
+                string sVerifyNote4 = string.Format("Caution Money paid by " + oDRCautionMoney["PaymentType"] + "( Transaction No. - " + oDRCautionMoney["TransactionNumber"] + ")" + "Payment on date {0}", sPaymentDate);
+
+                string sReceiptNumber = oDRCautionMoney["Receipt_Number"].ToString();
+                int iReceiptNumber = sReceiptNumber.ToInt();
+                sReceiptNumber = sReceiptNumber.Length >= Settings.ReceiptMinimumDigits ? sReceiptNumber : sReceiptNumber.PadLeft(Settings.ReceiptMinimumDigits, '0');
+
+                string sReceiptNumberNode = string.Format(" Receipt No. : {0}", sReceiptNumber);
+
+                if (miSchoolId == Constants.SchoolId.PPSN.ToInt() && oDRCautionMoney["ConcessionAmount"] == DBNull.Value)
+                    sConcessionAmount = string.Empty;
+
+                if (oDRCautionMoney["Payment_Mode"].ToString() == "Q")
+                {
+                    string sMode = string.Format("Caution Money paid by Cheque on date {0}.", sPaymentDate);
+
+                    if (Settings.ShowCautionMoneyClrDate && moUserRole != Constants.UserRoles.Student)
+                    {
+                        string sClearanceDate = " - ";
+                        if (!oDRCautionMoney["ClearanceDate"].IsNull() && !oDRCautionMoney["ClearanceDate"].ToString().IsNullOrEmpty())
+                            sClearanceDate = oDRCautionMoney["ClearanceDate"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT);
+                        sMode = string.Format("Caution Money is paid by Cheque on Date {0} and cleared on Date {1}.", sPaymentDate, sClearanceDate);
+                    }
+
+                    string sChequeDate = string.Format("Date: {0}", oDRCautionMoney["Cheque_Date"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT));
+                    string sChequeNumber = string.Format(", Number: {0}", Convert.ToString(oDRCautionMoney["Cheque_Number"]));
+                    string sBankName = string.Format(", Bank Name: {0}", Convert.ToString(oDRCautionMoney["Bank_Name"]));
+                    sVerifyNote3 = string.Format("{0} Cheque Details ({1}{2}{3})", sMode, sChequeDate, sChequeNumber, sBankName);
+                    lblVerifyNote4.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
+                    if (moUserRole != Constants.UserRoles.Student && oDRCautionMoney["ClearanceDate"] == DBNull.Value)
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "#f98972");
+                    else
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "White");
+                }
+                else if (oDRCautionMoney["Payment_Mode"].ToString() == "N")
+                {
+                    string sMode = string.Format("Caution Money paid by online payment on date {0}.", sPaymentDate);
+
+                    if (Settings.ShowCautionMoneyClrDate && moUserRole != Constants.UserRoles.Student)
+                    {
+                        string sClearanceDate = " - ";
+                        if (!oDRCautionMoney["OnlineClearanceDate"].IsNull() && !oDRCautionMoney["OnlineClearanceDate"].ToString().IsNullOrEmpty())
+                            sClearanceDate = oDRCautionMoney["OnlineClearanceDate"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT);
+                        sMode = string.Format("Caution Money is paid by online payment on Date {0} and cleared on Date {1}.", sPaymentDate, sClearanceDate);
+                    }
+
+                    string sTransactionDate = string.Format("Date: {0}", oDRCautionMoney["TransactionDateTime"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT));
+                    string sTransNo = string.Format(", Transaction No. : {0}", Convert.ToString(oDRCautionMoney["TPSLTransactionID"]));
+                    string sBankName = string.Format(", Bank Name: {0}", Convert.ToString(oDRCautionMoney["RegisterdBankName"]));
+                    sVerifyNote3 = string.Format("{0} Transaction Details ({1}{2}{3})", sMode, sTransactionDate, sTransNo, sBankName);
+                    lblVerifyNote4.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
+                    if (moUserRole != Constants.UserRoles.Student && oDRCautionMoney["OnlineClearanceDate"] == DBNull.Value)
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "#f98972");
+                    else
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "White");
+                }
+
+                else if (oDRCautionMoney["Payment_Mode"].ToString() == "E")
+                {
+                    if (!oDRCautionMoney["EClearance"].IsNull() && !oDRCautionMoney["EClearance"].ToString().IsNullOrEmpty())  //
+                    {
+                        string sClearanceDate = " - ";
+                        sClearanceDate = oDRCautionMoney["EClearance"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT);   //
+                        string sMode = string.Format(" and cleared on Date {0}.", sClearanceDate);
+
+                        lblVerifyNote4.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}{4}.", sVerifyNote4, sMode, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3); //
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "White");
+                    }
+                    else
+                    {
+                        lblVerifyNote4.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "White");
+                    }
+                }
+                else
+                {
+                    lblVerifyNote4.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
+                    tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "White");
+                }
+
+                if (moUserRole != Constants.UserRoles.Student && oDRCautionMoney["Returned_By_School"].ToBool())
+                {
+                    if (oDRCautionMoney["Return_Mode"].ToString() == "Q")
+                    {
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "Yellow");
+                        lblVerifyNote4.Text += string.Format(" <br/> Caution Money is returned by Cheque on Date: {0} (Details - Cheque Number: {1}, Bank Name: {2}, Amount: {3}).", oDRCautionMoney["Return_Cheque_Date"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT), Convert.ToString(oDRCautionMoney["Return_Cheque_Number"]), Convert.ToString(oDRCautionMoney["Return_Bank_Name"]), oDRCautionMoney["ReturnAmount"].ToString());
+                    }
+                    else
+                    {
+                        tdVerifyNote4.Style.Add(S_BACKGROUND_COLOR, "Yellow");
+                        lblVerifyNote4.Text += string.Format(" Caution Money returned by Cash on date {0} (Amount: {1}).", oDRCautionMoney["Return_Date"].ToDateTime().ToString(Constants.S_STANDARD_DATE_FORMAT), oDRCautionMoney["ReturnAmount"].ToString());
+                    }
+                }
+
+                lblVerifyNote4.Visible = true;
+            }
+
+            else
+            {
+                lblVerifyNote4.Visible = false;
+            }
+        }
     }
+    
 
     /// <summary>
     /// 	This method is used to show or hide caution money details.
@@ -2529,9 +2654,13 @@ public partial class StudentPayFeeUI : SchoolBase
                 if (lstIds.Contains(iStudId))
                     hidCautionMoneyButton.Value = Constants.S_YES;
             }
-        }
+         }
+            
         else
             lblLeft.Visible = false;
+
+        int iIsCautionMoneyExist = grdStudents.DataKeys[aiRowIndex]["IsCautionMoneyExist"].ToInt();
+        hidIsCautionMoneyExist.Value = iIsCautionMoneyExist == 1 ? Constants.S_YES : Constants.S_NO;
 
         var oStudentBL = new StudentBL(aiStudentId);
         hidStudentId.Value = oStudentBL.YearWiseStudentId.ToString();
@@ -2540,6 +2669,7 @@ public partial class StudentPayFeeUI : SchoolBase
         hidSchoolwiseStudentId.Value = oStudentBL.StudentId.ToString();
         SetStudentInfo(oStudentBL);
 
+      
         //if (Settings.ShowFormNumber && grdStudents.DataKeys[aiRowIndex]["Form_Number"] != null && grdStudents.DataKeys[aiRowIndex]["Form_Number"].ToString() != string.Empty)
         //  lblStudentName.Text += " (" + Resources.LocalizedResources.FormNumber + " - " + grdStudents.DataKeys[aiRowIndex]["Form_Number"].ToString() + ")";
 

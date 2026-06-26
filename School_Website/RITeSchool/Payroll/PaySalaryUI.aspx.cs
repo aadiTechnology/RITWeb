@@ -1592,7 +1592,7 @@ public partial class PaySalaryUI : ExportDataTable
         DateTime dtDate = new DateTime(iYear, iMonthId, 1);
 
         string sRecordSelectionFormula = "(usp_GetSalarySlipDetails.School_Id}=" + miSchoolId + " AND  usp_GetSalarySlipDetails.Academic_Year_Id} =" + miAcademicYearId +
-          " AND usp_GetSalarySlipDetails.FromDate}=" + dtDate.ToString(Constants.S_DATE_FORMAT) + " AND usp_GetSalarySlipDetails.StaffGroupsId} = null AND usp_GetSalarySlipDetails.UserId} = null AND  usp_GetSalarySlipDetails.ToDate} =" + dtDate.ToString(Constants.S_DATE_FORMAT) + ")" + "@ ";
+          " AND usp_GetSalarySlipDetails.FromDate}=" + dtDate.ToString(Constants.S_DATE_FORMAT) + " AND usp_GetSalarySlipDetails.StaffGroupsId} = null AND usp_GetSalarySlipDetails.UserId} = null AND usp_GetSalarySlipDetails.LoginUserId} = "+miUserId+" AND  usp_GetSalarySlipDetails.ToDate} =" + dtDate.ToString(Constants.S_DATE_FORMAT) + ")" + "@ ";
         return sRecordSelectionFormula;
     }
 

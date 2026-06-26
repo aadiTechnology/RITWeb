@@ -151,6 +151,8 @@ public partial class ClearanceList : SchoolBase
             {
                 trCautionMoney.Visible = true;
             }
+
+            SetImportMisButtonVisibility();
         }
         catch (Exception ex)
         {
@@ -207,6 +209,7 @@ public partial class ClearanceList : SchoolBase
             }
 
             HideRow();
+            SetImportMisButtonVisibility();
         }
         catch (Exception ex)
         {
@@ -256,6 +259,7 @@ public partial class ClearanceList : SchoolBase
                 lblError.Visible = false;
                 HideRow();
             }
+            SetImportMisButtonVisibility();
         }
         catch (Exception ex)
         {
@@ -957,6 +961,8 @@ public partial class ClearanceList : SchoolBase
 
         if (odtOnlineTrasaction.Rows.Count == 0)
             trTotalRec.Visible = false;
+
+        SetImportMisButtonVisibility();
     }
 
     /// <summary>
@@ -1734,10 +1740,11 @@ public partial class ClearanceList : SchoolBase
     /// </summary>
     private void SetClientScriptAttribute()
     {
-        ApplyMouseHoverEffect(new List<Button> { btnShow, btnSave, btnExport });
+        ApplyMouseHoverEffect(new List<Button> { btnShow, btnSave, btnExport, btnImportMIS });
         optRegNo.Attributes.Add("onclick", "if(!ClearValSum()){return false;}");
         optClearanceDate.Attributes.Add("onclick", "if(!ClearValSum()){return false;}");
         optPaymentDate.Attributes.Add("onclick", "if(!ClearValSum()){return false;}");
+        btnImportMIS.Attributes.Add("onclick", "window.open('ImportClearanceDetailsPopup.aspx','_blank','height=300,width=500,status=no,resizable=no,scrollbars=yes'); return false;");
 
         //btnExportFee.Visible = false;
         //if (miSchoolId == Constants.SchoolId.DSK.ToInt())
@@ -2494,5 +2501,17 @@ public partial class ClearanceList : SchoolBase
             trGateway.Visible = true;
         else
             trGateway.Visible = false;
+    }
+
+    /// <summary>
+    /// Sets visibility of Import MIS button based on school, payment mode and grid data.
+    /// </summary>
+    private void SetImportMisButtonVisibility()
+    {
+        bool bIsAllowedSchool = moSchool == Constants.SchoolId.PPSH;
+
+        btnImportMIS.Visible = bIsAllowedSchool
+            && optOnlineTransactionClearance.Checked
+            && grdvwClearedCash.Visible;
     }
 }

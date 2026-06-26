@@ -810,6 +810,7 @@ namespace Utility
             StudentHealth,
             VehicleReadingAllocation,
             VehicleMaintenance,
+            RFID
         }
 
         public enum SMSTypes

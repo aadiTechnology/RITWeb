@@ -18,24 +18,35 @@
                         </asp:CustomValidator>
                         <asp:CustomValidator ID="CustomValidator1" runat="server" OnServerValidate="DuplicateRFID_Validate"
                             Display="None" SetFocusOnError="True" ErrorMessage="">
-                        </asp:CustomValidator>
+                       <asp:CustomValidator ID="CstValFileType" runat="server" ClientValidationFunction="validateFile" ValidationGroup="Import"
+                          ControlToValidate="fuRFIDImport" CssClass="ClsLabel" Display="None" ValidateEmptyText="true"
+                           ErrorMessage="<%$ Resources:LocalizedResources, InvalidFileType%>"></asp:CustomValidator>
+                       </asp:CustomValidator>
                     </ContentTemplate>
                     <Triggers>                        
                         <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
                         <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
+                        <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
                         <asp:AsyncPostBackTrigger ControlID="lstvwUpdateRFIDDetails" EventName="ItemCommand" />
                     </Triggers>
                 </asp:UpdatePanel>
             </td>
         </tr>
-        <tr id="tr1" runat="server">
+         <tr>
+            <td align="right">
+                <div style="float: right">
+                    <asp:HyperLink ID="lnkDownloadTemplate" runat="server" CssClass="CursorHand" Target="_blank"
+                        ImageUrl="~/RITeSchool/images/DownloadTemplate.gif" ToolTip="Download template for adding students RFID details by import."></asp:HyperLink>                                                
+                </div>
+            </td>
+         </tr>
+         <tr id="tr1" runat="server">
             <td align="center">
                 <table id="tblUpdateRFID" width="80%" runat="server">
                     <tr align="center">
                         <td align="center">
                             <table id="Table1" runat="server" width="98%">
-                                <tr>
+                               <tr>
                                     <td align="center">
                                         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                             <ContentTemplate>
@@ -45,30 +56,107 @@
                                             <Triggers>
                                                 <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
                                                 <asp:AsyncPostBackTrigger ControlID="btnCancel" EventName="Click" />
-                                                <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
+                                                <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
                                                 <asp:AsyncPostBackTrigger ControlID="lstvwUpdateRFIDDetails" EventName="ItemCommand" />
                                             </Triggers>
                                         </asp:UpdatePanel>
                                     </td>
                                 </tr>
-                                <tr align="center" style="text-align: center; margin: 0px auto;">
-                                    <td align="center" style="text-align: center;">
-                                        <table align="center">
+                               <tr align="center">
+                                 <td align="center">
+                                 <table border="0" cellpadding="0" cellspacing="3" align="center" style="text-align: center; margin: 0px auto;">
+                                    <tr align="center" style="text-align: center; margin: 0px auto;">
+                                        <td align="center" style="padding-left : 80px;">
+                                            <asp:Label CssClass="ClsLabel" ID="lblSelectFile" runat="server" EnableViewState="False"
+                                                Text="Import File"></asp:Label>
+                                            <span class="ClsLabel colonPadding">:</span>
+                                        </td>
+                                        <td align="center" colspan="2">
+                                            <asp:FileUpload ID="fuRFIDImport" runat="server" />                                                                             
+                                        </td>   
+                                        <td align="center" class="clspaddingsmallt" colspan="3">
+                                             <asp:Button ID="btnImport"  runat="server" Text="Import"   CssClass="ClsBtn" OnClick="btnImport_Click" CausesValidation="true"
+                                                BorderWidth="1px" UseSubmitBehavior="false"  ValidationGroup="Import" />
+                                        </td>
+                                     </tr>
+                                     <tr align="center" style="text-align: center; margin: 0px auto;">
+                                        <td colspan="3" align="left" style="text-align: left; margin: 0px auto; padding-left : 85px;">
+                                            <asp:Label CssClass="LblSmlGray" ID="lblNoteFileType" runat="server" EnableViewState="False"
+                                                Text="<%$ Resources:LocalizedResources, FileType %>"></asp:Label>
+                                        </td>
+                                     </tr>
+                                 </table>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="height: 10px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top: 2px solid #C0C0C0;">
+                            </td>
+                        </tr>
+                           <tr>
+                            <td align="center">
+                                <asp:UpdatePanel ID="UpdatePanel5" UpdateMode="Conditional" runat="server">
+                                    <ContentTemplate>
+                                        <table width="70%">
                                             <tr>
-                                                <td class="ClsBorderLight" align="left">
-                                                    <span class="ClsLabel">Student Name / Enrolment No. / RFID : </span>
+                                                <td class="ClsBorderlight" style="padding-left: 5px">
+                                                    <span class="ClsLabel">Standard :</span>
                                                 </td>
-                                                <td>
-                                                    <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" Width="300px"></asp:TextBox>
+                                                <td align="left">
+                                                    <asp:DropDownList ID="cmbStandard" runat="server" CssClass="LrgCombo" AutoPostBack="true"
+                                                        OnSelectedIndexChanged="cmbStandard_SelectedIndexChanged" ViewStateMode="Enabled">
+                                                    </asp:DropDownList>
                                                 </td>
-                                                <td colspan="2" align="center">
-                                                    <asp:Button ID="btnSearch" runat="server" Text="Search" class="ClsBtn" OnClick="btnSearch_Click"
-                                                        CausesValidation="false" />
+                                                <td class="ClsBorderlight">
+                                                    <span class="ClsLabel">Division :</span>
                                                 </td>
+                                                <td align="left">
+                                                 <asp:UpdatePanel ID="upnl1" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <asp:DropDownList ID="cmbDivision" CssClass="LrgCombo" runat="server" EnableViewState="true">
+                                                            </asp:DropDownList>
+                                                        </ContentTemplate>
+                                                        <Triggers>
+                                                            <asp:AsyncPostBackTrigger ControlID="cmbStandard" EventName="SelectedIndexChanged" />
+                                                        </Triggers>
+                                                    </asp:UpdatePanel>
+                                                 </td>
                                             </tr>
                                         </table>
-                                    </td>
-                                </tr>
+                                    </ContentTemplate>
+                                    <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
+                                  </Triggers>
+                                </asp:UpdatePanel>
+                            </td>
+                        </tr>
+                             <tr align="center" style="text-align: center; margin: 0px auto;">
+                                 <td align="center" style="text-align: center;">
+                                    <asp:UpdatePanel ID="UpdatePanel4" UpdateMode="Conditional" runat="server">
+                                      <ContentTemplate>
+                                        <table align="center">
+                                            <tr>
+                                               <td class="ClsBorderLight" align="left">
+                                                    <span class="ClsLabel">Student Name / Enrolment No. / RFID : </span>
+                                               </td>
+                                               <td>
+                                                    <asp:TextBox ID="txtSearch" runat="server" MaxLength="100" Width="300px"></asp:TextBox>
+                                               </td>
+                                               <td align="center">
+                                                 <asp:Button ID="btnShow" CssClass="ClsBtn" runat="server" Text="Show" OnClick="btnShow_Click"  ValidationGroup="SHOW" />
+                                              </td>
+                                            </tr>
+                                        </table>
+                                      </ContentTemplate>
+                                      <Triggers>
+                                        <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
+                                    </Triggers>
+                                </asp:UpdatePanel>
+                              </td>
+                           </tr>
                                 <tr id="trlink" runat="server">
                                     <td>
                                         <table id="tbllstRFID" align="center" width="95%" runat="server">
@@ -202,6 +290,10 @@
                                                                                 <asp:SessionParameter Name="aiSchoolId" SessionField="I_SCHOOL_ID" Type="int32" />
                                                                                 <asp:SessionParameter Name="aiAcademicYearId" SessionField="S_CURRENT_ACADEMIC_YEAR_ID"
                                                                                     Type="int32" />
+                                                                                <asp:ControlParameter ControlID="cmbStandard" Name="aiStandardId" PropertyName="SelectedValue" Type="Int32" />
+                                                                                <asp:ControlParameter ControlID="cmbDivision" Name="aiDivisionId" PropertyName="SelectedValue" Type="Int32" />
+                                                                                 <asp:ControlParameter ControlID="hidIsResetCall" Name="asIsResetCall" PropertyName="Value" />
+
                                                                                 <asp:ControlParameter ControlID="txtSearch" Name="asFilter" Type="String" PropertyName="Text" />
                                                                                 <asp:Parameter Name="SortExpression" Type="String" />
                                                                                 <asp:Parameter Name="SortDirection" Type="String" />
@@ -213,12 +305,14 @@
                                                                         <asp:HiddenField ID="hidUserId" runat="server" />
                                                                         <asp:HiddenField ID="hidSortExpression" runat="server" />
                                                                         <asp:HiddenField ID="hidSortDirection" runat="server" />
+                                                                        <asp:HiddenField ID="hidIsResetCall" runat="server" Value="0" />
+
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </ContentTemplate>
                                                         <Triggers>
-                                                            <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
+                                                            <asp:AsyncPostBackTrigger ControlID="btnShow" EventName="Click" />
                                                             <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
                                                         </Triggers>
                                                     </asp:UpdatePanel>
@@ -263,6 +357,8 @@
                                                                 class="ClsBtn" OnClick="btnCancel_Click" CausesValidation="False" />
                                                         </td>
                                                     </tr>
+                                                     <asp:HiddenField ID="hidValFileUpload" runat="server" />
+                                                    <asp:HiddenField ID="hidValFileUploadType" runat="server" />
                                                 </table>
                                             </ContentTemplate>
                                             <Triggers>
@@ -284,8 +380,11 @@
 
         _clienttxtRFID = "<%=this.txtRFID.ClientID %>"
         _clientlblStudentName = "<%=this.lblStudentNameData.ClientID %>"
+        _clientfuRFIDImport = "<%=this.fuRFIDImport.ClientID %>";
+        _clientCustomValId = "<%=this.CstValFileType.ClientID%>"
+        _clientlblUpdate = "<%=this.lblUpdate.ClientID %>";
 
-        function ValidateName(src, args) {
+       function ValidateName(src, args) {
             if ($get(_clientlblStudentName).innerHTML == "") {
                 src.errormessage = "Student Name should be selected."
                 args.IsValid = false;
@@ -309,6 +408,33 @@
                 return false;
             }
         }
+        function validateFile(source, args) {
+            ClearLabel()
+            var oFileName = document.getElementById(_clientfuRFIDImport).value
+            var Extension = oFileName.toUpperCase().substring(oFileName.indexOf("."))
+            var bIsValid = true
+            if (oFileName != "") {
+                if (oFileName.toUpperCase().indexOf(".XLS") == -1 && oFileName.toUpperCase().indexOf(".XLSX") == -1) {
+                    bIsValid = false
+                    document.getElementById(_clientCustomValId).errormessage = document.getElementById("<%=this.hidValFileUploadType.ClientID %>").value;
+                }
+                else if (oFileName.toUpperCase().substring(oFileName.indexOf(".")) != ".XLS" && oFileName.toUpperCase().substring(oFileName.indexOf(".")) != ".XLSX") {
+                    bIsValid = false
+                    document.getElementById(_clientCustomValId).errormessage = document.getElementById("<%=this.hidValFileUploadType.ClientID %>").value;
+                }
+            }
+            else {
+                bIsValid = false
+                document.getElementById(_clientCustomValId).errormessage = document.getElementById("<%=this.hidValFileUpload.ClientID %>").value;
+            }
+            args.IsValid = bIsValid
+            return !bIsValid
+        }
+        function ClearLabel() {
+            if (document.getElementById(_clientlblUpdate)) {
+                document.getElementById(_clientlblUpdate).innerText = ""
+                document.getElementById(_clientlblUpdate).innerHTML = ""
+            }
     </script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="PopupMainBody" runat="Server">

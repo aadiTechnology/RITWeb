@@ -262,6 +262,8 @@
 												<td align="center" valign="top" colspan="3">
 													<asp:Button ID="btnShow" runat="server" ViewStateMode="Enabled" Text="Show" CssClass="ClsBtn" TabIndex="7"
 													            Width="100px" ValidationGroup="Show" OnClick="btnShow_Click" />
+													<asp:Button ID="btnImportMIS" runat="server" ViewStateMode="Enabled" Text="Import MIS" CssClass="ClsBtn" TabIndex="8"
+													            Width="100px" Visible="false" CausesValidation="false" />
 												</td>
 											</tr>
 											<tr>

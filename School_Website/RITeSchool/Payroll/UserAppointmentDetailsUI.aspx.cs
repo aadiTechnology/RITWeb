@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -397,6 +398,7 @@ public partial class UserAppointmentDetailsUI : SchoolBase
         txtJoiningDate.Text = DateTime.Now.Date.ToString(Constants.S_DATE_FORMAT, new CultureInfo("en"));
         txtPaymentStartDate.Text = DateTime.Now.Date.ToString(Constants.S_DATE_FORMAT, new CultureInfo("en"));
         txtEmpNo.Text = string.Empty;
+        txtLetterNoPostfix.Text = GetDefaultLetterNoPostfix();
     }
 
     /// <summary>
@@ -419,6 +421,7 @@ public partial class UserAppointmentDetailsUI : SchoolBase
             Status = new StaffStatusDetails { StatusId = Convert.ToInt32(cmbJobType.SelectedValue) },
             PaymentGroupId = Convert.ToInt32(cmbPaymentGroup.SelectedValue),
             EmployeeNo = txtEmpNoPrefix.Text.Trim() + txtEmpNo.Text.Trim(),
+            LetterNoPostfix = txtLetterNoPostfix.Text.Trim(),
         };
     }
 
@@ -468,6 +471,9 @@ public partial class UserAppointmentDetailsUI : SchoolBase
         cmbPaymentGroup.SelectedValue = oUserAppointmentDetails.PaymentGroupId.ToString();
         cmbPaymentGroup_SelectedIndexChanged(cmbPaymentGroup, null);
         txtEmpNo.Text = oUserAppointmentDetails.EmployeeNo.Replace(Settings.EmployeeNoPrefix, string.Empty);
+        txtLetterNoPostfix.Text = string.IsNullOrEmpty(oUserAppointmentDetails.LetterNoPostfix)
+            ? GetDefaultLetterNoPostfix()
+            : oUserAppointmentDetails.LetterNoPostfix;
 
         decimal iGrossSalary = 0;
         foreach (ListViewDataItem oCurrentItem in lstvwParameters.Items)
@@ -544,6 +550,26 @@ public partial class UserAppointmentDetailsUI : SchoolBase
     private void SetDefaultValues()
     {
         txtEmpNoPrefix.Text = Settings.EmployeeNoPrefix;
+        txtLetterNoPostfix.Text = GetDefaultLetterNoPostfix();
+    }
+
+    /// <summary>
+    /// This method is used to get default letter no postfix from current academic year.
+    /// </summary>
+    /// <returns></returns>
+    private string GetDefaultLetterNoPostfix()
+    {
+        if (Session[Constants.S_SESSION_ACADEMIC_YEAR_START_DATE] != null
+            && Session[Constants.S_SESSION_ACADEMIC_YEAR_END_DATE] != null)
+        {
+            DateTime dtStart = Convert.ToDateTime(Session[Constants.S_SESSION_ACADEMIC_YEAR_START_DATE]);
+            DateTime dtEnd = Convert.ToDateTime(Session[Constants.S_SESSION_ACADEMIC_YEAR_END_DATE]);
+            return "/"+dtStart.ToString("yy", CultureInfo.InvariantCulture)
+                 + "-"
+                 + dtEnd.ToString("yy", CultureInfo.InvariantCulture);
+        }
+
+        return string.Empty;
     }
     #endregion
 }

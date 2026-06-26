@@ -288,11 +288,14 @@ namespace DataCommunicator
         public List<UserDetails> GetRegimeDetails()
         {
             List<UserDetails> olstUserDetails = new List<UserDetails>();
-            string sSQLStatement = "SELECT Id, Name FROM [dbo].[RegimeCategories] WHERE IsDeleted = 0";
-
+            //string sSQLStatement = "SELECT Id, Name FROM [dbo].[RegimeCategories] WHERE IsDeleted = 0";
+           
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
-                using (SqlDataReader oSQLDataReader = oSQLServerDbUtility.ExecuteSqlStatementAndGetResults(sSQLStatement))
+                oSQLServerDbUtility.AddParameter("School_Id", this.miSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("FinancialYearId", this.miFinYearId, SqlDbType.Int);
+
+                using (SqlDataReader oSQLDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("USP_RegimeCategories"))
                 {
                     while (oSQLDataReader.Read())
                     {

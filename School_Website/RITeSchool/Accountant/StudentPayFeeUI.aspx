@@ -167,7 +167,7 @@
 																<td>
 																	<asp:GridView CssClass="GridBorder" ID="grdStudents" runat="server" ViewStateMode="Enabled" AutoGenerateColumns="False"
 																	              Height="100%" PageSize="20" CellPadding="0" CellSpacing="1" ForeColor="#333333"
-																	              GridLines="None" DataKeyNames="Yearwise_Student_Id,SchoolLeft_Date,Is_RTE_Student,Form_Number,CancellationFormNo,Schoolwise_Student_Id" Width="100%"
+																	              GridLines="None" DataKeyNames="Yearwise_Student_Id,SchoolLeft_Date,Is_RTE_Student,Form_Number,CancellationFormNo,Schoolwise_Student_Id,IsCautionMoneyExist" Width="100%"
 																	              OnRowDataBound="grdStudents_RowDataBound" ShowFooter="False" OnRowCommand="grdStudents_RowCommand"
 																	              EmptyDataText="No record found." EmptyDataRowStyle-HorizontalAlign="Center" AllowPaging="true">
 																		<PagerStyle ForeColor="Black" HorizontalAlign="Right" Font-Bold="True" Font-Underline="False">
@@ -740,6 +740,7 @@
                                                         <asp:HiddenField ID="hidFeePayable" runat="server" ViewStateMode="Enabled" Value="0"/>
                                                         <asp:HiddenField ID="hidRestrictCurrentYearPayment" runat="server" ViewStateMode="Enabled" Value="N"/>
                                                         <asp:HiddenField ID="hidBaseFinancialYearId" runat="server" ViewStateMode="Enabled" Value="0" /> 
+                                                        <asp:HiddenField ID="hidIsCautionMoneyExist" runat="server" ViewStateMode="Enabled" Value="0"/>
                                                         <asp:HiddenField ID="hidStdDivId" runat="server" ViewStateMode="Enabled" Value="0" />
                                                         <asp:HiddenField ID="hidHideCautionMoneyButton" runat="server" ViewStateMode="Enabled" Value="N" />
 														<asp:HiddenField ID="hidNewStdId" runat="server" ViewStateMode="Enabled" />
@@ -858,8 +859,15 @@
 									</td>
 									<td align="left" class="ClsBorderlight" style="padding-left: 5px" id="tdVerifyNote3" runat="server" viewstatemode="Enabled" >
 										<asp:Label ID="lblVerifyNote3" runat="server" ViewStateMode="Enabled" BorderWidth="0px" CssClass="LblSmlV"></asp:Label>
+
 									</td>
-								</tr>
+                                 </tr>
+                                <tr>
+                                    <td></td>
+                                    <td align="left" class="ClsBorderlight" style="padding-left: 5px" id="tdVerifyNote4" runat="server"  viewstatemode="Enabled">
+                                        <asp:Label ID="lblVerifyNote4" runat="server" ViewStateMode="Enabled" BorderWidth="0px" CssClass="LblSmlV"></asp:Label>
+                                    </td>
+                                </tr>
                                 <tr id="trCautionMoneyNewNote" runat="server">
                                     <td align="left" class="ClsBorderlight" style="background-color: #ffffc4; width: 5%;">
                                         <asp:Label ID="lblCautionMoneyNewNote" runat="server" class="LblNrmlB" style="font-weight: bold" EnableViewState="false" Text="Note:"></asp:Label>
