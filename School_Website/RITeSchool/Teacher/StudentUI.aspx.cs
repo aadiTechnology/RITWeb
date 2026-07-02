@@ -3607,83 +3607,83 @@ public partial class StudentUI : SchoolBase
 
         DataSet odataset =oMasterDataBL.GetAllCompulsarySubjects( ddlGroup.SelectedValue.ToInt(), miAcademicYearId);
 
-       if (chkNewAddmission.Checked && miAcademicYearId >= 13 && ddlGroup.SelectedIndex > 0)
-        {
-            // OPTIONAL SUBJECTS
-            DataTable dtOptionalSubjects = odataset.Tables[1];
-           // SCIENCE - Hide Computer Science only for Group 2
-            if (ddlStream.SelectedValue == "1" && ddlGroup.SelectedValue == "2")
-            {
-                DataRow[] drSubjects = dtOptionalSubjects.Select("SubjectName = 'Computer Science'");
-                foreach (DataRow row in drSubjects)
-                {
-                    dtOptionalSubjects.Rows.Remove(row);
-                }
-            }
-           // COMMERCE
-            if (ddlStream.SelectedValue == "2")
-            {
-                // Hide Mathematics
-                DataRow[] drMaths = dtOptionalSubjects.Select("SubjectName = 'Mathematics'");
-                foreach (DataRow row in drMaths)
-                {
-                    dtOptionalSubjects.Rows.Remove(row);
-                }
+        //if (chkNewAddmission.Checked && miAcademicYearId >= 13 && ddlGroup.SelectedIndex > 0)
+        //{
+        //    // OPTIONAL SUBJECTS
+        //    DataTable dtOptionalSubjects = odataset.Tables[1];
+        //    // SCIENCE - Hide Computer Science only for Group 2
+        //    if (ddlStream.SelectedValue == "1" && ddlGroup.SelectedValue == "2")
+        //    {
+        //        DataRow[] drSubjects = dtOptionalSubjects.Select("SubjectName = 'Computer Science'");
+        //        foreach (DataRow row in drSubjects)
+        //        {
+        //            dtOptionalSubjects.Rows.Remove(row);
+        //        }
+        //    }
+        //    // COMMERCE
+        //    if (ddlStream.SelectedValue == "2")
+        //    {
+        //        // Hide Mathematics
+        //        DataRow[] drMaths = dtOptionalSubjects.Select("SubjectName = 'Mathematics'");
+        //        foreach (DataRow row in drMaths)
+        //        {
+        //            dtOptionalSubjects.Rows.Remove(row);
+        //        }
 
-              }
-            dtOptionalSubjects.AcceptChanges();
+        //    }
+        //    dtOptionalSubjects.AcceptChanges();
 
-          // COMPETITIVE EXAMS
-            DataTable dtCompetitiveExams = odataset.Tables[2];
-          // ARTS STREAM - Hide all exams
-            if (ddlStream.SelectedValue == "3")
-            {
-                dtCompetitiveExams.Rows.Clear();
-                dtCompetitiveExams.AcceptChanges();
-            }
+        //    // COMPETITIVE EXAMS
+        //    DataTable dtCompetitiveExams = odataset.Tables[2];
+        //    // ARTS STREAM - Hide all exams
+        //    if (ddlStream.SelectedValue == "3")
+        //    {
+        //        dtCompetitiveExams.Rows.Clear();
+        //        dtCompetitiveExams.AcceptChanges();
+        //    }
 
-           // ARTS STREAM
-           if (ddlStream.SelectedValue == "3")
-            {
-                string sSubjects = Convert.ToString(  odataset.Tables[0] .Rows[0]["SubjectDetails"]);
-               // Hide History
-                sSubjects = sSubjects.Replace(",History", "");
-                odataset.Tables[0].Rows[0]["SubjectDetails"] =sSubjects;
-            }
-        }
-        else
-        {
-           DataTable dtOptionalSubjects =odataset.Tables[1];
-              // COMMERCE
-            if (ddlStream.SelectedValue == "2" && ddlGroup.SelectedValue == "3")
-            {  // Hide Applied Mathematics
-                DataRow[] drAppliedMaths = dtOptionalSubjects.Select("SubjectName in ( 'Applied Mathematics','Legal Studies')");
+        //    // ARTS STREAM
+        //    if (ddlStream.SelectedValue == "3")
+        //    {
+        //        string sSubjects = Convert.ToString(odataset.Tables[0].Rows[0]["SubjectDetails"]);
+        //        // Hide History
+        //        sSubjects = sSubjects.Replace(",History", "");
+        //        odataset.Tables[0].Rows[0]["SubjectDetails"] = sSubjects;
+        //    }
+        //}
+        //else
+        //{
+        //    DataTable dtOptionalSubjects = odataset.Tables[1];
+        //    // COMMERCE
+        //    if (ddlStream.SelectedValue == "2" && ddlGroup.SelectedValue == "3")
+        //    {  // Hide Applied Mathematics
+        //        DataRow[] drAppliedMaths = dtOptionalSubjects.Select("SubjectName in ( 'Applied Mathematics','Legal Studies')");
 
-                foreach (DataRow row in drAppliedMaths)
-                {
-                    dtOptionalSubjects.Rows.Remove(row);
-                }
-             }
+        //        foreach (DataRow row in drAppliedMaths)
+        //        {
+        //            dtOptionalSubjects.Rows.Remove(row);
+        //        }
+        //    }
 
-            dtOptionalSubjects.AcceptChanges();
-          // COMPETITIVE EXAMS
-          DataTable dtCompetitiveExams =odataset.Tables[2];
-          DataRow[] drExams = dtCompetitiveExams.Select("ExamName = 'UG Entrance'");
-          foreach (DataRow row in drExams)
-            {
-                dtCompetitiveExams.Rows.Remove(row);
-            }
+        //    dtOptionalSubjects.AcceptChanges();
+        //    // COMPETITIVE EXAMS
+        //    DataTable dtCompetitiveExams = odataset.Tables[2];
+        //    DataRow[] drExams = dtCompetitiveExams.Select("ExamName = 'UG Entrance'");
+        //    foreach (DataRow row in drExams)
+        //    {
+        //        dtCompetitiveExams.Rows.Remove(row);
+        //    }
 
-          // ARTS STREAM
-          if (ddlStream.SelectedValue == "3")
-            {
-                string sSubjects = Convert.ToString(odataset.Tables[0].Rows[0]["SubjectDetails"]);
-               // Hide Business Studies
-                sSubjects = sSubjects.Replace( ",Business Studies", "");
+        //    // ARTS STREAM
+        //    if (ddlStream.SelectedValue == "3")
+        //    {
+        //        string sSubjects = Convert.ToString(odataset.Tables[0].Rows[0]["SubjectDetails"]);
+        //        // Hide Business Studies
+        //        sSubjects = sSubjects.Replace(",Business Studies", "");
 
-                odataset.Tables[0] .Rows[0]["SubjectDetails"] =  sSubjects;
-            }
-        }
+        //        odataset.Tables[0].Rows[0]["SubjectDetails"] = sSubjects;
+        //    }
+        //}
      
             StudentCompulsarySubjects(odataset.Tables[0]);
             FillOptionalSubjects( odataset.Tables[1]);
