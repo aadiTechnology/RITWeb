@@ -558,8 +558,69 @@ public partial class UserAndStaffGroupAsso : ExportDataTable
 			oExportTable.Rows.Add(newRow);
 		}
 
-		return oExportTable;
+        return oExportTable;
 	}
+
+    /// <summary>
+    /// Validates that every checked row selected for save/update has a staff group assigned.
+    /// </summary>
+    private bool ValidateStaffGroupSelection(List<string> lstUserStaffgroupIds, out string asErrorMessage)
+    {
+        asErrorMessage = string.Empty;
+        List<string> lstUsersWithoutStaffGroup = new List<string>();
+
+        for (int iRowCount = 0; iRowCount <= lstvwAssociation.Items.Count - 1; iRowCount++)
+        {
+            ListViewDataItem oCurrentItem = (ListViewDataItem)lstvwAssociation.Items[iRowCount];
+            int iRowId = oCurrentItem.DisplayIndex;
+
+            if (!lstUserStaffgroupIds.Contains(iRowId.ToString()))
+                continue;
+
+            CheckBox oChkSelect = (CheckBox)oCurrentItem.FindControl("ChkSelect");
+            if (!oChkSelect.Checked)
+                continue;
+
+            DropDownList cmbStaffGroups = (DropDownList)oCurrentItem.FindControl("cmbStaffGroups");
+            int iStaffGroupId = GetStaffGroupIdForSave(iRowCount, cmbStaffGroups, true);
+
+            if (iStaffGroupId == Constants.I_ZERO)
+            {
+                LinkButton lblStaffName = (LinkButton)oCurrentItem.FindControl("lblStaffName");
+                lstUsersWithoutStaffGroup.Add(lblStaffName.Text.Trim());
+            }
+        }
+
+        if (lstUsersWithoutStaffGroup.Count > 0)
+        {
+            asErrorMessage = "Staff group should be assigned to user(s) : " + string.Join(", ", lstUsersWithoutStaffGroup.ToArray()) + ".";
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Resolves staff group id from dropdown; uses data key when dropdown is disabled and did not post back a value.
+    /// </summary>
+    private int GetStaffGroupIdForSave(int aiRowCount, DropDownList acmbStaffGroups, bool abIsCheckedForSave)
+    {
+        int iStaffGroupId = Constants.I_ZERO;
+
+        if (!string.IsNullOrEmpty(acmbStaffGroups.SelectedValue))
+            iStaffGroupId = Convert.ToInt32(acmbStaffGroups.SelectedValue);
+
+        if (iStaffGroupId == Constants.I_ZERO && abIsCheckedForSave
+            && lstvwAssociation.DataKeys[aiRowCount]["StaffGroupId"] != null
+            && lstvwAssociation.DataKeys[aiRowCount]["StaffGroupId"] != DBNull.Value)
+        {
+            int iDataKeyStaffGroupId = Convert.ToInt32(lstvwAssociation.DataKeys[aiRowCount]["StaffGroupId"]);
+            if (iDataKeyStaffGroupId != Constants.I_ZERO && !acmbStaffGroups.Enabled)
+                iStaffGroupId = iDataKeyStaffGroupId;
+        }
+
+        return iStaffGroupId;
+    }
     
     /// <summary>
     /// This method is used to set confirmation messaege on change of page.
@@ -865,6 +926,16 @@ public partial class UserAndStaffGroupAsso : ExportDataTable
 			}
 		}
 
+        string sStaffGroupValidationError;
+        if (!ValidateStaffGroupSelection(lstUserStaffgroupIds, out sStaffGroupValidationError))
+        {
+            trErrorMessage.Visible = true;
+            lblErrorMessage.Visible = true;
+            lblErrorMessage.Text = sStaffGroupValidationError;
+            FillUserDetails();
+            return;
+        }
+
         oUsersSGAssociation.UserXml = GenerateUserXml(lstUserStaffgroupIds);
         int iLeaveSeperaterDay = Settings.LeaveSeperaterDay;
         DataSet oDsMessage = oUsersStaffGroupsAssociationBL.Save(iLeaveSeperaterDay);
@@ -989,7 +1060,7 @@ public partial class UserAndStaffGroupAsso : ExportDataTable
                 sAttribute = "StaffGroupsId";
                 attr = oDoc.CreateAttribute(sAttribute);
                 DropDownList cmbStaffGroups = (DropDownList)oCurrentItem.FindControl("cmbStaffGroups");
-                int iStaffGroupId = Convert.ToInt32(cmbStaffGroups.SelectedValue);
+                int iStaffGroupId = GetStaffGroupIdForSave(iRowCount, cmbStaffGroups, oChkSelect.Checked);
                 attr.Value = iStaffGroupId.ToString();
                 oXmlNode.Attributes.Append(attr);
 

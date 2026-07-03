@@ -228,7 +228,7 @@
                                 </tr>
                                 <tr id="trlistview" runat="server" align="center">
                                     <td align="center">
-                                        <asp:ListView ID="lstvwAssociation" runat="server" EnableViewState="true" DataKeyNames="UsersStaffGroupsAssociationId,User_Id,UserName,Is_Locked,IsDeleted"
+                                        <asp:ListView ID="lstvwAssociation" runat="server" EnableViewState="true" DataKeyNames="UsersStaffGroupsAssociationId,User_Id,UserName,Is_Locked,IsDeleted,StaffGroupId"
                                             OnItemDataBound="lstvwAssociation_ItemDataBound" OnItemCommand="lstvwAssociation_ItemCommand"
                                             OnDataBound="lstvwAssociation_DataBound">
                                             <LayoutTemplate>
@@ -591,7 +591,7 @@
                                             </tr>
                                         </table>
                                         <asp:CustomValidator ID="cstvalEmptyEmployeeNo" runat="server" ClientValidationFunction="DuplicateEmployeeNo"
-                                            SetFocusOnError="True" Display="None" ErrorMessage=""></asp:CustomValidator>
+                                            SetFocusOnError="True" Display="None" ErrorMessage="" ValidationGroup="Save"></asp:CustomValidator>
                                     </td>
                                 </tr>
                                 <tr id="trNoRecordMsg" runat="server">
@@ -838,6 +838,20 @@
             __doPostBack(objBtn.name, '');
         }
 
+        function EnableStaffGroupDropdownsBeforeSave() {
+            var iRowCount = 0;
+            var chk = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_ChkSelect");
+            while (chk != null) {
+                if (chk.checked == true) {
+                    var cmbStaffGroup = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_cmbStaffGroups");
+                    if (cmbStaffGroup != null)
+                        cmbStaffGroup.disabled = false;
+                }
+                iRowCount++;
+                chk = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_ChkSelect");
+            }
+        }
+
         function DuplicateEmployeeNo(aSrc, args) {  
             var chk
             var sDuplicate = false;
@@ -877,12 +891,13 @@
                     var sUserName = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_lblStaffName").innerHTML;
                     var i_RowCount = iRowCount + 1
 
-                    if (Find(changesRowNumbers,iRowCount) && (cmbStaffGroup.value == "0" || txtsTextBox.value.trim() == "" || txtAccountNo.value.trim() == "" || txtPFNo.value.trim() == "" || txtUAN.value.trim() == "" || txtPanNo.value.trim() == "")) {
+                    if (cmbStaffGroup.value == "0" || cmbStaffGroup.value.trim() == "") {
+                        sEmptyStaffGroups = sEmptyStaffGroups + ", " + sUserName;
+                        sEmpty = true;
+                    }
+
+                    if (Find(changesRowNumbers,iRowCount) && (txtsTextBox.value.trim() == "" || txtAccountNo.value.trim() == "" || txtPFNo.value.trim() == "" || txtUAN.value.trim() == "" || txtPanNo.value.trim() == "")) {
                        
-                        if (cmbStaffGroup.value.trim() == "0"){
-                            sEmptyStaffGroups = sEmptyStaffGroups + ", " + sUserName
-                             sEmpty = true;
-                             }
                         if (txtsTextBox.value.trim() == ""){
                             sEmptyEmployeeNumUser = sEmptyEmployeeNumUser + ", " + sUserName
                              sEmpty = true;
@@ -1042,36 +1057,40 @@
             var sMessage = true;
             var bResult = true;
 
-            if (typeof (Page_ClientValidate) == 'function') {
-                bResult = Page_ClientValidate();
-            }
-            if (bResult) {
+            EnableStaffGroupDropdownsBeforeSave();
 
+            if (typeof (Page_ClientValidate) == 'function') {
+                bResult = Page_ClientValidate('Save');
+            }
+            if (!bResult) {
+                Page_IsValid = false;
+                return false;
+            }
+
+            chk = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_ChkSelect")
+
+            while (chk != null) {
+                if (document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_lnkBtnConfig") != null) {
+                    if (chk.checked == false) {
+                        sMessage = false;
+                        break;
+                    }
+                }
+                iRowCount = iRowCount + 1;
                 chk = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_ChkSelect")
 
-                while (chk != null) {
-                    if (document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_lnkBtnConfig") != null) {
-                        if (chk.checked == false) {
-                            sMessage = false;
-                            break;
-                        }
-                    }
-                    iRowCount = iRowCount + 1;
-                    chk = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_ChkSelect")
-
-                }
-
-                if (sMessage == false) {
-                    {
-                        if (!window.confirm("This action will delete unchecked association and respective Earning-Deduction configuration, Yearwise Leaves configuration if exists. Are you sure, you want to continue?")) {
-                            bResult = false;
-							Page_IsValid =false;
-                            SelectCheckBoxes();
-                        }
-                    }
-                }
-                return bResult;
             }
+
+            if (sMessage == false) {
+                {
+                    if (!window.confirm("This action will delete unchecked association and respective Earning-Deduction configuration, Yearwise Leaves configuration if exists. Are you sure, you want to continue?")) {
+                        bResult = false;
+						Page_IsValid =false;
+                        SelectCheckBoxes();
+                    }
+                }
+            }
+            return bResult;
         }
 
         function SelectCheckBoxes() {
@@ -1564,15 +1583,19 @@
                 if (document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_lnkBtnConfig") != null) {
                     {
                         cmbStaffGroup = document.getElementById(_clientlstvwAssociation + "_ctrl" + iRowCount + "_cmbStaffGroups")
-                        if (cmbStaffGroup.value != iStaffGroupId && cmbStaffGroup.value != "0") {
-                            if (!window.confirm("If the staff group is changed, the salary configuration and leaves of the user will get overwritten according to the new staff group. Are you sure you want to continue?")) {
-                                cmbStaffGroup.value = iStaffGroupId;
-                                bResult = false;
-								Page_IsValid = false;                                
+                        if (cmbStaffGroup.value != iStaffGroupId) {
+                            if (cmbStaffGroup.value != "0") {
+                                if (!window.confirm("If the staff group is changed, the salary configuration and leaves of the user will get overwritten according to the new staff group. Are you sure you want to continue?")) {
+                                    cmbStaffGroup.value = iStaffGroupId;
+                                    bResult = false;
+								    Page_IsValid = false;                                
+                                }
                             }
-                            
-                            var Ids = document.getElementById(_clienthidUserStaffgroupsAssociationId).value;
-                            document.getElementById(_clienthidUserStaffgroupsAssociationId).value = Ids + "," + iRowCount;
+
+                            if (bResult) {
+                                var Ids = document.getElementById(_clienthidUserStaffgroupsAssociationId).value;
+                                document.getElementById(_clienthidUserStaffgroupsAssociationId).value = Ids + "," + iRowCount;
+                            }
                         }                       
                     }
                 }

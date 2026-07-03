@@ -548,6 +548,21 @@ public partial class PaySalaryUI : ExportDataTable
             sMessage = sMessage + sConnector + "Earnings and deductions are not configured for the user(s) : " + sUsers + ".";
         }
 
+        int iDaysOfMonth = DateTime.DaysInMonth(hidYear.Value.ToInt(), hidMonthId.Value.ToInt());
+
+        var oTotalDays = from row in oDataTable.AsEnumerable()
+                          where Convert.ToDecimal(row.Field<string>("Total")) > iDaysOfMonth
+                          && row.Field<string>("UserId") != "-9999"
+                          select row;
+
+        if (oTotalDays != null && oTotalDays.Count() > 0)
+        {
+            var oUserNames = oTotalDays.AsEnumerable().Select(dr => dr.Field<string>("Name")).ToList();
+            string sUserList = string.Join(", ", oUserNames);
+            sMessage = sMessage + sConnector + "Total Working Days(Total) should not be more than total days of that month for user(s) : " + sUserList;
+            sConnector = "<br />";
+        }
+        
         if (sMessage != string.Empty)
             throw new SalaryPublishException(sMessage);
     }
