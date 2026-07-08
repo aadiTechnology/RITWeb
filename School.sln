@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11822.322 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCommunicator", "DataCommunicator\DataCommunicator.csproj", "{3E0B1133-70D4-4693-AB21-47CF27590C59}"
 EndProject
@@ -13,7 +13,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "School_WebSite", "School_We
 		SccAuxPath = ""
 		SccLocalPath = ""
 		SccProvider = ""
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8.1"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		ProjectReferences = "{3E0B1133-70D4-4693-AB21-47CF27590C59}|DataCommunicator.dll;{482E90CC-E31F-4E8F-BCEA-DD38CFE97FC0}|SchoolEntities.dll;{A8F9A48A-AD95-4E8E-BD13-9D398527F0A4}|Utility.dll;{669F30F9-186A-45C4-AEA5-FB674C302B6F}|SchoolWebApp.dll;{EA6874E7-CC73-4D7B-8D4E-3A4634ADA345}|BusinessLogic.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/School_WebSite"
 		Debug.AspNetCompiler.PhysicalPath = "School_WebSite\"
