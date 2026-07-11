@@ -2805,4 +2805,7 @@ Once grades for all the students are allotted you have to submit these grades to
   <data name="assignsummarygradesui_2" xml:space="preserve">
     <value>Assign summary grades as per exam and subject.</value>
   </data>
+  <data name="studentmandatorydetailsui_3" xml:space="preserve">
+    <value>Submit given mandatory details.</value>
+  </data>
 </root>

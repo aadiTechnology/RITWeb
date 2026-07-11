@@ -24,6 +24,7 @@
     <siteMapNode url="RITeSchool/Common/MyProfile.aspx" title="My Profile"  ></siteMapNode>
     <siteMapNode url="RITeSchool/Common/SupportThankYouUI.aspx" title="Support Thank You"  ></siteMapNode>
     <siteMapNode url="RITeSchool/Student/StudentAttendance.aspx" title="Attendance"  ></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/StudentMandatoryDetailsUI.aspx" title="Student Mandatory Details" ></siteMapNode>
     <siteMapNode url="RITeSchool/Student/StudentProgressSheet.aspx" title="Progress Report"  ></siteMapNode>
 	  <siteMapNode url="RITeSchool/Teacher/StudentProgressReportEntry.aspx" title="Progress Report"  ></siteMapNode>
     <siteMapNode url="RITeSchool/Student/TeacherSubjectListUI.aspx" title="Subject Teachers"  ></siteMapNode>

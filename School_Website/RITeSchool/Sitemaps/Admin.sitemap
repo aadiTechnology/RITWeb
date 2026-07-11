@@ -466,6 +466,7 @@
     </siteMapNode>
 
     <siteMapNode url="RITeSchool/Student/SiblingLoginUI.aspx" title="Sibling Login"></siteMapNode>
+    <siteMapNode url="RITeSchool/Student/StudentMandatoryDetailsUI.aspx" title="Student Mandatory Details" ></siteMapNode>
       
     <siteMapNode url="RITeSchool/Admission/NewStudentAdmisionsListUI.aspx" title="New Admissions">
       <siteMapNode url="RITeSchool/Admission/EnquiryForm.aspx" title="Enquiry"/>

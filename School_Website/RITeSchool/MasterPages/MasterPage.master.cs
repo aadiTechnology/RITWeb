@@ -221,6 +221,18 @@ public partial class MasterPage : BaseMasterPage
             {
                 hlnkSupport.Visible = false;
             }
+
+            if ((Session[Constants.S_SESSION_USER_LOGIN_ROLE_ID].ToInt() == Constants.UserRoles.Student.ToInt()))
+            {
+                if (Session[Constants.S_SESSION_ARE_MANDATORY_FIELD_SUBMITTED_BY_STUDENT] != null && Session[Constants.S_SESSION_ARE_MANDATORY_FIELD_SUBMITTED_BY_STUDENT].ToString() != Constants.S_YES)
+                {
+                    string currentPage = Request.Path.ToLower();
+                    if (!currentPage.ToUpper().Contains("STUDENTMANDATORYDETAILSUI.ASPX") && !currentPage.ToUpper().Contains("CONTROLPANEL.ASPX"))
+                    {
+                        RedirectToNextPage("~/RITeSchool/Student/StudentMandatoryDetailsUI.aspx");
+                    }
+                }
+            }
 		}
 		catch (ThreadAbortException)
 		{

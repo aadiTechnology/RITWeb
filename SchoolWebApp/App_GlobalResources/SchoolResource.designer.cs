@@ -19,7 +19,7 @@ namespace Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SchoolResource {
@@ -5993,6 +5993,15 @@ namespace Resources {
         public static string studentlistfornotedetailsui_2 {
             get {
                 return ResourceManager.GetString("studentlistfornotedetailsui_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit given mandatory details..
+        /// </summary>
+        public static string studentmandatorydetailsui_3 {
+            get {
+                return ResourceManager.GetString("studentmandatorydetailsui_3", resourceCulture);
             }
         }
         

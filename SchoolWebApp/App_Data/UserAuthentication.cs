@@ -305,6 +305,8 @@ public class UserAuthentication
                 else
                     HttpContext.Current.Session[Constants.S_SESSION_HAS_SIBLING] = "False";
 
+                HttpContext.Current.Session[Constants.S_SESSION_ARE_MANDATORY_FIELD_SUBMITTED_BY_STUDENT] = oDR["AreMandatoryFieldsSubmittedByStudent"];
+                
         		break;
         	case Constants.UserRoles.Supervisor:
         		HttpContext.Current.Session[Constants.S_SESSION_USER_NAME] = oDR["Supervisor_FirstName"].ToString();

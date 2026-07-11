@@ -244,6 +244,7 @@ namespace SchoolEntities
         public bool ShowInternalFeeAtStudentLogin { get; set; }
         public int PasswordChangeMandatoryDays { get; set; }
         public bool EnableDeleteButtonforStudentRegistration { get; set; }
+        public bool ForceStudentToSubmitMandatoryFields { get; set; }
    }
 
     /// <summary>
