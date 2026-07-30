@@ -1270,6 +1270,14 @@ public partial class StudentRegistrationDetails : SchoolBase
             lblArtsSubjects.Text = "English, Business Studies, Psychology";
             rdoStream_SciGr2CompSci.Visible = false;
             chkStream_ComCA.Text = "CA Foundation";
+            if (hidStandardName.Value == "12 Art")
+            {
+                lblArtsSubjects.Text = "English, Business Studies, Psychology,Economics";
+             }
+            else
+            {
+                lblArtsSubjects.Text = "English, Business Studies, Psychology";
+            }
         }
     }
   #endregion   

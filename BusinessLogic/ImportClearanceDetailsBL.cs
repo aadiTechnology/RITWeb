@@ -35,18 +35,16 @@ namespace BusinessLogic
         private const string S_ELEMENT = "element";
         private const string S_NETBANKING_PAYMENT_TRANSACTION_ID_ATTR = "NetBankingPaymentTransactionID";
         private const string S_TRANSACTION_ID_LIST = "TransactionIdList";
-        private const string S_COLUMN_TRANSACTION_ID = "Transaction Id";
-        private const string S_COLUMN_SETTLED_DATE = "Settled_date";
+        private const string S_COLUMN_TRANSACTION_ID = "order_receipt";
+        private const string S_COLUMN_SETTLED_DATE = "settled_at";
         private const string S_COLUMN_NETBANKING_PAYMENT_TRANSACTION_ID = "NetBankingPaymentTransactionID";
         private const string S_COLUMN_TPSL_TRANSACTION_ID = "TPSLTransactionID";
         private const string S_COLUMN_DEPOSITEDBANKID = "DepositedBankId";
 
         private static readonly string[] S_REQUIRED_COLUMNS = new[]
         {
-            "Merchant Id",
             S_COLUMN_TRANSACTION_ID,
-            "Transaction From",
-            "Amount",
+            "amount",
             S_COLUMN_SETTLED_DATE
         };
 
@@ -107,7 +105,7 @@ namespace BusinessLogic
                 return "File should not be blank.";
 
             if (!HasRequiredColumns(odtExcelData))
-                return "File should contains all required columns (Merchant Id, Transaction Id, Transaction From, Amount, Settled_date).";
+                return "File should contains all required columns (order_receipt, amount, settled_at).";
 
             return string.Empty;
         }
@@ -146,16 +144,6 @@ namespace BusinessLogic
             if (aoDbTransactionDetails == null || aoDbTransactionDetails.Rows.Count == 0)
                 return "All transaction IDs present in the file either do not match the system records or have already been cleared.";
 
-            string sMerchantId = aoDbTransactionDetails.Rows[0]["MerchantId"].ToString();
-            List<string> lstInvalidMerchantIds = aoExcelData.AsEnumerable().Where(rs => Convert.ToString(rs["Merchant Id"]) != sMerchantId).Select(rs => Convert.ToString(rs["Transaction Id"])).ToList();
-            if (lstInvalidMerchantIds.Count > 0)
-                return "Please set correct Merchant Id in excel file for Transaction Ids : " + string.Join(",", lstInvalidMerchantIds);
-
-            List<string> lstAllowedFroms = new List<string> { "STUDENTFEE", "INTERNALFEE", "CAUTIONMONEY", "ADMISSION" };
-            List<string> lstInvalidTxnFrom = aoExcelData.AsEnumerable().Where(rs => !lstAllowedFroms.Contains(Convert.ToString(rs["Transaction From"]).ToUpper())).Select(rs => Convert.ToString(rs["Transaction Id"])).ToList();
-            if (lstInvalidTxnFrom.Count > 0)
-                return "Only StudentFee, InternalFee and CautionMoney is allowed in 'Transaction From' : " + string.Join(",", lstInvalidTxnFrom);
-
             var oMatchedTxnIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (DataRow oDbRow in aoDbTransactionDetails.Rows)
             {
@@ -187,10 +175,10 @@ namespace BusinessLogic
             var mismatchedTransactionIds = (
                     from excel in aoExcelData.AsEnumerable()
                     join data in aoDbTransactionDetails.AsEnumerable()
-                    on Convert.ToString(excel["Transaction Id"])
+                    on GetColumnValue(excel, S_COLUMN_TRANSACTION_ID)
                        equals Convert.ToString(data["NetBankingPaymentTransactionID"])
-                    where Convert.ToDecimal(excel["Amount"]) != Convert.ToDecimal(data["Amount"])
-                    select Convert.ToString(excel["Transaction Id"])
+                    where Convert.ToDecimal(GetColumnValue(excel, "amount")) != Convert.ToDecimal(data["Amount"])
+                    select GetColumnValue(excel, S_COLUMN_TRANSACTION_ID)
                 ).ToList();
 
             if (mismatchedTransactionIds.Count > 0)
@@ -201,22 +189,60 @@ namespace BusinessLogic
 
         /// <summary>
         /// Saves online transactions imported from excel for clearance.
+        /// Routes transactions based on DB Transaction_From column instead of Excel column.
         /// </summary>
         public ImportClearanceSaveResult SaveOnlineTrasactionPayments(DataTable aoExcelData, DataTable aoTransactionDetails, Action<string, bool> recordPayment)
         {
             var oResult = new ImportClearanceSaveResult();
-            var oFeeData = aoExcelData.AsEnumerable().Where(dr => dr.Field<string>("Transaction From").ToUpper() == "STUDENTFEE" || dr.Field<string>("Transaction From").ToUpper() == "CAUTIONMONEY" || dr.Field<string>("Transaction From").ToUpper() == "INTERNALFEE");
+            var alstNonUpdatedTxnNos = new List<string>();
+            var alstInvalidTxnFrom = new List<string>();
+            var oTransactionDetailsLookup = BuildTransactionDetailsLookup(aoTransactionDetails);
 
-            List<string> alstNonUpdatedTxnNos = new List<string>();
-            var oUpdateNetBankingPaymentTransactions = new NetBankingPaymentTransactionsBL();
-            if (oFeeData != null && oFeeData.Count() > 0)
+            DataTable dtFeeData = aoExcelData.Clone();
+            DataTable dtAdmissionData = aoExcelData.Clone();
+
+            foreach (DataRow oExcelRow in aoExcelData.Rows)
             {
-                DataTable dtData = oFeeData.CopyToDataTable();
-                string sOnlineTrasactionXML = GenerateOnlineTransactionXML(dtData, aoTransactionDetails, out alstNonUpdatedTxnNos);
-
-                if (alstNonUpdatedTxnNos.Count > 0)
+                string sTransactionId = GetColumnValue(oExcelRow, S_COLUMN_TRANSACTION_ID);
+                if (string.IsNullOrEmpty(sTransactionId) || !oTransactionDetailsLookup.ContainsKey(sTransactionId))
                 {
-                    oResult.ErrorMessage = "These Transaction Nos are not matched with system record : " + string.Join(",", alstNonUpdatedTxnNos);
+                    alstNonUpdatedTxnNos.Add(sTransactionId);
+                    continue;
+                }
+
+                DataRow oDbRow = oTransactionDetailsLookup[sTransactionId];
+                string sTxnFrom = GetDataTableColumnValue(oDbRow, "Transaction_From").ToUpper();
+
+                if (sTxnFrom == "STUDENTFEE" || sTxnFrom == "INTERNALFEE" || sTxnFrom == "CAUTIONMONEY")
+                {
+                    dtFeeData.ImportRow(oExcelRow);
+                }
+                else if (sTxnFrom == "ADMISSION")
+                {
+                    dtAdmissionData.ImportRow(oExcelRow);
+                }
+                else
+                {
+                    alstInvalidTxnFrom.Add(sTransactionId);
+                }
+            }
+
+            if (alstInvalidTxnFrom.Count > 0)
+            {
+                oResult.ErrorMessage = "Invalid Transaction_From value for Transaction Ids : " + string.Join(",", alstInvalidTxnFrom);
+                return oResult;
+            }
+
+            var oUpdateNetBankingPaymentTransactions = new NetBankingPaymentTransactionsBL();
+
+            if (dtFeeData.Rows.Count > 0)
+            {
+                List<string> alstNonUpdatedFeeTxnNos;
+                string sOnlineTrasactionXML = GenerateOnlineTransactionXML(dtFeeData, aoTransactionDetails, out alstNonUpdatedFeeTxnNos);
+
+                if (alstNonUpdatedFeeTxnNos.Count > 0)
+                {
+                    oResult.ErrorMessage = "These Transaction Nos are not matched with system record : " + string.Join(",", alstNonUpdatedFeeTxnNos);
                     return oResult;
                 }
 
@@ -224,22 +250,16 @@ namespace BusinessLogic
 
                 if (mbIsAccountsModuleEnabled && recordPayment != null)
                 {
-                    int iCount = dtData.AsEnumerable().Count(dr => dr.Field<string>("Transaction From").ToUpper() == "STUDENTFEE" || dr.Field<string>("Transaction From").ToUpper() == "CAUTIONMONEY");
-                    if (iCount > 0)
-                    {
-                        string sDayBookXml = GetXMLFromGrid(dtData, aoTransactionDetails);
+                    string sDayBookXml = GetXMLFromGrid(dtFeeData, aoTransactionDetails);
+                    if (!string.IsNullOrEmpty(sDayBookXml))
                         recordPayment(sDayBookXml, false);
-                    }
                 }
             }
 
-            var oAdmissionData = aoExcelData.AsEnumerable().Where(dr => dr.Field<string>("Transaction From").ToUpper() == "ADMISSION");
-
-            if (oAdmissionData != null && oAdmissionData.Count() > 0)
+            if (dtAdmissionData.Rows.Count > 0)
             {
-                DataTable dtAdmission = oAdmissionData.CopyToDataTable();
                 List<string> alstNonUpdatedAdmissionTxnNos;
-                string sAdmissionXml = GetAdmissionXml(dtAdmission, aoTransactionDetails, out alstNonUpdatedAdmissionTxnNos);
+                string sAdmissionXml = GetAdmissionXml(dtAdmissionData, aoTransactionDetails, out alstNonUpdatedAdmissionTxnNos);
 
                 if (alstNonUpdatedAdmissionTxnNos.Count > 0)
                 {
@@ -250,7 +270,7 @@ namespace BusinessLogic
                 oUpdateNetBankingPaymentTransactions.SetOnlineAdmissionFeeDetails(sAdmissionXml, miSchoolId, miAcademicYearId);
                 if (mbIsAccountsModuleEnabled && recordPayment != null)
                 {
-                    string sDayBookAdmissionXml = GetAdmissionXml(dtAdmission, aoTransactionDetails, out alstNonUpdatedAdmissionTxnNos);
+                    string sDayBookAdmissionXml = GetAdmissionXml(dtAdmissionData, aoTransactionDetails, out alstNonUpdatedAdmissionTxnNos);
                     recordPayment(sDayBookAdmissionXml, true);
                 }
             }
@@ -350,15 +370,15 @@ namespace BusinessLogic
 
             foreach (DataRow oExcelRow in aoExcelData.Rows)
             {
-                string sTxnFrom = oExcelRow["Transaction From"].ToString().Trim().ToUpper();
+                string sTransactionId = GetColumnValue(oExcelRow, S_COLUMN_TRANSACTION_ID);
+                if (string.IsNullOrEmpty(sTransactionId) || !oTransactionDetailsLookup.ContainsKey(sTransactionId))
+                    continue;
+
+                DataRow oDbRow = oTransactionDetailsLookup[sTransactionId];
+                string sTxnFrom = GetDataTableColumnValue(oDbRow, "Transaction_From").ToUpper();
 
                 if (sTxnFrom == "STUDENTFEE" || sTxnFrom == "CAUTIONMONEY")
                 {
-                    string sTransactionId = GetColumnValue(oExcelRow, S_COLUMN_TRANSACTION_ID);
-                    if (string.IsNullOrEmpty(sTransactionId) || !oTransactionDetailsLookup.ContainsKey(sTransactionId))
-                        continue;
-
-                    DataRow oDbRow = oTransactionDetailsLookup[sTransactionId];
                     XmlNode oXMLNode = oDoc.CreateNode(S_ELEMENT_NAME, "ClearanceInfo", String.Empty);
 
                     sAttribute = "TransId";
@@ -487,9 +507,9 @@ namespace BusinessLogic
                 if (aoExcelRow[oColumn.ColumnName] is DateTime)
                     return (Convert.ToDateTime(aoExcelRow[oColumn.ColumnName])).ToString("dd-MMM-yyyy", CultureInfo.GetCultureInfo("en"));
 
-                if (oColumn.ColumnName.ToUpper() == "SETTLED_DATE")
+                if (oColumn.ColumnName.ToUpper() == "SETTLED_AT")
                 {
-                    string[] formats = { "dd-MM-yyyy", "dd-MMM-yyyy", "yyyy-MM-dd", "dd-MM-yyyy HH:mm:ss", "dd-MMM-yyyy HH:mm:ss" };
+                    string[] formats = { "dd-MM-yyyy", "dd-MMM-yyyy", "yyyy-MM-dd", "dd-MM-yyyy HH:mm:ss", "dd-MMM-yyyy HH:mm:ss", "dd/MM/yyyy HH:mm:ss" };
                     DateTime dtSettledDate;
                     if (DateTime.TryParseExact(aoExcelRow[oColumn.ColumnName].ToString(),formats,CultureInfo.InvariantCulture,DateTimeStyles.None,out dtSettledDate))
                     {

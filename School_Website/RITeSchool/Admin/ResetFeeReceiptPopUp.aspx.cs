@@ -31,6 +31,7 @@ public partial class ResetFeeReceiptPopUp : SchoolBase
                 FillFeeTypeCombo();
                 FillAccountHeaderCombo();
                 valSumErrorMsg.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
+                SetResetOptionList();
             }
         }
         catch (Exception ex)
@@ -103,7 +104,14 @@ public partial class ResetFeeReceiptPopUp : SchoolBase
     {
         try
         {
-            moStudentFeeDetailsBL.ResetReceiptNumber(miSchoolId, miAcademicYearId, cmbAccountHeader.SelectedValue.ToInt(), txtStartDate.Text.ToDateTime(), cmbOrderBy.SelectedValue.ToInt(), cmbResetFor.SelectedValue.ToInt());
+            DateTime dtFromDate = DateTime.MinValue;
+
+            if (moSchool != Constants.SchoolId.VPMCPS)
+            {
+                dtFromDate = txtStartDate.Text.ToDateTime();
+            }
+
+            moStudentFeeDetailsBL.ResetReceiptNumber(miSchoolId, miAcademicYearId, cmbAccountHeader.SelectedValue.ToInt(), dtFromDate, cmbOrderBy.SelectedValue.ToInt(), cmbResetFor.SelectedValue.ToInt());
             lblMessage.Visible = true;
             lblMessage.Text = "Receipt number reset Successfully !!!";
             ClearFields();
@@ -157,6 +165,30 @@ public partial class ResetFeeReceiptPopUp : SchoolBase
         cmbFeeType.SelectedValue = Constants.S_ZERO;
         cmbAccountHeader.SelectedValue = Constants.S_ZERO;
         cmbOrderBy.SelectedValue = Constants.S_ZERO;
+    }
+
+    /// <summary>
+    /// This method is used to set fields as per VPMCPS school.
+    /// </summary>
+    private void SetResetOptionList()
+    {
+        if (moSchool == Constants.SchoolId.VPMCPS)
+        {
+            var oItem = cmbResetFor.Items.FindByValue("2");
+            if (oItem != null)
+                cmbResetFor.Items.Remove(oItem);
+
+            // Hide From Date, Fee Type, Account Header, Order By fields for VPMCPS
+            trFromDate.Visible = false;
+            trFeeType.Visible = false;
+            trAccountHeader.Visible = false;
+            trOrderBy.Visible = false;
+
+            // Disable validators for hidden fields
+            reqDate.Enabled = false;
+            regAccountHeader.Enabled = false;
+            cstValidateFeeTypes.Enabled = false;
+        }
     }
 
     #endregion

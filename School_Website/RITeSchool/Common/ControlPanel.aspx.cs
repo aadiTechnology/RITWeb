@@ -1379,7 +1379,7 @@ public partial class ControlPanel : SchoolBase
             trAssignGradeClassTeacher.Visible = Settings.EnableObservationSystem;
 
             if (miSchoolId == Constants.SchoolId.PPSH.ToInt())
-                trTeacherPhoto1.Visible = true;
+                trTeacherPhoto1.Visible = false;
 
             if (!String.IsNullOrEmpty(Settings.BetaVersionURL))
             {
@@ -1406,7 +1406,7 @@ public partial class ControlPanel : SchoolBase
             trAssignGradesTeacher.Visible = Settings.EnableObservationSystem;
 
             if (miSchoolId == Constants.SchoolId.PPSH.ToInt())
-                trTeacherPhoto2.Visible = true;
+                trTeacherPhoto2.Visible = false;
 
             if (!String.IsNullOrEmpty(Settings.BetaVersionURL))
             {

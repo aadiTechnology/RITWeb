@@ -4465,7 +4465,12 @@ public partial class SchoolReportsUI : ExportToExcel
         else if (msReportID == S_PRELIM_RESULT_SHEET)
             sFilterSting += "({usp_GetResultSheetDetails;1.Division_Id}=0)@";
         else if (msReportID == S_STUD_FINAL_RESULT_PPSH_Old && miSchoolId == Constants.SchoolId.PIONEER.ToInt())
-            sFilterSting += "({USP_StudentProgressReportCBSEForPioneer;1.Term_Id}=null AND {USP_StudentProgressReportCBSEForPioneer;1.Note}=null)@";
+        {
+            if(miAcademicYearId <= 2)
+                sFilterSting += "({USP_StudentProgressReportCBSEForPioneer;1.Term_Id}=null AND {USP_StudentProgressReportCBSEForPioneer;1.Note}=null)@";
+            else
+                sFilterSting += "({USP_StudentFinalProgressReportCBSEForPioneer;1.Term_Id}=null AND {USP_StudentFinalProgressReportCBSEForPioneer;1.IsFromReportScreen}=1 AND {USP_StudentFinalProgressReportCBSEForPioneer;1.Note}=null)@";
+        }
         else if (msReportID == S_SALARY_SLIP)
             sFilterSting += "({usp_GetSalarySlipDetails;1.LoginUserId}=" + miUserId + ")@";
         else if (msReportID == S_EXAM_RESULT_STSS_10STD && miSchoolId == Constants.SchoolId.PPSN.ToInt())
@@ -4503,7 +4508,7 @@ public partial class SchoolReportsUI : ExportToExcel
         else if (msReportID == S_NEXT_YEAR_PAID_FEE && moSchool == Constants.SchoolId.SNS)
             sFilterSting += "({usp_GetNextYearFeePaymentDetails;1.FeeCategoryId}=1)@";
         else if (msReportID == S_ANNUAL_INCREMENT_LETTER)
-            sFilterSting += "({usp_GetAnnualIncrementLetterDetails;1.LoginUserId}="+miUserId+")@";
+            sFilterSting += "({usp_GetAnnualIncrementLetterDetails;1.LoginUserId}=" + miUserId + ")@";
         else if (msReportID == S_EMPLOYMENT_CONFIRMATION_LETTER || msReportID == S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS)
             sFilterSting += "({usp_GetDetailsForEmploymentConfirmationLetter;1.ReportId}=" + msReportID + ")@";
         else if (msReportID == S_DATEWISE_Fee_COLLECTION && moSchool == Constants.SchoolId.VPMCPS)
@@ -4524,7 +4529,7 @@ public partial class SchoolReportsUI : ExportToExcel
             sFilterSting += "({usp_GetProgressReportDetailsForPrePrimaryPioneer;1.IsFromReportScreen}=1)@";
         else if (msReportID == S_STUDENT_HALF_YEARLY_3TO9)
             sFilterSting += "({usp_GetDetailsForHalfYearlyReport_Pioneer;1.Term_Id}=1 AND {usp_GetDetailsForHalfYearlyReport_Pioneer;1.IsFromReportScreen}=1)@";
-        else if(msReportID == S_MISSING_ATTENDANCE_REPORT)
+        else if (msReportID == S_MISSING_ATTENDANCE_REPORT)
             sFilterSting += "({usp_GetMissingAttendanceDetails;1.UserId}=null)@";
         return sFilterSting;
     }
@@ -12168,56 +12173,63 @@ public partial class SchoolReportsUI : ExportToExcel
     {
         miStudentPaidFeeStartupRow++;
 
-        moPaidFeeDetails.StudentFeeDetailsList.Select(fd => fd.PaidDate.Date).Distinct().OrderBy(dt => dt).ToList().ForEach(dt =>
-        {
-            var oStudentFee = moPaidFeeDetails.StudentFeeDetailsList.Where(fd => fd.PaidDate.Date == dt).ToList();
-            oStudentFee.Select(fd => new { fd.StudentId, fd.ReceiptNumber, fd.PaymentMode, fd.TransactionNumber }).Distinct().OrderBy(fd => fd.ReceiptNumber.ToInt()).ToList().ForEach(rcpt =>
+        // School 166: group by receipt only; others: group by paid date then receipt
+        moPaidFeeDetails.StudentFeeDetailsList
+            .GroupBy(fd => moSchool == Constants.SchoolId.VPMCPS ? (DateTime?)null : (DateTime?)fd.PaidDate.Date)
+            .OrderBy(g => g.Key)
+            .ToList()
+            .ForEach(dateGroup =>
             {
-                var oStudeDetails = moPaidFeeDetails.StudentDetailsList.Where(stud => stud.StudentId == rcpt.StudentId).FirstOrDefault();
-
-                var iRefuncableAmount = moPaidFeeDetails.StudentCautionMoneyDetailsList.Where(cm => cm.SchoolwiseStudentId == oStudeDetails.SchoolwiseStudentId).Select(cm => cm.CautionMoneyAmount).FirstOrDefault();
-
-                int iTotal = oStudentFee.Where(fd => fd.StudentId == rcpt.StudentId && fd.ReceiptNumber == rcpt.ReceiptNumber && fd.PaymentMode == rcpt.PaymentMode && fd.TransactionNumber == rcpt.TransactionNumber).Sum(fd => fd.Amount);
-                iTotal = iTotal + iRefuncableAmount;
-
-                if (iTotal > 0)
+                var oStudentFee = dateGroup.ToList();
+                oStudentFee.Select(fd => new { fd.StudentId, fd.ReceiptNumber, fd.PaymentMode, fd.TransactionNumber }).Distinct().OrderBy(fd =>
                 {
-                    Row row = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+                    int iReceiptNo;
+                    return int.TryParse(Convert.ToString(fd.ReceiptNumber), out iReceiptNo) ? iReceiptNo : 0;
+                }).ToList().ForEach(rcpt =>
+                {
+                    var oStudeDetails = moPaidFeeDetails.StudentDetailsList.Where(stud => stud.StudentId == rcpt.StudentId).FirstOrDefault();
 
-                    row.Append(AddCell(dt.ToString(Constants.S_DATE_FORMAT), CellValues.String, StudentPaidFeeEnum.LeftData));
-                    row.Append(AddCell(rcpt.ReceiptNumber, CellValues.String, StudentPaidFeeEnum.LeftData));
-                    row.Append(AddCell(oStudeDetails.Class, CellValues.String, StudentPaidFeeEnum.LeftData));
-                    row.Append(AddCell(rcpt.PaymentMode, CellValues.String, StudentPaidFeeEnum.CenterData));
-                    row.Append(AddCell(rcpt.TransactionNumber, CellValues.String, StudentPaidFeeEnum.CenterData));
-                    row.Append(AddCell(oStudeDetails.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
+                    var iRefuncableAmount = moPaidFeeDetails.StudentCautionMoneyDetailsList.Where(cm => cm.SchoolwiseStudentId == oStudeDetails.SchoolwiseStudentId).Select(cm => cm.CautionMoneyAmount).FirstOrDefault();
 
-                    moPaidFeeDetails.StudentFeeTypeConfigurationDetailsList.OrderBy(fee => fee.FeeTypeId).ToList().ForEach(fee =>
+                    int iTotal = oStudentFee.Where(fd => fd.StudentId == rcpt.StudentId && fd.ReceiptNumber == rcpt.ReceiptNumber && fd.PaymentMode == rcpt.PaymentMode && fd.TransactionNumber == rcpt.TransactionNumber).Sum(fd => fd.Amount);
+                    iTotal = iTotal + iRefuncableAmount;
+
+                    if (iTotal > 0)
                     {
-                        var iAmount = oStudentFee.Where(fd => fd.StudentId == rcpt.StudentId && fd.ReceiptNumber == rcpt.ReceiptNumber && fd.FeeType == fee.FeeType && fd.PaymentMode == rcpt.PaymentMode && fd.TransactionNumber == rcpt.TransactionNumber).Select(fd => fd.Amount).FirstOrDefault();
-                        if (iAmount != null)
-                            row.Append(AddCell(iAmount.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
+                        Row row = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 15 };
+
+                        DateTime dtPaidDate = dateGroup.Key ?? oStudentFee.Where(fd => fd.StudentId == rcpt.StudentId && fd.ReceiptNumber == rcpt.ReceiptNumber && fd.PaymentMode == rcpt.PaymentMode && fd.TransactionNumber == rcpt.TransactionNumber).Select(fd => fd.PaidDate.Date).FirstOrDefault();
+                        row.Append(AddCell(dtPaidDate.ToString(Constants.S_DATE_FORMAT), CellValues.String, StudentPaidFeeEnum.LeftData));
+                        row.Append(AddCell(rcpt.ReceiptNumber, CellValues.String, StudentPaidFeeEnum.LeftData));
+                        row.Append(AddCell(oStudeDetails.Class, CellValues.String, StudentPaidFeeEnum.LeftData));
+                        row.Append(AddCell(rcpt.PaymentMode, CellValues.String, StudentPaidFeeEnum.CenterData));
+                        row.Append(AddCell(rcpt.TransactionNumber, CellValues.String, StudentPaidFeeEnum.CenterData));
+                        row.Append(AddCell(oStudeDetails.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
+
+                        moPaidFeeDetails.StudentFeeTypeConfigurationDetailsList.OrderBy(fee => fee.FeeTypeId).ToList().ForEach(fee =>
+                        {
+                            var iAmount = oStudentFee.Where(fd => fd.StudentId == rcpt.StudentId && fd.ReceiptNumber == rcpt.ReceiptNumber && fd.FeeType == fee.FeeType && fd.PaymentMode == rcpt.PaymentMode && fd.TransactionNumber == rcpt.TransactionNumber).Select(fd => fd.Amount).FirstOrDefault();
+                            if (iAmount != null)
+                                row.Append(AddCell(iAmount.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
+                            else
+                                row.Append(AddCell("0", CellValues.String, StudentPaidFeeEnum.CenterData));
+                        });
+
+                        if (iRefuncableAmount != null)
+                            row.Append(AddCell(iRefuncableAmount.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
                         else
+                        {
                             row.Append(AddCell("0", CellValues.String, StudentPaidFeeEnum.CenterData));
-                    });
+                            iRefuncableAmount = 0;
+                        }
 
-                    //var iRefuncableAmount = moPaidFeeDetails.StudentCautionMoneyDetailsList.Where(cm => cm.SchoolwiseStudentId == oStudeDetails.SchoolwiseStudentId).Select(cm => cm.CautionMoneyAmount).FirstOrDefault();
-                    if (iRefuncableAmount != null)
-                        row.Append(AddCell(iRefuncableAmount.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
-                    else
-                    {
-                        row.Append(AddCell("0", CellValues.String, StudentPaidFeeEnum.CenterData));
-                        iRefuncableAmount = 0;
-                    }
+                        row.Append(AddCell(iTotal.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
 
-                    //int iTotal = oStudentFee.Where(fd => fd.StudentId == rcpt.StudentId && fd.ReceiptNumber == rcpt.ReceiptNumber && fd.PaymentMode == rcpt.PaymentMode && fd.TransactionNumber == rcpt.TransactionNumber).Sum(fd => fd.Amount);
-                    //iTotal = iTotal + iRefuncableAmount;
-                    row.Append(AddCell(iTotal.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
-
-                    aoSheetData1.Append(row);
-                    miStudentPaidFeeStartupRow++;
-                }                
+                        aoSheetData1.Append(row);
+                        miStudentPaidFeeStartupRow++;
+                    }                
+                });
             });
-        });
     }
 
     /// <summary>
@@ -12373,7 +12385,7 @@ public partial class SchoolReportsUI : ExportToExcel
         Row row = new Row { RowIndex = Convert.ToUInt32(miStudentPaidFeeStartupRow), CustomHeight = true, Height = 25 };
 
         row.Append(AddCell("Year", CellValues.String, StudentPaidFeeEnum.CenterHeader));
-        row.Append(AddCell("Total Students Count ", CellValues.String, StudentPaidFeeEnum.CenterHeader));
+        row.Append(AddCell("Total Students Countï¿½", CellValues.String, StudentPaidFeeEnum.CenterHeader));
         row.Append(AddCell("RTE students", CellValues.String, StudentPaidFeeEnum.CenterHeader));
         row.Append(AddCell("Actual Fees Receivable students", CellValues.String, StudentPaidFeeEnum.CenterHeader));
         row.Append(AddCell("Pending Fees students count", CellValues.String, StudentPaidFeeEnum.CenterHeader));

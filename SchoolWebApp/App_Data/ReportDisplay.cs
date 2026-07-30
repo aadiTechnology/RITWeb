@@ -206,7 +206,7 @@ public class ReportDisplay : SchoolBase
         }
         catch (Exception ex)
         {
-            mbIsReportGennerated = true;
+            mbIsReportGennerated = false;
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
         }
         finally
@@ -703,6 +703,8 @@ public class ReportDisplay : SchoolBase
                     return "\\RITeSchool\\Report\\Exam\\StudentwiseTerm2ProgressReportPrimaryPioneer.rpt";
             case Constants.ExportReports.HalfYearlyReportFor3To9Pioneer:
                 return "\\RITeSchool\\Report\\Exam\\StudentHalfYearlyReportFor3To9ForPioneer.rpt";
+            case Constants.ExportReports.FinalProgressCardForPioneer3To9:
+                return "\\RITeSchool\\Report\\Exam\\StudentWiseFinalProgressReportCBSEForPioneer.rpt";                
             case Constants.ExportReports.HolosticProgressReportPPSNFor3to5:
                 return "RITeSchool\\Report\\Exam\\StudentHolisticReportForPPSH.rpt";
             case Constants.ExportReports.EnquiryFormReport:

@@ -20,7 +20,7 @@ public partial class ImportClearanceDetailsPopup : SchoolBase
 {
     #region Constants
 
-    private const string S_SHEET_NAME = "Easypay";
+    private const string S_SHEET_NAME = "Sheet1";
 
     #endregion Constants
 

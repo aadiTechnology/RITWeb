@@ -1081,7 +1081,8 @@ namespace Utility
             StudentwiseProgressReportPioneer_NurseryTO2nd=106,
 			HolosticProgressReportPPSNFor3to5=107,
             HalfYearlyReportFor3To9Pioneer = 108,
-            EnquiryFormReport=109
+            EnquiryFormReport=109,
+            FinalProgressCardForPioneer3To9 = 110
         }
 
 		public enum BarcodeChar

@@ -202,7 +202,7 @@ public partial class StudentPayFeeUI : SchoolBase
 
                     txtRegNumber.Attributes.Add("onkeypress", string.Format("return clickButton(event,'{0}')", btnSearch.ClientID));
 
-                    if (miSchoolId == Constants.SchoolId.SNS.ToInt())
+                    if (miSchoolId == Constants.SchoolId.SNS.ToInt() || moSchool == Constants.SchoolId.VPMCPS)
                     {
                         tdResetRecipt.Visible = true;
                         hlnkReceiptNo.Attributes.Add("onclick", "OpenReceiptResetPopup(); return false");                        

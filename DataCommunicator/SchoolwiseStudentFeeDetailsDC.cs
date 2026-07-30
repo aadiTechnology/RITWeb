@@ -912,7 +912,10 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("AccountHeaderId", aiAccountHeaderId, SqlDbType.Int);
-                oSQLServerDbUtility.AddParameter("Date", Date, SqlDbType.DateTime);
+
+                if (Date != DateTime.MinValue)
+                    oSQLServerDbUtility.AddParameter("Date", Date, SqlDbType.DateTime);
+
                 oSQLServerDbUtility.AddParameter("OrderById", aiOrderById, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("IsInternalFee", aiIsInternalFee, SqlDbType.Int);
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_ResetReceiptForm");

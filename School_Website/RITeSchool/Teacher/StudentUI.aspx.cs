@@ -2169,11 +2169,19 @@ public partial class StudentUI : SchoolBase
             hidStudentSiblingNames.Value = string.Empty;
 
         chkIsStaffKid.Checked = moStudentBL.IsStaffKid;
-        
-       
-        ddlUserRole.SelectedValue = moStudentBL.ParentUserRoleId.ToString();
-        ddlUserRole_SelectedIndexChanged(ddlUserRole, null);
-        ddlUserName.SelectedValue = moStudentBL.ParentUserId.ToString();
+
+        if (moStudentBL.IsStaffKid)
+        {
+            ddlUserRole.SelectedValue = moStudentBL.ParentUserRoleId.ToString();
+            ddlUserRole_SelectedIndexChanged(ddlUserRole, null);
+            ddlUserName.SelectedValue = moStudentBL.ParentUserId.ToString();
+        }
+        else
+        {
+            ddlUserRole.SelectedIndex = 0;      
+            ddlUserRole_SelectedIndexChanged(ddlUserRole, null);
+            ddlUserName.SelectedIndex = 0;  
+        }
         
         if(SchoolBase.Settings.IsAdditionalFieldsApplicable)
         BindAdditionalDetails(aiSchoolId, aiStudentId);
@@ -2254,8 +2262,8 @@ public partial class StudentUI : SchoolBase
                     ddlGroup.SelectedValue = Convert.ToString(dt.Rows[0]["GroupId"]);
                     FillCompulsarySubjects();
                     lblCompulsarySubjects.Text = Convert.ToString(dt.Rows[0]["CompulsorySubjects"]);
-                    // hidCompulsorySubjects.Value = lblCompulsarySubjects.Text; ////
-                    if (ddlStream.SelectedValue == "3")
+                 // hidCompulsorySubjects.Value = lblCompulsarySubjects.Text; ////
+                   if (ddlStream.SelectedValue == "3")
                     {
                         string OptionalSubjects = Convert.ToString(dt.Rows[0]["OptionalSubjects"]);
                         if (OptionalSubjects != string.Empty)
@@ -3606,6 +3614,13 @@ public partial class StudentUI : SchoolBase
         MasterDataCollectionBL oMasterDataBL = new MasterDataCollectionBL();
 
         DataSet odataset =oMasterDataBL.GetAllCompulsarySubjects( ddlGroup.SelectedValue.ToInt(), miAcademicYearId);
+
+        if (miSchoolId == Constants.SchoolId.SNS.ToInt() && miAcademicYearId >= 13 && ddlStream.SelectedValue == "3" && lblStandard.Text.Contains("12 Art"))
+        {
+            string sSubjects = Convert.ToString(odataset.Tables[0].Rows[0]["SubjectDetails"]);
+            sSubjects = sSubjects.Replace("History", "Economics");
+            odataset.Tables[0].Rows[0]["SubjectDetails"] = sSubjects;
+        }
 
         //if (chkNewAddmission.Checked && miAcademicYearId >= 13 && ddlGroup.SelectedIndex > 0)
         //{

@@ -64,7 +64,7 @@
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                     <ContentTemplate>
                                         <table>
-                                            <tr>
+                                            <tr id="trFromDate" runat="server">
                                                 <td class="ClsBorderlight" width="150px">
                                                     <span class="ClsLabel">From Date : </span>
                                                 </td>
@@ -91,7 +91,7 @@
                                                     <span style="font-size: 9pt;" class="ClsMdtStar">*</span>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="trFeeType" runat="server">
                                                 <td class="ClsBorderlight">
                                                     <span class="ClsLabel">Fee Type&nbsp; : </span>
                                                 </td>
@@ -102,7 +102,7 @@
                                                      <span id="spMandatory" runat="server" class="ClsMdtStar">*</span>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="trAccountHeader" runat="server">
                                                 <td class="ClsBorderlight">
                                                     <span class="ClsLabel">&nbsp;Account Header : </span>
                                                 </td>
@@ -113,7 +113,7 @@
                                                     <span class="ClsMdtStar">*</span>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="trOrderBy" runat="server">
                                                 <td class="ClsBorderlight">
                                                     <span class="ClsLabel">Order By : </span>
                                                 </td>
@@ -129,6 +129,7 @@
                                             <tr>
                                                 <td colspan="2" align="center">
                                                     <asp:Button ID="btnReset" runat="server" Text="Reset" CssClass="ClsBtn" OnClick="btnReset_Click" />
+                                                    <asp:Button ID="btnClose" runat="server" Text="Close" CssClass="ClsBtn" OnClientClick="window.close()" />
                                                     <asp:HiddenField ID="hidSortExpression" runat="server" Value="" />
                                                     <asp:HiddenField ID="hidSortDirection" runat="server" Value="" />
                                                 </td>

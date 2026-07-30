@@ -1971,7 +1971,7 @@ public partial class TeacherUI : SchoolBase
         arrDatacolumn[Constants.I_ZERO] = (DataColumn)oDTEducationGridDetails.Columns["Id"];
         oDTEducationGridDetails.PrimaryKey = arrDatacolumn;
         //oDTRow = oDTEducationGridDetails.Rows.Find(sQualification_Id);
-        oDTRow = oDTEducationGridDetails.Select("Qualification_Id=" + sQualificationId + " and Specialization = '" + sSpecilization + "'")[0];
+        oDTRow = oDTEducationGridDetails.Select("Qualification_Id=" + sQualificationId + " and Specialization = '" + (sSpecilization == "&nbsp;" ? "" : sSpecilization) + "'")[0];
         oDTRow.Delete();
         oDTEducationGridDetails.AcceptChanges();
         grdvwEducationDetails.DataSource = oDTEducationGridDetails;
