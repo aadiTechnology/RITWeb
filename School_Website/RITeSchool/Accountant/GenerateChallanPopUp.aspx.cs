@@ -132,7 +132,7 @@ public partial class GenerateChallanPopUp : SchoolBase
     {
         string sFilterStr = string.Empty;
 
-        sFilterStr = "(usp_GetBankChallanDetails.School_Id}=" + miSchoolId + "AND usp_GetBankChallanDetails.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetBankChallanDetails.Standard_Id}=" + hidStandardId.Value.ToInt() + "AND usp_GetBankChallanDetails.SchoolWise_Standard_Division_Id}=" + hidStandardDivisionId.Value.ToInt() + "AND usp_GetBankChallanDetails.Student_Id}=" + hidSchoolwiseStudentId.Value.ToInt() + "AND usp_GetBankChallanDetails.Original_Fee_Type_Id}=" + cmbFeeType.SelectedValue.ToInt() + " AND usp_GetBankChallanDetails.Payable_For}=" + cmbPayableFor.SelectedValue + "AND usp_GetBankChallanDetails.AcademicYearId}=" + cmbAcademicYear.SelectedValue.ToInt() + ") @";
+        sFilterStr = "(usp_GetBankChallanDetails.School_Id}=" + miSchoolId + "AND usp_GetBankChallanDetails.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetBankChallanDetails.Standard_Id}=" + hidStandardId.Value.ToInt() + "AND usp_GetBankChallanDetails.SchoolWise_Standard_Division_Id}=" + hidStandardDivisionId.Value.ToInt() + "AND usp_GetBankChallanDetails.Student_Id}=" + hidSchoolwiseStudentId.Value.ToInt() + "AND usp_GetBankChallanDetails.Original_Fee_Type_Id}=" + cmbFeeType.SelectedValue.ToInt() + " AND usp_GetBankChallanDetails.Payable_For}=" + cmbPayableFor.SelectedValue + "AND usp_GetBankChallanDetails.AcademicYearId}=" + cmbAcademicYear.SelectedValue.ToInt() + "AND usp_GetBankChallanDetails.IncludeLateFee}=1" + "AND usp_GetBankChallanDetails.ShowOnlyNewStudents}=0" +") @";
 
         return sFilterStr;
 

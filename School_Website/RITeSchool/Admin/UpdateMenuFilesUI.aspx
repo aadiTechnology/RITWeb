@@ -136,7 +136,7 @@
         </tr>
         <tr>
             <td align="center">
-                <hr style="width: 1200px; background-color: Black" align="center" />
+                <hr style="width: 90%; background-color: Black" align="center" />
             </td>
         </tr>
         <tr>
@@ -162,7 +162,7 @@
             <td>
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <table align="center" width="1200px">
+                        <table align="center" width="90%">
                             <tr id="trPager" runat="server">
                                 <td align="center">
                                     <asp:DataPager ID="DtPgCount" runat="server" PageSize="20" PagedControlID="lstvwMenuFilesDetails">
@@ -206,9 +206,9 @@
                                                         <asp:LinkButton ID="lnkBtnMenuName" runat="server" CommandName="SortRow" CommandArgument="ConfigureMenuName"
                                                             CausesValidation="false" ForeColor="Black" Text="Menu Name" />
                                                     </th>
-                                                    <th align="left" style="padding-left: 7px; width: 325px;">
-                                                        <asp:LinkButton ID="lnkChildSubMenuName" runat="server" CommandName="SortRow" CommandArgument="ConfigureSubMenuName"
-                                                            CausesValidation="false" ForeColor="Black" Text="Sub Menu Name" />
+                                                    <th align="left" style="padding-left: 7px; width: 275px;">
+                                                        <asp:LinkButton ID="lnkChildSubMenuName" runat="server" CommandName="SortRow" CommandArgument="ChildMenuName"
+                                                            CausesValidation="false" ForeColor="Black" Text="Child Sub Menu Name" />
                                                     </th>
                                                     <th align="left" style="padding-left: 7px; width: 350px;">
                                                         <asp:LinkButton ID="lnkBtnLinkName" runat="server" CommandName="SortRow" CommandArgument="LinkName"
@@ -216,6 +216,10 @@
                                                     </th>
                                                     <th align="center" style="padding-left: 3px; width: 100px;">
                                                         File Extension
+                                                    </th>
+                                                    <th align="center" style="padding-left: 3px; width: 110px;">
+                                                        <asp:LinkButton ID="lnkBtnAddedOn" runat="server" CommandName="SortRow" CommandArgument="InsertDate"
+                                                            CausesValidation="false" ForeColor="Black" Text="Added On" />
                                                     </th>
                                                     <th align="center" style="width: 60px;">
                                                         Edit
@@ -227,7 +231,7 @@
                                                 <tr runat="server" id="itemPlaceholder">
                                                 </tr>
                                                 <tr class="ClsBorderPager" id="trDataPager">
-                                                    <td colspan="7">
+                                                    <td colspan="9">
                                                         <asp:DataPager ID="DtPgDropDown" runat="server" PagedControlID="lstvwMenuFilesDetails"
                                                             PageSize="20">
                                                             <Fields>
@@ -272,6 +276,9 @@
                                                 </td>
                                                 <td align="center">
                                                     <asp:Label ID="lblExtension" EnableViewState="false" runat="server" />
+                                                </td>
+                                                <td align="center">
+                                                    <asp:Label ID="lblAddedOn" EnableViewState="false" runat="server" />
                                                 </td>
                                                 <td align="center">
                                                     <asp:ImageButton ID="imgBtnEdit" runat="server" CausesValidation="false" CommandName="UpdateFile"

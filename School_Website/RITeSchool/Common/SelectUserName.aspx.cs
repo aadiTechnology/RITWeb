@@ -94,8 +94,14 @@ public partial class SelectUserName : SchoolBase
                     else if (QueryString["Mode"] == "Message")
                     {
                         char cAccess = CommonUtility.IsUserHasEditAccess(Constants.SchoolConfigurations.MessageCenter);
-                        hidUserHasFullAccess.Value = (cAccess == Constants.C_YES ? true : false).ToString();
+                        hidUserHasFullAccess.Value = (cAccess == Constants.C_YES ? true : false).ToString();                        
                     }
+
+                if (moSchool == Constants.SchoolId.SNS && moUserRole == Constants.UserRoles.OtherStaff)
+                {
+                    char cAccess = CommonUtility.IsUserHasEditAccess(Constants.SchoolConfigurations.MessageCenter);
+                    hidUserHasFullAccess.Value = (cAccess == Constants.C_YES ? true : false).ToString();
+                }
 
                 SetDefaultSortGridArrow();
                 FillGridsAccordingToRequest();

@@ -51,7 +51,7 @@ namespace DataCommunicator
 			{
 				oSQLServerDbUtility.AddParameter("SchoolID", aiSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("asSearchText", StringUtility.ReplaceSingleQuoteInString(asSearchText,true), SqlDbType.NVarChar);
-				oSQLServerDbUtility.AddParameter("SortExp", "ORDER BY " + (sortExpression.IsNullOrEmpty() ? " ConfigureMenuName" : sortExpression), SqlDbType.NVarChar);
+				oSQLServerDbUtility.AddParameter("SortExp", "ORDER BY " + (sortExpression.IsNullOrEmpty() ? " InsertDate desc" : sortExpression), SqlDbType.NVarChar);
 				oSQLServerDbUtility.AddParameter("StartIndex", aiStartRowIndex, SqlDbType.Int);
 				oSQLServerDbUtility.AddParameter("EndIndex", aiEndRowIndex, SqlDbType.Int);
 				
@@ -82,6 +82,7 @@ namespace DataCommunicator
                                                         Name = oSqlDataReader["Name"].ToString(),
                                                         Path = oSqlDataReader["Path"].ToString(),
                                                         IsURL = oSqlDataReader["IsURL"].ToBool(),
+                                                        InsertDate = oSqlDataReader["InsertDate"] == DBNull.Value ? string.Empty : oSqlDataReader["InsertDate"].ToString(),
                                                         TotalRows = oSqlDataReader["TotalRows"].ToInt()
                                                     });
 				}

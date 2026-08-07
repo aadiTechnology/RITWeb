@@ -294,9 +294,9 @@ namespace BusinessLogic
 		    return moConfigureCollectionMenuDC.FetchConfigureMenuCollection(aiSchoolId);
 	    }
 
-	    public DataTable FetchAllInternalMenus(int aiSchoolId, string asFilterString)
+	    public DataTable FetchAllInternalMenus(int aiSchoolId, string asFilterString, bool abShowOnlyActive)
 	    {
-            return moConfigureCollectionMenuDC.FetchAllInternalMenus(aiSchoolId, asFilterString);
+            return moConfigureCollectionMenuDC.FetchAllInternalMenus(aiSchoolId, asFilterString, abShowOnlyActive);
 	    }
 
 	    public DataTable FetchAllActiveInternalMenus(int aiSchoolId, int aiUserRoleId)

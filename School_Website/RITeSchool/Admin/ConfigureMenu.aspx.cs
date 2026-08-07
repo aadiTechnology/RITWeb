@@ -850,7 +850,7 @@ public partial class ConfigureMenu : SchoolBase
     {
         string sSelectedMenuItemValue = asSelectedValue;
         ConfigureCollectionMenuBL oConfigureCollectionMenuBL = new ConfigureCollectionMenuBL();
-        DataTable oDataTable = oConfigureCollectionMenuBL.FetchAllInternalMenus(miSchoolId, string.Empty);
+        DataTable oDataTable = oConfigureCollectionMenuBL.FetchAllInternalMenus(miSchoolId, string.Empty, false);
         AddMenuItems(ref Menu_Configure, oDataTable, sSelectedMenuItemValue, true);
         if (Menu_Configure.Nodes.Count == 0)
         {

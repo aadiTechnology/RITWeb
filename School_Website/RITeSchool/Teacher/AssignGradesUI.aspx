@@ -73,7 +73,7 @@
                             <table width="50%">
                                 <tr>
                                     <td>
-                                        <asp:ListView ID="lstvwSubjects" runat="server" DataKeyNames="Standard_Division_Id,Subject_Id, IsSubmitted, IsSubjectTeacher,IsCoCurricularSubject"
+                                        <asp:ListView ID="lstvwSubjects" runat="server" DataKeyNames="Standard_Division_Id,Subject_Id, IsSubmitted, IsSubjectTeacher,IsCoCurricularSubject,StandardDivision"
                                             OnItemCommand="lstvwSubjects_ItemCommand" 
                                             OnSelectedIndexChanging="lstvwSubjects_SelectedIndexChanging" 
                                             onitemdatabound="lstvwSubjects_ItemDataBound">

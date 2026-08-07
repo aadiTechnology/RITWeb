@@ -20,7 +20,7 @@ public partial class UpdateMenuFilesUI : SchoolBase
 
 	#region -- CONSTANT(s) --
 
-	private const string S_DEFAULT_SORT_EXP = "ConfigureMenuName";
+	private const string S_DEFAULT_SORT_EXP = "InsertDate";
 	private const string S_SAVE_MESSAGE = "File saved successfully!!!";
 	private const string S_UPDATE_MESSAGE = "File updated successfully !!!";
 	private const string S_DELETE_MESSAGE = "File deleted successfully!!!";
@@ -170,6 +170,18 @@ public partial class UpdateMenuFilesUI : SchoolBase
                 {
                     string sFilePath = Convert.ToString(lstvwMenuFilesDetails.DataKeys[oCurrentItem.DisplayIndex]["Path"]);
                     (oCurrentItem.FindControl("lblExtension") as Label).Text = sFilePath.Substring(sFilePath.LastIndexOf(".") + 1, sFilePath.Length - sFilePath.LastIndexOf(".") - 1).ToLower();
+                }
+
+                Label lblAddedOn = oCurrentItem.FindControl("lblAddedOn") as Label;
+                if (lblAddedOn != null)
+                {
+                    lblAddedOn.Text = string.Empty;
+                    if (!string.IsNullOrEmpty(oMenuFile.InsertDate))
+                    {
+                        DateTime dtAddedOn;
+                        if (DateTime.TryParse(oMenuFile.InsertDate, out dtAddedOn))
+                            lblAddedOn.Text = dtAddedOn.ToString(Constants.S_DATE_FORMAT);
+                    }
                 }
             }
 		}
@@ -335,9 +347,14 @@ public partial class UpdateMenuFilesUI : SchoolBase
 	private void FillMenuList()
 	{
 		var oConfigureCollectionMenuBL = new ConfigureCollectionMenuBL();
-		DataTable oDataTable = oConfigureCollectionMenuBL.FetchAllInternalMenus(miSchoolId,txtTopSearch.Text.Trim());
-		ddlMenus.Bind(oDataTable, "ConfigureMenuId", "MenuName", Constants.S_SELECT);
-        
+		DataTable oDataTable = oConfigureCollectionMenuBL.FetchAllInternalMenus(miSchoolId,txtTopSearch.Text.Trim(), true);
+		if (oDataTable != null && oDataTable.Columns.Contains("InsertDate"))
+		{
+			oDataTable.DefaultView.Sort = "InsertDate DESC";
+			ddlMenus.Bind(oDataTable.DefaultView, "ConfigureMenuId", "MenuName", Constants.S_SELECT);
+		}
+		else
+			ddlMenus.Bind(oDataTable, "ConfigureMenuId", "MenuName", Constants.S_SELECT);
 	}
 
 	/// <summary>
@@ -448,7 +465,7 @@ public partial class UpdateMenuFilesUI : SchoolBase
 		hidFilePath.Value = string.Empty;
 		hidNewFileName.Value = string.Empty;
 		hidSortExpression.Value = S_DEFAULT_SORT_EXP;
-		hidSortDirection.Value = Constants.S_ASCENDING;
+		hidSortDirection.Value = Constants.S_DESCENDING;
 		ddlMenus.Enabled = true;
 		ddlMenus.ClearSelection();
 		hidMode.Value = S_NEW;

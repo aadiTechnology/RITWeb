@@ -670,23 +670,40 @@ namespace DataCommunicator
 				return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(sFetchString);
 		}
 
-		public DataTable FetchAllInternalMenus(int aiSchoolId, string asFilterString)
+        public DataTable FetchAllInternalMenus(int aiSchoolId, string asFilterString, bool abShowOnlyActive)
 		{
 			//This function is used to fetch the configuration menu collection Items. 
 
             if (asFilterString.Contains("'"))
                 asFilterString = asFilterString.Replace("'", "''");
 
-            string sFetchString = "SELECT CM1.ConfigureMenuId, CM1.ConfigureMenuName, CM1.Parent_Menu_Id, ISNULL(CM4.ConfigureMenuName + ' - ', '') + ISNULL(CM3.ConfigureMenuName + ' - ', '') + ISNULL(CM2.ConfigureMenuName + ' - ', '')  + CM1.ConfigureMenuName [MenuName], CM1.Priority, CM1.Is_External, CM1.End_Date,CM1.SubMenuCount,CM1.ApplyAllSubMenu" +
-								  "  FROM dbo.ConfigureMenu CM1 LEFT OUTER JOIN dbo.ConfigureMenu CM2" +
-								  "	   ON CM1.Parent_Menu_Id = CM2.ConfigureMenuId" +
-                                  " AND CM2.IsDeleted= 0 "+
-                                  "   LEFT OUTER JOIN dbo.ConfigureMenu CM3 ON CM2.Parent_Menu_Id = CM3.ConfigureMenuId" +" "+
-                                  " And CM3.IsDeleted=0 "+
-                                  "   LEFT OUTER JOIN dbo.ConfigureMenu CM4 ON CM3.Parent_Menu_Id = CM4.ConfigureMenuId" + " " +
-                                  " And CM4.IsDeleted=0 " +
-                                  " WHERE CM1.SchoolId = " + aiSchoolId + "AND CM1.IsDeleted=0 AND (CM1.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM2.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM3.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM4.ConfigureMenuName LIKE '%" + asFilterString + "%')" +
-								  " ORDER BY CM1.Priority, CM1.ConfigureMenuName";
+            string sFetchString;
+            if (abShowOnlyActive)
+            {
+                sFetchString = "SELECT CM1.ConfigureMenuId, CM1.ConfigureMenuName, CM1.Parent_Menu_Id, ISNULL(CM4.ConfigureMenuName + ' - ', '') + ISNULL(CM3.ConfigureMenuName + ' - ', '') + ISNULL(CM2.ConfigureMenuName + ' - ', '')  + CM1.ConfigureMenuName [MenuName], CM1.Priority, CM1.Is_External, CM1.End_Date,CM1.SubMenuCount,CM1.ApplyAllSubMenu, CM1.InsertDate" +
+                                      "  FROM dbo.ConfigureMenu CM1 LEFT OUTER JOIN dbo.ConfigureMenu CM2" +
+                                      "	   ON CM1.Parent_Menu_Id = CM2.ConfigureMenuId" +
+                                      " AND CM2.IsDeleted= 0 AND CM2.Is_Active = 'Y'" +
+                                      "   LEFT OUTER JOIN dbo.ConfigureMenu CM3 ON CM2.Parent_Menu_Id = CM3.ConfigureMenuId" + " " +
+                                      " And CM3.IsDeleted=0 AND CM3.Is_Active = 'Y'" +
+                                      "   LEFT OUTER JOIN dbo.ConfigureMenu CM4 ON CM3.Parent_Menu_Id = CM4.ConfigureMenuId" + " " +
+                                      " And CM4.IsDeleted=0 AND CM4.Is_Active = 'Y'" +
+                                      " WHERE CM1.Is_Active = 'Y' AND CM1.SchoolId = " + aiSchoolId + "AND CM1.IsDeleted=0 AND (CM1.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM2.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM3.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM4.ConfigureMenuName LIKE '%" + asFilterString + "%')" +
+                                      " ORDER BY CM1.Priority, CM1.ConfigureMenuName";
+            }
+            else
+            {
+                sFetchString = "SELECT CM1.ConfigureMenuId, CM1.ConfigureMenuName, CM1.Parent_Menu_Id, ISNULL(CM4.ConfigureMenuName + ' - ', '') + ISNULL(CM3.ConfigureMenuName + ' - ', '') + ISNULL(CM2.ConfigureMenuName + ' - ', '')  + CM1.ConfigureMenuName [MenuName], CM1.Priority, CM1.Is_External, CM1.End_Date,CM1.SubMenuCount,CM1.ApplyAllSubMenu, CM1.InsertDate" +
+                                      "  FROM dbo.ConfigureMenu CM1 LEFT OUTER JOIN dbo.ConfigureMenu CM2" +
+                                      "	   ON CM1.Parent_Menu_Id = CM2.ConfigureMenuId" +
+                                      " AND CM2.IsDeleted= 0" +
+                                      "   LEFT OUTER JOIN dbo.ConfigureMenu CM3 ON CM2.Parent_Menu_Id = CM3.ConfigureMenuId" + " " +
+                                      " And CM3.IsDeleted=0" +
+                                      "   LEFT OUTER JOIN dbo.ConfigureMenu CM4 ON CM3.Parent_Menu_Id = CM4.ConfigureMenuId" + " " +
+                                      " And CM4.IsDeleted=0" +
+                                      " WHERE CM1.SchoolId = " + aiSchoolId + "AND CM1.IsDeleted=0 AND (CM1.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM2.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM3.ConfigureMenuName LIKE '%" + asFilterString + "%' OR CM4.ConfigureMenuName LIKE '%" + asFilterString + "%')" +
+                                      " ORDER BY CM1.Priority, CM1.ConfigureMenuName";
+            }
 			using (var oSQLServerDbUtility = new SQLServerDbUtility())
 				return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(sFetchString);
 		}
