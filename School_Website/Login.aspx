@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Welcome to Pawar Public School</title>
+    <title>Welcome to <%: System.Configuration.ConfigurationManager.AppSettings["SchoolName"]%></title>
     <link rel="SHORTCUT ICON" href="/images/favicon.ico" type="image/x-icon" />
     <style>
             .clsLabel {
@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td align="center">
-                    <img src="RITeSchool/images/Logos/School_Logo.bmp?Version=1.0" style="" />
+                    <img src="RITeSchool/images/Logos/School_Logo.bmp?version=1.0" style="" />
                 </td>
             </tr>
             <tr>
@@ -71,7 +71,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <span style="font-size: 25px; font-weight: bold;">PAWAR PUBLIC SCHOOL</span>
+                                    <span style="font-size: 25px; font-weight: bold;"><%: System.Configuration.ConfigurationManager.AppSettings["SchoolName"]%></span>
                                 </td>
                             </tr>
                             <tr style="height: 30px">
@@ -134,7 +134,14 @@
                                                         OnClientClick="OpenPopup(); return false;"></asp:LinkButton>
                                                     <asp:HiddenField ID="hidScreenWidth" runat="server" />
                                             </td>
-                                        </tr>
+                                        </tr> 
+										<tr style="display:none;">
+                                            <td colspan="3" align="center">
+                                                <u>
+                                                    <asp:LinkButton ID="lnkbtn2" runat="server" Text="Policy Details" CssClass="clsText" Style="font-weight: bold;font-size:12px;"
+                                                        OnClientClick="OpenPolicyPopup(); return false;"></asp:LinkButton>                                                    
+                                            </td>
+                                        </tr> 										
                                     </table>
                                 </td>
                             </tr>
@@ -147,6 +154,11 @@
         _hidScreenWidth = "<%=this.hidScreenWidth.ClientID%>";
         function OpenPopup() {
             window.open("ForgotPassword.aspx", '_new', 'fullscreen=no,scrollbars=yes,resizable=no,top=200,left=200,width=540,height=430');
+            return false;
+        }
+
+        function OpenPolicyPopup() {
+            window.open("PrivacyPolicy.aspx", '_new');
             return false;
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Web;
 using BusinessLogic;
@@ -13,15 +14,22 @@ using Utility;
 
 /// <summary>
 ///		Client class for the ManagementService, which can be used from the UI.
+///		Marked Serializable for Custom / StateServer / SQLServer session modes.
+///		WCF clients and BL instances are NonSerialized and recreated after deserialize.
 /// </summary>
-    [Serializable]
+[Serializable]
 public class MISServiceClientUtility
 {
 
 	#region -- MEMBER(s) --
 
+	// WCF ClientBase / MarshalByRef objects cannot be serialized into session state.
+	[NonSerialized]
 	private ManagementServiceClient moMgmtServiceClient;
+
+	[NonSerialized]
 	private ManagementServiceConfigBL moMgmtServiceConfigBL;
+
 	private int miSchoolId = ConfigurationManager.AppSettings["SchoolID"].ToInt();
 
 	#endregion -- MEMBER(s) --
@@ -46,8 +54,34 @@ public class MISServiceClientUtility
 
 	public MISServiceClientUtility()
 	{
+		InitializeTransientMembers();
+	}
+
+	/// <summary>
+	///		Recreates non-serializable members after the object is restored from session.
+	/// </summary>
+	[OnDeserialized]
+	private void OnDeserialized(StreamingContext context)
+	{
+		InitializeTransientMembers();
+	}
+
+	private void InitializeTransientMembers()
+	{
 		moMgmtServiceClient = new ManagementServiceClient();
 		moMgmtServiceConfigBL = new ManagementServiceConfigBL(miSchoolId);
+	}
+
+	/// <summary>
+	///		Ensures non-serializable members exist (needed if custom session store
+	///		does not invoke [OnDeserialized]).
+	/// </summary>
+	private void EnsureTransientMembers()
+	{
+		if (moMgmtServiceConfigBL == null)
+			moMgmtServiceConfigBL = new ManagementServiceConfigBL(miSchoolId);
+		if (moMgmtServiceClient == null)
+			moMgmtServiceClient = new ManagementServiceClient();
 	}
 
 	#endregion -- CONSTRUCTOR(s) --
@@ -59,6 +93,7 @@ public class MISServiceClientUtility
 	/// </summary>
 	public void Initialize()
 	{
+		EnsureTransientMembers();
 		AssociatedMISSchools = moMgmtServiceConfigBL.GetAssociatedSchools();
 
 		foreach (var school in AssociatedMISSchools)

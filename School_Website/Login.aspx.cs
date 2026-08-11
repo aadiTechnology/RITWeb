@@ -11,6 +11,7 @@ using System.Data;
 using BusinessLogic.Exceptions;
 using System.Reflection;
 using BusinessLogic;
+using System.Collections.Specialized;
 
 public partial class Login : System.Web.UI.Page
 {
@@ -21,6 +22,36 @@ public partial class Login : System.Web.UI.Page
             SetDefaultButton();
             txtUserName.Focus();
             valSum.HeaderText = Constants.S_VALIDATION_SUMMARY_HEADER;
+
+            Session["IsManagementLinkedAdminStaff"] = Constants.S_NO;
+            if (!Request.QueryString.ToString().IsNullOrEmpty())
+            {
+                if (Request.QueryString != null && Request.QueryString.ToString() != string.Empty)
+                {
+                    string sDecryptedQueryString = CommonUtility.DecryptQuerystring(Server.UrlDecode(Request.QueryString.ToString()));
+                    NameValueCollection QueryString = HttpUtility.ParseQueryString(sDecryptedQueryString);
+
+                    if (QueryString.Count > 0)
+                    {
+                        string sUserName = string.Empty;
+                        if (QueryString["UserName"] != null)
+                            sUserName = QueryString["UserName"].ToString();
+
+                        string sPassword = string.Empty;
+                        if (QueryString["Password"] != null)
+                            sPassword = QueryString["Password"].ToString();
+
+                        if (sUserName != string.Empty && sPassword != string.Empty)
+                        {
+                            txtUserName.Text = sUserName;
+                            txtPassword.Text = sPassword;
+                            Session["IsManagementLinkedAdminStaff"] = Constants.S_YES;
+
+                            btnLogin_Click(btnLogin, null);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -40,7 +71,14 @@ public partial class Login : System.Web.UI.Page
                 string sLogin = txtUserName.Text.Trim();
                 string sPassword = txtPassword.Text;
                 int iSchoolId = ConfigurationManager.AppSettings["SchoolID"].ToInt();
-                string sIPAddress = Request.UserHostAddress;
+                //string sIPAddress = Request.UserHostAddress;
+
+                string sIPAddress = Request.Headers["CF-Connecting-IP"];
+                if (string.IsNullOrEmpty(sIPAddress))                                    
+                    sIPAddress = Request.Headers["X-Forwarded-For"];
+                
+                if (string.IsNullOrEmpty(sIPAddress))
+                    sIPAddress = Request.UserHostAddress;
 
                 var oUserAuthentication = new UserAuthentication(iSchoolId, sLogin, sPassword, sIPAddress);
 
@@ -66,7 +104,16 @@ public partial class Login : System.Web.UI.Page
                                 if (sLogin == sPassword)
                                     Response.Redirect("RITeSchool/Common/StudentChangePassword.aspx", false);
                                 else
-                                    Response.Redirect("RITeSchool/Common/ControlPanel.aspx", false);
+								{
+									if (oUserAuthentication.LoginRole == Constants.UserRoles.Teacher && oUserAuthentication.BetaURL != string.Empty)
+                                    {
+                                        Session.Clear();
+                                        Session.Abandon();
+                                        Response.Redirect(oUserAuthentication.BetaURL, false);
+                                    }
+                                    else
+										Response.Redirect("RITeSchool/Common/ControlPanel.aspx", false);
+								}
                             }
                             else
                                 Response.Redirect(returnUrl, false);

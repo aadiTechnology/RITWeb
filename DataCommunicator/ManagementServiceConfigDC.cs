@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using Management.Entities;
 using Utility;
 using System.Data;
+using System.Configuration;
 
 namespace DataCommunicator
 {
@@ -90,12 +91,41 @@ namespace DataCommunicator
 
         public static DataTable GetManagementUserInfo(int aiSchoolId, int aiUserId)
         {
-            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            string connectionString = "Data Source= " + ConfigurationManager.AppSettings["SchoolLocationsDataSource"] + "; Database=" + ConfigurationManager.AppSettings["SchoolLocationsDataBaseName"]
+                           + "; User ID=" + ConfigurationManager.AppSettings["SchoolLocationsUserId"] + "; Password=" + ConfigurationManager.AppSettings["SchoolLocationsPassword"];
+
+            string sSchoolDBName = string.Empty;
+            using (SqlConnection oSqlConnection = new SqlConnection(connectionString))
             {
-                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
-                oSQLServerDbUtility.AddParameter("UserId", aiUserId, SqlDbType.Int);
-                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetManagementUserInfo");
+                string command = string.Empty;
+                if (aiSchoolId != 0)                
+                    command = "SELECT * FROM BiometricSchools WHERE SchoolID = " + aiSchoolId + " AND IsDeleted = 0";
+
+                SqlCommand oSqlCommand = new SqlCommand(command, oSqlConnection);
+                oSqlConnection.Open();
+
+                string sConnectionString = string.Empty;
+                using (SqlDataReader oSqlDataReader = oSqlCommand.ExecuteReader())
+                {
+                    if (oSqlDataReader.Read())
+                    {
+                        sSchoolDBName = oSqlDataReader["SchoolDatabaseName"].ToString();
+                    }
+                }
             }
+
+            if (sSchoolDBName != string.Empty)
+            {
+                string sNewConnectionString = Constants.S_CONNECTION_STRING.Replace(ConfigurationManager.AppSettings["reportdatabasename"], sSchoolDBName);
+                using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility(sNewConnectionString))
+                {
+                    oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
+                    oSQLServerDbUtility.AddParameter("UserId", aiUserId, SqlDbType.Int);
+                    return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetManagementUserInfo");
+                }
+            }
+            else
+                return null;
         }
     }
 }

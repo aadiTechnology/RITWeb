@@ -4,7 +4,7 @@
 
 <%--<%@ Page Title="" Language="C#" MasterPageFile="~/RITeSchool/SuperAdmin/SuperAdminMasterPage.master" AutoEventWireup="true" CodeFile="DashboardUI.aspx.cs" Inherits="Management.DashboardUI" ClientIDMode="Static" ValidateRequest="false" %>--%>
 <asp:Content ID="headContent" ContentPlaceHolderID="headContentPlaceholder" runat="server">
-	<link href="../Styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
 	<link href="../Styles/kendo.blueopal.min.css" rel="stylesheet" type="text/css" />
 	<script src="../Scripts/kendo.jquery.min.js" type="text/javascript"></script>
 	<%--<script src="../Scripts/jquery-1.8.2-vsdoc.js" type="text/javascript"></script>--%>
@@ -12,14 +12,28 @@
 	<style type="text/css">
 		#content
 		{
+			box-sizing: border-box;
 			font-family: Verdana;
 			font-size: 9pt;
 			padding: 15px;
 			text-align: left;
-			width: 1000px;
+			width: 100%;
+			max-width: 1000px;
+		}
+		#data,
+		#widgetFrame,
+		#gridFrame,
+		#gridContent,
+		#branches .sectionContent,
+		#branches .k-button,
+		#widgetFrame .widget,
+		#dummyWidget
+		{
+			box-sizing: border-box;
 		}
 		#ddlElements
 		{
+			overflow: hidden;
 			text-align: center;
 		}
 		.section
@@ -43,39 +57,85 @@
 			margin-top: -1px;
 			padding: 10px;
 		}
+		#branches .sectionContent
+		{
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: stretch;
+			gap: 6px;
+			overflow-x: auto;
+		}
 		#branches .k-button
 		{
+			flex: 0 0 auto;
+			width: auto;
 			font-weight: bold;
+			text-align: center;
+			white-space: nowrap;
+			padding-left: 10px;
+			padding-right: 10px;
 		}
 		#data
 		{
+			display: flex;
+			align-items: flex-start;
 			margin: 10px 0;
+			width: 100%;
+			position: relative;
 		}
 		#widgetFrame, #gridFrame
 		{
-			float: left;
+			float: none;
 		}
 		#widgetFrame
 		{
-			width: 260px;
+			flex: 0 0 250px;
+			width: 250px;
+			min-width: 250px;
+			position: relative;
+			z-index: 2;
 		}
 		#widgetFrame #dummyWidget
 		{
-			height: 40px;
+			display: none;
+			height: 0;
+			margin: 0;
+			padding: 0;
+			border: 0;
 		}
 		#widgetFrame .widget
 		{
 			background: url("../styles/textures/highlight.png") repeat-x scroll 0 center #DAECF4;
 			border: 1px solid #94C0D2;
 			border-right: none;
-			border-radius: 5px 0 0 5px;
-			box-shadow: 0 0 6px rgba(0,0,0,.17);
-			color: #171E28; /*height: 100px;*/
-			margin: 11px 0;
+			border-radius: 0;
+			box-shadow: none;
+			box-sizing: border-box;
+			color: #171E28;
+			margin: 0;
+			overflow: hidden;
+			width: 250px;
+		}
+		#widgetFrame .widget + .widget
+		{
+			border-top-width: 0;
 		}
 		.widget table
 		{
 			width: 100%;
+			height: 100%;
+			border-collapse: collapse;
+		}
+		.widget table td
+		{
+			vertical-align: middle;
+			padding: 0;
+		}
+		/* Hide unused arrow rows so they do not affect height */
+		.widget table tr:first-child,
+		.widget table tr:last-child
+		{
+			display: none;
 		}
 		.widget .iconWrapper
 		{
@@ -84,13 +144,15 @@
 		.widget .widgetContent
 		{
 			text-align: left;
-			padding: 5px 10px;
+			padding: 10px 12px;
+			box-sizing: border-box;
 		}
 		.widget .widgetTitle
 		{
 			font-weight: bold;
-			margin-bottom: 3px;
+			margin-bottom: 4px;
 			text-align: left;
+			line-height: 1.3;
 		}
 		.widgetTitle .close-icon
 		{
@@ -102,17 +164,40 @@
 		{
 			/*visibility: visible;*/
 		}
+		#studentWidget .k-datepicker,
+		#studentWidget .k-picker-wrap
+		{
+			width: 145px;
+		}
+		#studentWidget .k-input
+		{
+			width: 110px;
+			font-size: 9pt;
+			height: 22px;
+			line-height: 22px;
+		}
+		#feeWidget .widgetContent div
+		{
+			line-height: 1.25;
+			white-space: nowrap;
+		}
 		#gridFrame
 		{
-			width: 740px;
+			flex: 1 1 auto;
+			min-width: 0;
+			width: auto;
+			position: relative;
+			z-index: 1;
 		}
 		#gridContent
 		{
 			background-color: #EAF4F9;
 			border: 1px solid #94C0D2;
-			border-radius: 8px;
-			box-shadow: 0 0 6px rgba(0, 0, 0, 0.17);
+			border-radius: 0 8px 8px 0;
+			box-shadow: none;
 			padding: 5px;
+			width: 100%;
+			box-sizing: border-box;
 		}
 		#schoolGrid
 		{
@@ -122,7 +207,8 @@
 		#schoolGrid .k-grid-header
 		{
 			font-size: 14px;
-			margin-bottom: 8px;
+			margin-bottom: 0;
+			padding: 0;
 		}
 		.k-drag-clue
 		{
@@ -133,9 +219,24 @@
 		{
 			font-weight: bold;
 		}
-		#schoolGrid tr[data-uid]
+		#schoolGrid .k-grid-content
 		{
-			height: 68px;
+			overflow: hidden !important;
+		}
+		#schoolGrid .k-grid-content table
+		{
+			border-collapse: collapse;
+		}
+		#schoolGrid .k-grid-content tr[data-uid],
+		#schoolGrid .k-grid-content tr
+		{
+			height: auto;
+		}
+		#schoolGrid .k-grid-content td
+		{
+			vertical-align: middle;
+			padding-top: 10px;
+			padding-bottom: 10px;
 		}
 		#schoolGrid th, #schoolGrid td
 		{
@@ -162,14 +263,17 @@
 		{
 			margin: 0 auto;
 			width: 150px;
+			line-height: 1.25;
 		}
 		.feeBlock div
 		{
-			text-align: right;
+			text-align: center;
+			padding: 0;
+			margin: 0;
 		}
 		.widget .k-icon.up-arrow, .widget .k-icon.down-arrow
 		{
-			visibility: hidden;
+			display: none;
 		}
 		
 		/* KendoUI Custom CSS Adjustments */
@@ -182,16 +286,22 @@
 		}
 		.k-grid-content
 		{
-			overflow: auto;
+			overflow: hidden;
 		}
 		.widget .k-icon
 		{
 			cursor: pointer;
 		}
+		#schoolGrid .k-button
+		{
+			line-height: 1.3;
+			padding: 4px 10px;
+			margin: 2px 0;
+		}
 	</style>
 </asp:Content>
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainBody" runat="Server">
-	<asp:UpdatePanel ID="mainUpdatePanel" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true">
+    <asp:UpdatePanel ID="mainUpdatePanel" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true">
 		<ContentTemplate>
 			<div id="content">
 				<div id="ddlElements">
@@ -207,8 +317,8 @@
 							runat="server" Style="text-align: center;  " ForeColor="#0000CC">Change Password</asp:HyperLink>
 					</div>
 				</div>
-				<div id="branches" class="section" style="height: auto;">
-					<div class="k-header" style="height: auto;">
+				<div id="branches" class="section">
+					<div class="k-header">
 						<h3 class="sectionTitle">
 							Branches</h3>
 					</div>
@@ -326,7 +436,7 @@
 								</tr>
 							</table>
 						</div>
-						<%--<div id="adminloginWidget" runat="server" class="widget">
+						<div id="adminloginWidget" runat="server" class="widget">
 							<table border="0" cellpadding="0" cellspacing="0" style="vertical-align: middle; text-align: center;">
 								<tr>
 									<td align="center">
@@ -337,7 +447,7 @@
 									<td align="center">
 										<div class="widgetContent">
 											<div class="widgetTitle">
-												School Dashboard
+												LogIn
 												<span class="k-icon close-icon"></span>
 											</div>
 										</div>
@@ -349,7 +459,7 @@
 									</td>
 								</tr>
 							</table>
-						</div>--%>
+						</div>
 					</div>
 					<div id="gridFrame">
 						<div id="gridContent">
@@ -362,8 +472,6 @@
 								</table>
 							</div>
 						</div>
-					</div>
-					<div style="clear: both;">
 					</div>
 				</div>
 				<asp:HiddenField ID="hidJSON" runat="server" />
@@ -506,23 +614,103 @@
 						data: json.datasource
 					},
 					columns: columns,
-					reorderable: true
+					reorderable: true,
+					dataBound: function () {
+						SetGridRowHeight();
+					}
 				});
 
 			SetGridRowHeight();
+			setTimeout(SetGridRowHeight, 50);
+			setTimeout(SetGridRowHeight, 200);
 			MapMISReportHandlers();
 		}
 
 		function SetGridRowHeight() {
-			var rows = $('#schoolGrid .k-grid-content tr');
-			$('.widget')
-				.each(function (index) {
-					if (index >= rows.length)
-						return;
+			var ROW_PADDING = 8; // extra top+bottom space so rows are not cramped
+			var $frame = $('#widgetFrame');
+			var $widgets = $frame.children('.widget');
+			var $content = $('#schoolGrid .k-grid-content');
+			var $rows = $content.find('table tbody > tr');
+			if ($rows.length === 0)
+				$rows = $content.find('tbody > tr');
+			if ($rows.length === 0)
+				$rows = $content.find('tr');
 
-					var height = this.scrollHeight;
-					rows[index].style.height = (height + 13) + 'px';
+			if ($rows.length === 0 || $widgets.length === 0)
+				return;
+
+			var count = Math.min($widgets.length, $rows.length);
+
+			// 1) Measure natural left-side heights (in normal flow).
+			$widgets.each(function () {
+				$(this).css({
+					position: 'relative',
+					top: 'auto',
+					left: 'auto',
+					height: 'auto',
+					width: '250px'
 				});
+			});
+
+			var naturalHeights = [];
+			for (var i = 0; i < count; i++)
+				naturalHeights[i] = $widgets.eq(i).outerHeight();
+
+			// 2) Make each grid row at least as tall as its left widget + padding.
+			$rows.each(function () {
+				this.style.height = 'auto';
+				$(this).children('td').css({ height: '', minHeight: '', paddingTop: '', paddingBottom: '' });
+			});
+			$content.css({ height: 'auto', overflow: 'hidden' });
+
+			var totalHeight = 0;
+			for (var r = 0; r < count; r++) {
+				var $row = $rows.eq(r);
+				var rowHeight = Math.max($row.outerHeight(), naturalHeights[r]) + ROW_PADDING;
+				$row[0].style.height = rowHeight + 'px';
+				$row.children('td').css({
+					height: rowHeight + 'px',
+					'vertical-align': 'middle',
+					'padding-top': '10px',
+					'padding-bottom': '10px'
+				});
+				totalHeight += rowHeight;
+			}
+			$content.height(totalHeight);
+
+			// 3) Pin each left widget exactly onto its matching grid row.
+			var frameTop = $frame.offset().top;
+			var last = $rows.eq(count - 1);
+			var frameHeight = (last.offset().top - frameTop) + last.outerHeight();
+			$frame.css({ height: frameHeight + 'px' });
+
+			for (var w = 0; w < count; w++) {
+				var $rowMatch = $rows.eq(w);
+				var top = $rowMatch.offset().top - frameTop;
+				var height = $rowMatch.outerHeight();
+				var radius = '';
+				if (w === 0)
+					radius = '5px 0 0 0';
+				else if (w === count - 1)
+					radius = '0 0 0 5px';
+				else
+					radius = '0';
+
+				$widgets.eq(w).css({
+					position: 'absolute',
+					top: top + 'px',
+					left: '0',
+					width: '250px',
+					height: height + 'px',
+					'box-sizing': 'border-box',
+					'border-radius': radius,
+					margin: '0'
+				});
+			}
+
+			// Keep spacer unused with absolute layout.
+			$('#dummyWidget').hide();
 		}
 
 		function MapMISReportHandlers() {
@@ -583,6 +771,8 @@ function LoginToSchool(id) {
 				if (i != x)
 					grid.reorderColumn(x, grid.columns[i]);
 			}
+
+			SetGridRowHeight();
 		}
 
 		function GetIndexOfColumn(dataField) {

@@ -553,7 +553,7 @@ public partial class MasterPage : BaseMasterPage
         {
             SiteMapPath1.Provider = SiteMap.Providers[sUserRole];
         }
-        else if ((Constants.SuperAdminRoles)Session[Constants.S_SESSION_SUPERADMIN_ROLE_ID].ToInt() == Constants.SuperAdminRoles.ManagementUser)
+        else if ((Constants.SuperAdminRoles)Session[Constants.S_SESSION_SUPERADMIN_ROLE_ID].ToInt() == Constants.SuperAdminRoles.ManagementUser && (Session["IsManagementLinkedAdminStaff"] == null || (Session["IsManagementLinkedAdminStaff"].ToString() != Constants.S_YES)))
 			SiteMapPath1.Provider = SiteMap.Providers["Management"];
 
         if (SiteMapPath1.Provider.CurrentNode == null)
