@@ -245,6 +245,7 @@ namespace SchoolEntities
         public int PasswordChangeMandatoryDays { get; set; }
         public bool EnableDeleteButtonforStudentRegistration { get; set; }
         public bool ForceStudentToSubmitMandatoryFields { get; set; }
+        public bool ForceStudentToUseMobileApp { get; set; }
    }
 
     /// <summary>

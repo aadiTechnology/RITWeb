@@ -1813,7 +1813,7 @@ namespace DataCommunicator
         /// <param name="aiEndIndex"></param>
         /// <param name="aiStartRowIndex"></param>
         /// <returns></returns>
-        public static DataTable GetInCompleteTransaction(int aiSchoolId, int aiAcademicYearId, string asRegNo, DateTime asTransactionDate, string asPaymentCategoryFeeId, String sortExpression, bool IsIncomplete, int aiEndIndex, int aiStartRowIndex)
+        public static DataTable GetInCompleteTransaction(int aiSchoolId, int aiAcademicYearId, string asRegNo, DateTime asTransactionDate, string asPaymentCategoryFeeId, String sortExpression, bool IsIncomplete,bool IsSuccessful, int aiEndIndex, int aiStartRowIndex)
         {
             string sFilter = CreateFilter(asRegNo, asTransactionDate, asPaymentCategoryFeeId);
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -1826,8 +1826,9 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("SortExp", sortExpression, SqlDbType.NVarChar);
                 oSQLServerDbUtility.AddParameter("PaymentCategoryFeeId", asPaymentCategoryFeeId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("IsIncomplete", IsIncomplete, SqlDbType.Bit);
+                oSQLServerDbUtility.AddParameter("IsSuccessful", IsSuccessful, SqlDbType.Bit);
 
-                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetPagedInCompleteTransaction");
+               return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetPagedInCompleteTransaction");
             }
         }
 
@@ -1842,7 +1843,7 @@ namespace DataCommunicator
         /// <param name="aiEndIndex"></param>
         /// <param name="aiStartRowIndex"></param>
         /// <returns></returns>
-        public static DataTable GetInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, String sortExpression, bool IsIncomplete, int aiEndIndex, int aiStartRowIndex)
+        public static DataTable GetInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, String sortExpression, bool IsIncomplete, bool IsSuccessful, int aiEndIndex, int aiStartRowIndex)
         {
             string sDate = asTransactionDate != null && asTransactionDate != DateTime.MinValue ? asTransactionDate.ToString() : null;
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -1855,6 +1856,8 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("EndIndex", aiEndIndex, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("SortExp", sortExpression, SqlDbType.NVarChar);
                 oSQLServerDbUtility.AddParameter("IsIncomplete", IsIncomplete, SqlDbType.Bit);
+                oSQLServerDbUtility.AddParameter("IsSuccessful", IsSuccessful, SqlDbType.Bit);
+
 
                 return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetPagedInCompleteAdmissionTransaction");
             }
@@ -1868,7 +1871,7 @@ namespace DataCommunicator
         /// <param name="asMobileNumber"></param>
         /// <param name="asTransactionDate"></param>
         /// <returns></returns>
-        public static int CountRowsOfInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, bool IsIncomplete)
+        public static int CountRowsOfInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, bool IsIncomplete, bool IsSuccessful)
         {
             string sDate = asTransactionDate != null && asTransactionDate != DateTime.MinValue ? asTransactionDate.ToString() : null;
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -1878,6 +1881,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("MobileNumber", asMobileNumber, SqlDbType.NVarChar);
                 oSQLServerDbUtility.AddParameter("TransactionDate", sDate, SqlDbType.DateTime);
                 oSQLServerDbUtility.AddParameter("IsIncomplete", IsIncomplete, SqlDbType.Bit);
+                oSQLServerDbUtility.AddParameter("IsSuccessful", IsSuccessful, SqlDbType.Bit);
                 SqlParameter oSqlParameter = oSQLServerDbUtility.AddParameter("Cnt", 0, SqlDbType.Int, ParameterDirection.Output);
                 oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_CountInCompleteAdmissionTransaction");
                 return Convert.ToInt32(oSqlParameter.Value);

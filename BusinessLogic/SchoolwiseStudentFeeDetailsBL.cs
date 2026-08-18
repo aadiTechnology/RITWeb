@@ -1347,7 +1347,7 @@ namespace BusinessLogic
         /// <param name="maximumRows"></param>
         /// <param name="startRowIndex"></param>
         /// <returns></returns>
-        public DataTable GetInCompleteTransaction(int aiSchoolId, int aiAcademicYearId, string asRegNo, DateTime asTransactionDate, string asPaymentCategoryFeeId, string sortExpression, bool IsIncomplete, int maximumRows, int startRowIndex)
+        public DataTable GetInCompleteTransaction(int aiSchoolId, int aiAcademicYearId, string asRegNo, DateTime asTransactionDate, string asPaymentCategoryFeeId, string sortExpression, bool IsIncomplete, bool IsSuccessful, int maximumRows, int startRowIndex)
 		{
 			int iStartIndex = startRowIndex;
 			int iEndIndex = iStartIndex + maximumRows;
@@ -1355,7 +1355,7 @@ namespace BusinessLogic
             if (asPaymentCategoryFeeId == null) 
                 asPaymentCategoryFeeId = Constants.S_ZERO;
 
-            DataTable oDt = StudentFeeDetailsDC.GetInCompleteTransaction(aiSchoolId, aiAcademicYearId, asRegNo, asTransactionDate, asPaymentCategoryFeeId, sortExpression,IsIncomplete, iEndIndex, iStartIndex);
+            DataTable oDt = StudentFeeDetailsDC.GetInCompleteTransaction(aiSchoolId, aiAcademicYearId, asRegNo, asTransactionDate, asPaymentCategoryFeeId, sortExpression, IsIncomplete, IsSuccessful, iEndIndex, iStartIndex);
             if (oDt != null && oDt.Rows.Count > 0)
                 miRowCount = Convert.ToInt32(oDt.Rows[0]["TotalRows"]);
             
@@ -1371,7 +1371,7 @@ namespace BusinessLogic
         /// <param name="asRegNo"></param>
         /// <param name="asTransactionDate"></param>
         /// <returns></returns>
-        public int CountRowsOfInCompleteTransaction(int aiSchoolId, int aiAcademicYearId, string asRegNo, DateTime asTransactionDate, string asPaymentCategoryFeeId, bool IsIncomplete)
+        public int CountRowsOfInCompleteTransaction(int aiSchoolId, int aiAcademicYearId, string asRegNo, DateTime asTransactionDate, string asPaymentCategoryFeeId, bool IsIncomplete, bool IsSuccessful)
 		{
             return miRowCount;
 		}
@@ -1387,12 +1387,12 @@ namespace BusinessLogic
         /// <param name="maximumRows"></param>
         /// <param name="startRowIndex"></param>
         /// <returns></returns>
-        public static DataTable GetInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, string sortExpression, bool IsIncomplete, int maximumRows, int startRowIndex)
+        public static DataTable GetInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, string sortExpression, bool IsIncomplete, bool IsSuccessful, int maximumRows, int startRowIndex)
 		{
 			int iStartIndex = startRowIndex;
 			int iEndIndex = iStartIndex + maximumRows;
             if (asMobileNumber == null) asMobileNumber = "";
-            return StudentFeeDetailsDC.GetInCompleteAdmissionTransaction(aiSchoolId, aiAcademicYearId, asMobileNumber, asTransactionDate, sortExpression, IsIncomplete, iEndIndex, iStartIndex);
+            return StudentFeeDetailsDC.GetInCompleteAdmissionTransaction(aiSchoolId, aiAcademicYearId, asMobileNumber, asTransactionDate, sortExpression, IsIncomplete, IsSuccessful, iEndIndex, iStartIndex);
 		}
 
         /// <summary>
@@ -1403,9 +1403,9 @@ namespace BusinessLogic
         /// <param name="asMobileNumber"></param>
         /// <param name="asTransactionDate"></param>
         /// <returns></returns>
-        public static int CountRowsOfInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, bool IsIncomplete)
+        public static int CountRowsOfInCompleteAdmissionTransaction(int aiSchoolId, int aiAcademicYearId, string asMobileNumber, DateTime asTransactionDate, bool IsIncomplete, bool IsSuccessful)
 		{
-            return StudentFeeDetailsDC.CountRowsOfInCompleteAdmissionTransaction(aiSchoolId, aiAcademicYearId, asMobileNumber, asTransactionDate, IsIncomplete);
+            return StudentFeeDetailsDC.CountRowsOfInCompleteAdmissionTransaction(aiSchoolId, aiAcademicYearId, asMobileNumber, asTransactionDate, IsIncomplete, IsSuccessful);
 		}
 
         /// <summary>

@@ -326,6 +326,20 @@ public partial class InCompletedTransactionUI :SchoolBase
                     if (tdDelete != null)
                         tdDelete.Visible = false;
                 }
+                else if (optSuccessful.Checked)
+                {
+                    if (tdbtnComplete != null)
+                        tdbtnComplete.Visible = false;
+
+                    if (tdbtnFail != null)
+                        tdbtnFail.Visible = false;
+
+                    if (tdbtnInComplete != null)
+                        tdbtnInComplete.Visible = false;
+
+                    if (tdDelete != null)
+                        tdDelete.Visible = false;
+                }
                 else
                 {
                     if (tdbtnComplete != null)
@@ -530,6 +544,20 @@ public partial class InCompletedTransactionUI :SchoolBase
                 if (thDelete != null)
                     thDelete.Visible = false;
             }
+            else if (optSuccessful.Checked)
+            {
+                if (thComplete != null)
+                    thComplete.Visible = false;
+
+                if (thFail != null)
+                    thFail.Visible = false;
+
+                if (thIncomplete != null)
+                    thIncomplete.Visible = false;
+
+                if (thDelete != null)
+                    thDelete.Visible = false;
+            }
             else
             {
                 if (thComplete != null)
@@ -595,6 +623,7 @@ public partial class InCompletedTransactionUI :SchoolBase
         optIncomplte.Enabled = abFlag;
         optTransactionDate.Enabled = abFlag;
         optFail.Enabled = abFlag;
+        optSuccessful.Enabled = abFlag;
         txtRegNo.Enabled = abFlag;
         txtMobileNumber.Enabled = abFlag;
         txtFromDate.Enabled = abFlag;

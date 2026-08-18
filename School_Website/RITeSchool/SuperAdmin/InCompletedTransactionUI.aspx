@@ -101,6 +101,8 @@
                                                         Checked="true" TabIndex="1" Text="Incomplete" />
                                                         <asp:RadioButton ID="optFail" runat="server" GroupName="TypeFilter" 
                                                          TabIndex="1" Text="Failed"/>
+                                                    <asp:RadioButton ID="optSuccessful" runat="server" GroupName="TypeFilter" 
+                                                         TabIndex="1" Text="Successful"/>
                                             </tr>
                                            <tr>
                                                 <td align="center" valign="top" colspan="3">
@@ -184,6 +186,10 @@
                                                                             <asp:LinkButton ID="lnkSortBank" runat="server" CommandName="Sort" CommandArgument="RegisterdBankName"
                                                                                 ForeColor="Black"> Bank</asp:LinkButton>
                                                                         </th>
+                                                                        <th class="ClspaddingL" style="width: 30%" align="left">
+                                                                            <asp:LinkButton ID="lnkGetwayTxnId" runat="server" CommandName="Sort" CommandArgument="TPSLTransactionId"
+                                                                                ForeColor="Black"> Gateway Txn Id</asp:LinkButton>
+                                                                        </th>
                                                                         <th id="thComplete" runat="Server" >
                                                                             Complete
                                                                         </th>
@@ -251,6 +257,9 @@
                                                                     <td align="left" class="ClspaddingL">
                                                                         <asp:Label ID="Label2" runat="server" Text='<%# Eval("RegisterdBankName") %>' />
                                                                     </td>
+                                                                     <td align="left" class="ClspaddingL">
+                                                                        <asp:Label ID="Label3" runat="server" Text='<%# Eval("TPSLTransactionId") %>' />
+                                                                    </td>
                                                                     <td id="tdbtnComplete" runat="server" visible="false">
                                                                         <asp:Button ID="btnComplete" runat="server" BorderStyle="Solid" BorderWidth="1px"
                                                                             CssClass="ClsBtnSml" Text="Complete" Visible="True" Width="80px" CommandArgument='<%# Eval("NetBankingPaymentTransactionID") %>'
@@ -298,6 +307,9 @@
                                                                     <td align="left" class="ClspaddingL">
                                                                         <asp:Label ID="Label2" runat="server" Text='<%# Eval("RegisterdBankName") %>' />
                                                                     </td>
+                                                                     <td align="left" class="ClspaddingL">
+                                                                        <asp:Label ID="Label3" runat="server" Text='<%# Eval("TPSLTransactionId") %>' />
+                                                                    </td>
                                                                     <td id="tdbtnComplete" runat="server" visible="false"> 
                                                                         <asp:Button ID="btnComplete" runat="server" BorderStyle="Solid" BorderWidth="1px"
                                                                             CssClass="ClsBtnSml" Text="Complete" Visible="True" Width="80px" CommandArgument='<%# Eval("NetBankingPaymentTransactionID") %>'
@@ -344,8 +356,9 @@
                                                             <asp:ControlParameter ControlID="txtRegNo" PropertyName="Text" Name="asRegNo" />
                                                             <asp:ControlParameter ControlID="txtFromDate" PropertyName="Text" Name="asTransactionDate" />                                                            
                                                             <asp:ControlParameter ControlID="hidPaymentCategoryFeeId" PropertyName="Value" Name="asPaymentCategoryFeeId" Type="string" />
-                                                              <asp:ControlParameter ControlID="optIncomplte" PropertyName="checked" Name="IsIncomplete" Type="Boolean" /> 
-                                                        </SelectParameters>
+                                                            <asp:ControlParameter ControlID="optIncomplte" PropertyName="checked" Name="IsIncomplete" Type="Boolean" /> 
+                                                            <asp:ControlParameter ControlID="optSuccessful" PropertyName="checked" Name="IsSuccessful" Type="Boolean" /> 
+                                                       </SelectParameters>
                                                     </asp:ObjectDataSource>
                                                 </td>
                                             </tr>
@@ -362,7 +375,8 @@
                                                             <asp:ControlParameter ControlID="txtMobileNumber" PropertyName="Text" Name="asMobileNumber" />
                                                             <asp:ControlParameter ControlID="txtFromDate" PropertyName="Text" Name="asTransactionDate" />
                                                             <asp:ControlParameter ControlID="optIncomplte" PropertyName="checked" Name="IsIncomplete"  Type="Boolean"/> 
-                                                        </SelectParameters>
+                                                            <asp:ControlParameter ControlID="optSuccessful" PropertyName="checked" Name="IsSuccessful" Type="Boolean" /> 
+                                                    </SelectParameters>
                                                     </asp:ObjectDataSource>
                                                 </td>
                                             </tr>

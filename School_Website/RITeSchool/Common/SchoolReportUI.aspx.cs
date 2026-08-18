@@ -2899,6 +2899,10 @@ public partial class SchoolReportsUI : ExportToExcel
                 if (!lstStd.Contains(cmbStandard.SelectedItem.Text))
                     msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\ExamwiseMarkDetails_6To12.rpt";
             }
+            else if (msReportID == S_BONAFIDE_CERTIFICATE_REPORT_ID && moSchool == Constants.SchoolId.TheScholarsAcademy)
+            {
+                msReportPath = msReportPath.Substring(0, msReportPath.LastIndexOf("\\")) + "\\Bonafide Certificate For TheScholarsAcademy.rpt";
+            }
             
             crReportDocument.Load(msReportPath);
 
@@ -11224,7 +11228,7 @@ public partial class SchoolReportsUI : ExportToExcel
                new Fill(new PatternFill() { PatternType = PatternValues.None }), // Index 0 - default
                new Fill(new PatternFill() { PatternType = PatternValues.LightGray }), // Index 1 - default
                new Fill(new PatternFill(new ForegroundColor { Rgb = new HexBinaryValue() { Value = "A9A9A9" } }) { PatternType = PatternValues.Solid }) // Index 2 - header
-           );
+               );
 
         Borders borders = new DocumentFormat.OpenXml.Spreadsheet.Borders(
                 new DocumentFormat.OpenXml.Spreadsheet.Border(), // index 0 default
@@ -11242,8 +11246,8 @@ public partial class SchoolReportsUI : ExportToExcel
                 new CellFormat { FontId = 0, FillId = 2, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Center, VerticalAlignmentValues.Center) },
                 new CellFormat { FontId = 1, FillId = 0, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Left, VerticalAlignmentValues.Center) },
                 new CellFormat { FontId = 1, FillId = 0, BorderId = 1, ApplyBorder = true, Alignment = GetAlignment(HorizontalAlignmentValues.Center, VerticalAlignmentValues.Center) },
-                new CellFormat { FontId = 2, FillId = 0, BorderId = 0, ApplyBorder = false, Alignment = GetAlignment(HorizontalAlignmentValues.Center, VerticalAlignmentValues.Center) }                
-            );
+                new CellFormat { FontId = 2, FillId = 0, BorderId = 0, ApplyBorder = false, Alignment = GetAlignment(HorizontalAlignmentValues.Center, VerticalAlignmentValues.Center) }  
+                );
 
         aoWorkbookStylesPart1.Stylesheet = new Stylesheet(fonts1, fills1, borders, cellFormats1); ;
     }
@@ -11820,7 +11824,7 @@ public partial class SchoolReportsUI : ExportToExcel
         base.AddSheetDetails(worksheet1);
         SheetData sheetData1 = new SheetData();
         SetStudentPendingFeeDetailsColumnWidth(worksheet1, iColCount);
-        AddPendingFeeHeader(sheetData1, iColCount);
+        AddPendingFeeHeader(sheetData1, iColCount);        
         AddStudentPendingFeeDataRows(sheetData1, iColCount);
         
         if (moSchool == Constants.SchoolId.PPSH)
@@ -11870,6 +11874,7 @@ public partial class SchoolReportsUI : ExportToExcel
         miStudentPaidFeeStartupRow++;
 
         var oAcademicYears = moPendingFee.PendingFees.Select(fee => new { fee.AcademicYearId, fee.AcademicYear }).Distinct().OrderBy(fee => fee.AcademicYearId).ToList();
+        List<int> lstPaidStudentId = moPendingFee.OldYearPaidFeeStudents.Select(x => x.YearWiseStudentId).Distinct().ToList();
 
         moPendingFee.OldYearPendingFeeStudents.OrderBy(stud => stud.OriginalStandardId).ThenBy(stud => stud.OriginalDivisionId).ThenBy(stud => stud.RollNo).ToList().ForEach
             (
@@ -11880,10 +11885,15 @@ public partial class SchoolReportsUI : ExportToExcel
                 row.Append(AddCell(stud.RegNo, CellValues.String, StudentPaidFeeEnum.LeftData));
                 row.Append(AddCell(stud.Class, CellValues.String, StudentPaidFeeEnum.LeftData));
                 row.Append(AddCell(stud.RollNo.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
-                row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
+
+                if (lstPaidStudentId.Contains(stud.YearWiseStudentId))
+                    row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftDataYellow));
+                  else
+                    row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
+
                 row.Append(AddCell(stud.MobileNo, CellValues.String, StudentPaidFeeEnum.CenterData));
                 row.Append(AddCell(stud.HasSibling, CellValues.String, StudentPaidFeeEnum.CenterData));
-               
+
                 foreach (var year in oAcademicYears)
                 {
                     var oData = moPendingFee.PendingFees.Where(fee => fee.StudentId == stud.YearWiseStudentId && fee.AcademicYearId == year.AcademicYearId).Select(fee => fee.Amount).FirstOrDefault();
@@ -11975,7 +11985,7 @@ public partial class SchoolReportsUI : ExportToExcel
                     row.Append(AddCell(stud.RegNo, CellValues.String, StudentPaidFeeEnum.LeftData));
                     row.Append(AddCell(stud.Class, CellValues.String, StudentPaidFeeEnum.LeftData));
                     row.Append(AddCell(stud.RollNo.ToString(), CellValues.String, StudentPaidFeeEnum.CenterData));
-                    row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
+                     row.Append(AddCell(stud.StudentName, CellValues.String, StudentPaidFeeEnum.LeftData));
                     row.Append(AddCell(stud.MobileNo, CellValues.String, StudentPaidFeeEnum.CenterData));
                     row.Append(AddCell(stud.HasSibling, CellValues.String, StudentPaidFeeEnum.CenterData));
 
@@ -13385,6 +13395,7 @@ public partial class SchoolReportsUI : ExportToExcel
         LeftData = 3,
         CenterData = 4,
         NoBorderCenterHeader = 5,
+        LeftDataYellow = 18,
         RightDataWithNoBorder = 14,
         CenterDataBold = 17
     }
