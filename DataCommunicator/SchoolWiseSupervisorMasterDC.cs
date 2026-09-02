@@ -540,6 +540,7 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("iInsertById", aiInsertById, SqlDbType.Int);
 				oSQLServerDbUtility.AddParameter("sXmlScreenAccess", sXmlScreenAccess, SqlDbType.Xml);
 				oSQLServerDbUtility.AddParameter("sXmlReportsAccess", sReportsAccessId, SqlDbType.Xml);
+				oSQLServerDbUtility.AddParameter("iLoginUserId", aiInsertById, SqlDbType.Int);
 				oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_AssignScreenLevelAccess",true);
 			}
 		}

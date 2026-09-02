@@ -525,7 +525,10 @@ public class StudentProgress : ProgressSheetBase
                 if (mbIsApplicable)
                 {
                     iCellIndex++;
-                    if (aoExamWisePercentageDetails.Rank != Constants.I_ZERO && aoExamWisePercentageDetails.Rank > 0 && aoExamWisePercentageDetails.Rank <= Settings.ToppersCount)
+                    if (ShouldShowRankColumn()
+                        && aoExamWisePercentageDetails.Rank != Constants.I_ZERO
+                        && aoExamWisePercentageDetails.Rank > 0
+                        && aoExamWisePercentageDetails.Rank <= Settings.ToppersCount)
                     {
                         oHtmlTableCell = aoHtmlTableRow.Cells[iCellIndex];
                         if (bShowResult)
@@ -546,7 +549,13 @@ public class StudentProgress : ProgressSheetBase
                         //CheckDSKStatus(oHtmlTableCell);
                     }
                     else if (menmPagemode == Constants.PageMode.Print)
+                    {
                         ShowTotalOnPrintPreview(aoHtmlTableRow, iCellIndex);
+                        if (!Settings.ShowRankColumn)
+                            HideRankColumnCell(aoHtmlTableRow.Cells[iCellIndex]);
+                    }
+                    else if (!Settings.ShowRankColumn)
+                        HideRankColumnCell(aoHtmlTableRow.Cells[iCellIndex]);
                 }
         }
 
@@ -1414,7 +1423,7 @@ public class StudentProgress : ProgressSheetBase
         oHtmlTableRow.Cells.Add(oHtmlTableCell);
 
 
-        if ((!IsTotalConsiderForProgressReport()) && (sInnerText.Equals("Total") || sInnerText.Equals("%") || sInnerText.Equals("Result") || sInnerText.Equals("-") || sInnerText.Equals("Rank")))
+        if ((!IsTotalConsiderForProgressReport()) && (sInnerText.Equals("Total") || sInnerText.Equals("%") || sInnerText.Equals("Result") || sInnerText.Equals("-") || (sInnerText.Equals("Rank") && ShouldShowRankColumn())))
             oHtmlTableCell.Attributes.Add("style", "display:none");
 
         //CheckDSKStatus(oHtmlTableCell);
@@ -2641,7 +2650,10 @@ public class StudentProgress : ProgressSheetBase
         // If rank is applicable for this sudent then show rank column.
         if (!bShowOnlyGradesInProgressSheet && !bIsGradesStandard)
             if (mbIsApplicable)
+            {
                 CreateHtmlCell(otrHeader, "Rank", S_CSS_CLSPADDING + " " + S_CSS_PRINT_PREFIX + "TotalHead", colspan, 1);
+                HideRankColumnCell(otrHeader.Cells[otrHeader.Cells.Count - 1]);
+            }
         if (mbStudentwiseProgressReport)
             CreateHtmlCell(otrHeader, "Select", S_CSS_CLSPADDING + " " + S_CSS_PRINT_PREFIX + "TotalHead", colspan, 1);
         otrHeader.Dispose();
@@ -2687,6 +2699,27 @@ public class StudentProgress : ProgressSheetBase
    
     
     /// <summary>
+    /// Hides Rank column text while preserving cell layout and CellSpacing grid lines.
+    /// Only inner content is hidden; td styles/classes must not be changed.
+    /// </summary>
+    /// <param name="aoHtmlTableCell"></param>
+    private void HideRankColumnCell(HtmlTableCell aoHtmlTableCell)
+    {
+        if (Settings.ShowRankColumn || aoHtmlTableCell == null)
+            return;
+
+        aoHtmlTableCell.Attributes.Add("style", "display:none");
+    }
+
+    /// <summary>
+    /// Returns true when Rank column should be rendered with values.
+    /// </summary>
+    private bool ShouldShowRankColumn()
+    {
+        return Settings.ShowRankColumn && mbIsApplicable;
+    }
+
+    /// <summary>
     /// Check if rank is applicable for progress report or not.
     /// </summary>
     /// <returns></returns>
@@ -2717,7 +2750,10 @@ public class StudentProgress : ProgressSheetBase
             CreateHtmlCell(oHtmlTableRow, sTempValue, S_CSS_PRINT_PREFIX + S_CSS_CLSTOTALMARKSCELL, 1, 1);
         if (!bShowOnlyGradesInProgressSheet)
             if (mbIsApplicable)
+            {
                 CreateHtmlCell(oHtmlTableRow, sTempValue, S_CSS_PRINT_PREFIX + S_CSS_CLSTOTALMARKSCELL, 1, 1);
+                HideRankColumnCell(oHtmlTableRow.Cells[oHtmlTableRow.Cells.Count - 1]);
+            }
         if (mbStudentwiseProgressReport)
             CreateHtmlCell(oHtmlTableRow, string.Empty, S_CSS_PRINT_PREFIX + S_CSS_CLSTOTALMARKSCELL, 1, 1);
         oHtmlTableRow.Dispose();

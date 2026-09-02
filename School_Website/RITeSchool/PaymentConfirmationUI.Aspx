@@ -287,7 +287,10 @@
                             <asp:HiddenField ID="hidRequestUrl" runat="server" />
                             <asp:HiddenField ID="hidGatewayId" runat="server" Value="0" />
                             <asp:HiddenField ID="hidAccessCode" runat="server" Value="" />
-                            <asp:HiddenField ID="hidAcademicYearId" runat="server" Value="0" />                            
+                            <asp:HiddenField ID="hidAcademicYearId" runat="server" Value="0" />
+                            <asp:HiddenField ID="hidLateFeeAmount" runat="server" Value="0" />
+                            <asp:HiddenField ID="hidLateFeeRemarks" runat="server" Value="" />
+                            <asp:HiddenField ID="hidPendingTransactionId" runat="server" Value="0" />                            
                             <asp:Button runat="server" ID="btnConfirm" Text="Confirm" CssClass="ClsButton" OnClick="btnConfirm_Click" />
                         </td>
                     </tr>

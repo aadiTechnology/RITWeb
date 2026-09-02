@@ -83,6 +83,7 @@ namespace SchoolEntities
 		public bool ShowAdmissionForCurrentYear { get; set; }
 		public bool ShowAds { get; set; }
 		public bool ShowAnnualInProgressSheet { get; set; }
+		public bool ShowRankColumn  { get; set; }
 		public bool ShowEmailIcon { get; set; }
         public bool ShowThemes { get; set;  }
 		public bool ShowNotes { get; set; }

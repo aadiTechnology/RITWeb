@@ -146,11 +146,20 @@ public partial class PayFeeOnline : SchoolBase
                 if (sStudentFeeIds.StartsWith(","))
                     sStudentFeeIds = sStudentFeeIds.Substring(1);
 
-                Session["LateFeeRemarks"] = null;
                 if (hidFinalRemark.Value != string.Empty)
-                    Session.Add("LateFeeRemarks", hidFinalRemark.Value);
+                {
+                    string sRemarkToStore = hidFinalRemark.Value;
+                    if (sRemarkToStore.Length > 2000)
+                        sRemarkToStore = sRemarkToStore.Substring(0, 1998) + "..";
+                    Session["LateFeeRemarks"] = sRemarkToStore;
+                }
                 else
-                    Session.Add("LateFeeRemarks", txtRemarks.Text);
+                {
+                    string sRemarkToStore = txtRemarks.Text;
+                    if (sRemarkToStore.Length > 2000)
+                        sRemarkToStore = sRemarkToStore.Substring(0, 1998) + "..";
+                    Session["LateFeeRemarks"] = sRemarkToStore;
+                }
             }
 
             int iTotalAmt = ViewState[TOTAL_AMOUNT].ToInt();
@@ -302,8 +311,8 @@ public partial class PayFeeOnline : SchoolBase
                 if (!QueryString["IsFinalYear"].IsNull())
                 {
                     hidIsFinalYear.Value = QueryString["IsFinalYear"];
-                    Session.Add("FinalAcademicYearId", hidAcademicYrId.Value.ToInt());
-                    Session.Add("FinalYearStudentId", hidStudentId.Value.ToInt());
+                    Session["FinalAcademicYearId"] = hidAcademicYrId.Value.ToInt();
+                    Session["FinalYearStudentId"] = hidStudentId.Value.ToInt();
                 }
 
                 if (!QueryString["TotalAmount"].IsNull())
@@ -343,6 +352,7 @@ public partial class PayFeeOnline : SchoolBase
 
 	private void InitializeFormForNextYear()
 	{
+        Session["PendingFeeTransactionId"] = null;
 		txtAmountTobePaid.Text = ViewState[TOTAL_AMOUNT].ToString();
 		txtPayableAmt.Text = (ViewState[TOTAL_AMOUNT].ToString().ToInt() - hidLateFeeAmount.Value.ToInt()).ToString();
 		txtLateFeeAmt.Text = hidLateFeeAmount.Value;
@@ -370,14 +380,17 @@ public partial class PayFeeOnline : SchoolBase
             ViewState[CONCESSION_AMOUNT] = dcConcessionAmount;
         }
 
-		Session.Add("LateFeeRemarks", hidRemarks.Value + ".");
-		Session.Add("DueDates", hidDuedates.Value);
-		Session.Add("IsForNextYear", hidIsForNextYear.Value);
-		Session.Add("NewStudentID", hidStudentId.Value);
-		Session.Add("NewStandardID", hidStandard.Value);
-		Session.Add("NewAcademicYearID", hidAcademicYrId.Value);
-		Session.Add("LateFeeAmount", hidLateFeeAmount.Value);
-        Session.Add("InternalFeeDetailsId", hidInternalFeeDetailsID.Value);        
+        string sRemarkForSession = hidRemarks.Value + ".";
+        if (sRemarkForSession.Length > 2000)
+            sRemarkForSession = sRemarkForSession.Substring(0, 1998) + "..";
+		Session["LateFeeRemarks"] = sRemarkForSession;
+		Session["DueDates"] = hidDuedates.Value;
+		Session["IsForNextYear"] = hidIsForNextYear.Value;
+		Session["NewStudentID"] = hidStudentId.Value;
+		Session["NewStandardID"] = hidStandard.Value;
+		Session["NewAcademicYearID"] = hidAcademicYrId.Value;
+		Session["LateFeeAmount"] = hidLateFeeAmount.Value;
+        Session["InternalFeeDetailsId"] = hidInternalFeeDetailsID.Value;        
 	}
 
 	/// <summary>
@@ -394,6 +407,7 @@ public partial class PayFeeOnline : SchoolBase
 	/// </summary>
 	private void FillControlsOnForm()
 	{
+        Session["PendingFeeTransactionId"] = null;
 		const int I_DISPLAYED_DETAILS_TABLE = 0;
 		const int I_LATE_FEE_DETAILS_TABLE = 1;
 		const int I_REMARKS_TABLE = 2;
@@ -474,7 +488,7 @@ public partial class PayFeeOnline : SchoolBase
         if (oMainTable.Rows[0]["RestrictStudentFeePayment"] != null && oMainTable.Rows[0]["RestrictStudentFeePayment"].ToBool() == true)
             hidRestrictStudentsFeePayment.Value = Constants.S_YES;
 
-		Session.Add("Schoolwise_Student_Fee_Id", oArrSchoolStudId);
+		Session["Schoolwise_Student_Fee_Id"] = oArrSchoolStudId;
 
 		//sRemarks = sRemarks.Trim();
 		if (sRemarks.StartsWith(","))
@@ -494,7 +508,9 @@ public partial class PayFeeOnline : SchoolBase
             if (iConcessionAmount > 0)
                 sConcessionFeeRemark = String.Format("with Concession Fee (Concession Fee - Rs. {0}/-)", iConcessionAmount);
 			string sFeeRemarks = String.Format("Amount paid for {0} {1} & {2}", sRemarks, sConcessionFeeRemark, sLateFeeRemarks);
-			Session.Add("LateFeeRemarks", sFeeRemarks);
+            if (sFeeRemarks.Length > 2000)
+                sFeeRemarks = sFeeRemarks.Substring(0, 1998) + "..";
+			Session["LateFeeRemarks"] = sFeeRemarks;
 			txtRemarks.Text = String.Format("{0} (Rs. {1}/-)", sFeeRemarks, iLateFee);            
 		}
 		else
@@ -502,9 +518,12 @@ public partial class PayFeeOnline : SchoolBase
 			txtRemarks.Text = String.Format("Amount paid for {0}.", sRemarks);
             if (iConcessionAmount > 0)
                 txtRemarks.Text = String.Format("Amount paid for {0} with  Concession Fee (Concession Fee - Rs. {1}/-).", sRemarks, iConcessionAmount);
-			Session.Add("LateFeeRemarks", txtRemarks.Text);
+            string sRemarkToStore = txtRemarks.Text;
+            if (sRemarkToStore.Length > 2000)
+                sRemarkToStore = sRemarkToStore.Substring(0, 1998) + "..";
+			Session["LateFeeRemarks"] = sRemarkToStore;
 		}
-		Session.Add("LateFeeAmount", iLateFee);
+		Session["LateFeeAmount"] = iLateFee;
         if (Convert.ToBoolean(HttpContext.Current.Session[Constants.S_SESSION_IS_LOGIN_FROM_MOBILE]))
         {
             txtPayableAmt.Attributes.Add("style", "color:#000 !important;");

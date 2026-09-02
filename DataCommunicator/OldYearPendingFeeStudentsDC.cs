@@ -67,7 +67,9 @@ namespace DataCommunicator
                                 MobileNo = Convert.ToString(oSqlDataReader["Mobile_Number"]),
                                 OriginalStandardId = Convert.ToInt32(oSqlDataReader["Original_Standard_Id"]),
                                 OriginalDivisionId = Convert.ToInt32(oSqlDataReader["Original_Division_Id"]),
-                                HasSibling = Convert.ToString(oSqlDataReader["HasSibling"])
+                                HasSibling = Convert.ToString(oSqlDataReader["HasSibling"]),
+                                ResidenceType = Convert.ToString(oSqlDataReader["ResidenceType"]),
+                                CautionMoneyPaid = Convert.ToInt32(oSqlDataReader["CautionMoneyPaid"])
                             });
 
                     }
@@ -107,8 +109,8 @@ namespace DataCommunicator
                                     MobileNo = Convert.ToString(oSqlDataReader["Mobile_Number"]),
                                     OriginalStandardId = Convert.ToInt32(oSqlDataReader["Original_Standard_Id"]),
                                     OriginalDivisionId = Convert.ToInt32(oSqlDataReader["Original_Division_Id"]),
-                                    HasSibling = Convert.ToString(oSqlDataReader["HasSibling"]),
-                                });
+                                    HasSibling = Convert.ToString(oSqlDataReader["HasSibling"])
+                                 });
                         }
                     }
 

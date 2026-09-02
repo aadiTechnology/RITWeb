@@ -26,6 +26,8 @@ namespace SchoolEntities
         public int OriginalStandardId { get; set; }
         public int OriginalDivisionId { get; set; }
         public string HasSibling { get; set; }
+        public string ResidenceType { get; set; }
+        public int CautionMoneyPaid { get; set; }
     }
 
      [Serializable]

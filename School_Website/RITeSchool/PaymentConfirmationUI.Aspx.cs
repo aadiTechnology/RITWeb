@@ -185,6 +185,7 @@ public partial class PaymentConfirmationUI : SchoolBase
 				FillBankDropDown();
 				SerializeBlocksBanks();
                 SetFieldState();
+                PersistLateFeeDetailsFromSession();
                 if (hidTransactionFrom.Value == S_STUDENTFEE || hidTransactionFrom.Value == S_CAUTION_MONEY || hidTransactionFrom.Value == S_INTERNAL_FEE)
 				{
 					lblForm.Text = S_FORMFEECOLON;
@@ -1315,6 +1316,10 @@ public partial class PaymentConfirmationUI : SchoolBase
 	/// <returns></returns>
     private int ConfirmTransaction(string asBankId, string asPayAmt, int aiConcessionAmount)
 	{
+        int iExistingTransactionID = GetExistingPendingTransactionId();
+        if (iExistingTransactionID > Constants.I_ZERO)
+            return iExistingTransactionID;
+
         int iTransactionID = Constants.I_ZERO;
         NetBankingTransaction oNetBankingTransaction = new NetBankingTransaction
         {
@@ -1328,14 +1333,12 @@ public partial class PaymentConfirmationUI : SchoolBase
 
 		if (!IsOnlineAdmissionFee)
 		{
-            string sRemarks = string.Empty;
+            string sRemarks = GetPersistedLateFeeRemarks();
 			int iStudentId = Session[Constants.S_SESSION_STUDENT_ID].ToInt();
 			if (Session["FinalAcademicYearId"] != null)
 				miAcademicYearId = Session["FinalAcademicYearId"].ToInt();
 			if (Session["FinalYearStudentId"] != null)
 				iStudentId = Session["FinalYearStudentId"].ToInt();
-            if (Session[S_LATEFEEREMARKS] != null)
-                sRemarks = (Session[S_LATEFEEREMARKS]).ToString();
 
 			if (Session["IsForNextYear"] != null && Session["IsForNextYear"].ToString() == "Y")
                 iTransactionID = CreateNextYearFeeTransaction(oNetBankingTransaction, sRemarks);
@@ -1345,6 +1348,13 @@ public partial class PaymentConfirmationUI : SchoolBase
 		}
 		else
             iTransactionID = CreateAdmissionTransaction(oNetBankingTransaction);
+
+        if (iTransactionID > Constants.I_ZERO)
+        {
+            hidPendingTransactionId.Value = iTransactionID.ToString();
+            Session["PendingFeeTransactionId"] = iTransactionID;
+        }
+
         return iTransactionID;
 	}
 
@@ -1358,7 +1368,7 @@ public partial class PaymentConfirmationUI : SchoolBase
         int iStudentId = Session["NewStudentID"].ToInt();
         miAcademicYearId = Session["NewAcademicYearID"].ToInt();
         int iStandardId = Session["NewStandardID"].ToInt();
-        int iLateFeeAmount = Session[S_LATEFEEAMOUNT].ToInt();
+        int iLateFeeAmount = GetPersistedLateFeeAmount();
         string sDueDatesFilterXML = GetXMLForDueDates();
         bool bIsForInternalFee = Session["IsInternalFeePayment"].ToString() == "Y" ? true : false;
         string sInternalFeeDetailsIds = Constants.S_ZERO;
@@ -1381,11 +1391,11 @@ public partial class PaymentConfirmationUI : SchoolBase
     /// <returns></returns>
     private int CreateCurrentYearFeeTransaction(NetBankingTransaction aoNetBankingTransaction, int aiStudentId, string asRemarks)
     {
-        int iLateFeeAmount = Session[S_LATEFEEAMOUNT].ToInt();
-        bool bIsPayFromMobile = Convert.ToBoolean(Session[Constants.S_SESSION_IS_LOGIN_FROM_MOBILE]);
-        string sLateFeeRemark = String.Empty;
-        if (iLateFeeAmount != 0)
-            sLateFeeRemark = asRemarks.Substring(asRemarks.IndexOf("Late fee for ") + 13);
+        int iLateFeeAmount = GetPersistedLateFeeAmount();
+        bool bIsPayFromMobile = false;
+        if (Session[Constants.S_SESSION_IS_LOGIN_FROM_MOBILE] != null)
+            bIsPayFromMobile = Convert.ToBoolean(Session[Constants.S_SESSION_IS_LOGIN_FROM_MOBILE]);
+        string sLateFeeRemark = GetLateFeeRemarkFromRemarks(asRemarks, iLateFeeAmount);
         string sStudentFeeIdXML = GetStudentFeeIdXML();
         var oNetBankingPaymentTransactionsBL = new NetBankingPaymentTransactionsBL(miSchoolId, miAcademicYearId, aiStudentId);
 
@@ -1449,10 +1459,64 @@ public partial class PaymentConfirmationUI : SchoolBase
 	/// </summary>
 	private void ClearSessionVariables()
 	{	
-		Session[S_LATEFEEREMARKS] = null;
-		Session[S_LATEFEEAMOUNT] = null;
 		Session[S_DUEDATES] = null;
 	}
+
+    /// <summary>
+    /// Copies late fee amount and remarks from Session into hidden fields on first load
+    /// so Confirm can still use them after Session is cleared or on retry.
+    /// </summary>
+    private void PersistLateFeeDetailsFromSession()
+    {
+        if (Session[S_LATEFEEAMOUNT] != null)
+            hidLateFeeAmount.Value = Session[S_LATEFEEAMOUNT].ToString();
+        if (Session[S_LATEFEEREMARKS] != null)
+            hidLateFeeRemarks.Value = Session[S_LATEFEEREMARKS].ToString();
+        if (Session["PendingFeeTransactionId"] != null)
+            hidPendingTransactionId.Value = Session["PendingFeeTransactionId"].ToString();
+    }
+
+    private int GetPersistedLateFeeAmount()
+    {
+        int iLateFeeAmount = Constants.I_ZERO;
+        if (!string.IsNullOrEmpty(hidLateFeeAmount.Value))
+            iLateFeeAmount = hidLateFeeAmount.Value.ToInt();
+        if (iLateFeeAmount == Constants.I_ZERO && Session[S_LATEFEEAMOUNT] != null)
+            iLateFeeAmount = Session[S_LATEFEEAMOUNT].ToInt();
+        return iLateFeeAmount;
+    }
+
+    private string GetPersistedLateFeeRemarks()
+    {
+        string sRemarks = hidLateFeeRemarks.Value;
+        if (string.IsNullOrEmpty(sRemarks) && Session[S_LATEFEEREMARKS] != null)
+            sRemarks = Session[S_LATEFEEREMARKS].ToString();
+        if (sRemarks == null)
+            sRemarks = string.Empty;
+        return sRemarks;
+    }
+
+    private int GetExistingPendingTransactionId()
+    {
+        if (string.IsNullOrEmpty(hidPendingTransactionId.Value))
+            return Constants.I_ZERO;
+        return hidPendingTransactionId.Value.ToInt();
+    }
+
+    private string GetLateFeeRemarkFromRemarks(string asRemarks, int aiLateFeeAmount)
+    {
+        string sLateFeeRemark = string.Empty;
+        if (aiLateFeeAmount == Constants.I_ZERO || string.IsNullOrEmpty(asRemarks))
+            return sLateFeeRemark;
+
+        int iIndex = asRemarks.IndexOf("Late fee for ");
+        if (iIndex >= 0)
+            sLateFeeRemark = asRemarks.Substring(iIndex + 13);
+        else
+            sLateFeeRemark = asRemarks;
+
+        return sLateFeeRemark;
+    }
 
 	/// <summary>
 	///	This method	Returns StudentFeeId list in XML format.

@@ -210,7 +210,7 @@
 								<asp:Label ID="Label4" runat="server" CssClass="ClsLabel" Text="Remarks :" EnableViewState="false"></asp:Label>
 							</td>
 							<td align="left" class="ClsMdtStar" colspan="2">
-								<asp:TextBox ID="txtRemarks" TabIndex="7" runat="server" MaxLength="100" CssClass="SmlTxtBox"
+								<asp:TextBox ID="txtRemarks" TabIndex="7" runat="server" MaxLength="2000" CssClass="SmlTxtBox"
 								             Width="395px" TextMode="MultiLine" Enabled="false"></asp:TextBox>
 							</td>
 						</tr>
@@ -333,6 +333,13 @@
 //			    window.open('../Admission/TermsOfUseForOnlinePayment.aspx', '_blank', 'scrollbars=yes,resizable=no,menubar=no,status=no,titlebar=no,toolbar=no,top=50,left=400,width=850,height=450');
 //			}
 
+			function truncateRemark(remark) {
+			    if (remark.length > 2000) {
+			        return remark.substring(0, 1998) + "..";
+			    }
+			    return remark;
+			}
+
 			function CalculateActualAmt(obj, iRowCount) {			   
 			    var PreviousTotalActualAmt = 0, PreviousActualAmt, AmountAdded;
 
@@ -425,6 +432,9 @@
 
 			        if (_sClienttxtLateFeeAmt != null && $get(_sClienttxtLateFeeAmt).value != "0")
 			            GenerateLateFeeRemarks();
+
+			        $get(_sClienttxtRemarks).value = truncateRemark($get(_sClienttxtRemarks).value);
+			        $get(_clienthidFinalRemark).value = $get(_sClienttxtRemarks).value;
 			    }
 			}
 
@@ -479,6 +489,7 @@
 			        }
 
 			        $get(_sClienttxtRemarks).value = $get(_sClienttxtRemarks).value + finalRemark;
+			        $get(_sClienttxtRemarks).value = truncateRemark($get(_sClienttxtRemarks).value);
 			        $get(_clienthidFinalRemark).value = $get(_sClienttxtRemarks).value;
 			    }
 			}

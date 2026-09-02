@@ -594,7 +594,8 @@ namespace Utility
             NPS = 162,
             VPMCPS = 166,
             DPISRAVET = 168,
-            CKInstOfCulinaryArtAndHotelMgmt = 169
+            CKInstOfCulinaryArtAndHotelMgmt = 169,
+            TheScholarsAcademy = 173
 		}
 
         public enum SchoolConfigurations
@@ -1082,7 +1083,8 @@ namespace Utility
 			HolosticProgressReportPPSNFor3to5=107,
             HalfYearlyReportFor3To9Pioneer = 108,
             EnquiryFormReport=109,
-            FinalProgressCardForPioneer3To9 = 110
+            FinalProgressCardForPioneer3To9 = 110,
+            LeavingCertificateTSA = 111
         }
 
 		public enum BarcodeChar

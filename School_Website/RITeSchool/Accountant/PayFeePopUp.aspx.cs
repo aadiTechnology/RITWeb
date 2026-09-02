@@ -862,7 +862,7 @@ public partial class PayFeePopUp : SchoolBase
                      ? Constants.I_ZERO
                      : ddlBankNameDirectlyPaid.SelectedValue.ToInt(),            
 
-            Remarks = hidRemarks.Value,
+            Remarks = hidRemarks.Value.Length > 2000 ? hidRemarks.Value.Substring(0, 1998) + ".." : hidRemarks.Value,
             AdditionalRemark = txtAdditionalRemark.Text.Trim(),
             lstStudentFeeList = alstStudentFeesList,
             oLateFeeDetails = aoStudentLateFeeDetails,

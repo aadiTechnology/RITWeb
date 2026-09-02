@@ -396,11 +396,11 @@
                                                 <span class="ClsLabel">Remarks :</span>
                                             </td>
                                             <td align="left" class="ClsMdtStar" style="height: 40px">
-                                                <asp:TextBox ID="txtRemarks" TabIndex="10" runat="server" viewstatemode="Enabled" MaxLength="100" CssClass="SmlTxtBox"
+                                                <asp:TextBox ID="txtRemarks" TabIndex="10" runat="server" viewstatemode="Enabled" MaxLength="2000" CssClass="SmlTxtBox"
                                                     ReadOnly="true" Width="100%" TextMode="MultiLine" Height="50px"></asp:TextBox>
                                                 <asp:RegularExpressionValidator ID="cst_Remarks" runat="server" viewstatemode="Enabled" Display="None" ControlToValidate="txtRemarks"
-                                                    ErrorMessage="Length of remarks should not exceed 1000 characters." CssClass="ClsMdtStar"
-                                                    ValidationExpression="^[\s\S]{0,1000}$"></asp:RegularExpressionValidator>
+                                                    ErrorMessage="Length of remarks should not exceed 2000 characters." CssClass="ClsMdtStar"
+                                                    ValidationExpression="^[\s\S]{0,2000}$"></asp:RegularExpressionValidator>
                                             </td>
                                         </tr>
                                         <tr id="tr1" runat="server">
@@ -776,6 +776,13 @@
 
         _clientcmbJVLedgers = "<%=this.cmbJVLedgers.ClientID %>"
         _clientChkPaymentCautionMoneyAdjusted =  "<%=this.ChkPaymentCautionMoneyAdjusted.ClientID %>"
+
+        function truncateRemark(remark) {
+            if (remark.length > 2000) {
+                return remark.substring(0, 1998) + "..";
+            }
+            return remark;
+        }
 
         function CloseWindow() {
             var sQueryString = document.getElementById(_clienthidQueryString).value;
@@ -1792,6 +1799,7 @@
             }
             
             $get(_sClienttxtRemarks).value =$get(_sClienttxtRemarks).value + finalRemark;
+            $get(_sClienttxtRemarks).value = truncateRemark($get(_sClienttxtRemarks).value);
         }
 
         function ValidateConcessionAmt() {
@@ -2150,6 +2158,7 @@
             $get(_sClienttxtRemarks).value = $get(_sClienttxtRemarks).value + " with  Concession Fee (Concession Fee - Rs. " + $get(_sClienttxtConcessionAmt).value + "/-) ";
         if (_sClienttxtLateFeeAmt != null && $get(_sClienttxtLateFeeAmt).value != "0")
             GenerateLateFeeRemarks();
+        $get(_sClienttxtRemarks).value = truncateRemark($get(_sClienttxtRemarks).value);
         $get(_sClienthidRemarks).value = $get(_sClienttxtRemarks).value;
         }
 

@@ -814,9 +814,13 @@ namespace BusinessLogic
 			PropertyInfo[] oPropertyInfos = oYearwiseSchoolSettings.GetType().GetProperties();
 			foreach (PropertyInfo oInfo in oPropertyInfos)
 			{
+				object oValue = GetSettingValue(oInfo, alstSchoolSettings);
+				if (oValue == null)
+					continue;
+
 				oYearwiseSchoolSettings.GetType()
 				                       .GetProperty(oInfo.Name)
-									   .SetValue(oYearwiseSchoolSettings, GetSettingValue(oInfo, alstSchoolSettings), null);
+									   .SetValue(oYearwiseSchoolSettings, oValue, null);
 			}
 
 			return oYearwiseSchoolSettings;
