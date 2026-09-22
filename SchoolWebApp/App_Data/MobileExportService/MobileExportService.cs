@@ -1118,6 +1118,268 @@ namespace MobileExportService.Service
             return asFilterString;
         }
 
+        /// <summary>
+        /// Determines the report category based on ExportReports enum and SchoolId.
+        /// Category 1: Standard Crystal Report (parameter-based) - DEFAULT for any report not listed below.
+        /// Category 2: Crystal Report with DataSet (BL method provides data).
+        /// Category 3: SpreadsheetDocument / Excel export (non-Crystal Report).
+        /// </summary>
+        private int GetReportCategory(int aiReportId, int aiSchoolId)
+        {
+            // Category 2: DataSet-based Crystal Reports
+            // Add new DataSet reports here as needed.
+
+            List<int> lstDatasetBasedReports = new List<int> { };
+            if (lstDatasetBasedReports.Contains(aiReportId))
+                return 2;
+
+            // Category 3: SpreadsheetDocument / Excel export (non-Crystal Report)
+            // Add new Excel-export reports here as needed.
+            List<int> lstDirectExportReports = new List<int> { };
+            if (lstDirectExportReports.Contains(aiReportId))
+                return 3;
+
+            // Default: Category 1 - Standard Crystal Report (fully generic, no code change needed for new reports)
+            return 1;
+        }
+
+        /// <summary>
+        /// Returns the appropriate DataSet for Category 2 (DataSet-based) reports.
+        /// </summary>
+        private DataSet GetReportDataSet(int aiReportId, int aiSchoolId, int aiAcademicYearId, List<ParameterPair> aoParameterPairs)
+        {
+            var aoDictParameters = aoParameterPairs != null
+                ? aoParameterPairs.ToDictionary(p => p.Name, p => p.Value)
+                : new Dictionary<string, string>();
+
+            int iStandardId = aoDictParameters.ContainsKey("Standard_Id") ? aoDictParameters["Standard_Id"].ToInt() : 0;
+            int iDivisionId = aoDictParameters.ContainsKey("Division_Id") ? aoDictParameters["Division_Id"].ToInt() : 0;
+            int iStudentId = aoDictParameters.ContainsKey("StudentId") ? aoDictParameters["StudentId"].ToInt() : 0;
+            int iTermId = aoDictParameters.ContainsKey("Term_Id") ? aoDictParameters["Term_Id"].ToInt() : 0;
+            string sNote = aoDictParameters.ContainsKey("Note") ? aoDictParameters["Note"] : string.Empty;
+            int iIsFromReportScreen = aoDictParameters.ContainsKey("IsFromReportScreen") ? aoDictParameters["IsFromReportScreen"].ToInt() : 0;
+
+            DatasetBasedReports oReport = (DatasetBasedReports)aiReportId;
+
+            switch (oReport)
+            {
+                case DatasetBasedReports.StudentwiseProgressReport:
+                    return ReportsBL.GetGradingProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId, iIsFromReportScreen);
+
+                case DatasetBasedReports.StudentTerm1ProgressReport:
+                    return ReportsBL.GetMarkingSystemProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 1, iIsFromReportScreen);
+
+                case DatasetBasedReports.StudentTerm2ProgressReport:
+                    return ReportsBL.GetMarkingSystemProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 2, iIsFromReportScreen);
+
+                case DatasetBasedReports.StudentwiseProgressReportFBS:
+                    return ReportsBL.GetGradingProgressReportDataSetForFBS(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId);
+
+                case DatasetBasedReports.StudentwiseProgressReportPPSN:
+                    return ReportsBL.GetGradingProgressReportDataSetForPPSN(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId);
+
+                case DatasetBasedReports.PPSTermwiseReport:
+                    return ReportsBL.GetTermwiseProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 1, false);
+
+                case DatasetBasedReports.PrelimReport:
+                    return ReportsBL.GetPreliminaryExaminationProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, false);
+
+                case DatasetBasedReports.PrelimReportPP:
+                    return ReportsBL.GetPrelimProgressReportDataSetForPP(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 2, false);
+
+                case DatasetBasedReports.HolosticProgressReportPPSNFor3to5:
+                    return ReportsBL.GetDetailsForHolisticReportForPPSH(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, false);
+
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Generates Excel report in memory for Category 3 (SpreadsheetDocument-based) reports.
+        /// Add new Excel reports to the switch as needed.
+        /// </summary>
+        private byte[] GenerateExcelReport(int aiReportId, int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, List<ParameterPair> aoParameterPairs)
+        {
+            // TODO: Implement specific Excel generation methods per report.
+            // Each case should generate the Excel in a MemoryStream and return byte[].
+            // Example:
+            // case Constants.ExportReports.ExportStudentMonthlyDetails:
+            //     return GenerateStudentMonthlyDetailsExcel(aiSchoolId, aiAcademicYearId, aoParameterPairs);
+
+            DirectExportToExcel oReport = (DirectExportToExcel)aiReportId;
+
+            switch (oReport)
+            {
+                case DirectExportToExcel.SchoolDataReport:
+                    // Phase 2: Implement actual SpreadsheetDocument generation.
+                    // For now, return null to indicate not implemented.
+                    return null;
+
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Main generic report generation method.
+        /// Handles all 3 categories: Standard CR, DataSet CR, and SpreadsheetDocument Excel.
+        /// </summary>
+        public ReportResult GenerateReport(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId, int aiReportId, List<ParameterPair> aoParameterPairs, int aiExportFormatType)
+        {
+            ReportResult oResult = new ReportResult();
+
+            try
+            {
+                if (aoParameterPairs == null || aoParameterPairs.Count == 0)
+                {
+                    oResult.Success = false;
+                    oResult.ErrorMessage = "Parameter list is blank.";
+                    return oResult;
+                }
+
+                AddDefaultParameters(aiSchoolId, aiAcademicYearId, aoParameterPairs, aiReportId);
+
+                // Determine export format
+                ExportFormatType oExportFormatType = ExportFormatType.PortableDocFormat;
+                if (aiExportFormatType != 0)
+                    oExportFormatType = (ExportFormatType)aiExportFormatType;
+
+                // Determine file extension and content type
+                string sExtension = ".pdf";
+                string sContentType = "application/pdf";
+                if (oExportFormatType == ExportFormatType.Excel)
+                {
+                    sExtension = ".xls";
+                    sContentType = "application/vnd.ms-excel";
+                }
+                else if (oExportFormatType == ExportFormatType.RichText)
+                {
+                    sExtension = ".doc";
+                    sContentType = "application/msword";
+                }
+
+                // Determine report category
+                int iReportCategory = GetReportCategory(aiReportId, aiSchoolId);
+                byte[] reportBytes = null;
+
+                if (iReportCategory == 1)
+                {
+                    // Category 1: Standard Crystal Report - fully generic
+                    string sReportFilePath = ReportsBL.GetReportFilePath(aiSchoolId, aiAcademicYearId, aiReportId, aiLoginUserId);
+
+                    if (string.IsNullOrEmpty(sReportFilePath))
+                    {
+                        oResult.Success = false;
+                        oResult.ErrorMessage = "Report file path not found in database.";
+                        return oResult;
+                    }
+
+                    ReportDisplay oReportDisplay = new ReportDisplay();
+                    oReportDisplay.IsServiceCall = true;
+                    oReportDisplay.BasePath = HostingEnvironment.ApplicationPhysicalPath;
+                    oReportDisplay.SchoolId = aiSchoolId;
+                    oReportDisplay.AcademicYearId = aiAcademicYearId;
+
+                    reportBytes = oReportDisplay.ExportReportToStream(sReportFilePath, aoParameterPairs, oExportFormatType);
+                }
+                else if (iReportCategory == 2)
+                {
+                    // Category 2: Crystal Report with DataSet
+                    string sReportFilePath = ReportsBL.GetReportFilePath(aiSchoolId, aiAcademicYearId, aiReportId, aiLoginUserId);
+
+                    if (string.IsNullOrEmpty(sReportFilePath))
+                    {
+                        oResult.Success = false;
+                        oResult.ErrorMessage = "Report file path not found in database.";
+                        return oResult;
+                    }
+
+                    DataSet oDataSet = GetReportDataSet(aiReportId, aiSchoolId, aiAcademicYearId, aoParameterPairs);
+
+                    if (oDataSet == null)
+                    {
+                        oResult.Success = false;
+                        oResult.ErrorMessage = "Failed to retrieve report data.";
+                        return oResult;
+                    }
+
+                    ReportDisplay oReportDisplay = new ReportDisplay();
+                    oReportDisplay.IsServiceCall = true;
+                    oReportDisplay.BasePath = HostingEnvironment.ApplicationPhysicalPath;
+                    oReportDisplay.SchoolId = aiSchoolId;
+                    oReportDisplay.AcademicYearId = aiAcademicYearId;
+
+                    reportBytes = oReportDisplay.ExportDataSetReportToStream(sReportFilePath, oDataSet, oExportFormatType);
+                }
+                else if (iReportCategory == 3)
+                {
+                    // Category 3: SpreadsheetDocument Excel export
+                    sExtension = ".xlsx";
+                    sContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                    reportBytes = GenerateExcelReport(aiReportId, aiSchoolId, aiAcademicYearId, aiLoginUserId, aoParameterPairs);
+                }
+
+                if (reportBytes == null || reportBytes.Length == 0)
+                {
+                    oResult.Success = false;
+                    oResult.ErrorMessage = "Failed to generate report.";
+                    return oResult;
+                }
+
+                oResult.Success = true;
+                oResult.FileContent = Convert.ToBase64String(reportBytes);
+                //oResult.FileName = aoExportReports.ToString() + "_" + GetDateFormat() + sExtension;
+                oResult.FileName = Guid.NewGuid() + sExtension;
+                oResult.ContentType = sContentType;
+                oResult.ErrorMessage = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                oResult.Success = false;
+                oResult.ErrorMessage = "Error generating report: " + ex.Message;
+            }
+
+            return oResult;
+        }
+
+        private void AddDefaultParameters(int aiSchoolId,int aiAcademicYearId, List<ParameterPair> aoParameterPairs, int aiReportId)
+        {
+            List<int> lstReportIds = new List<int> { 208, 261, 4, 202, 142, 275 };
+            if (!lstReportIds.Contains(aiReportId))
+            {
+                SchoolWiseAcademicYearMasterBL oSchoolAcademicYearBL = new SchoolWiseAcademicYearMasterBL();
+                DataTable oDTSchoolInfo = oSchoolAcademicYearBL.GetSchoolInfo(aiSchoolId, aiAcademicYearId);
+                string sAcademicYearName = "Year " + oDTSchoolInfo.Rows[Constants.I_ZERO]["Year"].ToString();
+                string sOrgName = oDTSchoolInfo.Rows[Constants.I_ZERO]["School_Orgn_Name"].ToString();
+                string sSchoolName = oDTSchoolInfo.Rows[Constants.I_ZERO]["School_Name"].ToString();
+
+                aoParameterPairs.Add(new ParameterPair { Name = "SchoolName", Value = sSchoolName });
+                aoParameterPairs.Add(new ParameterPair { Name = "Organisation Name", Value = sOrgName });
+                aoParameterPairs.Add(new ParameterPair { Name = "AcademicYear", Value = sAcademicYearName });
+            }
+        }
+
+        public enum DirectExportToExcel
+        {
+            SchoolDataReport = 1
+        }
+
+        // Need to set correct report id here.
+        public enum DatasetBasedReports
+        {
+            StudentwiseProgressReportFBS = 9,
+            StudentwiseProgressReportPPSN = 8,
+            StudentwiseProgressReport = 1,
+            StudentTerm1ProgressReport = 2,
+            StudentTerm2ProgressReport = 3,
+            HolosticProgressReportPPSNFor3to5 = 4,
+            PrelimReportPP = 5,
+            PrelimReport = 6,
+            PPSTermwiseReport = 7,
+        }
+
         #endregion -- PRIVATE METHOD(s) --
     }
 }

@@ -24,6 +24,8 @@
                 <asp:CustomValidator ID="CustomValidator2" runat="server" ErrorMessage="Leave dates should not overlap on another leave day's." Display="None" OnServerValidate="DateOverlapping_Validate"></asp:CustomValidator>
                 <asp:CustomValidator ID="custValDateValidate" runat="server" ErrorMessage="" ValidationGroup="UpdateLeaveRecord" Display="None" OnServerValidate="Date_Validate" Enabled="false"></asp:CustomValidator>
                 <asp:CustomValidator ID="cstValidateDates" runat="server" Display="None" ClientValidationFunction="ValidateEndDate" EnableClientScript="true" />
+                <asp:CustomValidator ID="cvRestrictBackdatedLeave" runat="server" ErrorMessage="" Display="None" Enabled="false"
+                    OnServerValidate="RestrictBackdatedLeave_Validate" ClientValidationFunction="ValidateBackdatedLeave" EnableClientScript="true"></asp:CustomValidator>
             </td>
         </tr>
         <tr>
@@ -163,6 +165,15 @@
                                             <asp:Label ID="Label7" runat="server" BorderWidth="0px" CssClass="LblSmlV" Text="If leave start date or end date is across the month then system will update leave for only days those are in upcoming salary publish month."></asp:Label>
                                         </td>
                                     </tr>
+                                    <tr id="trRestrictLeaveNote" runat="server" visible="false">
+                                        <td align="left" class="ClsBorderlight " style="background-color: #ffffc4;">
+                                            <asp:Label ID="Label10" runat="server" BorderWidth="0px" Font-Bold="True" Text="Note 3 :"
+                                                CssClass="LblNrmlB"></asp:Label>
+                                        </td>
+                                        <td align="left" class="ClsBorderlight" style="padding-left: 5px">
+                                            <asp:Label ID="lblRestrictLeaveNote" runat="server" BorderWidth="0px" CssClass="LblSmlV" Text=""></asp:Label>
+                                        </td>
+                                    </tr>
                                 </table>
                             </td>
                         </tr>
@@ -179,6 +190,9 @@
                                 <asp:HiddenField ID="hidQueryString" runat="server" />
                                 <asp:HiddenField ID="hidConfigId" runat="server" Value="0" />
                                 <asp:HiddenField ID="hidCategoryId" runat="server" Value="0" />
+                                <asp:HiddenField ID="hidRestrictLeaveApplyCount" runat="server" Value="0" />
+                                <asp:HiddenField ID="hidRestrictLeaveActive" runat="server" Value="0" />
+                                <asp:HiddenField ID="hidRestrictedLeaveTypes" runat="server" Value="" />
                             </td>
                         </tr>
                         <tr id="trSeparator" runat="server">
@@ -303,6 +317,10 @@
         var _clientbtnCancel = '<%= this.btnCancel.ClientID %>';
         var _clienthidUserLeaveDetails = "<%=this.hidUserLeaveDetails.ClientID %>"
 
+        var _clienthidRestrictLeaveApplyCount = "<%=this.hidRestrictLeaveApplyCount.ClientID %>";
+        var _clienthidRestrictLeaveActive = "<%=this.hidRestrictLeaveActive.ClientID %>";
+        var _clienthidRestrictedLeaveTypes = "<%=this.hidRestrictedLeaveTypes.ClientID %>";
+
         var prm = Sys.WebForms.PageRequestManager.getInstance();
         prm.add_endRequest(EndReqHandler);
 
@@ -423,6 +441,79 @@
                 args.IsValid = true
                 return false
             }
+        }
+
+        function ValidateBackdatedLeave(oSrc, args) {
+            // Restriction inactive (setting = 0 or CategoryId 4/5) -> always valid.
+            if ($get(_clienthidRestrictLeaveActive).value != "1") {
+                args.IsValid = true;
+                return;
+            }
+
+            var restrictDays = parseInt($get(_clienthidRestrictLeaveApplyCount).value, 10);
+            if (isNaN(restrictDays) || restrictDays <= 0) {
+                args.IsValid = true;
+                return;
+            }
+
+            var ddl = $get(_clientddlleavetype);
+            var shortName = (ddl.selectedIndex >= 0) ? ddl.options[ddl.selectedIndex].text : "";
+            shortName = shortName.replace(/^\s+|\s+$/g, "").toUpperCase();
+
+            var restrictedRaw = $get(_clienthidRestrictedLeaveTypes).value;
+            var restrictedTypes = [];
+            if (restrictedRaw != null && restrictedRaw != "") {
+                try {
+                    restrictedTypes = JSON.parse(restrictedRaw);
+                } catch (e) {
+                    restrictedTypes = [];
+                }
+            }
+            // No restricted list available -> nothing to enforce on the client.
+            if (!restrictedTypes || restrictedTypes.length == 0) {
+                args.IsValid = true;
+                return;
+            }
+
+            var bIsAllowedType = false;
+            for (var i = 0; i < restrictedTypes.length; i++) {
+                if (restrictedTypes[i].toUpperCase() == shortName) {
+                    bIsAllowedType = true;
+                    break;
+                }
+            }
+            // Allowed types (e.g. LWP) can always be back-dated -> valid.
+            if (bIsAllowedType) {
+                args.IsValid = true;
+                return;
+            }
+
+            var dtStart = document.getElementById(_clienttxtStartDate).value;
+            if (dtStart == "") {
+                args.IsValid = true;
+                return;
+            }
+
+            var startDate;
+            if (document.all)
+                startDate = new Date(dtStart.replace('-', ' '));
+            else
+                startDate = new Date(convertdate(dtStart));
+            startDate.setHours(0, 0, 0, 0);
+
+            // Cut-off = today - restrictDays. Start dates before this are blocked.
+            var cutoff = new Date();
+            cutoff.setHours(0, 0, 0, 0);
+            cutoff.setDate(cutoff.getDate() - restrictDays);
+
+            if (startDate < cutoff) {
+                //oSrc.errormessage = "Leave type '" + shortName + "' cannot be applied for a Start Date older than " + restrictDays + " day(s). Only LWP is allowed for such dates.";
+                oSrc.errormessage = "Only Leave Type(s) LWP can be applied for a Start Date older than " + restrictDays + " day(s)."
+                args.IsValid = false;
+                return;
+            }
+
+            args.IsValid = true;
         }
 
         function ValidateFileUpload(sender, args) {

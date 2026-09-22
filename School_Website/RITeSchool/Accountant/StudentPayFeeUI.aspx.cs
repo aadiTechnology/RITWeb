@@ -2350,6 +2350,8 @@ public partial class StudentPayFeeUI : SchoolBase
                     lblVerifyNote3.Text = iReceiptNumber != 0 ? string.Format("{0},{1}{2}{3}.", sVerifyNote3, sReceiptNumberNode, sAmount, sConcessionAmount) : string.Format("{0}.", sVerifyNote3);
                     tdVerifyNote3.Style.Add(S_BACKGROUND_COLOR, "White");
                 }
+                // Append view icon if an attachment file exists for this caution money record
+                AppendAttachmentViewIcon(lblVerifyNote3, oDRCautionMoney);
                 if (moUserRole != Constants.UserRoles.Student && oDRCautionMoney["Returned_By_School"].ToBool() == true)
                 {
                     if (oDRCautionMoney["Return_Mode"].ToString() == "Q")
@@ -2479,6 +2481,8 @@ public partial class StudentPayFeeUI : SchoolBase
                     }
                 }
 
+                // Append view icon if an attachment file exists for this caution money record
+                AppendAttachmentViewIcon(lblVerifyNote4, oDRCautionMoney);
                 lblVerifyNote4.Visible = true;
             }
 
@@ -2489,6 +2493,27 @@ public partial class StudentPayFeeUI : SchoolBase
         }
     }
     
+
+    /// <summary>
+    /// Appends a view icon hyperlink to the given label if an attachment file exists for the caution money record.
+    /// </summary>
+    /// <param name="oLabel">The label to append the icon to.</param>
+    /// <param name="oDataRow">The caution money DataRow containing AttachmentFileName.</param>
+    private void AppendAttachmentViewIcon(System.Web.UI.WebControls.Label oLabel, DataRow oDataRow)
+    {
+        if (oDataRow["AttachmentFileName"] == DBNull.Value ||
+            oDataRow["AttachmentFileName"].ToString().Trim() == string.Empty)
+            return;
+
+        string sFileName = oDataRow["AttachmentFileName"].ToString().Trim();
+        string sFileUrl  = ResolveUrl("~/RITeSchool/Uploads/CautionMoneyAttachments/") + sFileName;
+        string sIconUrl  = ResolveUrl("~/RITeSchool/images/iconGridSml_ViewGE.gif");
+
+        oLabel.Text += string.Format(
+            " &nbsp;<a href=\"{0}\" target=\"_blank\" title=\"View Attachment\">" +
+            "<img src=\"{1}\" border=\"0\" style=\"vertical-align:middle;\" alt=\"View Attachment\" /></a>",
+            sFileUrl, sIconUrl);
+    }
 
     /// <summary>
     /// 	This method is used to show or hide caution money details.

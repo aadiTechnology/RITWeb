@@ -552,6 +552,12 @@ public partial class LeavingCertificateUI : SchoolBase
                     oReportDisplay.DisplayReport();
                     break;
                 }
+            case Constants.SchoolId.TheScholarsAcademy:
+                {
+                    oReportDisplay = new ReportDisplay(Constants.ExportReports.LeavingCertificateTSA, GetFilterString(), GeneratReportAsPerFormat());
+                    oReportDisplay.DisplayReport();
+                    break;
+                }
             default:
                  if (SchoolBase.Settings.IsAaryanSchool)
                   {
@@ -647,6 +653,10 @@ public partial class LeavingCertificateUI : SchoolBase
         else if (miSchoolId == Constants.SchoolId.PIONEER.ToInt())
         {
             sRecordSelectionFormula = "(usp_LeavingCertificate_Pioneer.School_Id}=" + miSchoolId + " AND  usp_LeavingCertificate_Pioneer.Enrolment_Number} =" + hidRegNo.Value + " AND  usp_LeavingCertificate_Pioneer.PrintDate} = " + sFinalPrintdate + ") @";
+        }
+        else if (miSchoolId == Constants.SchoolId.TheScholarsAcademy.ToInt())
+        {
+            sRecordSelectionFormula = "(usp_LeavingCertificateForTSA.School_Id}=" + miSchoolId + " AND usp_LeavingCertificateForTSA.Enrolment_Number} =" + hidRegNo.Value + " AND usp_LeavingCertificateForTSA.PrintDate} =" + sFinalPrintdate + ") @";
         }
         else
             sRecordSelectionFormula = "(usp_LeavingCertificate.School_Id}=" + miSchoolId + " AND  usp_LeavingCertificate.Enrolment_Number} =" + hidRegNo.Value + " AND  usp_LeavingCertificate.PrintDate} = " + sFinalPrintdate + ") @";

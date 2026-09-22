@@ -1175,7 +1175,7 @@ public partial class ControlPanel : SchoolBase
         else
             trStudentAssessment.Visible = false;
 
-       if (moSchool == Constants.SchoolId.PPSN && moUserRole == Constants.UserRoles.Student)
+       if ((moSchool == Constants.SchoolId.PPSN || moSchool == Constants.SchoolId.PIONEER) && moUserRole == Constants.UserRoles.Student)
         {
             StudentAssessmentBL oStudentAssessmentBL = new StudentAssessmentBL(miSchoolId, miAcademicYearId, miUserId);
             trStudentAssessment.Visible = oStudentAssessmentBL.AllowSelfAssessmentscreen();

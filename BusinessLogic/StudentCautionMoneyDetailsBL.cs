@@ -168,6 +168,12 @@ namespace BusinessLogic
             set { moStudentCautionMoneyDetailsStruct.miReturnAmount = value; }
         }
 
+        public string AttachmentFileName
+        {
+            get { return moStudentCautionMoneyDetailsStruct.msAttachmentFileName; }
+            set { moStudentCautionMoneyDetailsStruct.msAttachmentFileName = value; }
+        }
+
 		#endregion Properties
 
 		public int InsertStudentCautionMoneyPaidDetails()

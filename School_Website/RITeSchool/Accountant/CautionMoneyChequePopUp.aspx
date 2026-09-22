@@ -216,6 +216,32 @@
                                         <span class="ClsMdtStar">* </span>                                     
                                     </td>
                                 </tr>
+                                <tr id="trAttachment" runat="server">
+                                    <td align="right" class="ClsBorderlight" valign="top" style="width: 22%">
+                                        <span class="ClsLabel">Attachment :</span>
+                                    </td>
+                                    <td align="left" class="ClsTextNormal" colspan="3">
+                                        <asp:FileUpload ID="fuAttachment" runat="server" onchange="OnAttachmentSelected(this)" />
+                                        <asp:HiddenField ID="hidAttachmentFileName" runat="server" />
+                                        <asp:HiddenField ID="hidDeleteAttachment" runat="server" Value="0" />
+                                        <span id="spnAttachmentInfo" style="display:none;">
+                                            <asp:Label ID="lblAttachmentName" runat="server" CssClass="ClsLabel" />
+                                            &nbsp;
+                                            <img id="imgViewAttachment" src="../images/iconGridSml_ViewGE.gif"
+                                                 style="cursor:pointer; vertical-align:middle; display:none;"
+                                                 title="View Attachment" alt="View"
+                                                 onclick="ViewAttachment(); return false;" />
+                                            &nbsp;
+                                            <img id="imgDeleteAttachment" src="../images/IconGrid_Delete.GIF"
+                                                 style="cursor:pointer; vertical-align:middle;"
+                                                 title="Delete Attachment" alt="Delete"
+                                                 onclick="DeleteAttachment(); return false;" />
+                                        </span>
+                                        <br />
+                                        <asp:Label ID="lblAttachmentNote" runat="server" CssClass="ClsLabel"
+                                            Text="Note: Allowed file types: jpg, jpeg, png, bmp, pdf. Max size: 5 MB." />
+                                    </td>
+                                </tr>
                                 <tr id="trChequeNumber" runat="server">
                                     <td align="right" class="ClsBorderlight" valign="top">
                                         <span class="ClsLabel">
@@ -440,7 +466,7 @@
         _sClienttxtConcessionAmt = "<%=this.txtConcessionAmt.ClientID %>";
         _clienttxtChequeAmtID = "<%= txtAmount.ClientID %>";
         _sClienttxtActualAmt = "<%=this.txtActualAmt.ClientID %>";
-        _sClientcstActualAmt = "<=this.cstActualAmt.ClientID >";
+        _sClientcstActualAmt = "<%=this.txtActualAmt.ClientID %>";
         _sClientcstValidateTotalFee = "<%=this.cstValidateTotalFee.ClientID %>";
 
         function CalculateTotalAmtToBePaid() {        
@@ -770,5 +796,58 @@
             return !isValid
         }
 
+    </script>
+
+    <script language="javascript" type="text/javascript">
+        // ---------------------------------------------------------------
+        // Caution Money Attachment — View / Delete / Pre-load logic
+        // ---------------------------------------------------------------
+        var _hidAttachmentFileName = '<%= hidAttachmentFileName.ClientID %>';
+        var _hidDeleteAttachment   = '<%= hidDeleteAttachment.ClientID %>';
+
+        // Called when a file is chosen in the file upload control
+        function OnAttachmentSelected(input) {
+            if (input.value) {
+                var fileName = input.value.replace(/^.*[\\\/]/, '');
+                document.getElementById('<%= lblAttachmentName.ClientID %>').innerHTML = fileName;
+                document.getElementById('spnAttachmentInfo').style.display = 'inline';
+                // View icon is only meaningful for previously saved files — hide for new selections
+                document.getElementById('imgViewAttachment').style.display = 'none';
+                document.getElementById('imgDeleteAttachment').style.display = 'inline';
+            }
+        }
+
+        // Called when View icon is clicked (saved attachment only)
+        function ViewAttachment() {
+            var fileName = $get(_hidAttachmentFileName).value;
+            if (fileName !== '') {
+                window.open('../Uploads/CautionMoneyAttachments/' + fileName, '_blank');
+            }
+        }
+
+        // Called when Delete icon is clicked
+        function DeleteAttachment() {
+            if (confirm('Are you sure you want to delete this attachment?\n\nNote: Click Save or Save & Print to complete the delete action.')) {
+                $get(_hidDeleteAttachment).value = '1';
+                document.getElementById('spnAttachmentInfo').style.display = 'none';
+                document.getElementById('<%= lblAttachmentName.ClientID %>').innerHTML = '';
+                // Reset file input value
+                var fu = document.getElementById('<%= fuAttachment.ClientID %>');
+                fu.value = '';
+                fu.style.display = 'inline';
+            }
+        }
+
+        // On page ready — show attachment info if a file is already saved (edit modes)
+        Sys.Application.add_load(function () {
+            var fileName = $get(_hidAttachmentFileName).value;
+            if (fileName && fileName !== '') {
+                document.getElementById('<%= lblAttachmentName.ClientID %>').innerHTML = fileName;
+                document.getElementById('spnAttachmentInfo').style.display = 'inline';
+                document.getElementById('imgViewAttachment').style.display = 'inline';
+                document.getElementById('imgDeleteAttachment').style.display = 'inline';
+                document.getElementById('<%= fuAttachment.ClientID %>').style.display = 'none';
+            }
+        });
     </script>
 </asp:Content>

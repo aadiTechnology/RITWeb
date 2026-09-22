@@ -247,6 +247,7 @@ namespace SchoolEntities
         public bool EnableDeleteButtonforStudentRegistration { get; set; }
         public bool ForceStudentToSubmitMandatoryFields { get; set; }
         public bool ForceStudentToUseMobileApp { get; set; }
+        public int RestrictLeaveApplyCount { get; set; }
    }
 
     /// <summary>

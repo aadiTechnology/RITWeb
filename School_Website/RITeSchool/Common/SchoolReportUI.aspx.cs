@@ -28,12 +28,12 @@ using Utility;
 using System.Configuration;
 using XseedReportEntities;
 using SchoolEntities;
-using System.Web.UI;
 using BusinessLogic.MusterRollDetails;
 using SchoolEntities.MusterRollDetails;
-using Excel = Microsoft.Office.Interop.Excel;
 using BusinessLogic.StudentPaidFeeDetailsReport;
-using SchoolEntities.StudentPaidFeeDetails;
+
+using System.Web.Script.Serialization;
+using System.Net;
 
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Drawing.Spreadsheet;
@@ -46,6 +46,7 @@ using BusinessLogic.TransportBL;
 using SchoolEntities.ProgressReport;
 using PayrollReportingUserEntities;
 using SchoolEntities.Teacher;
+
 
 ///<summary>
 ///	This class is used to generate tree structure of different reports as well to display report's parameters with respective controls.
@@ -83,9 +84,9 @@ public partial class SchoolReportsUI : ExportToExcel
     private int miIsSearchGridConsidered;
     private int miFirstRowNo = 6,miFirstRowForHSP = 5, miFontSize = 12, miRowsBeforeSignSection = 3, miSchoolNameRowIndex=1, miMusterRollStartIndex=6, miMusterRollStartupRow = 6, miStudentPaidFeeDetailsStartIndex = 2, miStudentPaidFeeStartupRow = 2;
     private Dictionary<string, string> moDictFiledDatatype = new Dictionary<string, string>();
-    private List<string> molstPayrollDateReports = new List<string> { S_SALARY_SLIP,S_TRANSFERED_STAFF_SALARY_SLIP, S_SALARY_LEDGER, S_EARNINGS_DEDUCTIONS, S_INSURANCE_DETAILS, S_SALARY_SHEET, S_NET_SALARY, S_FORM_NO_16, S_PROVIDENT_FUND_DETAILS, S_PROVIDENT_FUND_OF_SALARY_DIFFERENCE, S_BANK_LETTER, S_STAFF_ATTENDANCE };
-    private List<string> mlstPayrollReports = new List<string> { S_SALARY_SLIP, S_TRANSFERED_STAFF_SALARY_SLIP, S_SALARY_LEDGER, S_EARNINGS_DEDUCTIONS, S_INSURANCE_DETAILS, S_SALARY_SHEET, S_NET_SALARY, S_FORM_NO_16, S_INVESTMENT_DECLARATIONS, S_PROFESSIONAL_TAX_DETAILS, S_PROFESSIONAL_TAX_CHALLAN, S_STAFF_LEAVES, S_LEAVE_BALANCE, S_SERVICE_TYPE_DETAILS, S_BANK_LETTER, S_SALARY_BANK_STATEMENT, S_PROVIDENT_FUND_DETAILS, S_FORM_NO_27A, S_PROVIDENT_FUND_OF_SALARY_DIFFERENCE, S_STAFF_ATTENDANCE, S_STAFF_LEAVE_DETAILS_EXPORT };
-    private List<string> mlstUserAccessPayrollReports = new List<string> { S_SALARY_SLIP, S_TRANSFERED_STAFF_SALARY_SLIP, S_STAFF_LEAVES,S_LEAVE_BALANCE, S_INVESTMENT_DECLARATIONS, S_FORM_NO_16, S_BANK_LETTER, S_STAFF_ATTENDANCE };
+    private List<string> molstPayrollDateReports = new List<string> { S_SALARY_SLIP, S_TRANSFERED_STAFF_SALARY_SLIP, S_SALARY_LEDGER, S_EARNINGS_DEDUCTIONS, S_INSURANCE_DETAILS, S_SALARY_SHEET, S_NET_SALARY, S_FORM_NO_16, S_PROVIDENT_FUND_DETAILS, S_PROVIDENT_FUND_OF_SALARY_DIFFERENCE, S_BANK_LETTER, S_STAFF_ATTENDANCE, S_LEAVE_APPROVAL_DETAILS };
+    private List<string> mlstPayrollReports = new List<string> { S_SALARY_SLIP, S_TRANSFERED_STAFF_SALARY_SLIP, S_SALARY_LEDGER, S_EARNINGS_DEDUCTIONS, S_INSURANCE_DETAILS, S_SALARY_SHEET, S_NET_SALARY, S_FORM_NO_16, S_INVESTMENT_DECLARATIONS, S_PROFESSIONAL_TAX_DETAILS, S_PROFESSIONAL_TAX_CHALLAN, S_STAFF_LEAVES, S_LEAVE_BALANCE, S_SERVICE_TYPE_DETAILS, S_BANK_LETTER, S_SALARY_BANK_STATEMENT, S_PROVIDENT_FUND_DETAILS, S_FORM_NO_27A, S_PROVIDENT_FUND_OF_SALARY_DIFFERENCE, S_STAFF_ATTENDANCE, S_STAFF_LEAVE_DETAILS_EXPORT, S_LEAVE_APPROVAL_DETAILS };
+    private List<string> mlstUserAccessPayrollReports = new List<string> { S_SALARY_SLIP, S_TRANSFERED_STAFF_SALARY_SLIP, S_STAFF_LEAVES, S_LEAVE_BALANCE, S_INVESTMENT_DECLARATIONS, S_FORM_NO_16, S_BANK_LETTER, S_STAFF_ATTENDANCE };
     
     #endregion
 
@@ -397,7 +398,10 @@ public partial class SchoolReportsUI : ExportToExcel
     private const string S_STUDENT_NEW_IDENTITY_CARDS = "328";
     private const string S_USER_ROLEWISE_IDENTITY_CARDS_NEW = "329";
     private const string S_CLASSWISE_EXAM_PERCENTAGE_ATTENDANCE_DETAILS = "330";
-    
+    private const string S_HOLISTIC_REPORT_FOR6TO8_PPSH = "331";
+    private const string S_LEAVE_APPROVAL_DETAILS = "332";
+    private const string S_HOLISTIC_PROGRESS_REPORT_6TO7_PPSN = "327"; // Using existing Id
+
     private DataTable oDTUderDetails;
     private DataTable moDTStudentFinalProgressReports;
 
@@ -582,7 +586,7 @@ public partial class SchoolReportsUI : ExportToExcel
                 sFilterString = sFilterString.Replace("Xseed.", "");
 
             //This method is used to check report data availability.
-            if (msReportID != S_STUD_TERMWISE_RESULT && msReportID != "115" && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_TBS_ID && msReportID != S_DATEWISE_Fee_COLLECTION && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_SS_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_PPSH_ID && msReportID != S_STUD_FINAL_RESULT && msReportID != S_STUD_FINAL_RESULT_PPSN && msReportID != S_STUD_FINAL_RESULT_MCPS && msReportID != S_EXAM_RESULT && msReportID != S_EXAM_RESULT_FBS && msReportID != S_EXAM_RESULT_PPSN && msReportID != S_STUD_TERM2_RESULT && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_JOS_ID && msReportID != S_BANK_CHALLAN_REPORT && msReportID != S_STUD_EXAM_RESULT_PPSN && msReportID != S_MARK_ENTRY_FORM_REPORT && msReportID != S_STUD_EXAM_RESULT_MVPS_9 && msReportID != S_USER_LOGIN_DETAILS && msReportID != S_PRELIM_RESULT_SHEET && msReportID != S_STUD_FINAL_RESULT_PPSH_Old && msReportID != S_STUD_FINAL_RESULT_FOR_9 && msReportID != S_FINAL_PROGRESS_CARD_SNS_11_12 && !(msReportID == S_ANNUAL_CONSOLDATED_REPORT && miSchoolId == Constants.SchoolId.HSP.ToInt()) && msReportID != STUDENT_DOCUMNET_STATUS_DETAILS && msReportID != S_MONTHLY_FEE_COLLECTION_DETAILS && msReportID != S_STUDENT_FEE_REPORT && msReportID != S_STUDENT_NEWADMISSION_DETAILS_EXPORT && msReportID != S_LEAVING_CERTIFICATE_10TH_NPS_ID && msReportID != S_DYNAMIC_PENDING_FEE_REPORT && msReportID != S_PRELIM_REPORT_PP && msReportID != S_STUDENT_OBSERVATION_REPORT && msReportID != S_STUD_FINAL_RESULT_FOR_PPSN && msReportID != S_TRANSPORT_NOTIFICATIONS && msReportID != S_INAUGURAL_CERTIFICATE && msReportID != S_PENDING_FEE_STATEMENT_FOR_ALL_ACADEMICS_PPSN && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS && msReportID != S_PARENT_OCCUPATION_DETAILS && msReportID != S_USER_PAYROLL_DETAILS && msReportID != S_USER_PAYROLL_SALARY_DETAILS && msReportID != S_STUDENT_FINAL_PROGRESS_REPORT_MNS && msReportID != S_STUDENT_BONAFIDE_CERTIFICATE_VPMCPS && msReportID != S_STUDENT_FEE_DETAILS && msReportID != S_STUDENT_FEE_CONSOLIDATED_DETAILS && msReportID != S_TEST_CONSOLIDATED_REPORT && msReportID != S_TEST_TYPE_EXAM_RESULT && msReportID != S_STUDENT_TERM1_PROGRESS_REPORT && msReportID != S_FEE_RECONCILIATION_REPORT_PPSH && msReportID != S_EXPORT_FEE_DETAILS_SNS && msReportID != S_HOLISTIC_FINAL_PROGRESS_CARD && msReportID != S_TERM_PROGRESS_REPORT_PIONEER && msReportID != S_EXPORT_STUDENT_MONTHLY_STATUS && msReportID != S_EXPORT_STUDENTS_RECEIPTS_DETAILS && msReportID != S_CA_RECONSOLIDATION_DETAILS && msReportID != S_HOLISTIC_REPORT_FOR1TO3_PPSH && msReportID != S_STUDENT_HALF_YEARLY_3TO9 && msReportID != S_STUDENT_YEARWISE_PENDING_FEE_COUNT_DETAILS && msReportID != S_MUSTER_REPORT && msReportID!=S_VEHICLES_FUEL_MAINTENANCE_EXPENSES && msReportID != S_Holistic_Progress_Report_6to7_SNS)
+            if (msReportID != S_STUD_TERMWISE_RESULT && msReportID != "115" && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_TBS_ID && msReportID != S_DATEWISE_Fee_COLLECTION && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_SS_ID && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_PPSH_ID && msReportID != S_STUD_FINAL_RESULT && msReportID != S_STUD_FINAL_RESULT_PPSN && msReportID != S_STUD_FINAL_RESULT_MCPS && msReportID != S_EXAM_RESULT && msReportID != S_EXAM_RESULT_FBS && msReportID != S_EXAM_RESULT_PPSN && msReportID != S_STUD_TERM2_RESULT && msReportID != S_BONAFIDE_CERTIFICATE_REPORT_FOR_JOS_ID && msReportID != S_BANK_CHALLAN_REPORT && msReportID != S_STUD_EXAM_RESULT_PPSN && msReportID != S_MARK_ENTRY_FORM_REPORT && msReportID != S_STUD_EXAM_RESULT_MVPS_9 && msReportID != S_USER_LOGIN_DETAILS && msReportID != S_PRELIM_RESULT_SHEET && msReportID != S_STUD_FINAL_RESULT_PPSH_Old && msReportID != S_STUD_FINAL_RESULT_FOR_9 && msReportID != S_FINAL_PROGRESS_CARD_SNS_11_12 && !(msReportID == S_ANNUAL_CONSOLDATED_REPORT && miSchoolId == Constants.SchoolId.HSP.ToInt()) && msReportID != STUDENT_DOCUMNET_STATUS_DETAILS && msReportID != S_MONTHLY_FEE_COLLECTION_DETAILS && msReportID != S_STUDENT_FEE_REPORT && msReportID != S_STUDENT_NEWADMISSION_DETAILS_EXPORT && msReportID != S_LEAVING_CERTIFICATE_10TH_NPS_ID && msReportID != S_DYNAMIC_PENDING_FEE_REPORT && msReportID != S_PRELIM_REPORT_PP && msReportID != S_STUDENT_OBSERVATION_REPORT && msReportID != S_STUD_FINAL_RESULT_FOR_PPSN && msReportID != S_TRANSPORT_NOTIFICATIONS && msReportID != S_INAUGURAL_CERTIFICATE && msReportID != S_PENDING_FEE_STATEMENT_FOR_ALL_ACADEMICS_PPSN && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER && msReportID != S_EMPLOYMENT_CONFIRMATION_LETTER_IN_DETAILS && msReportID != S_PARENT_OCCUPATION_DETAILS && msReportID != S_USER_PAYROLL_DETAILS && msReportID != S_USER_PAYROLL_SALARY_DETAILS && msReportID != S_STUDENT_FINAL_PROGRESS_REPORT_MNS && msReportID != S_STUDENT_BONAFIDE_CERTIFICATE_VPMCPS && msReportID != S_STUDENT_FEE_DETAILS && msReportID != S_STUDENT_FEE_CONSOLIDATED_DETAILS && msReportID != S_TEST_CONSOLIDATED_REPORT && msReportID != S_TEST_TYPE_EXAM_RESULT && msReportID != S_STUDENT_TERM1_PROGRESS_REPORT && msReportID != S_FEE_RECONCILIATION_REPORT_PPSH && msReportID != S_EXPORT_FEE_DETAILS_SNS && msReportID != S_HOLISTIC_FINAL_PROGRESS_CARD && msReportID != S_TERM_PROGRESS_REPORT_PIONEER && msReportID != S_EXPORT_STUDENT_MONTHLY_STATUS && msReportID != S_EXPORT_STUDENTS_RECEIPTS_DETAILS && msReportID != S_CA_RECONSOLIDATION_DETAILS && msReportID != S_HOLISTIC_REPORT_FOR1TO3_PPSH && msReportID != S_STUDENT_HALF_YEARLY_3TO9 && msReportID != S_STUDENT_YEARWISE_PENDING_FEE_COUNT_DETAILS && msReportID != S_MUSTER_REPORT && msReportID != S_VEHICLES_FUEL_MAINTENANCE_EXPENSES && msReportID != S_Holistic_Progress_Report_6to7_SNS && msReportID != S_HOLISTIC_REPORT_FOR6TO8_PPSH && msReportID != S_LEAVE_APPROVAL_DETAILS)
                 IsReportEmpty(sFilterString);
 
             //set export option for opening reports.
@@ -686,6 +690,11 @@ public partial class SchoolReportsUI : ExportToExcel
                 if (iCallCount == 1)
                     ExportMarkDetailsForTestwiseReport(sFilterString);
             }
+            else if (msReportID == S_LEAVE_APPROVAL_DETAILS)
+            {
+                if (iCallCount == 1)
+                    ExportLeaveApprovalDetails(sFilterString);
+            }
             else
             {
                 //This method is used to display reports by creating report selection formula.               
@@ -713,8 +722,6 @@ public partial class SchoolReportsUI : ExportToExcel
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod(), String.Format("ReportId: {0}", msReportID));
         }        
     }
-
-
 
     /// <summary>
     /// 	This method is used to fill dependant control on parent control's change event.
@@ -2906,7 +2913,7 @@ public partial class SchoolReportsUI : ExportToExcel
             
             crReportDocument.Load(msReportPath);
 
-            if (msReportID == S_STUD_FINAL_RESULT || msReportID == S_STUD_FINAL_RESULT_PPSN || msReportID == S_STUD_FINAL_RESULT_MCPS || msReportID == S_EXAM_RESULT || msReportID == S_STUD_TERM1_RESULT || msReportID == S_STUD_TERMWISE_RESULT || msReportID == S_EXAM_RESULT_FBS || msReportID == S_EXAM_RESULT_PPSN || msReportID == S_STUD_PRELIMINARY_RESULT || msReportID == S_STUD_TERM2_RESULT || msReportID == S_PRELIM_REPORT_PP || (msReportID == S_STUDENT_TERM1_PROGRESS_REPORT && moSchool == Constants.SchoolId.VPMCPS) || msReportID == S_HOLISTIC_FINAL_PROGRESS_CARD || msReportID == S_PREPRIMARY_STUDENT_TERM1 || msReportID == S_HOLISTIC_REPORT_FOR1TO3_PPSH || msReportID==S_Holistic_Progress_Report_6to7_SNS)
+            if (msReportID == S_STUD_FINAL_RESULT || msReportID == S_STUD_FINAL_RESULT_PPSN || msReportID == S_STUD_FINAL_RESULT_MCPS || msReportID == S_EXAM_RESULT || msReportID == S_STUD_TERM1_RESULT || msReportID == S_STUD_TERMWISE_RESULT || msReportID == S_EXAM_RESULT_FBS || msReportID == S_EXAM_RESULT_PPSN || msReportID == S_STUD_PRELIMINARY_RESULT || msReportID == S_STUD_TERM2_RESULT || msReportID == S_PRELIM_REPORT_PP || (msReportID == S_STUDENT_TERM1_PROGRESS_REPORT && moSchool == Constants.SchoolId.VPMCPS) || msReportID == S_HOLISTIC_FINAL_PROGRESS_CARD || msReportID == S_PREPRIMARY_STUDENT_TERM1 || msReportID == S_HOLISTIC_REPORT_FOR1TO3_PPSH || msReportID == S_Holistic_Progress_Report_6to7_SNS || msReportID == S_HOLISTIC_REPORT_FOR6TO8_PPSH || (msReportID == S_HOLISTIC_PROGRESS_REPORT_6TO7_PPSN && moSchool == Constants.SchoolId.PPSN))
             {
                 bGenerateReport = SetProgressReportDataSource(asReportSelectionString);
             }
@@ -3118,7 +3125,13 @@ public partial class SchoolReportsUI : ExportToExcel
                 dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPPSH(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
                 break;
             case S_Holistic_Progress_Report_6to7_SNS:
-                dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportFor6to8SNS(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId);
+                if(moSchool == Constants.SchoolId.SNS)
+                    dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportFor6to8SNS(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId);
+                else if (moSchool == Constants.SchoolId.PPSN)
+                    dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPPSN(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
+                break;
+            case S_HOLISTIC_REPORT_FOR6TO8_PPSH:
+                dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportFor6To8PPSHStd(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
                 break;
         }
 
@@ -4531,10 +4544,14 @@ public partial class SchoolReportsUI : ExportToExcel
             sFilterSting += "({usp_GetCAReconsolidationReport_SNS;1.FromDate}=)@";
         else if (msReportID == S_TERM_PROGRESS_REPORT_PIONEER)
             sFilterSting += "({usp_GetProgressReportDetailsForPrePrimaryPioneer;1.IsFromReportScreen}=1)@";
+        else if (msReportID == S_STUDENT_HALF_YEARLY_3TO9 && miSchoolId == Constants.SchoolId.TheScholarsAcademy.ToInt())
+            sFilterSting += "({usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy;1.Term_Id}=1 AND {usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy;1.IsFromReportScreen}=1)@";
         else if (msReportID == S_STUDENT_HALF_YEARLY_3TO9)
             sFilterSting += "({usp_GetDetailsForHalfYearlyReport_Pioneer;1.Term_Id}=1 AND {usp_GetDetailsForHalfYearlyReport_Pioneer;1.IsFromReportScreen}=1)@";
-        else if (msReportID == S_MISSING_ATTENDANCE_REPORT)
+         else if (msReportID == S_MISSING_ATTENDANCE_REPORT)
             sFilterSting += "({usp_GetMissingAttendanceDetails;1.UserId}=null)@";
+        else if (msReportID == S_Holistic_Progress_Report_6to7_SNS && moSchool == Constants.SchoolId.PPSN)
+            sFilterSting += "({usp_GetDetailsForHolisticReportPPSN;1.Term_Id}=2)@";
         return sFilterSting;
     }
 
@@ -4648,7 +4665,7 @@ public partial class SchoolReportsUI : ExportToExcel
             if (msReportID == S_CLASSWISE_STUDENT_PENDING_FEE_REPORT_ID || msReportID == S_REQUISITION_DETAILS || msReportID == S_PENDING_FEE_DETAILS || msReportID == S_PENDING_FEE_STUDENTLIST || msReportID == S_NETBANKING_REPORT || msReportID == S_TASK_DETAILS || msReportID == S_USERROLEWISE_BOOK_ISSUED_USERS || msReportID == S_LOST_BOOK_DETAILS || msReportID == S_CLAIM_BOOK_DETAILS || msReportID == S_LC_REPORT_ID || msReportID == S_DAILY_FEE_COLLECTION || msReportID == S_LEAVING_CERTIFICATE_10TH_NPS_ID
                 || msReportID == S_NEXT_YEAR_PAID_FEE || msReportID == S_TRANSFER_CERTIFICATE || msReportID == S_STUDENT_ALL_ACADEMICS_PENDING_FEE || msReportID == S_TEACHER_JOINING_DATE || msReportID == S_USER_RETIREMENT_DETAILS_REPORT || msReportID == S_STUDENT_PENDING_FEE_REMINDER || msReportID == S_STUDENT_HALF_YEARLY_3TO9)
                 sParameterFilterString = sFilterValue == "1/1/0001" || sFilterValue == "01-Jan-0001" ? string.Format("{0}= null   @ ", sParameterName) : string.Format("{0}={1}   @ ", sParameterName, sFilterValue);
-            else if (msReportID == S_STUDENT_FEE_DETAILS)
+            else if (msReportID == S_STUDENT_FEE_DETAILS || msReportID == S_LEAVE_APPROVAL_DETAILS)
             {
                     sParameterFilterString = " AND "+sParameterName+"="+sFilterValue;
             }
@@ -5002,6 +5019,7 @@ public partial class SchoolReportsUI : ExportToExcel
 
             if (sFilterValue != "0")
                 sParameterFilterString = string.Format("({0}={1})@", sParameterName, sFilterValue);
+
             //when division_id is null, in this special case is handled.
             if (sFilterValue == Constants.I_ZERO.ToString() && msType != "View")
             {
@@ -5390,7 +5408,7 @@ public partial class SchoolReportsUI : ExportToExcel
                         break;
                 }
                 if (msReportID == S_EXAM_RESULT_SS || msReportID == S_EXAM_RESULT_STSS_9STD || msReportID == S_EXAM_RESULT_STSS_10STD || msReportID == S_STUD_FINAL_RESULT_SS || msReportID == S_STUD_FINAL_RESULT_PPSH || msReportID == S_STUD_FINAL_RESULT_SNS_6TO8_Std || msReportID == S_STUD_FINAL_RESULT_PPSH_Old || msReportID == S_STUD_FINAL_RESULT_FOR_PPSN || msReportID == S_STUD_FINAL_RESULT_FOR_9 || msReportID == S_STUD_FINAL_RESULT_FOR_11 || msReportID == S_EXAM_RESULT || msReportID == S_STUD_TERM1_RESULT || msReportID == S_STUD_TERMWISE_RESULT || msReportID == S_STUD_TERM2_RESULT || msReportID == S_EXAM_RESULT_FBS || msReportID == S_EXAM_RESULT_PPSN || msReportID == S_STUD_PRELIMINARY_RESULT
-                    || msReportID == S_FINAL_REPORT_JPS || msReportID == S_FINAL_REPORT_GSS || msReportID == S_FINAL_REPORT_PKJC || msReportID == S_STUD_EXAM_RESULT_PPSN || msReportID == S_PRE_PRIMARY_REPORT_JOS || msReportID == S_STANDARDWISE_TEST_DETAILS || msReportID == S_ANNUAL_CONSOLDATED_REPORT_SPS9 || msReportID == S_ANNUAL_CONSOLDATED_REPORT_SPS11 || msReportID == S_STUD_EXAM_RESULT_MVPS_9 || msReportID == S_STUDENT_FINAL_PROGRESS_REPORT_PEMS || msReportID == S_PRELIM_RESULT_SHEET || msReportID == S_STUDENT_PROGRESS_REPORT_CBSE || msReportID == S_COSCHOLASTIC_SUBJECT_MARK_DETAILS || msReportID == S_PERIODIC_TEST_MARK_DETAILS || msReportID == S_STUDENT_OBSERVATION_REPORT || msReportID == S_STUDENT_TERM1_PROGRESS_REPORT || msReportID == S_STUDENT_TERM1_PROGRESS_REPORT_PPSN || msReportID == S_PRELIM_REPORT_PP || msReportID == S_STUDENT_FINAL_PROGRESS_REPORT_MNS || msReportID == S_FINAL_PROGRESS_CARD_SNS_11_12 || msReportID == S_HOLISTIC_FINAL_PROGRESS_CARD || msReportID == S_TERM_PROGRESS_REPORT_PIONEER || msReportID == S_EXAMWISE_MARK_DETAILS || msReportID == S_PREPRIMARY_STUDENT_TERM1 || msReportID == S_HOLISTIC_REPORT_FOR1TO3_PPSH || msReportID == S_STUDENT_HALF_YEARLY_3TO9 || msReportID == S_Holistic_Progress_Report_6to7_SNS)
+                    || msReportID == S_FINAL_REPORT_JPS || msReportID == S_FINAL_REPORT_GSS || msReportID == S_FINAL_REPORT_PKJC || msReportID == S_STUD_EXAM_RESULT_PPSN || msReportID == S_PRE_PRIMARY_REPORT_JOS || msReportID == S_STANDARDWISE_TEST_DETAILS || msReportID == S_ANNUAL_CONSOLDATED_REPORT_SPS9 || msReportID == S_ANNUAL_CONSOLDATED_REPORT_SPS11 || msReportID == S_STUD_EXAM_RESULT_MVPS_9 || msReportID == S_STUDENT_FINAL_PROGRESS_REPORT_PEMS || msReportID == S_PRELIM_RESULT_SHEET || msReportID == S_STUDENT_PROGRESS_REPORT_CBSE || msReportID == S_COSCHOLASTIC_SUBJECT_MARK_DETAILS || msReportID == S_PERIODIC_TEST_MARK_DETAILS || msReportID == S_STUDENT_OBSERVATION_REPORT || msReportID == S_STUDENT_TERM1_PROGRESS_REPORT || msReportID == S_STUDENT_TERM1_PROGRESS_REPORT_PPSN || msReportID == S_PRELIM_REPORT_PP || msReportID == S_STUDENT_FINAL_PROGRESS_REPORT_MNS || msReportID == S_FINAL_PROGRESS_CARD_SNS_11_12 || msReportID == S_HOLISTIC_FINAL_PROGRESS_CARD || msReportID == S_TERM_PROGRESS_REPORT_PIONEER || msReportID == S_EXAMWISE_MARK_DETAILS || msReportID == S_PREPRIMARY_STUDENT_TERM1 || msReportID == S_HOLISTIC_REPORT_FOR1TO3_PPSH || msReportID == S_STUDENT_HALF_YEARLY_3TO9 || msReportID == S_Holistic_Progress_Report_6to7_SNS || msReportID == S_HOLISTIC_REPORT_FOR6TO8_PPSH)
                     oHashFilterParameters.Add("ReportId", msReportID.ToInt());
 
                 if (msReportID == S_SALARY_SLIP && aiGridRowCount == 2)
@@ -11911,8 +11929,6 @@ public partial class SchoolReportsUI : ExportToExcel
                 }
 
                 int oTotalPendingFee = moPendingFee.PendingFees.Where(fee => fee.StudentId == stud.YearWiseStudentId).Sum(fee => fee.Amount);
-                if (moSchool == Constants.SchoolId.PPSN)
-                    oTotalPendingFee += stud.CautionMoneyPaid;
                 row.Append(AddCell(oTotalPendingFee.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
 
                 aoSheetData1.Append(row);
@@ -11931,8 +11947,7 @@ public partial class SchoolReportsUI : ExportToExcel
         if (moSchool == Constants.SchoolId.PPSN)
         {
             rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.LeftData));
-            int iTotalCautionMoney = moPendingFee.OldYearPendingFeeStudents.Sum(stud => stud.CautionMoneyPaid);
-            rowTotal.Append(AddCell(iTotalCautionMoney.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
+            rowTotal.Append(AddCell(string.Empty, CellValues.String, StudentPaidFeeEnum.CenterDataBold));
         }
 
         foreach (var year in oAcademicYears)
@@ -11945,8 +11960,7 @@ public partial class SchoolReportsUI : ExportToExcel
         }
 
         int oOverallTotalPendingFee = moPendingFee.PendingFees.Sum(fee => fee.Amount);
-        if (moSchool == Constants.SchoolId.PPSN)
-            oOverallTotalPendingFee += moPendingFee.OldYearPendingFeeStudents.Sum(stud => stud.CautionMoneyPaid);
+       
         rowTotal.Append(AddCell(oOverallTotalPendingFee.ToString(), CellValues.String, StudentPaidFeeEnum.CenterDataBold));
 
         aoSheetData1.Append(rowTotal);
@@ -13403,6 +13417,40 @@ public partial class SchoolReportsUI : ExportToExcel
 
     }
 
+    /// <summary>
+    /// This method is used to export leave approval details.
+    /// </summary>
+    /// <param name="asFilterString"></param>
+    private void ExportLeaveApprovalDetails(string asFilterString)
+    {
+        int iStaffgroupId = 0, iUserId = 0;
+        string sStartDate = "", sEndDate = "";
+
+        asFilterString = asFilterString.Replace("({usp_GetLeaveApprovalDetailsForReport;1.StaffGroupsId}=", "AND ({usp_GetLeaveApprovalDetailsForReport;1.StaffGroupsId}=");
+        var oFilters = asFilterString.Replace("{", "").Replace("}", "").Replace("(", "").Replace(")", "").Replace("AND", "@").TrimAll().Replace("usp_GetLeaveApprovalDetailsForReport;1.", "").Split('@');
+
+        foreach (string sVal in oFilters)
+        {
+            var oData = sVal.Split('=');
+            if (oData.Length > 0)
+            {
+                if (oData[0].Trim().ToUpper() == "STAFFGROUPSID")
+                    iStaffgroupId = (oData[1].Trim() == "null" ? 0 : oData[1].ToInt());
+                else if (oData[0].Trim().ToUpper() == "USERID")
+                    iUserId = (oData[1].Trim() == "null" ? 0 : oData[1].ToInt());
+                else if (oData[0].Trim().ToUpper() == "STARTDATE")
+                    sStartDate = oData[1];
+                else if (oData[0].Trim().ToUpper() == "ENDDATE")
+                    sEndDate = oData[1].ToString().Replace("StaffGroupsId", string.Empty);
+            }
+        }
+
+        string sQueryString = CommonUtility.EncryptQuerystring("SchoolId=" + miSchoolId + "&AcademicYearId=" + miAcademicYearId + "&StartDate=" + sStartDate.Trim() + "&EndDate=" + sEndDate.Trim() +
+            "&StaffGroupsId=" + iStaffgroupId + "&UserId=" + iUserId + "&LoginUserId=" + miUserId + "&ReportId=" + msReportID + "&ExportFormatType=5");
+
+        Response.Redirect("HandleExport.ashx" + "?" + sQueryString);
+    }
+
     private enum MusterRollEnum
     {
         LeftHeader = 1,
@@ -13463,4 +13511,5 @@ public partial class SchoolReportsUI : ExportToExcel
         public DateTime DOB { get; set; }
         public int Salary { get; set; }
     }
+
 }

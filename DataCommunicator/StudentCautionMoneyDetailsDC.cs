@@ -163,6 +163,7 @@ namespace DataCommunicator
 											",Updated_By_Id= " + moStudentCautionMoneyDetailsStruct.miUpdatedById +
                                             ",Receipt_Number= " + iMaxReceiptNo +
                                             ",PaidByName= N'" + moStudentCautionMoneyDetailsStruct.msPaidByName + "'" +
+                                            ",AttachmentFileName= N'" + StringUtility.ReplaceSingleQuoteInString(moStudentCautionMoneyDetailsStruct.msAttachmentFileName, false) + "'" +
 											sWhere +
 									" WHERE  " +
 										" School_Id=" + moStudentCautionMoneyDetailsStruct.miSchoolId +
@@ -196,6 +197,7 @@ namespace DataCommunicator
 											",Updated_By_Id= " + moStudentCautionMoneyDetailsStruct.miUpdatedById +
                                             ",ReturnReceiptNo=dbo.udf_GetNextReturnReceiptNo("+moStudentCautionMoneyDetailsStruct.miSchoolId+") "+
                                             ",ReturnAmount= " + moStudentCautionMoneyDetailsStruct.miReturnAmount +
+                                            ",AttachmentFileName= N'" + StringUtility.ReplaceSingleQuoteInString(moStudentCautionMoneyDetailsStruct.msAttachmentFileName, false) + "'" +
 											sWhere +
 									 " WHERE  " +
 										" School_Id=" + moStudentCautionMoneyDetailsStruct.miSchoolId +
@@ -251,6 +253,8 @@ namespace DataCommunicator
                                 moStudentCautionMoneyDetailsStruct.miPaymentChequeId = Convert.ToInt32(oDR["Payment_Cheque_Id"]);
                             if (oDR["Return_Cheque_Id"] != DBNull.Value)
                                 moStudentCautionMoneyDetailsStruct.miReturnChequeId = Convert.ToInt32(oDR["Return_Cheque_Id"]);
+                            if (oDR["AttachmentFileName"] != DBNull.Value)
+                                moStudentCautionMoneyDetailsStruct.msAttachmentFileName = Convert.ToString(oDR["AttachmentFileName"]);
                         }
                      
                     }
@@ -274,6 +278,7 @@ namespace DataCommunicator
 				",Payment_Mode" +
 				",Payment_Cheque_Id" +
 				",Return_Cheque_Id" +
+                ",AttachmentFileName" +
 			" FROM Student_Caution_Money_Details" +
 			" WHERE Schoolwise_Student_Id=" + aiStudentId +
 			" AND Is_Deleted = 0";
@@ -303,6 +308,7 @@ namespace DataCommunicator
             public int miConcessionAmount;
             public int miReturnAmount;
             public int miRemainingCautionMoney;
+            public string msAttachmentFileName;
 		}
 
 		public DataTable GetStudentCautionMoneyDetails(int aiStudentID, int aiAcademicYrID, int aiSchoolID)

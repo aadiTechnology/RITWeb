@@ -892,6 +892,17 @@ namespace BusinessLogic
             oDS.Tables[2].TableName = "StudentSkillSummary";
             return oDS;
         }
+        public static DataSet GetDetailsForHolisticReportFor6To8PPSHStd(int aiSchoolId, int aiAcademicYearId, int aiStdId, int aiDivId, int aiStudentId, int aiTermId, bool abIsFromReportScreen)
+        {
+            DataSet oDS = ReportsDC.GetDetailsForHolisticReportFor6To8PPSHStd(aiSchoolId, aiAcademicYearId, aiStdId, aiDivId, aiStudentId, aiTermId, abIsFromReportScreen);
+            oDS.Tables[0].TableName = "StudentDetails";
+            oDS.Tables[1].TableName = "StudentSkillDetails";
+            oDS.Tables[2].TableName = "StudentSkillSummary";
+            oDS.Tables[3].TableName = "MarkDetails";
+            oDS.Tables[4].TableName = "CurricularSubjectMarks";
+
+            return oDS;
+        }
 
         public static DataSet GetDetailsForHolisticReportFor6to8SNS(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, int aiStudentId)
         {
@@ -902,6 +913,20 @@ namespace BusinessLogic
             oDS.Tables[3].TableName = "MarkDetails";
             oDS.Tables[4].TableName = "PercentageGrade";            
             return oDS;
+        }
+
+        /// <summary>
+        /// Returns the report file path (.rpt) for a given report from the database.
+        /// Used by the generic report export API.
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiReportId"></param>
+        /// <param name="aiLoginUserId"></param>
+        /// <returns>Report file logical path</returns>
+        public static string GetReportFilePath(int aiSchoolId, int aiAcademicYearId, int aiReportId, int aiLoginUserId)
+        {
+            return ReportsDC.GetReportFilePath(aiSchoolId, aiAcademicYearId, aiReportId, aiLoginUserId);
         }
     }
 }

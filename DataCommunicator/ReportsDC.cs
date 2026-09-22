@@ -906,6 +906,21 @@ namespace DataCommunicator
             }
         }
 
+        public static DataSet GetDetailsForHolisticReportFor6To8PPSHStd(int aiSchoolId, int aiAcademicYearId, int aiStdId, int aiDivId, int aiStudentId, int aiTermId, bool abIsFromReportScreen)
+        {
+            using (var oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("School_Id", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Academic_Year_Id", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Standard_Id", aiStdId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Division_Id", aiDivId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Student_Id", aiStudentId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Term_Id", aiTermId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IsFromReportScreen", abIsFromReportScreen, SqlDbType.Bit);
+                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataSet("usp_GetDetailsForHolisticReportFor6To8PPSHStd");
+            }
+        }
+
         public static DataSet GetDetailsForHolisticReportFor6to8SNS(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, int aiStudentId)
         {
             using (var oSQLServerDbUtility = new SQLServerDbUtility())
@@ -917,6 +932,49 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("StudentId", aiStudentId, SqlDbType.Int);
                 return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataSet("usp_GetHolisticProgressReportDetailsFor6To8SNS");
             }
+        }
+
+        public static DataSet GetDetailsForHolisticReportForPPSN(int aiSchoolId, int aiAcademicYearId, int aiStandardId, int aiDivisionId, int aiStudentId, int aiTermId, bool abIsFromReportScreen)
+        {
+            using (var oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("School_Id", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Academic_Year_Id", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Standard_Id", aiStandardId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Division_Id", aiDivisionId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Student_Id", aiStudentId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Term_Id", aiTermId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("IsFromReportScreen", abIsFromReportScreen, SqlDbType.Int);                
+                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataSet("usp_GetDetailsForHolisticReportPPSN");
+            }
+        }
+
+        /// <summary>
+        /// Returns the report file path (.rpt) for a given report from the database.
+        /// Used by the generic report export API.
+        /// </summary>
+        /// <param name="aiSchoolId"></param>
+        /// <param name="aiAcademicYearId"></param>
+        /// <param name="aiReportId"></param>
+        /// <param name="aiLoginUserId"></param>
+        /// <returns>Report file logical path (e.g., \RITeSchool\Report\Payroll\SalarySlip.rpt)</returns>
+        public static string GetReportFilePath(int aiSchoolId, int aiAcademicYearId, int aiReportId, int aiLoginUserId)
+        {
+            string sReportFilePath = string.Empty;
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("School_Id", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Academic_Year_Id", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Report_Id", aiReportId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("LoginUserId", aiLoginUserId, SqlDbType.Int);
+
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetReportFilePath"))
+                {
+                    if (oSqlDataReader.Read())
+                        sReportFilePath = oSqlDataReader["ReportFilePath"].ToString();
+                }
+            }
+            return sReportFilePath;
         }
     }
 }

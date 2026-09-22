@@ -78,7 +78,10 @@ public partial class ApplyLeaveUI : SchoolBase
                     FillLeaveDetails(iId, iCategoryId);
                 }
                 else
+                {
                     GetLeaveTypeWiseLeaveBalance(hidUserId.Value.ToInt());
+                    SetBackdatedLeaveRestriction();
+                }
             }
             if (hidCultureInfo.Value != Session[Constants.S_SESSION_LANGUAGE].ToString())
             {
@@ -259,6 +262,46 @@ public partial class ApplyLeaveUI : SchoolBase
         }
         catch (Exception ex)
         {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
+    /// <summary>
+    /// This event blocks applying a restricted leave type (CL/SL/LA-ED/OD) when the start
+    /// date is older than the configured RestrictLeaveApplyCount days. Skipped for CategoryId 4/5
+    /// and when the setting is 0 (validator stays disabled in those cases).
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void RestrictBackdatedLeave_Validate(object sender, ServerValidateEventArgs e)
+    {
+        try
+        {
+            int iRestrictDays = Settings.RestrictLeaveApplyCount;
+            string sLeaveShortName = ddlleavetype.SelectedItem != null ? ddlleavetype.SelectedItem.Text : string.Empty;
+
+            DateTime dtStartDate;
+            // If the start date is missing/unparseable, let the RequiredField/date validators handle it.
+            if (!DateTime.TryParse(txtStartDate.Text, out dtStartDate))
+            {
+                e.IsValid = true;
+                return;
+            }
+
+            bool bRestricted = moUserApplyLeaveDetailsBL.IsBackdatedLeaveRestricted(sLeaveShortName, dtStartDate, iRestrictDays);
+            if (bRestricted)
+            {
+                CustomValidator cv = sender as CustomValidator;
+                cv.ErrorMessage = "Leave type '" + sLeaveShortName + "' cannot be applied for a start date older than " + iRestrictDays + " day(s). Only LWP is allowed for such dates.";
+                e.IsValid = false;
+            }
+            else
+                e.IsValid = true;
+        }
+        catch (Exception ex)
+        {
+            // On unexpected failure, do not silently pass this rule: mark invalid so the apply is blocked.
+            e.IsValid = false;
             ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
         }
     }
@@ -505,6 +548,34 @@ public partial class ApplyLeaveUI : SchoolBase
 
         if (obj.Length > 0)
             lblLeaveBalance.Text = "Leave Balance : " + obj.ToString().Substring(2);        
+    }
+
+    /// <summary>
+    /// This method activates the back-dated leave restriction for the Submit (apply) flow.
+    /// The restriction is skipped when RestrictLeaveApplyCount is 0 or when the screen is
+    /// opened with CategoryId 4 or 5. Populates hidden fields so client-side validation
+    /// stays in sync with the server-side rule.
+    /// </summary>
+    private void SetBackdatedLeaveRestriction()
+    {
+        int iRestrictDays = Settings.RestrictLeaveApplyCount;
+        string sCategoryId = hidCategoryId.Value;
+        List<string> lstAllowedLeaveTypes = UserApplyLeaveDetailsBL.GetBackdatedAllowedLeaveShortNames();
+        bool bRestrictionActive = iRestrictDays > 0 && sCategoryId != "4" && sCategoryId != "5";
+
+        cvRestrictBackdatedLeave.Enabled = bRestrictionActive;
+        hidRestrictLeaveApplyCount.Value = iRestrictDays.ToString();
+        hidRestrictLeaveActive.Value = bRestrictionActive ? Constants.S_ONE : Constants.S_ZERO;
+
+        var jsSerializer = new JavaScriptSerializer();
+        hidRestrictedLeaveTypes.Value = jsSerializer.Serialize(lstAllowedLeaveTypes);
+
+        // Show the informational note only when the restriction is active and allowed types exist.
+        if (bRestrictionActive && lstAllowedLeaveTypes.Count > 0)
+        {
+            lblRestrictLeaveNote.Text = "Only Leave Type(s) " + string.Join(", ", lstAllowedLeaveTypes.ToArray()) + " can be applied for a Start Date older than " + iRestrictDays + " day(s).";
+            trRestrictLeaveNote.Visible = true;
+        }
     }
     /// <summary>
     /// these method is used to get file name.

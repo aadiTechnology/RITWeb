@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
@@ -112,6 +113,11 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 		{
 			if (cal_Date.IsValid())
 			{
+                // Handle attachment upload / delete before saving
+                string sAttachmentFileName = SaveAttachmentFile();
+                if (sAttachmentFileName == null) return; // file validation failed — abort save
+                hidAttachmentFileName.Value = sAttachmentFileName;
+
 				switch (hidMode.Value)
 				{
 					case S_ADD_PAID:
@@ -338,6 +344,13 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 		DataRow oDataRow = oDTCautionMoney.Rows[0];
 		txtDate.Text = DateTime.Today.ToString(S_DATE_FORMATE_FEILD, new CultureInfo("en"));
 		lblStudName.Text = oDataRow["FullName"].ToString();
+
+        // Pre-load existing attachment for edit modes
+        if (oDataRow["AttachmentFileName"] != DBNull.Value &&
+            !oDataRow["AttachmentFileName"].ToString().IsNullOrEmpty())
+        {
+            hidAttachmentFileName.Value = oDataRow["AttachmentFileName"].ToString();
+        }
        
 		// Amount is returned by school and is opened in edit mode.
 		if (hidMode.Value == S_ADD_RETURN || hidMode.Value == S_EDIT_RETURN)
@@ -451,6 +464,7 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 				trPaidDetails.Visible = false;
 				SetCashChequeOptionBtn(false);
 				EnableDisableChequeControls(true);
+				trRemark.Visible = true;
 				btnSavePrint.Visible = true;
 				break;
 			case S_EDIT_PAID:
@@ -471,6 +485,7 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 						ddlAcBankList.SelectedValue = oDataRow["PaymentDepositBankId"].ToString();
 					SetBankComboBoxIndex(oDataRow["Bank_Id"].ToString());
 					SetCashChequeOptionBtn(false);
+					trRemark.Visible = true;
 				}
                 else if (oDataRow[S_PAYMENT_MODE_FEILD].ToString() == C_ELECTRONIC_MODE.ToString())
                 {
@@ -756,6 +771,8 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 		lblErrMsg.Visible = false;
 		lblErrMsg.Text = string.Empty;
 		ddlBankName.SelectedIndex = 0;
+        hidAttachmentFileName.Value = string.Empty;
+        hidDeleteAttachment.Value = "0";
 	}
 
 	/// <summary>
@@ -828,8 +845,9 @@ public partial class CautionMoneyChequePopUp : SchoolBase
 												Updated_By_Id = miUserId,
 												Update_Date =  DateTime.Now,
                                                 PaidByName = txtPaidByName.Text.TrimAll(),
-                                                Remarks = txtRemarks.Text.Trim()                                                
-											};
+                                                Remarks = txtRemarks.Text.Trim(),
+                                                AttachmentFileName = hidAttachmentFileName.Value
+                                               };
 
 		switch (hidMode.Value)
 		{
@@ -1230,6 +1248,66 @@ public partial class CautionMoneyChequePopUp : SchoolBase
                     oBankClient.Close();
             }
         }
+    }
+
+    /// <summary>
+    /// Handles file upload and pending delete for caution money attachment.
+    /// Returns the saved filename, empty string if deleted/none, or null if validation fails (abort save).
+    /// </summary>
+    private string SaveAttachmentFile()
+    {
+        const int MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+        string[] allowedExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".pdf" };
+        string sFolderPath = base.BasePath + "\\RITeSchool\\Uploads\\CautionMoneyAttachments\\";
+
+        // Handle pending delete: user clicked Delete and is now saving
+        if (hidDeleteAttachment.Value == "1")
+        {
+            if (!hidAttachmentFileName.Value.IsNullOrEmpty())
+            {
+                string sFileToDelete = sFolderPath + hidAttachmentFileName.Value;
+                if (File.Exists(sFileToDelete))
+                    File.Delete(sFileToDelete);
+            }
+            return string.Empty; // clears the DB column
+        }
+
+        // Handle new file upload
+        if (fuAttachment.HasFile)
+        {
+            string sFileExtension = Path.GetExtension(fuAttachment.FileName).ToLower();
+            if (Array.IndexOf(allowedExtensions, sFileExtension) < 0)
+            {
+                lblErrMsg.Visible = true;
+                lblErrMsg.Text = "Invalid file type. Allowed types: jpg, jpeg, png, bmp, pdf.";
+                return null;
+            }
+            if (fuAttachment.PostedFile.ContentLength > MAX_FILE_SIZE)
+            {
+                lblErrMsg.Visible = true;
+                lblErrMsg.Text = "Attachment file size must not exceed 5 MB.";
+                return null;
+            }
+
+            // Ensure upload folder exists
+            if (!Directory.Exists(sFolderPath))
+                Directory.CreateDirectory(sFolderPath);
+
+            // Delete old file if being replaced
+            if (!hidAttachmentFileName.Value.IsNullOrEmpty())
+            {
+                string sOldFile = sFolderPath + hidAttachmentFileName.Value;
+                if (File.Exists(sOldFile))
+                    File.Delete(sOldFile);
+            }
+
+            string sFileName = CommonUtility.GetFileNameForRenaming(fuAttachment.FileName);
+            fuAttachment.SaveAs(sFolderPath + sFileName);
+            return sFileName;
+        }
+
+        // No new file and no pending delete — return existing filename unchanged
+        return hidAttachmentFileName.Value;
     }
 
 	#endregion -- PRIVATE METHOD(s) --    

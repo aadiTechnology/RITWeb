@@ -57,5 +57,9 @@ namespace MobileExportService.Service
         [OperationContract]
         [WebInvoke(UriTemplate = "GetInternalFeeReceiptFileName", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
         string GetInternalFeeReceiptFileName(int aiSchoolId, int aiAcademicYearId, int aiSchoolwiseStudentId, string asReceiptNo, int aiInternalFeeDetailsId, bool abIsNextYearPayment, int aiSerialNumber);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "GenerateReport", Method = "POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
+        ReportResult GenerateReport(int aiSchoolId, int aiAcademicYearId, int aiLoginUserId,int aiReportId, List<ParameterPair> aoParameterPairs, int aiExportFormatType);
     }
 }

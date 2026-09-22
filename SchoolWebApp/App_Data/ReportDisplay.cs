@@ -591,6 +591,8 @@ public class ReportDisplay : SchoolBase
                 return "\\RITeSchool\\Report\\Exam\\StudentwiseProgressReportMNS.rpt";
             case Constants.ExportReports.StudentwiseTermProgressReportSNS_1rdTO5th2024:
                 return "\\RITeSchool\\Report\\Exam\\StudentwiseTermProgressReportSNS_1rdTO5th2024.rpt";
+            case Constants.ExportReports.LeavingCertificateTSA:
+                return "\\RITeSchool\\Report\\Student\\LeavingCertificate_TSA.rpt";
             case Constants.ExportReports.StudentwiseProgressReportPPS:
                 {
                     if (TermId == Constants.I_ONE)

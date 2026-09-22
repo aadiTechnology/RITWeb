@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DataCommunicator.PayrollDC;
 using PayrollEntities;
 using Utility;
@@ -16,6 +17,13 @@ namespace BusinessLogic.PayrollBL
 
        UserApplyLeaveDetailsDC moUserApplyLeaveDetailsDC ;
        private int miTotalRows;
+
+       /// <summary>
+       /// Leave types (by ShortName) that ARE allowed with a back-dated start date.
+       /// Any leave type not in this list is blocked when the start date is older than the
+       /// configured number of days. Extend this list to allow more types for back-dated apply.
+       /// </summary>
+       private static readonly List<string> mlstBackdatedAllowedLeaveShortNames = new List<string> { "LWP" };
 
        #endregion
        public UserApplyLeaveDetailsBL()
@@ -121,6 +129,36 @@ namespace BusinessLogic.PayrollBL
       public string ValidateDates(DateTime adtDate, int aiLeaveTypeId, int aiLeaveConfigId)
       {
           return moUserApplyLeaveDetailsDC.ValidateDates(adtDate, aiLeaveTypeId, aiLeaveConfigId);
+      }
+
+       /// <summary>
+       /// Determines whether the selected leave cannot be applied because it is NOT an allowed
+       /// back-dated leave type (only LWP is allowed) and the start date is older than the
+       /// allowed number of days.
+       /// </summary>
+       /// <param name="asLeaveShortName">ShortName of the selected leave type.</param>
+       /// <param name="adtStartDate">Start date of the leave.</param>
+       /// <param name="aiRestrictDays">Allowed number of days (RestrictLeaveApplyCount). 0 disables the check.</param>
+       /// <returns>True when the leave should be blocked; otherwise false.</returns>
+      public bool IsBackdatedLeaveRestricted(string asLeaveShortName, DateTime adtStartDate, int aiRestrictDays)
+      {
+          if (aiRestrictDays <= 0 || string.IsNullOrEmpty(asLeaveShortName))
+              return false;
+
+          // Allowed types (e.g. LWP) can always be back-dated; every other type is blocked.
+          if (mlstBackdatedAllowedLeaveShortNames.Contains(asLeaveShortName.Trim(), StringComparer.OrdinalIgnoreCase))
+              return false;
+
+          return adtStartDate.Date < DateTime.Today.AddDays(-aiRestrictDays);
+      }
+
+       /// <summary>
+       /// Returns the list of leave ShortNames that ARE allowed for back-dated apply.
+       /// Used to keep client-side validation in sync with the server-side rule.
+       /// </summary>
+      public static List<string> GetBackdatedAllowedLeaveShortNames()
+      {
+          return new List<string>(mlstBackdatedAllowedLeaveShortNames);
       }
 
       public bool ValidateDateOverlapping(DateTime adtStartDate, DateTime adtEndDate, int aiUserId, int aiLeaveConfigId)

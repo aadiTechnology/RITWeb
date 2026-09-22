@@ -204,6 +204,10 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                 tblNote.Visible = false;
                 tblData.Visible = true;
                 tblParameters.Rows.Clear();
+                if (miSchoolId == Constants.SchoolId.PPSN.ToInt() && miAcademicYearId >= 14)
+                {
+                    tblParameters.Style.Add("width", "max-content");
+                }
                 SetLegends();
                 FillSkills();
                 FillHeaders();
@@ -358,7 +362,8 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                      ctrl.Controls.Add(txtRemark);
                                  }
 
-                                 this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, "width:50px", ctrl);
+                                 this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, ParameterColumnWidth, ctrl);
+                                 //this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, "width:50px", ctrl);
                              }
 
                          );
@@ -379,6 +384,16 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
         lblSubject.Text = moObservationDetailsBL.SubjectName;
     }
 
+    private string ParameterColumnWidth
+    {
+        get
+        {
+            return (miSchoolId == Constants.SchoolId.PPSN.ToInt() && miAcademicYearId >= 14)
+              ? "width:100px;min-width:100px;"
+               : "width:50px;min-width:50px;";
+        }
+    }
+
     /// <summary>
     /// This method is used to display student list.
     /// </summary>
@@ -387,8 +402,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
         string sTDWidth = "250";
         if (!IsSummaryMode && !moObservationDetailsBL.Parameters.Any(prm => prm.ControlTypeId == 2 || prm.ControlTypeId == 3) && moObservationDetailsBL.Parameters.Count(prm => prm.Parameter.Length <= 15) == moObservationDetailsBL.Parameters.Count)
             sTDWidth = "150";
-        
-        mlstStudents.OrderBy(std => std.RollNo).ToList().ForEach
+         mlstStudents.OrderBy(std => std.RollNo).ToList().ForEach
             (
             student =>
             {
@@ -522,7 +536,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                      (
                          parameter =>
                          {
-                             this.AddTableCell(trHeader, parameter.Parameter, "ClsProgressGridTestHeader", "center", 1, "width:50px");
+                             this.AddTableCell(trHeader, parameter.Parameter, "ClsProgressGridTestHeader", "center", 1, ParameterColumnWidth);
                          }
 
                      );
