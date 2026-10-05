@@ -769,6 +769,9 @@ public partial class ControlPanel : SchoolBase
             oAccountsBaseClient = new AccountsBaseClient();
             oAccountsBaseClient.Open();
             List<FinancialYear> lstFinancialYears = oAccountsBaseClient.GetAllFinancialYears(miSchoolId);
+              SchoolWiseSupervisorMasterBL oSchoolWiseSupervisorMasterBL = new SchoolWiseSupervisorMasterBL(miSchoolId, miAcademicYearId, miUserId);
+              bool IsFinancialYearAccess = oSchoolWiseSupervisorMasterBL.CheckUserFinancialYearAccess(miUserId, miSchoolId, miAcademicYearId);
+
 
             if (lstFinancialYears == null || lstFinancialYears.Count == 0)
             {
@@ -791,7 +794,7 @@ public partial class ControlPanel : SchoolBase
                     });
 
                     // We only show the financial year dropdown list if it has more than 1 entry.
-                    trFinancialYearCombo.Visible = lstFinancialYears.Count > 1;
+                    trFinancialYearCombo.Visible =lstFinancialYears.Count > 1 && IsFinancialYearAccess;
                     if (lstFinancialYears.Count > 1)
                         divComboContainer.Visible = true;
 
@@ -1175,7 +1178,7 @@ public partial class ControlPanel : SchoolBase
         else
             trStudentAssessment.Visible = false;
 
-       if ((moSchool == Constants.SchoolId.PPSN || moSchool == Constants.SchoolId.PIONEER) && moUserRole == Constants.UserRoles.Student)
+        if ((moSchool == Constants.SchoolId.PPSN || moSchool == Constants.SchoolId.PIONEER || moSchool == Constants.SchoolId.TheScholarsAcademy || moSchool == Constants.SchoolId.ThePioneerSchool) && moUserRole == Constants.UserRoles.Student)
         {
             StudentAssessmentBL oStudentAssessmentBL = new StudentAssessmentBL(miSchoolId, miAcademicYearId, miUserId);
             trStudentAssessment.Visible = oStudentAssessmentBL.AllowSelfAssessmentscreen();

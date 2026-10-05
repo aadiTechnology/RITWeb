@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Web;
 using BusinessLogic;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using SchoolEntities;
 using Utility;
 using System.Threading;
 using BusinessLogic.Exceptions;
@@ -171,7 +173,7 @@ public class ReportDisplay : SchoolBase
 
             crReportDocument.Load(sPath);
 
-            if (meReportName == Constants.ExportReports.StudentwiseProgressReport || meReportName == Constants.ExportReports.PrelimReport || meReportName == Constants.ExportReports.StudentTerm1ProgressReport || meReportName == Constants.ExportReports.StudentTerm2ProgressReport || meReportName == Constants.ExportReports.StudentwiseProgressReportFBS || meReportName == Constants.ExportReports.StudentwiseProgressReportPPSN || meReportName == Constants.ExportReports.PPSTermwiseReport || meReportName == Constants.ExportReports.PrelimReportPP || meReportName == Constants.ExportReports.HolosticProgressReportPPSNFor3to5)
+            if (meReportName == Constants.ExportReports.StudentwiseProgressReport || meReportName == Constants.ExportReports.StudentwiseProgressReportPPSH6to8Std || meReportName == Constants.ExportReports.PrelimReport || meReportName == Constants.ExportReports.StudentTerm1ProgressReport || meReportName == Constants.ExportReports.StudentTerm2ProgressReport || meReportName == Constants.ExportReports.StudentwiseProgressReportFBS || meReportName == Constants.ExportReports.StudentwiseProgressReportPPSN || meReportName == Constants.ExportReports.PPSTermwiseReport || meReportName == Constants.ExportReports.PrelimReportPP || meReportName == Constants.ExportReports.HolosticProgressReportPPSNFor3to5 || meReportName == Constants.ExportReports.HPCProgressCardForNurseryORJRKg)
                 SetFinalProgressReportDataSource(msFilter);
             else
             {
@@ -229,6 +231,133 @@ public class ReportDisplay : SchoolBase
     }
 
     #endregion -- PUBLIC METHOD(s) --
+
+    #region -- GENERIC REPORT EXPORT METHOD(s) --
+
+    /// <summary>
+    /// Exports a Crystal Report to a byte array in memory using SetParameterValue for each parameter.
+    /// Used for Category 1 (standard parameter-based) reports.
+    /// Does NOT write to disk. Returns the exported report as byte[].
+    /// </summary>
+    /// <param name="asReportPath">Logical path of the .rpt file (e.g., \RITeSchool\Report\Payroll\SalarySlip.rpt)</param>
+    /// <param name="aoParameterPairs">List of parameter name-value pairs to pass to the report</param>
+    /// <param name="aoExportFormatType">Export format (PDF, Excel, RichText)</param>
+    /// <returns>byte[] of the exported report, or null on failure</returns>
+    public byte[] ExportReportToStream(string asReportPath, List<ParameterPair> aoParameterPairs, ExportFormatType aoExportFormatType)
+    {
+        ReportDocument crReport = null;
+        Tables crTables = null;
+
+        try
+        {
+            crReport = new ReportDocument();
+
+            ConnectionInfo crConnectionInfo = new ConnectionInfo();
+            crConnectionInfo.ServerName = ConfigurationManager.AppSettings["ReportingDataSource"];
+            crConnectionInfo.DatabaseName = ConfigurationManager.AppSettings["ReportDataBaseName"];
+            crConnectionInfo.UserID = ConfigurationManager.AppSettings["ReportingUserId"];
+            crConnectionInfo.Password = ConfigurationManager.AppSettings["ReportingPassword"];
+
+            string sFullPath = msBasePath + asReportPath;
+            crReport.Load(sFullPath);
+
+            crTables = crReport.Database.Tables;
+            TableLogOnInfo crtableLogoninfo;
+            foreach (Table ocrTable in crTables)
+            {
+                crtableLogoninfo = ocrTable.LogOnInfo;
+                crtableLogoninfo.ConnectionInfo = crConnectionInfo;
+                ocrTable.ApplyLogOnInfo(crtableLogoninfo);
+            }
+
+            // Apply parameters from the list
+            if (aoParameterPairs != null)
+            {
+                foreach (ParameterPair oPair in aoParameterPairs)
+                {
+                    if (oPair.Value != null && oPair.Value.Trim().ToLower() == "null")
+                        crReport.SetParameterValue(oPair.Name, null);
+                    else
+                        crReport.SetParameterValue(oPair.Name, oPair.Value);
+                }
+            }
+
+            // Export to stream (in-memory)
+            using (Stream oStream = crReport.ExportToStream(aoExportFormatType))
+            {
+                using (MemoryStream oMemoryStream = new MemoryStream())
+                {
+                    oStream.CopyTo(oMemoryStream);
+                    return oMemoryStream.ToArray();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+            return null;
+        }
+        finally
+        {
+            if (crTables != null)
+                crTables.Dispose();
+
+            if (crReport != null)
+            {
+                crReport.Close();
+                crReport.Dispose();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Exports a Crystal Report to a byte array in memory using DataSet as the data source.
+    /// Used for Category 2 (DataSet-based) reports.
+    /// Does NOT write to disk. Returns the exported report as byte[].
+    /// </summary>
+    /// <param name="asReportPath">Logical path of the .rpt file</param>
+    /// <param name="aoDataSet">DataSet to set as the report's data source</param>
+    /// <param name="aoExportFormatType">Export format (PDF, Excel, RichText)</param>
+    /// <returns>byte[] of the exported report, or null on failure</returns>
+    public byte[] ExportDataSetReportToStream(string asReportPath, DataSet aoDataSet, ExportFormatType aoExportFormatType)
+    {
+        ReportDocument crReport = null;
+
+        try
+        {
+            crReport = new ReportDocument();
+
+            string sFullPath = msBasePath + asReportPath;
+            crReport.Load(sFullPath);
+
+            crReport.SetDataSource(aoDataSet);
+
+            // Export to stream (in-memory)
+            using (Stream oStream = crReport.ExportToStream(aoExportFormatType))
+            {
+                using (MemoryStream oMemoryStream = new MemoryStream())
+                {
+                    oStream.CopyTo(oMemoryStream);
+                    return oMemoryStream.ToArray();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
+            return null;
+        }
+        finally
+        {
+            if (crReport != null)
+            {
+                crReport.Close();
+                crReport.Dispose();
+            }
+        }
+    }
+
+    #endregion -- GENERIC REPORT EXPORT METHOD(s) --
 
     #region -- PRIVATE METHOD(s) --
 
@@ -310,6 +439,12 @@ public class ReportDisplay : SchoolBase
                 break;
             case Constants.ExportReports.HolosticProgressReportPPSNFor3to5:
                 dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPPSH(miSchoolId, iAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, false);
+                break;
+            case Constants.ExportReports.StudentwiseProgressReportPPSH6to8Std:
+                dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportFor6To8PPSHStd(miSchoolId, iAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, false);
+                break;
+            case Constants.ExportReports.HPCProgressCardForNurseryORJRKg:
+                dsProgressReportDetails = ReportsBL.GetDetailsForHolisticReportForPrePrimaryPioneerStd(miSchoolId, miAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
                 break;
         }
 
@@ -529,6 +664,8 @@ public class ReportDisplay : SchoolBase
             //    return "\\RITeSchool\\Report\\Exam\\StudentWiseProgressReportPPSH.rpt";
             case Constants.ExportReports.StudentwiseProgressReportPPSH:
                 return "\\RITeSchool\\Report\\Exam\\StudentFinalProgressReport6to8_PPSH.rpt";
+            case Constants.ExportReports.StudentwiseProgressReportPPSH6to8Std:
+                return "\\RITeSchool\\Report\\Exam\\StudentHolisticReportFor6to8PPSH.rpt";
             case Constants.ExportReports.StudentwiseProgressReportPPSH_9th:
                 return "\\RITeSchool\\Report\\Exam\\StudentFinalProgressReport9thStd_PPSH.rpt";
             case Constants.ExportReports.StudentFinalProgressReport9thStd_PPSH_AY10:
@@ -711,6 +848,16 @@ public class ReportDisplay : SchoolBase
                 return "RITeSchool\\Report\\Exam\\StudentHolisticReportForPPSH.rpt";
             case Constants.ExportReports.EnquiryFormReport:
                 return "\\RITeSchool\\Report\\Student\\StudentEnquiryFormReport_SNS.rpt";
+            case Constants.ExportReports.HPCProgressCardForNurseryORJRKg:
+                return "\\RITeSchool\\Report\\Exam\\PrePrimaryPioneerHPCProgressReport.rpt";
+            case Constants.ExportReports.StudentwiseProgressReportTPS_NurseryTo2nd:
+                return "\\RITeSchool\\Report\\Exam\\StudentwiseTermProgressReportPrimaryTPS.rpt";
+            case Constants.ExportReports.StudentwiseProgressReportTPS_3TO8:
+                 return "\\RITeSchool\\Report\\Exam\\StudentHalfYearlyReportFor3To9ForTPS.rpt";
+            case Constants.ExportReports.StudentwiseProgressReportTSA_NurseryTo2nd:
+                 return "\\RITeSchool\\Report\\Exam\\StudentwiseTermProgressReportPrimaryTSA.rpt";
+            case Constants.ExportReports.StudentwiseProgressReportTSA_3TO8:
+                 return "\\RITeSchool\\Report\\Exam\\StudentHalfYearlyReportFor3To9ForTSA.rpt";
              default:
                 return string.Empty;
         }

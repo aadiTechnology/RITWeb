@@ -71,54 +71,14 @@ public partial class PhotoUpdationUtilityUI : SchoolBase
             if (Directory.Exists(txtPath.Text.Trim()))
             {
                 var ext = new List<string> { ".JPG", ".JPEG", ".BMP", ".PNG" };
-
                 DirectoryInfo obj = new DirectoryInfo(txtPath.Text.Trim());
-
                 FileInfo[] files = obj.GetFiles("*.*", SearchOption.AllDirectories).Where(f => ext.Contains(f.Extension.ToUpper())).ToArray();
 
-                if (files.Length > 0)
+                if (ddlUserRole.SelectedValue == Constants.S_ONE)
                 {
-                    List<string> lstRegNo = new List<string>();
-                    foreach (var file in files)
+                    if (files.Length > 0)
                     {
-                        string regNo = file.Name.Substring(0, file.Name.LastIndexOf("."));
-
-                        if (mbUseSerialNumberOption)
-                        {
-                            //var arrNo = dtData.AsEnumerable().Where(dr => "DSC_" + dr.Field<string>("Photo") == regNo).Select(dr => dr.Field<string>("GRNO")).FirstOrDefault();
-                            var arrNo = dtData.AsEnumerable().Where(dr => dr.Field<string>("Photo") == regNo).Select(dr => dr.Field<string>("GRNO")).FirstOrDefault();
-                            if (arrNo != null)
-                                regNo = arrNo;
-                        }
-
-                        lstRegNo.Add(regNo);
-                    }
-
-                    string sRegNos = base.GenerateXml(lstRegNo);
-
-                    StudentBL oStudentBL = new StudentBL();
-
-                    List<StudentPhoto> lstRegNos = oStudentBL.GetNonValidRegNos(sRegNos, miSchoolId, miAcademicYearId);
-
-                    List<string> lstNonExistregNos = lstRegNos.Where(reg => reg.SchoolwiseStudentId == 0).Select(reg => reg.RegNo).ToList();
-                    List<string> lstDuplicateNos = files.GroupBy(fl => fl.Name).Select(reg => new { RegNo = reg.Key, TotalCount = files.Count(cnt => cnt.Name == reg.Key) }).Where(reg => reg.TotalCount > 1).Select(reg => reg.RegNo).ToList();
-                    if (lstNonExistregNos.Count > 0)
-                    {
-                        string sRegNo = string.Join(", ", lstNonExistregNos);
-                        lblMessage.Text = "Invalid Enrolment No. : " + sRegNo;
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
-                        tdMessage.Align = "left";
-                    }
-                    else if (lstDuplicateNos.Count > 0)
-                    {
-                        string sDuplicate = string.Join(", ", lstDuplicateNos);
-                        lblMessage.Text = "Multiple files are found with same Enrolment No. : " + sDuplicate;
-                        lblMessage.ForeColor = System.Drawing.Color.Red;
-                        tdMessage.Align = "left";
-                    }
-                    else
-                    {
-                        List<StudentPhoto> lstNewList = new List<StudentPhoto>();
+                        List<string> lstRegNo = new List<string>();
                         foreach (var file in files)
                         {
                             string regNo = file.Name.Substring(0, file.Name.LastIndexOf("."));
@@ -131,23 +91,121 @@ public partial class PhotoUpdationUtilityUI : SchoolBase
                                     regNo = arrNo;
                             }
 
-                            var oStudent = lstRegNos.Where(reg => reg.RegNo == regNo).FirstOrDefault();
-                            oStudent.PhotoInBinary = ImageToBase64(file.FullName);
+                            lstRegNo.Add(regNo);
                         }
 
-                        oStudentBL.UpdatePhotos(miSchoolId, miAcademicYearId, miUserId, lstRegNos);
-                        lblMessage.Text = "Photos are updated successfully !!!";
-                        lblMessage.ForeColor = System.Drawing.Color.Blue;
-                        lblMessage.Font.Bold = true;
-                        tdMessage.Align = "center";
-                        txtPath.Text = string.Empty;
+                        string sRegNos = base.GenerateXml(lstRegNo);
+
+                        StudentBL oStudentBL = new StudentBL();
+
+                        List<StudentPhoto> lstRegNos = oStudentBL.GetNonValidRegNos(sRegNos, miSchoolId, miAcademicYearId);
+
+                        List<string> lstNonExistregNos = lstRegNos.Where(reg => reg.SchoolwiseStudentId == 0).Select(reg => reg.RegNo).ToList();
+                        List<string> lstDuplicateNos = files.GroupBy(fl => fl.Name).Select(reg => new { RegNo = reg.Key, TotalCount = files.Count(cnt => cnt.Name == reg.Key) }).Where(reg => reg.TotalCount > 1).Select(reg => reg.RegNo).ToList();
+                        if (lstNonExistregNos.Count > 0)
+                        {
+                            string sRegNo = string.Join(", ", lstNonExistregNos);
+                            lblMessage.Text = "Invalid Enrolment No. : " + sRegNo;
+                            lblMessage.ForeColor = System.Drawing.Color.Red;
+                            tdMessage.Align = "left";
+                        }
+                        else if (lstDuplicateNos.Count > 0)
+                        {
+                            string sDuplicate = string.Join(", ", lstDuplicateNos);
+                            lblMessage.Text = "Multiple files are found with same Enrolment No. : " + sDuplicate;
+                            lblMessage.ForeColor = System.Drawing.Color.Red;
+                            tdMessage.Align = "left";
+                        }
+                        else
+                        {
+                            List<StudentPhoto> lstNewList = new List<StudentPhoto>();
+                            foreach (var file in files)
+                            {
+                                string regNo = file.Name.Substring(0, file.Name.LastIndexOf("."));
+
+                                if (mbUseSerialNumberOption)
+                                {
+                                    //var arrNo = dtData.AsEnumerable().Where(dr => "DSC_" + dr.Field<string>("Photo") == regNo).Select(dr => dr.Field<string>("GRNO")).FirstOrDefault();
+                                    var arrNo = dtData.AsEnumerable().Where(dr => dr.Field<string>("Photo") == regNo).Select(dr => dr.Field<string>("GRNO")).FirstOrDefault();
+                                    if (arrNo != null)
+                                        regNo = arrNo;
+                                }
+
+                                var oStudent = lstRegNos.Where(reg => reg.RegNo == regNo).FirstOrDefault();
+                                oStudent.PhotoInBinary = ImageToBase64(file.FullName);
+                            }
+
+                            oStudentBL.UpdatePhotos(miSchoolId, miAcademicYearId, miUserId, lstRegNos);
+                            lblMessage.Text = "Photos are updated successfully !!!";
+                            lblMessage.ForeColor = System.Drawing.Color.Blue;
+                            lblMessage.Font.Bold = true;
+                            tdMessage.Align = "center";
+                            txtPath.Text = string.Empty;
+                        }
+                    }
+                    else
+                    {
+                        lblMessage.Text = "No any valid file is found.";
+                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        tdMessage.Align = "left";
                     }
                 }
                 else
                 {
-                    lblMessage.Text = "No any valid file is found.";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
-                    tdMessage.Align = "left";
+                    if (files.Length > 0)
+                    {
+                        List<string> lstUserName = new List<string>();
+                        foreach (var file in files)
+                        {
+                            string UserName = file.Name.Substring(0, file.Name.LastIndexOf("."));
+                            lstUserName.Add(UserName);
+                        }
+
+                        string sUserNames = base.GenerateXml(lstUserName);
+
+                        UserRolewisePhotoUploadBL oUserRolewisePhotoUploadBL = new UserRolewisePhotoUploadBL();
+                        List<UserPhoto> lstUserNames = oUserRolewisePhotoUploadBL.GetNonValidUserNames(sUserNames, miSchoolId, miAcademicYearId);
+
+                        List<string> lstNonExistUserNames = lstUserNames.Where(user => user.UserId == 0).Select(user => user.UserName).ToList();
+                        List<string> lstDuplicateNames = files.GroupBy(fl => fl.Name).Select(user => new { UserName = user.Key, TotalCount = files.Count(cnt => cnt.Name == user.Key) }).Where(user => user.TotalCount > 1).Select(user => user.UserName).ToList();
+                        if (lstNonExistUserNames.Count > 0)
+                        {
+                            string sUserName = string.Join(", ", lstNonExistUserNames);
+                            lblMessage.Text = "Invalid User Name : " + sUserName;
+                            lblMessage.ForeColor = System.Drawing.Color.Red;
+                            tdMessage.Align = "left";
+                        }
+                        else if (lstDuplicateNames.Count > 0)
+                        {
+                            string sDuplicate = string.Join(", ", lstDuplicateNames);
+                            lblMessage.Text = "Multiple files are found with same User Name : " + sDuplicate;
+                            lblMessage.ForeColor = System.Drawing.Color.Red;
+                            tdMessage.Align = "left";
+                        }
+                        else
+                        {
+                            List<UserPhoto> lstNewList = new List<UserPhoto>();
+                            foreach (var file in files)
+                            {
+                                string UserName = file.Name.Substring(0, file.Name.LastIndexOf("."));
+                                var oUser = lstUserNames.Where(user => user.UserName == UserName).FirstOrDefault();
+                                oUser.BinaryPhotoImage = ImageToBase64(file.FullName);
+                            }
+
+                            oUserRolewisePhotoUploadBL.UpdatePhotos(miSchoolId, miAcademicYearId, miUserId, lstUserNames);
+                            lblMessage.Text = "Photos are updated successfully !!!";
+                            lblMessage.ForeColor = System.Drawing.Color.Blue;
+                            lblMessage.Font.Bold = true;
+                            tdMessage.Align = "center";
+                            txtPath.Text = string.Empty;
+                        }
+                    }
+                    else
+                    {
+                        lblMessage.Text = "No any valid file is found.";
+                        lblMessage.ForeColor = System.Drawing.Color.Red;
+                        tdMessage.Align = "left";
+                    }
                 }
             }
             else
@@ -161,7 +219,7 @@ public partial class PhotoUpdationUtilityUI : SchoolBase
         {
             ExceptionHandler.WriteExceptionToErrorLog(ex, MethodBase.GetCurrentMethod());
         }
-    } 
+    }
 
     #endregion
 

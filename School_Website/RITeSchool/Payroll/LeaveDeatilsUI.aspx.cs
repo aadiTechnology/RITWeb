@@ -19,6 +19,9 @@ public partial class LeaveDeatilsUI : SchoolBase
     #region Data Member(s)
 
     UserApplyLeaveDetailsBL moUserApplyLeaveDetailsBL;
+    UserApplyLeaveDetailsBL moOdsUserApplyLeaveDetailsBL;
+    private const string S_VIEWSTATE_LEAVE_APPROVAL_REMARKS = "LeaveApprovalRemarks";
+    private const string S_COMMAND_SHOW_REMARKS = "ShowRemarks";
 
     #endregion
 
@@ -86,12 +89,30 @@ public partial class LeaveDeatilsUI : SchoolBase
                 if (bIsApprovedByApprover)
                     imgDelete.Visible = false;
 
+                Label lblStatus = e.Item.FindControl("lblStatus") as Label;
+                LinkButton lnkStatus = e.Item.FindControl("lnkStatus") as LinkButton;
+                bool bShowRemarkLink = cmbReportingRole.SelectedValue == Constants.S_ONE
+                    && (oUserApplyLeaveDetails.StatusId == Constants.LeaveStatuses.Approved.ToInt()
+                        || oUserApplyLeaveDetails.StatusId == Constants.LeaveStatuses.Rejected.ToInt());
+                if (lblStatus != null && lnkStatus != null)
+                {
+                    lblStatus.Visible = !bShowRemarkLink;
+                    lnkStatus.Visible = bShowRemarkLink;
+
+                    if (bShowRemarkLink)
+                    {
+                        if (oUserApplyLeaveDetails.StatusId == Constants.LeaveStatuses.Approved.ToInt())
+                            lnkStatus.Style.Add("color", "green");
+                        else if (oUserApplyLeaveDetails.StatusId == Constants.LeaveStatuses.Rejected.ToInt())
+                            lnkStatus.Style.Add("color", "red");
+                    }
+                }
+
                 if (!oUserApplyLeaveDetails.IsLeaveUpdatedInPayroll && cmbReportingRole.SelectedValue == "4") // all approved leaves
                 {
                     Label lblUserName = e.Item.FindControl("lblUserName") as Label;
                     Label lblDescription = e.Item.FindControl("lblDescription") as Label;
                     Label lblTotalDays = e.Item.FindControl("lblTotalDays") as Label;
-                    Label lblStatus = e.Item.FindControl("lblStatus") as Label;
                     Label lblLeaveType = e.Item.FindControl("lblLeaveType") as Label;
                     Label lblLeaveBalance = e.Item.FindControl("lblLeaveBalance") as Label;
 
@@ -100,7 +121,10 @@ public partial class LeaveDeatilsUI : SchoolBase
                     lblEndDate.Style.Add("color", "navy");
                     lblDescription.Style.Add("color", "navy");
                     lblTotalDays.Style.Add("color", "navy");
-                    lblStatus.Style.Add("color", "navy");
+                    if (lblStatus != null)
+                        lblStatus.Style.Add("color", "navy");
+                    if (lnkStatus != null)
+                        lnkStatus.Style.Add("color", "navy");
                     lblLeaveType.Style.Add("color", "navy");
                     lblLeaveBalance.Style.Add("color", "navy");
                 }
@@ -124,6 +148,7 @@ public partial class LeaveDeatilsUI : SchoolBase
                 if (e.CommandName == Constants.S_COMMAND_REMOVE)
                 {
                     moUserApplyLeaveDetailsBL.Delete(iLeaveCOnfigId);
+                    HideLeaveRemarksDiv();
                     FillApprovalCategories();
                     lblMessage.Text = "Leave record deleted successfully !!!";
                 }
@@ -135,6 +160,11 @@ public partial class LeaveDeatilsUI : SchoolBase
                     MasterPage master = this.Master as MasterPage;
                     string sQueryString = CommonUtility.EncryptQuerystring("Id=" + iLeaveCOnfigId + "&CategoryId=" + cmbReportingRole.SelectedValue + "&HasFullAccess=" + hidHasFullAccess.Value + "&UserName=" + sUserName + "&UserId=" + iUserId);
                     master.RedirectToNextPage("ApplyLeaveUI.aspx?" + sQueryString);
+                }
+                else if (e.CommandName == S_COMMAND_SHOW_REMARKS)
+                {
+                    int iLeaveId = e.CommandArgument.ToInt();
+                    ShowLeaveRemarks(iLeaveId);
                 }
             }
         }
@@ -164,6 +194,7 @@ public partial class LeaveDeatilsUI : SchoolBase
     {
         try
         {
+            HideLeaveRemarksDiv();
             ControlUtility.SetDataPagerAccordingToPageNo(lstvwConfiguration);
         }
         catch (Exception ex)
@@ -176,6 +207,7 @@ public partial class LeaveDeatilsUI : SchoolBase
     {
         try
         {
+            HideLeaveRemarksDiv();
             if (hidSortExpression.Value != e.SortExpression)
                 hidSortDirection.Value = Constants.S_DESCENDING;
             base.RevertSortOrder(hidSortDirection);
@@ -191,6 +223,7 @@ public partial class LeaveDeatilsUI : SchoolBase
     {
         try
         {
+            HideLeaveRemarksDiv();
             FillLeaveDetails();
         }
         catch (Exception ex)
@@ -203,6 +236,7 @@ public partial class LeaveDeatilsUI : SchoolBase
     {
         try
         {
+            HideLeaveRemarksDiv();
             FillApprovalCategories();
         }
         catch (Exception ex)
@@ -215,6 +249,7 @@ public partial class LeaveDeatilsUI : SchoolBase
     {
         try
         {
+            HideLeaveRemarksDiv();
             FillApprovalCategories();
         }
         catch (Exception ex)
@@ -227,7 +262,32 @@ public partial class LeaveDeatilsUI : SchoolBase
     {
         try
         {
+            HideLeaveRemarksDiv();
             FillApprovalCategories();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
+    protected void objdsPayments_ObjectCreating(object sender, ObjectDataSourceEventArgs e)
+    {
+        moOdsUserApplyLeaveDetailsBL = new UserApplyLeaveDetailsBL();
+        e.ObjectInstance = moOdsUserApplyLeaveDetailsBL;
+    }
+
+    protected void objdsPayments_Selected(object sender, ObjectDataSourceStatusEventArgs e)
+    {
+        if (moOdsUserApplyLeaveDetailsBL != null && moOdsUserApplyLeaveDetailsBL.LeaveApprovalRemarks != null)
+            ViewState[S_VIEWSTATE_LEAVE_APPROVAL_REMARKS] = moOdsUserApplyLeaveDetailsBL.LeaveApprovalRemarks;
+    }
+
+    protected void lnkCloseRemarks_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            HideLeaveRemarksDiv();
         }
         catch (Exception ex)
         {
@@ -356,6 +416,33 @@ public partial class LeaveDeatilsUI : SchoolBase
             chkNonLeave.Checked = false;
             chknonupdatedrecords.Checked = true;
         }
+    }
+
+    private void ShowLeaveRemarks(int aiUserLeaveDetailsId)
+    {
+        List<LeaveApprovalDetails> lstRemarks = ViewState[S_VIEWSTATE_LEAVE_APPROVAL_REMARKS] as List<LeaveApprovalDetails>;
+        List<LeaveApprovalDetails> lstFiltered = new List<LeaveApprovalDetails>();
+        if (lstRemarks != null)
+        {
+            lstFiltered = lstRemarks
+                .Where(r => r.UserLeaveDetailsId == aiUserLeaveDetailsId)
+                .OrderByDescending(r => r.InsertDate)
+                .ThenByDescending(r => r.Id)
+                .ToList();
+        }
+
+        rptLeaveRemarks.DataSource = lstFiltered;
+        rptLeaveRemarks.DataBind();
+        lblNoLeaveRemarks.Visible = lstFiltered.Count == 0;
+        divLeaveRemarks.Visible = true;
+    }
+
+    private void HideLeaveRemarksDiv()
+    {
+        divLeaveRemarks.Visible = false;
+        rptLeaveRemarks.DataSource = null;
+        rptLeaveRemarks.DataBind();
+        lblNoLeaveRemarks.Visible = false;
     }
 
     #endregion    

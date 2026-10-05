@@ -210,6 +210,9 @@
                                                 </td>
                                                 <td align="left">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblStatus" Text='<%#Eval("Status") %>'></asp:Label>
+                                                    <asp:LinkButton runat="server" CssClass="ClsLabel" ID="lnkStatus" Text='<%#Eval("Status") %>'
+                                                        CommandName="ShowRemarks" CommandArgument='<%#Eval("Id") %>' Visible="false"
+                                                        CausesValidation="false" style="text-decoration: underline;"></asp:LinkButton>
                                                 </td>
                                                 <td align="left">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblLeaveType" Text='<%#Eval("LeaveName") %>'></asp:Label>
@@ -248,6 +251,9 @@
                                                 </td>
                                                 <td align="left">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblStatus" Text='<%#Eval("Status") %>'></asp:Label>
+                                                    <asp:LinkButton runat="server" CssClass="ClsLabel" ID="lnkStatus" Text='<%#Eval("Status") %>'
+                                                        CommandName="ShowRemarks" CommandArgument='<%#Eval("Id") %>' Visible="false"
+                                                        CausesValidation="false" style="text-decoration: underline;"></asp:LinkButton>
                                                 </td>
                                                 <td align="left">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblLeaveType" Text='<%#Eval("LeaveName") %>'></asp:Label>
@@ -277,7 +283,8 @@
                                     </asp:ListView>
                                     <asp:ObjectDataSource TypeName="BusinessLogic.PayrollBL.UserApplyLeaveDetailsBL"
                                         EnablePaging="True" ID="objdsPayments" runat="server" SelectCountMethod="Count"
-                                        SelectMethod="GetAll" SortParameterName="sortExpression" EnableCaching="False">
+                                        SelectMethod="GetAll" SortParameterName="sortExpression" EnableCaching="False"
+                                        OnObjectCreating="objdsPayments_ObjectCreating" OnSelected="objdsPayments_Selected">
                                         <SelectParameters>
                                             <asp:SessionParameter Name="aiSchoolId" SessionField="I_SCHOOL_ID" Type="int32" />
                                             <asp:SessionParameter Name="aiUserId" SessionField="I_USER_ID" Type="int32" />
@@ -294,6 +301,36 @@
                                             <asp:Parameter Name="startRowIndex" Type="Int32" />
                                         </SelectParameters>
                                     </asp:ObjectDataSource>
+                                    <div id="divLeaveRemarks" runat="server" visible="false" style="display: block; position: absolute;
+                                        z-index: 1000; margin: 0px; padding: 0px; width: 420px; min-height: 120px; border: solid 2px darkgreen;
+                                        left: 50%; top: 350px; margin-left: -210px; background-color: white;">
+                                        <div style="background-image: url(../images/GridHeaderBG.gif); background-repeat: repeat-x;
+                                            height: 28px; color: Black; text-align: right; padding-top: 3px;">
+                                            <div style="font-size: 12px; letter-spacing: 1px; padding-left: 8px; font-weight: bold;
+                                                color: darkgreen; float: left;" align="left">
+                                                Approval Remarks
+                                            </div>
+                                            <asp:LinkButton ID="lnkCloseRemarks" runat="server" CausesValidation="false" OnClick="lnkCloseRemarks_Click"
+                                                style="padding-right: 6px;">
+                                                <img alt="Close" class="img-align-top" src="../images/close_vista.gif" border="0" />
+                                            </asp:LinkButton>
+                                        </div>
+                                        <div style="padding: 10px; text-align: left; overflow: auto; max-height: 250px;">
+                                            <asp:Label ID="lblNoLeaveRemarks" runat="server" CssClass="ClsLabel" Text="No remarks available."
+                                                Visible="false"></asp:Label>
+                                            <asp:Repeater ID="rptLeaveRemarks" runat="server">
+                                                <ItemTemplate>
+                                                    <div style="margin-bottom: 12px; padding: 0; overflow: hidden;">
+                                                        <asp:Label ID="lblApproverName" runat="server" CssClass="ClsLabel"  Style="float: none; padding: 0; display: block;" Font-Bold="true"
+                                                          Text='<%# Eval("ApproverName") + ":" %>'></asp:Label>
+
+                                                         <asp:Label ID="lblRemarkText" runat="server" CssClass="ClsLabel" Style="float: none; padding: 0; display: block;" Text='<%# Eval("Remark") %>'>
+                                                       </asp:Label>
+                                                   </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>

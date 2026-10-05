@@ -488,27 +488,27 @@
                 return;
             }
 
-            var dtStart = document.getElementById(_clienttxtStartDate).value;
-            if (dtStart == "") {
+            var dtEnd = document.getElementById(_clienttxtEndDate).value;
+            if (dtEnd == "") {
                 args.IsValid = true;
                 return;
             }
 
-            var startDate;
+            var EndDate;
             if (document.all)
-                startDate = new Date(dtStart.replace('-', ' '));
+                EndDate = new Date(dtEnd.replace('-', ' '));
             else
-                startDate = new Date(convertdate(dtStart));
-            startDate.setHours(0, 0, 0, 0);
+                EndDate = new Date(convertdate(dtEnd));
+            EndDate.setHours(0, 0, 0, 0);
 
             // Cut-off = today - restrictDays. Start dates before this are blocked.
             var cutoff = new Date();
             cutoff.setHours(0, 0, 0, 0);
             cutoff.setDate(cutoff.getDate() - restrictDays);
 
-            if (startDate < cutoff) {
+            if (EndDate < cutoff) {
                 //oSrc.errormessage = "Leave type '" + shortName + "' cannot be applied for a Start Date older than " + restrictDays + " day(s). Only LWP is allowed for such dates.";
-                oSrc.errormessage = "Only Leave Type(s) LWP can be applied for a Start Date older than " + restrictDays + " day(s)."
+                oSrc.errormessage = "Only Leave Type(s) LWP can be applied for a End Date older than " + restrictDays + " day(s)."
                 args.IsValid = false;
                 return;
             }

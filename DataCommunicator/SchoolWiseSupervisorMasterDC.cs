@@ -857,6 +857,30 @@ namespace DataCommunicator
                 oSQLServerDbUtility.ExecuteStoredProcedureOnServer("usp_DeleteExperianceDetails");
             }
         }
+        /// <summary>
+        /// This method is used to check whether the user has access to financial year.
+        /// </summary>
+        /// <param name="aiUserId"></param>
+        public bool CheckUserFinancialYearAccess(int aiUserId,int aiSchool_Id,int aiAcademicYearId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                oSQLServerDbUtility.AddParameter("User_Id", aiUserId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("School_Id", aiSchool_Id, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("Academic_Year_Id", aiAcademicYearId, SqlDbType.Int);
+
+                using (SqlDataReader oSqlDataReader =
+                    oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_CheckUserFinancialYearAccess"))
+                {
+                    if (oSqlDataReader.Read())
+                    {
+                        return Convert.ToInt32(oSqlDataReader["HasAccess"]) == 1;
+                    }
+
+                    return false;
+                }
+            }
+        }
 
 		#endregion -- PUBLIC METHOD(s) --
 

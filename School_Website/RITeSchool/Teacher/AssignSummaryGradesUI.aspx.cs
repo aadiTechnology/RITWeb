@@ -226,7 +226,7 @@ public partial class AssignSummaryGradesUI : SchoolBase
     private void FillGradeList()
     {
         StudentAssessmentBL mostudentAssessmentBL = new StudentAssessmentBL(miSchoolId, miAcademicYearId, miUserId);
-        DataTable odtGrade = mostudentAssessmentBL.GetGrades(miAcademicYearId);
+        DataTable odtGrade = mostudentAssessmentBL.GetGrades(miAcademicYearId, 0);
         ViewState[S_GRADES] = odtGrade;
     }
 

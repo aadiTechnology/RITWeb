@@ -27,7 +27,8 @@ namespace MobileExportService.Service
         private int miStandardId;
         private int miAssessmentId;
         private bool mbIsLateJoinee;
-        List<string> mlstPioneerGradeReportStandards = new List<string> { "Nursery", "Junior KG", "Senior KG", "1", "2" };
+        List<string> mlstPioneerGradeReportStandards = new List<string> { "Senior KG", "1", "2" };
+        List<string> mlstThePioneerSchoolGradeReportStandards = new List<string> { "Nursery", "Junior KG", "Senior KG", "1", "2" };
         
         #endregion
 
@@ -634,6 +635,8 @@ namespace MobileExportService.Service
 
                 if (msStandardName == "1" || msStandardName == "2" || msStandardName == "3" || msStandardName == "4" || msStandardName == "5")
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH_1stTO5th, GetFinalProgressReportFilterStringForPPSH(aiTermId, abIsFinalExamPublished), ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                else if (miAcademicYearId >= 15 && (msStandardName == "6" || msStandardName == "7" || msStandardName == "8"))
+                    oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH6to8Std, GetFinalProgressReportFilterStringForPPSH(aiTermId, abIsFinalExamPublished), ExportFormatType.PortableDocFormat, sDownloadPath, false);
                 else if (msStandardName == "6" || msStandardName == "7" || msStandardName == "8")
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH, GetFinalProgressReportFilterStringForPPSH(aiTermId, abIsFinalExamPublished), ExportFormatType.PortableDocFormat, sDownloadPath, false);
                 else if (msStandardName == "9" && IsFinalExamPublished && this.miAcademicYearId >= 11)
@@ -686,6 +689,8 @@ namespace MobileExportService.Service
             {
                 if (mlstPioneerGradeReportStandards.Contains(msStandardName))
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPioneer_NurseryTO2nd, GetPioneerProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                else if (msStandardName == "Nursery" || msStandardName == "Junior KG")
+                    oReportDisplay = new ReportDisplay(Constants.ExportReports.HPCProgressCardForNurseryORJRKg, GetPioneerProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
                 else
                 {
                     if (aiTermId == 1)
@@ -693,6 +698,17 @@ namespace MobileExportService.Service
                     else
                         oReportDisplay = new ReportDisplay(Constants.ExportReports.FinalProgressCardForPioneer3To9, GetPioneerProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
                 }
+            }
+            else if (miSchoolId == Constants.SchoolId.ThePioneerSchool.ToInt())
+            {
+                if (mlstThePioneerSchoolGradeReportStandards.Contains(msStandardName))
+                    oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportTPS_NurseryTo2nd, GetThePioneerSchoolProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                else
+                {
+                    if (aiTermId == 1)
+                        oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportTPS_3TO8, GetThePioneerSchoolProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                }
+
             }
             return oReportDisplay;
         }
@@ -834,7 +850,9 @@ namespace MobileExportService.Service
             if (aiTermId == 2 && abIsFinalExamPublished == false)
                 aiTermId = 0;
 
-            if (msStandardName == "6" || msStandardName == "7" || msStandardName == "8")
+            if (miAcademicYearId >= 15 && (msStandardName == "6" || msStandardName == "7" || msStandardName == "8"))
+                sFilterStr = "(usp_GetDetailsForHolisticReportFor6To8PPSHStd.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Standard_Id}=" + miStandardId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Division_Id}=" + miStdDivId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Student_Id}=" + miStudentId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Term_Id}=1" + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.IsFromReportScreen}=0) @";
+               else if  (msStandardName == "6" || msStandardName == "7" || msStandardName == "8")
                 sFilterStr = "(usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.School_Id}=" + miSchoolId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.StudentId}=" + miStudentId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Standard_Id}=" + miStandardId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Term_Id}=1AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.IsFromStudnetLogin}=1AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Division_Id}=" + miStdDivId + ") @";
             else if (msStandardName == "9")
                 sFilterStr = "(usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.School_Id}=" + miSchoolId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.StudentId}=" + miStudentId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.IsFromStudentLogin}=1AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.Standard_Id}=" + miStandardId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.Division_Id}=" + miStdDivId + ") @";
@@ -908,7 +926,9 @@ namespace MobileExportService.Service
             {
                 int iStdId = Convert.ToInt32(oDatatable1.Rows[0]["Standard_Id"]);
 
-                if (!mlstPioneerGradeReportStandards.Contains(msStandardName))
+                if (msStandardName == "Nursery" || msStandardName == "Junior KG")
+                    sFilterStr = "(usp_GetProgressReportForPrePrimaryPioneer.School_Id}=" + miSchoolId + "AND usp_GetProgressReportForPrePrimaryPioneer.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetProgressReportForPrePrimaryPioneer.Standard_Id}=" + miStandardId + "AND usp_GetProgressReportForPrePrimaryPioneer.Division_Id}=" + miStdDivId + "AND usp_GetProgressReportForPrePrimaryPioneer.Student_Id}=" + miStudentId + "AND usp_GetProgressReportForPrePrimaryPioneer.Term_Id}=" + Constants.I_ONE + "AND usp_GetProgressReportForPrePrimaryPioneer.IsFromReportScreen}=0" + ") @";
+                else if (!mlstPioneerGradeReportStandards.Contains(msStandardName))
                 {
                     if (aiTermId == 1)
                         sFilterStr = "(usp_GetDetailsForHalfYearlyReport_Pioneer.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.StudentId}=" + miStudentId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Standard_Id}=" + miStandardId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Division_Id}=" + miStdDivId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Term_Id}=" + Constants.I_ONE + " AND usp_GetDetailsForHalfYearlyReport_Pioneer.IsFromReportScreen}=0" + ") @";
@@ -920,6 +940,25 @@ namespace MobileExportService.Service
             }
             return sFilterStr;
         }
+
+        private string GetThePioneerSchoolProgressReportFilterString(int aiTermId)
+        {
+            DataTable oDatatable1 = StudentBL.GetYearwiseStudentDetails(miSchoolId, miAcademicYearId, miStudentId);
+            string sFilterStr = string.Empty;
+            if (oDatatable1 != null && oDatatable1.Rows.Count > 0)
+            {
+                //int iStdId = Convert.ToInt32(oDatatable1.Rows[0]["Standard_Id"]);
+
+                if (!mlstThePioneerSchoolGradeReportStandards.Contains(msStandardName))
+                {
+                    if (aiTermId == 1)
+                        sFilterStr = "(usp_GetDetailsForHalfYearlyReport_TPS.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHalfYearlyReport_TPS.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetDetailsForHalfYearlyReport_TPS.StudentId}=" + miStudentId + "AND usp_GetDetailsForHalfYearlyReport_TPS.Standard_Id}=" + miStandardId + "AND usp_GetDetailsForHalfYearlyReport_TPS.Division_Id}=" + miStdDivId + "AND usp_GetDetailsForHalfYearlyReport_TPS.Term_Id}=" + Constants.I_ONE + " AND usp_GetDetailsForHalfYearlyReport_TPS.IsFromReportScreen}=0" + ") @";
+                }
+                else
+                    sFilterStr = "(usp_GetProgressReportDetailsForPrePrimaryTPS.School_Id}=" + miSchoolId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.Standard_Id}=" + miStandardId + " AND usp_GetProgressReportDetailsForPrePrimaryTPS.Division_Id}=" + miStdDivId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.StudentId}=" + miStudentId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.TestId}=" + 0 + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.IsFromReportScreen}=0" + ") @";
+            }
+            return sFilterStr;
+       }
 
         /// <summary>
         /// This method is used to display report
@@ -1129,7 +1168,7 @@ namespace MobileExportService.Service
             // Category 2: DataSet-based Crystal Reports
             // Add new DataSet reports here as needed.
 
-            List<int> lstDatasetBasedReports = new List<int> { };
+            List<int> lstDatasetBasedReports = new List<int> { 82, 88, 137, 138, 99, 273, 90, 120, 122, 132, 281, 277, 312, 321, 322, 327, 331, 333 };
             if (lstDatasetBasedReports.Contains(aiReportId))
                 return 2;
 
@@ -1154,8 +1193,15 @@ namespace MobileExportService.Service
 
             int iStandardId = aoDictParameters.ContainsKey("Standard_Id") ? aoDictParameters["Standard_Id"].ToInt() : 0;
             int iDivisionId = aoDictParameters.ContainsKey("Division_Id") ? aoDictParameters["Division_Id"].ToInt() : 0;
-            int iStudentId = aoDictParameters.ContainsKey("StudentId") ? aoDictParameters["StudentId"].ToInt() : 0;
+            
+            int iStudentId = 0;
+            if (aoDictParameters.ContainsKey("StudentId"))
+                iStudentId = aoDictParameters["StudentId"].ToInt();
+            else if (aoDictParameters.ContainsKey("Student_Id"))
+                iStudentId = aoDictParameters["Student_Id"].ToInt();
+
             int iTermId = aoDictParameters.ContainsKey("Term_Id") ? aoDictParameters["Term_Id"].ToInt() : 0;
+            int iTestId = aoDictParameters.ContainsKey("TestId") ? aoDictParameters["TestId"].ToInt() : 0;
             string sNote = aoDictParameters.ContainsKey("Note") ? aoDictParameters["Note"] : string.Empty;
             int iIsFromReportScreen = aoDictParameters.ContainsKey("IsFromReportScreen") ? aoDictParameters["IsFromReportScreen"].ToInt() : 0;
 
@@ -1163,32 +1209,66 @@ namespace MobileExportService.Service
 
             switch (oReport)
             {
-                case DatasetBasedReports.StudentwiseProgressReport:
+                case DatasetBasedReports.ExamResult:
                     return ReportsBL.GetGradingProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId, iIsFromReportScreen);
 
-                case DatasetBasedReports.StudentTerm1ProgressReport:
-                    return ReportsBL.GetMarkingSystemProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 1, iIsFromReportScreen);
+                case DatasetBasedReports.StudentFinalResult:
+                    return ReportsBL.GetProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, true);
 
-                case DatasetBasedReports.StudentTerm2ProgressReport:
-                    return ReportsBL.GetMarkingSystemProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 2, iIsFromReportScreen);
+                case DatasetBasedReports.StudentFinalResultPPSN:
+                    return ReportsBL.GetProgressReportDataSetForPPSN(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote);
 
-                case DatasetBasedReports.StudentwiseProgressReportFBS:
+                case DatasetBasedReports.StudentFinalResultMCPS:
+                    return ReportsBL.GetProgressReportDataSetForMCPS(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote);
+
+                case DatasetBasedReports.StudentTerm1Result:
+                    iTermId = 1;
+                    return ReportsBL.GetMarkingSystemProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId, iIsFromReportScreen);
+
+                case DatasetBasedReports.StudentTermwiseResult:
+                    return ReportsBL.GetTermwiseProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId, true);
+
+                case DatasetBasedReports.StudentTerm2Result:
+                    iTermId = 2;
+                    return ReportsBL.GetMarkingSystemProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId, iIsFromReportScreen);
+
+                case DatasetBasedReports.ExamResultFBS:
                     return ReportsBL.GetGradingProgressReportDataSetForFBS(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId);
 
-                case DatasetBasedReports.StudentwiseProgressReportPPSN:
+                case DatasetBasedReports.StudentPreliminaryResult:
+                    return ReportsBL.GetPreliminaryExaminationProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, true);
+
+                case DatasetBasedReports.ExamResultPPSN:
                     return ReportsBL.GetGradingProgressReportDataSetForPPSN(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId);
 
-                case DatasetBasedReports.PPSTermwiseReport:
-                    return ReportsBL.GetTermwiseProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 1, false);
-
-                case DatasetBasedReports.PrelimReport:
-                    return ReportsBL.GetPreliminaryExaminationProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, false);
-
                 case DatasetBasedReports.PrelimReportPP:
-                    return ReportsBL.GetPrelimProgressReportDataSetForPP(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 2, false);
+                    return ReportsBL.GetPrelimProgressReportDataSetForPP(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, 2, true);
 
-                case DatasetBasedReports.HolosticProgressReportPPSNFor3to5:
-                    return ReportsBL.GetDetailsForHolisticReportForPPSH(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, false);
+                case DatasetBasedReports.StudentTerm1ProgressReport:
+                    iTermId = 1;
+                    return ReportsBL.GetTerm1ProgressReportDataSet(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, sNote, iTermId, iIsFromReportScreen);
+
+                case DatasetBasedReports.HolisticFinalProgressCard:
+                    return ReportsBL.GetDetailsForHolisticReport(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTestId);
+
+                case DatasetBasedReports.PrePrimaryStudentTerm1:
+                    return ReportsBL.GetDetailsForPrePrimaryTerm1Report(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId);
+
+                case DatasetBasedReports.HolisticReportFor1To3PPSH:
+                    return ReportsBL.GetDetailsForHolisticReportForPPSH(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
+
+                case DatasetBasedReports.HolisticProgressReport6to7SNS:
+                    if (aiSchoolId == Constants.SchoolId.SNS.ToInt())
+                        return ReportsBL.GetDetailsForHolisticReportFor6to8SNS(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId);
+                    else if (aiSchoolId == Constants.SchoolId.PPSN.ToInt())
+                        return ReportsBL.GetDetailsForHolisticReportForPPSN(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
+                    return null;
+
+                case DatasetBasedReports.HolisticReportFor6To8PPSH:
+                    return ReportsBL.GetDetailsForHolisticReportFor6To8PPSHStd(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
+
+                case DatasetBasedReports.HolisticReportForPrePrimaryPioneer:
+                    return ReportsBL.GetDetailsForHolisticReportForPrePrimaryPioneerStd(aiSchoolId, aiAcademicYearId, iStandardId, iDivisionId, iStudentId, iTermId, true);
 
                 default:
                     return null;
@@ -1346,7 +1426,7 @@ namespace MobileExportService.Service
 
         private void AddDefaultParameters(int aiSchoolId,int aiAcademicYearId, List<ParameterPair> aoParameterPairs, int aiReportId)
         {
-            List<int> lstReportIds = new List<int> { 208, 261, 4, 202, 142, 275 };
+            List<int> lstReportIds = new List<int> { 208, 261, 4, 202, 142, 275, 328, 329 };
             if (!lstReportIds.Contains(aiReportId))
             {
                 SchoolWiseAcademicYearMasterBL oSchoolAcademicYearBL = new SchoolWiseAcademicYearMasterBL();
@@ -1366,18 +1446,29 @@ namespace MobileExportService.Service
             SchoolDataReport = 1
         }
 
-        // Need to set correct report id here.
+        // Report ids below match the string report id constants used by
+        // SchoolReportUI.aspx.cs (SetProgressReportDataSource) so the mobile
+        // service resolves the same DataSet-based progress reports as the web app.
         public enum DatasetBasedReports
         {
-            StudentwiseProgressReportFBS = 9,
-            StudentwiseProgressReportPPSN = 8,
-            StudentwiseProgressReport = 1,
-            StudentTerm1ProgressReport = 2,
-            StudentTerm2ProgressReport = 3,
-            HolosticProgressReportPPSNFor3to5 = 4,
-            PrelimReportPP = 5,
-            PrelimReport = 6,
-            PPSTermwiseReport = 7,
+            ExamResult = 82,                        // S_EXAM_RESULT
+            StudentFinalResult = 88,                // S_STUD_FINAL_RESULT
+            StudentFinalResultPPSN = 137,           // S_STUD_FINAL_RESULT_PPSN
+            StudentFinalResultMCPS = 138,           // S_STUD_FINAL_RESULT_MCPS
+            StudentTerm1Result = 99,                // S_STUD_TERM1_RESULT
+            StudentTermwiseResult = 273,            // S_STUD_TERMWISE_RESULT
+            StudentTerm2Result = 90,                // S_STUD_TERM2_RESULT
+            ExamResultFBS = 120,                    // S_EXAM_RESULT_FBS
+            StudentPreliminaryResult = 122,         // S_STUD_PRELIMINARY_RESULT
+            ExamResultPPSN = 132,                   // S_EXAM_RESULT_PPSN
+            PrelimReportPP = 281,                   // S_PRELIM_REPORT_PP
+            StudentTerm1ProgressReport = 277,       // S_STUDENT_TERM1_PROGRESS_REPORT
+            HolisticFinalProgressCard = 312,        // S_HOLISTIC_FINAL_PROGRESS_CARD
+            PrePrimaryStudentTerm1 = 321,           // S_PREPRIMARY_STUDENT_TERM1
+            HolisticReportFor1To3PPSH = 322,        // S_HOLISTIC_REPORT_FOR1TO3_PPSH
+            HolisticProgressReport6to7SNS = 327,    // S_Holistic_Progress_Report_6to7_SNS
+            HolisticReportFor6To8PPSH = 331,        // S_HOLISTIC_REPORT_FOR6TO8_PPSH
+            HolisticReportForPrePrimaryPioneer = 333, // S_HOLISTIC_REPORT_FORPrePrimaryPioneer
         }
 
         #endregion -- PRIVATE METHOD(s) --

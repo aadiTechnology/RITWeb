@@ -213,8 +213,28 @@ public partial class AssignGradesUI : SchoolBase
                 if (moSchool == Constants.SchoolId.PPSH)
                 {
                     HtmlTableCell tdSummary = e.Item.FindControl("tdSummary") as HtmlTableCell;
+                    HtmlTableCell thSummary = e.Item.FindControl("thSummary") as HtmlTableCell;
+
                     if (tdSummary != null)
                         tdSummary.Visible = true;
+
+                    Label lblClass = e.Item.FindControl("lblClass") as Label;
+
+                    if (lblClass != null)
+                    {
+                        int iStandard = lblClass.Text.Split('-')[0].ToInt();
+
+                        if (iStandard >= 6 && iStandard <= 8)
+                        {
+                            if (thSummary != null)
+                                thSummary.Visible = false;
+                            if (tdSummary != null)
+                                tdSummary.Visible = false;
+
+                            if (btnAddSummary != null)
+                                btnAddSummary.Visible = false;
+                        }
+                    }
                 }
                 else if (moSchool == Constants.SchoolId.SNS)
                 {
@@ -405,7 +425,8 @@ public partial class AssignGradesUI : SchoolBase
                 dtClasses = oDtAllStdandardDivisions.Select("Subject_Name='Behaviour'").CopyToDataTable();
             else if (miSchoolId == Constants.SchoolId.SNS.ToInt() && miAcademicYearId >= 10)
                 dtClasses = oDtAllStdandardDivisions.Select("Subject_Name<>'Feedback'").CopyToDataTable();
-            else if ((miSchoolId == Constants.SchoolId.PPSN.ToInt() && miAcademicYearId >= 14) || (miSchoolId == Constants.SchoolId.PIONEER.ToInt() && miAcademicYearId >= 4))
+            else if ((miSchoolId == Constants.SchoolId.PPSN.ToInt() && miAcademicYearId >= 14) || (miSchoolId == Constants.SchoolId.PIONEER.ToInt() && miAcademicYearId >= 4) 
+                || (miSchoolId == Constants.SchoolId.TheScholarsAcademy.ToInt()) || (miSchoolId == Constants.SchoolId.ThePioneerSchool.ToInt()))
                 dtClasses = oDtAllStdandardDivisions.Select("Subject_Name NOT LIKE '%Assessment%' AND Subject_Name NOT LIKE '%Feedback%'").CopyToDataTable();
             else
                 dtClasses = oDtAllStdandardDivisions;
@@ -442,11 +463,22 @@ public partial class AssignGradesUI : SchoolBase
         lstvwSubjects.DataBind();
 
         if (moSchool == Constants.SchoolId.PPSH)
-        {
-            HtmlTableCell thGradeAll = lstvwSubjects.FindControl("thSummary") as HtmlTableCell;
-            if (thGradeAll != null)
-                thGradeAll.Visible = true;
-        }
+            if (moSchool == Constants.SchoolId.PPSH)
+            {
+                HtmlTableCell thGradeAll = lstvwSubjects.FindControl("thSummary") as HtmlTableCell;
+
+                if (thGradeAll != null)
+                {
+                    Label lblClass = lstvwSubjects.Items[0].FindControl("lblClass") as Label;
+
+                    if (lblClass != null)
+                    {
+                        int iStandard = lblClass.Text.Split('-')[0].ToInt();
+
+                        thGradeAll.Visible = !(iStandard >= 6 && iStandard <= 8);
+                    }
+                }
+            }
         else if (moSchool == Constants.SchoolId.SNS)
         {
             if (miAcademicYearId >= 11)

@@ -516,6 +516,11 @@ namespace BusinessLogic
         {
             moSchoolWiseSupervisorMasterDC.DeleteExperianceDetails(aiExperianceid, aiUserId, aiUpdatedById);
         }
+
+        public bool CheckUserFinancialYearAccess(int aiUserId, int aiSchool_Id, int aiAcademicYearId)
+        {
+            return moSchoolWiseSupervisorMasterDC.CheckUserFinancialYearAccess(aiUserId,aiSchool_Id,aiAcademicYearId);
+        }
        
     }
       public class SchoolWiseSupervisorMasterCollectionBL

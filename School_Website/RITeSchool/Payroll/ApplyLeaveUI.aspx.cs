@@ -280,19 +280,19 @@ public partial class ApplyLeaveUI : SchoolBase
             int iRestrictDays = Settings.RestrictLeaveApplyCount;
             string sLeaveShortName = ddlleavetype.SelectedItem != null ? ddlleavetype.SelectedItem.Text : string.Empty;
 
-            DateTime dtStartDate;
+            DateTime dtEndDate;
             // If the start date is missing/unparseable, let the RequiredField/date validators handle it.
-            if (!DateTime.TryParse(txtStartDate.Text, out dtStartDate))
+            if (!DateTime.TryParse(txtStartDate.Text, out dtEndDate))
             {
                 e.IsValid = true;
                 return;
             }
 
-            bool bRestricted = moUserApplyLeaveDetailsBL.IsBackdatedLeaveRestricted(sLeaveShortName, dtStartDate, iRestrictDays);
+            bool bRestricted = moUserApplyLeaveDetailsBL.IsBackdatedLeaveRestricted(sLeaveShortName, dtEndDate, iRestrictDays);
             if (bRestricted)
             {
                 CustomValidator cv = sender as CustomValidator;
-                cv.ErrorMessage = "Leave type '" + sLeaveShortName + "' cannot be applied for a start date older than " + iRestrictDays + " day(s). Only LWP is allowed for such dates.";
+                cv.ErrorMessage = "Leave type '" + sLeaveShortName + "' cannot be applied for a end date older than " + iRestrictDays + " day(s). Only LWP is allowed for such dates.";
                 e.IsValid = false;
             }
             else
@@ -573,7 +573,7 @@ public partial class ApplyLeaveUI : SchoolBase
         // Show the informational note only when the restriction is active and allowed types exist.
         if (bRestrictionActive && lstAllowedLeaveTypes.Count > 0)
         {
-            lblRestrictLeaveNote.Text = "Only Leave Type(s) " + string.Join(", ", lstAllowedLeaveTypes.ToArray()) + " can be applied for a Start Date older than " + iRestrictDays + " day(s).";
+            lblRestrictLeaveNote.Text = "Only Leave Type(s) " + string.Join(", ", lstAllowedLeaveTypes.ToArray()) + " can be applied for a End Date older than " + iRestrictDays + " day(s).";
             trRestrictLeaveNote.Visible = true;
         }
     }

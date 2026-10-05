@@ -17,6 +17,9 @@ using System.Collections;
 using System.Data.SqlClient;
 using Utility;
 using PhotoUploadEntities;
+using SchoolEntities;
+using System.Linq;
+
 
 namespace DataCommunicator
 {
@@ -417,6 +420,69 @@ namespace DataCommunicator
                 oSQLServerDbUtility.AddParameter("SchoolId", miSchoolId, SqlDbType.Int);
                 oSQLServerDbUtility.AddParameter("UserId", aiUserId, SqlDbType.Int);
                 return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("Usp_GetSubmitStatus");
+            }
+        }
+
+        public List<UserPhoto> GetNonValidUserNames(string sUserNames, int aiSchoolId, int aiAcademicYearId)
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                List<UserPhoto> lstUserNames = new List<UserPhoto>();
+                oSQLServerDbUtility.AddParameter("UserNames", sUserNames, SqlDbType.Xml);
+                oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("[usp_GetNonValidUserNames]"))
+                {
+                    while (oSqlDataReader.Read())
+                    {
+                        lstUserNames.Add(new UserPhoto
+                        {
+                            UserName = oSqlDataReader["UserName"].ToString(),
+                            UserId = oSqlDataReader["UserId"].ToInt(),
+                            User_Role_Id = oSqlDataReader["User_Role_Id"].ToInt()
+                        });
+                    }
+                }
+                return lstUserNames;
+            }
+        }
+
+        public void UpdatePhotos(int aiSchoolId, int aiAcademicYearId, int aiInsertedById, List<UserPhoto> alstUserNames)
+        {   
+            foreach (var photo in alstUserNames)
+            {
+                string sQuery = "";
+                if (photo.User_Role_Id == 2) // teacher 
+                {
+                    sQuery = " UPDATE SchoolWise_Teacher_Master SET " +
+                          " BinaryPhotoImage = @Image, ProfilePicUpdateDate = '" + System.DateTime.Now.ToString() + "'" +
+                          " WHERE User_Id = " + photo.UserId +
+                          " AND School_Id = " + aiSchoolId +
+                          " AND academic_year_id = " + aiAcademicYearId;
+
+                     using (SQLServerDbUtility oSQLServerUility = new SQLServerDbUtility())
+                        oSQLServerUility.ExecuteTransaction(photo.BinaryPhotoImage, sQuery);
+                }
+                else if (photo.User_Role_Id == 6) // Supervisor(Admin staff)
+                {
+                    sQuery = " UPDATE SchoolWise_Supervisor_Master SET " +
+                          " BinaryPhotoImage = @Image, ProfilePicUpdateDate = '" + System.DateTime.Now.ToString() + "'" +
+                          " WHERE User_Id = " + photo.UserId +
+                          " AND School_Id = " + aiSchoolId;                        
+
+                    using (SQLServerDbUtility oSQLServerUility = new SQLServerDbUtility())
+                        oSQLServerUility.ExecuteTransaction(photo.BinaryPhotoImage, sQuery);
+                }
+                else if (photo.User_Role_Id == 7) //Other staff
+                {
+                    sQuery = " UPDATE OtherStaff SET " +
+                          " BinaryPhotoImage = @Image, ProfilePicUpdateDate = '" + System.DateTime.Now.ToString() + "'" +
+                          " WHERE UserId = " + photo.UserId +
+                          " AND SchoolId = " + aiSchoolId;
+                         
+                    using (SQLServerDbUtility oSQLServerUility = new SQLServerDbUtility())
+                        oSQLServerUility.ExecuteTransaction(photo.BinaryPhotoImage, sQuery);
+                }
             }
         }
 

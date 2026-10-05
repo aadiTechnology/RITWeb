@@ -140,7 +140,7 @@ namespace BusinessLogic.PayrollBL
        /// <param name="adtStartDate">Start date of the leave.</param>
        /// <param name="aiRestrictDays">Allowed number of days (RestrictLeaveApplyCount). 0 disables the check.</param>
        /// <returns>True when the leave should be blocked; otherwise false.</returns>
-      public bool IsBackdatedLeaveRestricted(string asLeaveShortName, DateTime adtStartDate, int aiRestrictDays)
+      public bool IsBackdatedLeaveRestricted(string asLeaveShortName, DateTime adtEndDate, int aiRestrictDays)
       {
           if (aiRestrictDays <= 0 || string.IsNullOrEmpty(asLeaveShortName))
               return false;
@@ -149,7 +149,7 @@ namespace BusinessLogic.PayrollBL
           if (mlstBackdatedAllowedLeaveShortNames.Contains(asLeaveShortName.Trim(), StringComparer.OrdinalIgnoreCase))
               return false;
 
-          return adtStartDate.Date < DateTime.Today.AddDays(-aiRestrictDays);
+          return adtEndDate.Date < DateTime.Today.AddDays(-aiRestrictDays);
       }
 
        /// <summary>

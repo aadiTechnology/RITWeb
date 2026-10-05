@@ -20,6 +20,19 @@
                     </tr>
                     <tr>
                         <td class="ClsBorderlight">
+                            <span class="clsLabel">Category :</span>
+                        </td>
+                        <td>
+                            <asp:DropDownList ID="ddlUserRole" runat="server" AutoPostBack="false" CssClass="MidCombo">
+                            <asp:ListItem Value="0" Text="--Select--"></asp:ListItem>
+                            <asp:ListItem Value="1" Text="Student"></asp:ListItem>
+                            <asp:ListItem Value="2" Text="Staff"></asp:ListItem>
+                            </asp:DropDownList>
+                            <asp:RequiredFieldValidator ID="reqValCategory" runat="server" ErrorMessage="Category should be selected." InitialValue="0" ControlToValidate="ddlUserRole" Display="None"></asp:RequiredFieldValidator>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ClsBorderlight">
                             <span class="clsLabel">Folder Path :</span>
                         </td>
                         <td>

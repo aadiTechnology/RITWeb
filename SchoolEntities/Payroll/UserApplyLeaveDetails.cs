@@ -37,6 +37,7 @@ namespace SchoolEntities.Payroll
         public int Id { get; set; }
         public string Category { get; set; }
     }
+    [Serializable]
     public class LeaveApprovalDetails
     {
         public int Id { get; set; }
@@ -44,8 +45,8 @@ namespace SchoolEntities.Payroll
         public int ReportingUserId { get; set; }
         public string Remark { get; set; }
         public int StatusId { get; set; }
-      
-    
+        public string ApproverName { get; set; }
+        public DateTime InsertDate { get; set; }
     }
 
     public class LeaveBalance

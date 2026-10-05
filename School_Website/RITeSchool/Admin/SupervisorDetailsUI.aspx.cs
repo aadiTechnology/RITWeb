@@ -369,7 +369,7 @@ public partial class SupervisorDetailsUI : SchoolBase
             {
                 chkCanDeleteVoucher.Checked = chkCanEditOldFinancialYear.Checked = chkFinancialYearChangeApplicable.Checked = false;
                 chkCanEditOldFinancialYear.Enabled = false;
-                chkFinancialYearChangeApplicable.Enabled = false;
+                chkFinancialYearChangeApplicable.Enabled = true;
                 chkCanDeleteVoucher.Enabled = false;
             }
             HideShowControls();
@@ -1675,7 +1675,7 @@ public partial class SupervisorDetailsUI : SchoolBase
         else
         {
             chkCanEditOldFinancialYear.Enabled = false;
-            chkFinancialYearChangeApplicable.Enabled = false;
+            chkFinancialYearChangeApplicable.Enabled = true;
             chkCanDeleteVoucher.Enabled = false;
         }
 

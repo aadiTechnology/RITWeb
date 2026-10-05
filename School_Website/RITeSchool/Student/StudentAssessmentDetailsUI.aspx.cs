@@ -380,6 +380,7 @@ public partial class StudentAssessmentDetailsUI : SchoolBase
             btnSave.Enabled = false;
             btnSubmit.Enabled = false;
         }
+
         if (moUserRole == Constants.UserRoles.Teacher && miSchoolId.ToInt()==Constants.SchoolId.SNS.ToInt())
         {
             btnSave.Enabled = true;
@@ -414,7 +415,15 @@ public partial class StudentAssessmentDetailsUI : SchoolBase
     /// </summary>
     private void FillGradeList()
     {
-        DataTable odtGrade = moStudentAssessmentBL.GetGrades(ddlAcademicYear.SelectedValue.ToInt());
+        int iStandardId = 0;
+
+        if (moUserRole == Constants.UserRoles.Student)
+            iStandardId = Session[Constants.S_SESSION_STUDENT_STANDERED_ID].ToInt();
+        else
+            iStandardId = Convert.ToInt32(QueryString["StandardId"]);
+        
+        //int iStandardId = Session[Constants.S_SESSION_STUDENT_STANDERED_ID].ToInt();
+        DataTable odtGrade = moStudentAssessmentBL.GetGrades(ddlAcademicYear.SelectedValue.ToInt(), iStandardId);
         ViewState[S_GRADES] = odtGrade;
     }
 
@@ -528,7 +537,8 @@ public partial class StudentAssessmentDetailsUI : SchoolBase
             DisableControls(false);
         }
 
-        if (ddlCategory.SelectedItem.Text == "Self Assessment" && moSchool == Constants.SchoolId.PPSN)
+        if (ddlCategory.SelectedItem.Text == "Self Assessment" && (moSchool == Constants.SchoolId.PPSN || moSchool == Constants.SchoolId.PIONEER ||
+            moSchool == Constants.SchoolId.TheScholarsAcademy))
         {
             trFavColor.Visible = false;
             trFavFood.Visible = false;
@@ -540,6 +550,17 @@ public partial class StudentAssessmentDetailsUI : SchoolBase
             ReqFavSport.Enabled = false;
             ReqFavSub.Enabled = false;
             cstComment.Enabled = true;
+        }
+
+        if (moSchool == Constants.SchoolId.PIONEER || moSchool == Constants.SchoolId.TheScholarsAcademy || moSchool == Constants.SchoolId.ThePioneerSchool)
+        {
+            ListItem oListItem = ddlCategory.Items.FindByValue("3");
+            if (oListItem != null)
+                ddlCategory.Items.Remove(oListItem);
+
+            oListItem = ddlCategory.Items.FindByValue("2");
+            if (oListItem != null)
+                ddlCategory.Items.Remove(oListItem);
         }
     }
 

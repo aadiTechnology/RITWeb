@@ -217,7 +217,7 @@ namespace DataCommunicator
         /// This method is used to fill listview dropdown.
         /// </summary>
         /// <returns></returns>
-        public DataTable GetGrades(int aiAcemicYearId)
+        public DataTable GetGrades(int aiAcemicYearId, int aiStandardId)
         {
             if (miSchoolId == Constants.SchoolId.PPSN.ToInt())
             {
@@ -229,18 +229,22 @@ namespace DataCommunicator
                 using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                     return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(s1SelectStatement);
             }
-            else if (miSchoolId == Constants.SchoolId.SNS.ToInt())
+            else if (miSchoolId == Constants.SchoolId.SNS.ToInt() || miSchoolId == Constants.SchoolId.PIONEER.ToInt())
             {
                 string sSelectStatement = " SELECT " +
-                                           " Id " +
+                                           " OG.Id " +
                                            " ,Name " +
                                            " FROM " +
-                                           " ObservationGrades " +
+                                           " ObservationGrades OG " +
+                                           "Inner join StandardWiseGradeMaster SGM " +
+                                           "ON SGM.GradeId=OG.Id" +
                                            " WHERE " +
-                                           "IsDeleted =" + Constants.S_ZERO +
-                                           "AND AcademicYearId=" + aiAcemicYearId +
-                                           "AND SchoolId=" + miSchoolId +
-                                           "AND Id<=28" +
+                                           "OG.IsDeleted =" + Constants.S_ZERO +
+                                           " AND SGM.IsDeleted=" + Constants.S_ZERO +
+                                           " AND OG.AcademicYearId=" + aiAcemicYearId +
+                                           " AND OG.SchoolId=" + miSchoolId +
+                                           " AND SGM.StandardId=" + aiStandardId +
+                                           " AND IsParentEngagement=" + Constants.S_ZERO +
                                            " ORDER BY SortOrder";
                 using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
                     return oSQLServerDbUtility.ExecuteSqlStatementAndGetDataTable(sSelectStatement);

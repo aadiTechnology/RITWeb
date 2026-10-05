@@ -61,7 +61,7 @@ public partial class StudentProgressSheet : SchoolBase
     private bool mbIsOldProgressReport;
     private PrePrimaryProgressSheetConfigBL moPrePrimaryProgressSheetConfigBL;
     
-    List<string> mlstPioneerGradeReportStandards = new List<string> { "Nursery", "Junior KG", "Senior KG", "1", "2" };
+    List<string> mlstPioneerGradeReportStandards = new List<string> { "Senior KG", "1", "2" };
     
     #endregion
 
@@ -533,7 +533,7 @@ public partial class StudentProgressSheet : SchoolBase
     /// <param name="sender"></param>
     /// <param name="e"></param>
     protected void btnDownload_Click(object sender, EventArgs e)
-    {
+     {
         try
         {
             ReportDisplay oReportDisplay = null;
@@ -552,9 +552,11 @@ public partial class StudentProgressSheet : SchoolBase
 
                 if (iAccYearId >= 14 && (hidStandardName.Value == "3" || hidStandardName.Value == "4" || hidStandardName.Value == "5"))
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.HolosticProgressReportPPSNFor3to5, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
-                else if (hidStandardName.Value == "1" || hidStandardName.Value == "2" || hidStandardName.Value == "3" || hidStandardName.Value == "4" || hidStandardName.Value == "5")
+               else if (hidStandardName.Value == "1" || hidStandardName.Value == "2" || hidStandardName.Value == "3" || hidStandardName.Value == "4" || hidStandardName.Value == "5")
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH_1stTO5th, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
-                else if (hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8") 
+                else if (iAccYearId >= 15 && (hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8"))
+                    oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH6to8Std, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
+               else if (hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8") 
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
                 else if (hidStandardName.Value == "9" && IsFinalExamPublished && iAccYearId >= 11)
                     oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPPSH_9th, GetFilterString(false, false), ExportFormatType.PortableDocFormat);
@@ -616,6 +618,8 @@ public partial class StudentProgressSheet : SchoolBase
                    oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportPioneer_NurseryTO2nd, sFilterString, ExportFormatType.PortableDocFormat);
                    oReportDisplay.TermId = TermId;
                }
+               else if (hidStandardName.Value == "Nursery" || hidStandardName.Value == "Junior KG")
+                   oReportDisplay = new ReportDisplay(Constants.ExportReports.HPCProgressCardForNurseryORJRKg, sFilterString, ExportFormatType.PortableDocFormat);
                else
                {
                    if (TermId == 1)
@@ -717,7 +721,10 @@ public partial class StudentProgressSheet : SchoolBase
 
             if (iAcademicYearId>=14 && (hidStandardName.Value == "3" || hidStandardName.Value == "4" || hidStandardName.Value == "5"))
                 sFilterStr = "(usp_GetDetailsForHolisticReportFor3To5Std.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Student_Id}=" + iStudentId + "AND usp_GetDetailsForHolisticReportFor3To5Std.Standard_Id}=" + iStdid + "AND usp_GetDetailsForHolisticReportFor3To5Std.Term_Id}=" + (bIsFinalPublished?2:1) + " AND usp_GetDetailsForHolisticReportFor3To5Std.IsFromReportScreen}=0AND usp_GetDetailsForHolisticReportFor3To5Std.Division_Id}=" + iStdDivId + ") @";
-            else if (hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8")
+            
+            else if (iAcademicYearId >= 15 &&(hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8"))
+                  sFilterStr = "(usp_GetDetailsForHolisticReportFor6To8PPSHStd.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Standard_Id}=" + iStdid + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Division_Id}=" + iStdDivId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Student_Id}=" + iStudentId + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.Term_Id}=1"  + "AND usp_GetDetailsForHolisticReportFor6To8PPSHStd.IsFromReportScreen}=0) @";
+             else if (hidStandardName.Value == "6" || hidStandardName.Value == "7" || hidStandardName.Value == "8")
                 sFilterStr = "(usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.School_Id}=" + miSchoolId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.StudentId}=" + iStudentId + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Standard_Id}=" + iStdid + "AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Term_Id}=1AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.IsFromStudnetLogin}=1AND usp_GetStudentwiseProgressReportDetailsFor6to8_PPSH.Division_Id}=" + iStdDivId + ") @";
             else if(hidStandardName.Value == "9")
                 sFilterStr = "(usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.School_Id}=" + miSchoolId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.Academic_Year_Id}=" + iAcademicYearId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.StudentId}=" + iStudentId + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.IsFromStudentLogin}=1AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.Standard_Id}=" + iStdid + "AND usp_GetStudentwiseProgressReportDetailsFor9th_PPSH.Division_Id}=" + iStdDivId + ") @";
@@ -801,13 +808,15 @@ public partial class StudentProgressSheet : SchoolBase
     private string GetFilterStringForPioneer(int aiTermId, int aiAcademicYearId, int aiStudentId, int aiStdid, int aiStdDivId)
     {        
         string sFilterStr = string.Empty;
-        if (!mlstPioneerGradeReportStandards.Contains(hidStandardName.Value))
+        if (hidStandardName.Value == "Nursery" || hidStandardName.Value == "Junior KG")
+            sFilterStr = "(usp_GetProgressReportForPrePrimaryPioneer.School_Id}=" + miSchoolId + "AND usp_GetProgressReportForPrePrimaryPioneer.Academic_Year_Id}=" + aiAcademicYearId + "AND usp_GetProgressReportForPrePrimaryPioneer.Standard_Id}=" + hidStandardId.Value + "AND usp_GetProgressReportForPrePrimaryPioneer.Division_Id}=" + aiStdDivId + "AND usp_GetProgressReportForPrePrimaryPioneer.Student_Id}=" + aiStudentId + "AND usp_GetProgressReportForPrePrimaryPioneer.Term_Id}=" + Constants.I_ONE +"AND usp_GetProgressReportForPrePrimaryPioneer.IsFromReportScreen}=0" + ") @";
+        else if (!mlstPioneerGradeReportStandards.Contains(hidStandardName.Value))
         {
             if (aiTermId == 1)
                 sFilterStr = "(usp_GetDetailsForHalfYearlyReport_Pioneer.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Academic_Year_Id}=" + aiAcademicYearId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.StudentId}=" + aiStudentId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Standard_Id}=" + aiStdid + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Division_Id}=" + aiStdDivId + "AND usp_GetDetailsForHalfYearlyReport_Pioneer.Term_Id}=" + Constants.I_ONE + " AND usp_GetDetailsForHalfYearlyReport_Pioneer.IsFromReportScreen}=0" + ") @";
             else
                 sFilterStr = "(USP_StudentFinalProgressReportCBSEForPioneer.School_Id}=" + miSchoolId + "AND USP_StudentFinalProgressReportCBSEForPioneer.Academic_Year_Id}=" + aiAcademicYearId + "AND USP_StudentFinalProgressReportCBSEForPioneer.StudentId}=" + aiStudentId + "AND USP_StudentFinalProgressReportCBSEForPioneer.Standard_Id}=" + aiStdid + "AND USP_StudentFinalProgressReportCBSEForPioneer.Division_Id}=" + aiStdDivId + "AND USP_StudentFinalProgressReportCBSEForPioneer.Term_Id}=" + Constants.I_TWO + " AND usp_GetDetailsForHalfYearlyReport_Pioneer.Note}=AND usp_GetDetailsForHalfYearlyReport_Pioneer.IsFromReportScreen}=0" + ") @";
-        }
+        }        
         else
             sFilterStr = "(usp_GetProgressReportDetailsForPrePrimaryPioneer.School_Id}=" + miSchoolId + "AND usp_GetProgressReportDetailsForPrePrimaryPioneer.Academic_Year_Id}=" + aiAcademicYearId + "AND usp_GetProgressReportDetailsForPrePrimaryPioneer.Standard_Id}=" + aiStdid + " AND usp_GetProgressReportDetailsForPrePrimaryPioneer.Division_Id}=" + aiStdDivId + "AND usp_GetProgressReportDetailsForPrePrimaryPioneer.StudentId}=" + aiStudentId + "AND usp_GetProgressReportDetailsForPrePrimaryPioneer.TestId}=" + 0 + "AND usp_GetProgressReportDetailsForPrePrimaryPioneer.IsFromReportScreen}=0" + ") @";
 
@@ -1601,7 +1610,7 @@ public partial class StudentProgressSheet : SchoolBase
                 if (oDTStudentData.Rows.Count > 0 && oDTStudentData.Rows[0]["Standard_Name"] != DBNull.Value)
                     sStdName = oDTStudentData.Rows[0]["Standard_Name"].ToString();
 
-                if (mlstPioneerGradeReportStandards.Contains(sStdName))
+                if (mlstPioneerGradeReportStandards.Contains(sStdName) || (sStdName == "Nursery" || sStdName == "Junior KG"))
                     bShowScreenData = false;
             }
 

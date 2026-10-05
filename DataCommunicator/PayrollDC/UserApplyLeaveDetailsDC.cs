@@ -153,8 +153,11 @@ namespace DataCommunicator.PayrollDC
 
 
 
+        public List<LeaveApprovalDetails> LeaveApprovalRemarks { get; private set; }
+
         public List<UserApplyLeaveDetails> GetAll(int aiSchoolId, int aiUserId, int aiCategoryId,bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, string asSortExpression, int aiStartIndex, int aiEndIndex)
         {
+            LeaveApprovalRemarks = new List<LeaveApprovalDetails>();
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
             {
                 oSQLServerDbUtility.AddParameter("SchoolId", aiSchoolId, SqlDbType.Int);
@@ -171,6 +174,21 @@ namespace DataCommunicator.PayrollDC
                     List<UserApplyLeaveDetails> lstUserApplyLeaveDetails = new List<UserApplyLeaveDetails>();
                     while (oSqlDataReader.Read())
                         lstUserApplyLeaveDetails.Add(SetLeaveDetails(oSqlDataReader));
+
+                    if (oSqlDataReader.NextResult())
+                    {
+                        while (oSqlDataReader.Read())
+                        {
+                            LeaveApprovalRemarks.Add(new LeaveApprovalDetails
+                            {
+                                Id = Convert.ToInt32(oSqlDataReader["Id"]),
+                                UserLeaveDetailsId = Convert.ToInt32(oSqlDataReader["UserLeaveDetailsId"]),
+                                ApproverName = Convert.ToString(oSqlDataReader["ApproverName"]),
+                                Remark = Convert.ToString(oSqlDataReader["Remark"]),
+                                InsertDate = oSqlDataReader["InsertDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(oSqlDataReader["InsertDate"])
+                            });
+                        }
+                    }
                     return lstUserApplyLeaveDetails;
                 }
             }

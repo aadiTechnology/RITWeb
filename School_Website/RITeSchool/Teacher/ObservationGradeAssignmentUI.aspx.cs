@@ -204,10 +204,6 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                 tblNote.Visible = false;
                 tblData.Visible = true;
                 tblParameters.Rows.Clear();
-                if (miSchoolId == Constants.SchoolId.PPSN.ToInt() && miAcademicYearId >= 14)
-                {
-                    tblParameters.Style.Add("width", "max-content");
-                }
                 SetLegends();
                 FillSkills();
                 FillHeaders();
@@ -283,15 +279,16 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     private void FillSkills()
     {
         HtmlTableRow trHeader = new HtmlTableRow();
-        this.AddTableCell(trHeader, string.Empty, "ClsProgressGridTestHeader", "right");
-        this.AddTableCell(trHeader, string.Empty, "ClsProgressGridTestHeader", "left", 2, "width:200px");
+        trHeader.Attributes.Add("class", "obs-header-row");
+        this.AddTableCell(trHeader, string.Empty, "ClsProgressGridTestHeader obs-freeze-top obs-freeze-left-roll obs-freeze-corner", "right", 1, "width:100px");
+        this.AddTableCell(trHeader, string.Empty, "ClsProgressGridTestHeader obs-freeze-top obs-freeze-left-name obs-freeze-corner", "left", 2, "width:200px");
 
         moObservationDetailsBL.Skills.OrderBy(skl => skl.SortOrder).ToList().ForEach
             (
              skill =>
              {
                  int iCount = moObservationDetailsBL.Parameters.Where(prm => prm.SkillId == skill.Id).Count();
-                 this.AddTableCell(trHeader, skill.Name, "ClsProgressGridTestHeader", "center", iCount);
+                 this.AddTableCell(trHeader, skill.Name, "ClsProgressGridTestHeader obs-freeze-top", "center", iCount);
              }
 
         );
@@ -307,8 +304,9 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
         if (!IsSummaryMode)
         {
             HtmlTableRow trRow = new HtmlTableRow();
-            this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "right");
-            this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "left", 2, "width:200px");
+            trRow.Attributes.Add("class", "obs-header-row");
+            this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader obs-freeze-top obs-freeze-left-roll obs-freeze-corner", "right", 1, "width:100px");
+            this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader obs-freeze-top obs-freeze-left-name obs-freeze-corner", "left", 2, "width:200px");
 
             moObservationDetailsBL.Skills.OrderBy(skl => skl.SortOrder).ToList().ForEach
                 (
@@ -362,7 +360,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                      ctrl.Controls.Add(txtRemark);
                                  }
 
-                                 this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, ParameterColumnWidth, ctrl);
+                                 this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader obs-freeze-top", "center", 1, ParameterColumnWidth, ctrl);
                                  //this.AddTableCell(trRow, string.Empty, "ClsProgressGridTestHeader", "center", 1, "width:50px", ctrl);
                              }
 
@@ -389,8 +387,8 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
         get
         {
             return (miSchoolId == Constants.SchoolId.PPSN.ToInt() && miAcademicYearId >= 14)
-              ? "width:100px;min-width:100px;"
-               : "width:50px;min-width:50px;";
+              ? "min-width:100px;"
+               : "min-width:50px;";
         }
     }
 
@@ -399,7 +397,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     /// </summary>
     private void FillStudents()
     {
-        string sTDWidth = "250";
+        string sTDWidth = "170";
         if (!IsSummaryMode && !moObservationDetailsBL.Parameters.Any(prm => prm.ControlTypeId == 2 || prm.ControlTypeId == 3) && moObservationDetailsBL.Parameters.Count(prm => prm.Parameter.Length <= 15) == moObservationDetailsBL.Parameters.Count)
             sTDWidth = "150";
          mlstStudents.OrderBy(std => std.RollNo).ToList().ForEach
@@ -408,8 +406,8 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
             {
                 HtmlTableRow trRow = new HtmlTableRow();
                 trRow.ID = "tr_" + student.YearwiseStudentId;
-                this.AddTableCell(trRow, student.RollNo.ToString(), "ClsMarksCell", "right", 1, "width:100px");
-                this.AddTableCell(trRow, student.StudentName, "ClsMarksCell", "left", 2, "width:200px;white-space:nowrap");
+                this.AddTableCell(trRow, student.RollNo.ToString(), "ClsMarksCell obs-freeze-left-roll", "right", 1, "width:100px");
+                this.AddTableCell(trRow, student.StudentName, "ClsMarksCell obs-freeze-left-name", "left", 2, "width:200px;white-space:nowrap");
 
                 moObservationDetailsBL.Skills.OrderBy(skl => skl.SortOrder).ToList().ForEach
                     (
@@ -505,7 +503,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                                          ctrl.Controls.Add(txtRemark);
                                      }
 
-                                     this.AddTableCell(trRow, string.Empty, "ClsMarksCell", "center", 1, "width:"+ sTDWidth + "px", ctrl);
+                                     this.AddTableCell(trRow, string.Empty, "ClsMarksCell", "center", 1, "min-width:"+ sTDWidth + "px", ctrl);
                                  }
 
                              );
@@ -525,8 +523,9 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
     private void FillHeaders()
     {
         HtmlTableRow trHeader = new HtmlTableRow();
-        this.AddTableCell(trHeader, "Roll No.", "ClsProgressGridTestHeader", "right", 1, "white-space:nowrap;width:100px");
-        this.AddTableCell(trHeader, "Student Name", "ClsProgressGridTestHeader", "left", 2, "width:200px");
+        trHeader.Attributes.Add("class", "obs-header-row");
+        this.AddTableCell(trHeader, "Roll No.", "ClsProgressGridTestHeader obs-freeze-top obs-freeze-left-roll obs-freeze-corner", "right", 1, "white-space:nowrap;width:100px");
+        this.AddTableCell(trHeader, "Student Name", "ClsProgressGridTestHeader obs-freeze-top obs-freeze-left-name obs-freeze-corner", "left", 2, "width:200px");
 
         moObservationDetailsBL.Skills.OrderBy(skl => skl.SortOrder).ToList().ForEach
             (
@@ -536,7 +535,7 @@ public partial class ObservationGradeAssignmentUI : SchoolBase
                      (
                          parameter =>
                          {
-                             this.AddTableCell(trHeader, parameter.Parameter, "ClsProgressGridTestHeader", "center", 1, ParameterColumnWidth);
+                             this.AddTableCell(trHeader, parameter.Parameter, "ClsProgressGridTestHeader obs-freeze-top", "center", 1, ParameterColumnWidth);
                          }
 
                      );

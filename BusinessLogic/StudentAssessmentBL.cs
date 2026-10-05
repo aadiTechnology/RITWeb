@@ -107,9 +107,9 @@ namespace BusinessLogic
         /// This method is used to fill listview dropdown.
         /// </summary>
         /// <returns></returns>
-        public DataTable GetGrades(int aiAcdemicYearId)
+        public DataTable GetGrades(int aiAcdemicYearId,int aiStandardId)
         {
-            return moStudentAssessmentDC.GetGrades(aiAcdemicYearId);
+            return moStudentAssessmentDC.GetGrades(aiAcdemicYearId, aiStandardId);
         }
 
         /// <summary>

@@ -23,6 +23,7 @@ using System.Data.SqlClient;
 using DataCommunicator;
 using Utility;
 using PhotoUploadEntities;
+using SchoolEntities;
 
 namespace BusinessLogic
 {
@@ -151,6 +152,16 @@ namespace BusinessLogic
         public DataTable  GetSubmitStatus(int aiUserId )
         {
            return  moUserRolewisePhotoUploadDC.GetSubmitStatus(aiUserId );
+        }
+
+        public List<UserPhoto> GetNonValidUserNames(string sUserNames, int aiSchoolId, int aiAcademicYearId)
+        {
+            return moUserRolewisePhotoUploadDC.GetNonValidUserNames(sUserNames, aiSchoolId, aiAcademicYearId);
+        }
+
+        public void UpdatePhotos(int aiSchoolId, int aiAcademicYearId, int aiInsertedById, List<UserPhoto> alstUserNames)
+        {
+            moUserRolewisePhotoUploadDC.UpdatePhotos(aiSchoolId, aiAcademicYearId, aiInsertedById, alstUserNames);
         }
 
         #endregion "Public Methods"

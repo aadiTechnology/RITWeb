@@ -96,4 +96,12 @@ namespace SchoolEntities
         public string RegNo { get; set; }
         public byte[] PhotoInBinary { get; set; }
     }
+
+    public class UserPhoto
+    {
+        public int User_Role_Id { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public byte[] BinaryPhotoImage { get; set; }
+    }
 }
