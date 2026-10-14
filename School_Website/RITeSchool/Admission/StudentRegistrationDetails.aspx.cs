@@ -715,8 +715,14 @@ public partial class StudentRegistrationDetails : SchoolBase
                 {
 
                     cmbStream.SelectedValue = oDTStudentEnquiryDetails.Rows[0]["StreamId"].ToString();
-                    int iStreamId = oDTStudentEnquiryDetails.Rows[0]["StreamId"].ToInt();
-                    int iGroupId = oDTStudentEnquiryDetails.Rows[0]["GroupId"].ToInt();
+                    int iStreamId = 0;
+                    if (oDTStudentEnquiryDetails.Rows[0]["StreamId"] != DBNull.Value && oDTStudentEnquiryDetails.Rows[0]["StreamId"].ToString() != string.Empty)
+                       iStreamId = oDTStudentEnquiryDetails.Rows[0]["StreamId"].ToInt();
+
+                    int iGroupId = 0;
+                    if (oDTStudentEnquiryDetails.Rows[0]["GroupId"] != DBNull.Value && oDTStudentEnquiryDetails.Rows[0]["GroupId"].ToString() != string.Empty)
+                       iGroupId = oDTStudentEnquiryDetails.Rows[0]["GroupId"].ToInt();
+
                     string sOptionalSubject = oDTStudentEnquiryDetails.Rows[0]["OptionalSubjects"].ToString();
                     string sCompitativeExam = oDTStudentEnquiryDetails.Rows[0]["CompitativeExam"].ToString();
 
@@ -972,7 +978,7 @@ public partial class StudentRegistrationDetails : SchoolBase
     private void FillCombobox(DataSet oDataSet,object sender, EventArgs e)
     {
         ControlUtility.FillDropDownList(oDataSet.Tables[0], ref cmbYear, "Academic_Year_ID", "AcademicYear", string.Empty);
-        ControlUtility.FillDropDownList(oDataSet.Tables[2], ref cmbStd, "Standard_Id", "Standard_Name", string.Empty);
+        ControlUtility.FillDropDownList(oDataSet.Tables[2], ref cmbStd, "Standard_Id", "Standard_Name", Constants.S_SELECT);
         ControlUtility.FillDropDownList(oDataSet.Tables[3], ref cmbFOccupation, "Ocupation_Id", "Ocupation_Name", Constants.S_SELECT);
         ControlUtility.FillDropDownList(oDataSet.Tables[3], ref cmbMOccupation, "Ocupation_Id", "Ocupation_Name", Constants.S_SELECT);
 
@@ -1260,25 +1266,32 @@ public partial class StudentRegistrationDetails : SchoolBase
         }
     }
 
-    private void SetStreamVisibility()
+  
+   private void SetStreamVisibility()
+{
+    if (miSchoolId == Constants.SchoolId.SNS.ToInt() && (miAcademicYearId == 13 || miAcademicYearId == 14))
     {
-        if (miSchoolId == Constants.SchoolId.SNS.ToInt() && miAcademicYearId == 13)
+        lblCommerceSubjects.Text = "English, Business Studies, Accountancy, Economic";
+        rdoStream_ComMaths.Text = "Applied Mathematics";
+        chkUGEntrance.Visible = true;
+        rdoStream_SciGr2CompSci.Visible = false;
+
+        if (miAcademicYearId == 13)
         {
-            lblCommerceSubjects.Text = "English, Business Studies, Accountancy, Economic";
-            rdoStream_ComMaths.Text = "Applied Mathematics";
-            chkUGEntrance.Visible = true;
             lblArtsSubjects.Text = "English, Business Studies, Psychology";
-            rdoStream_SciGr2CompSci.Visible = false;
             chkStream_ComCA.Text = "CA Foundation";
+
             if (hidStandardName.Value == "12 Art")
             {
-                lblArtsSubjects.Text = "English, Business Studies, Psychology,Economics";
-             }
-            else
-            {
-                lblArtsSubjects.Text = "English, Business Studies, Psychology";
+                lblArtsSubjects.Text = "English, Business Studies, Psychology, Economics";
             }
         }
+        else if (miAcademicYearId == 14)
+        {
+            chkStream_SciGr1JEE.Text = "CET";
+            chkStream_SciGr2Neet.Text = "CET";
+        }
+      }
     }
   #endregion   
 }

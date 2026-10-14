@@ -708,7 +708,16 @@ namespace MobileExportService.Service
                     if (aiTermId == 1)
                         oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportTPS_3TO8, GetThePioneerSchoolProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
                 }
-
+            }
+            else if (miSchoolId == Constants.SchoolId.TheScholarsAcademy.ToInt())
+            {
+                if (mlstThePioneerSchoolGradeReportStandards.Contains(msStandardName))
+                    oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportTSA_NurseryTo2nd, GetTheScholarsAcademyProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                else
+                {
+                    if (aiTermId == 1)
+                        oReportDisplay = new ReportDisplay(Constants.ExportReports.StudentwiseProgressReportTSA_3TO8, GetTheScholarsAcademyProgressReportFilterString(aiTermId), ExportFormatType.PortableDocFormat, sDownloadPath, false);
+                }
             }
             return oReportDisplay;
         }
@@ -958,7 +967,26 @@ namespace MobileExportService.Service
                     sFilterStr = "(usp_GetProgressReportDetailsForPrePrimaryTPS.School_Id}=" + miSchoolId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.Standard_Id}=" + miStandardId + " AND usp_GetProgressReportDetailsForPrePrimaryTPS.Division_Id}=" + miStdDivId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.StudentId}=" + miStudentId + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.TestId}=" + 0 + "AND usp_GetProgressReportDetailsForPrePrimaryTPS.IsFromReportScreen}=0" + ") @";
             }
             return sFilterStr;
-       }
+        }
+
+        private string GetTheScholarsAcademyProgressReportFilterString(int aiTermId)
+        {
+            DataTable oDatatable1 = StudentBL.GetYearwiseStudentDetails(miSchoolId, miAcademicYearId, miStudentId);
+            string sFilterStr = string.Empty;
+            if (oDatatable1 != null && oDatatable1.Rows.Count > 0)
+            {
+                //int iStdId = Convert.ToInt32(oDatatable1.Rows[0]["Standard_Id"]);
+
+                if (!mlstThePioneerSchoolGradeReportStandards.Contains(msStandardName))
+                {
+                    if (aiTermId == 1)
+                        sFilterStr = "(usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.School_Id}=" + miSchoolId + "AND usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.StudentId}=" + miStudentId + "AND usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.Standard_Id}=" + miStandardId + "AND usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.Division_Id}=" + miStdDivId + "AND usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.Term_Id}=" + Constants.I_ONE + " AND usp_GetDetailsForHalfYearlyReport_TheScholarsAcademy.IsFromReportScreen}=0" + ") @";
+                }
+                else
+                    sFilterStr = "(usp_GetProgressReportDetailsForPrePrimaryTSA.School_Id}=" + miSchoolId + "AND usp_GetProgressReportDetailsForPrePrimaryTSA.Academic_Year_Id}=" + miAcademicYearId + "AND usp_GetProgressReportDetailsForPrePrimaryTSA.Standard_Id}=" + miStandardId + " AND usp_GetProgressReportDetailsForPrePrimaryTSA.Division_Id}=" + miStdDivId + "AND usp_GetProgressReportDetailsForPrePrimaryTSA.StudentId}=" + miStudentId + "AND usp_GetProgressReportDetailsForPrePrimaryTSA.TestId}=" + 0 + "AND usp_GetProgressReportDetailsForPrePrimaryTSA.IsFromReportScreen}=0" + ") @";
+            }
+            return sFilterStr;
+        }
 
         /// <summary>
         /// This method is used to display report

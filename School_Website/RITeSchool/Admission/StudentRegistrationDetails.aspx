@@ -62,13 +62,13 @@
                 </td>
                 <td align="left">
                     <asp:DropDownList ID="cmbStd" runat="server" CssClass="MidTxtNormalAdmission" AutoPostBack="True"
-                        ViewStateMode="Enabled" 
+                        ViewStateMode="Enabled" BackColor="#ffffa0"
                         onselectedindexchanged="cmbStd_SelectedIndexChanged">
                         <asp:ListItem Text="--Select--" Value="0"></asp:ListItem>
                     </asp:DropDownList>
                     <asp:Label ID="lblStdName" runat="server" Font-Bold="true"></asp:Label>
                     <asp:CompareValidator ID="cmp_valStdr" runat="server" ControlToValidate="cmbStd"
-                        Display="None" ErrorMessage="Admission sought for standard should be selected."
+                        Display="None" ErrorMessage="Admission sought for standard should be selected." ValidationGroup="Save"
                         Operator="NotEqual" ValueToCompare="0" CssClass="ClsLabel"></asp:CompareValidator>
                     <asp:HiddenField ID="hidMinBdate" runat="server" />
                     <asp:HiddenField ID="hidMaxBdate" runat="server" />
