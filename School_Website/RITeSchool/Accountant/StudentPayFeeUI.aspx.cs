@@ -301,7 +301,7 @@ public partial class StudentPayFeeUI : SchoolBase
             lblLeft.Text = string.Empty;
             lblPDCDetails.Text = string.Empty;
             lblNextYearPayment.Text = string.Empty;
-
+           
             if (txtRegNumber.Enabled)
             {
                 SetStudentGridViewDateColumnProperties();
@@ -317,6 +317,15 @@ public partial class StudentPayFeeUI : SchoolBase
                     ShowStudentForFeeEntry(iStudentId, 0);
                     trStudents.Visible = false;
 
+                }
+                if (moSchool == Constants.SchoolId.PPSH && miAcademicYearId >= 16)
+                {
+                    int iStudentId = grdStudents.DataKeys[Constants.I_ZERO][I_YEARWISE_STUDENT_ID].ToInt();
+                    var oStudentBL = new StudentBL(iStudentId);
+                    if (oStudentBL.IsNewStudent)
+                    {
+                        lblcautioneNote.Text = "The total amount for the CMD is Rs. 70,000, which is broken down as: Rs. 45,000 - Refundable, Rs. 25,000 - Non-refundable.";
+                    }
                 }
             }
             else

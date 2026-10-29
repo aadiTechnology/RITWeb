@@ -4419,7 +4419,7 @@
                             background-repeat: repeat-x; color: Black; width: 50%; height:auto; text-align: right;" id="divNoticeImage" runat="server" viewstatemode="Enabled">
                             <div style="font-size: 12px; width: 270px; letter-spacing: 1px; padding-left: 8px;
                                 font-weight: bold; color: darkgreen; float: left; height: 10px" align="left">
-                                <asp:Label ID="lblFeeStructure" runat="server" Text="Fee Structure Notice of AY 2026-27"></asp:Label>
+                                <asp:Label ID="lblFeeStructure" runat="server" Text="Fee Structure Notice of AY 2027-28"></asp:Label>
                             </div>
                             <span style="cursor: hand" onclick="javascript:HideFeeNoticeDiv();">
                                 <img alt="Hide Popup" class="img-align-top" src="../images/close_vista.gif" 
@@ -4428,8 +4428,9 @@
                             </span>
                         </div>   
                     <%--<img src="../images/Fee%20Structure%202024-2025.png" id="imgFeeStructure2019" style="width:100%;height:600px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />--%>
-                    <img src="~/images/PPSN_Fee_Structure_2026_27.png" style="display: block; width: auto; height: 450px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />
+                    <%--<img src="~/images/PPSN_Fee_Structure_2026_27.png" style="display: block; width: auto; height: 450px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />--%>
                    <%-- <img src="../images/new%20fee%20structure%20for%20ppsn.jpg" id="imgFeeStructure2022-23" style="width:100%;height:600px;" runat="server" viewstatemode="Enabled" onclick="OpenFeeStructure()" />--%>
+                   <img src="../images/PPSN%20Fee%20structure%202027-2028.png" onclick="OpenFeeStructure()" style="width:800px;height:500px" />
                 </div>
             </td>
         </tr>        
@@ -5979,10 +5980,10 @@ function ShowFeeNoticeDiv() {
     var x, y, tt_ovr_
     if ($get("<%=this.divFeeNotice.ClientID %>") != null) {
         var cssstyle = $get("<%=this.divFeeNotice.ClientID %>").style
-        var width = 1450
-        var height = 700
-        var left = parseInt((screen.width / 2) - (width / 2))
-        var top = parseInt((screen.height / 2) - (height / 2))
+        var width = 800
+        var height = 500
+        var left = 50 //parseInt((screen.width / 2) - (width / 2))
+        var top =  50 //parseInt((screen.height / 2) - (height / 2))
 
         cssstyle.left = left + "px"
         cssstyle.top = top + "px"
@@ -6531,7 +6532,7 @@ function HideTeacherDetails() {
 
 
 		function OpenFeeStructure() {
-		    window.open('../../images/PPSN_Fee_Structure_2026_27.png', '_blank')
+		    window.open('../images/PPSN Fee structure 2027-2028.png', '_blank')
 		}
 
 		function OpenResult() {

@@ -92,7 +92,7 @@ public partial class OnlineAdmissionUI : SchoolBase
                 //spnNextYearLabel.InnerText = "Grade List (2022-23) :";
 
                 //trNextYear.Visible = false;
-                spnNextYearLabel.InnerText = "Standard List for admission in 2026-27 :";
+                spnNextYearLabel.InnerText = "Standard List for admission in 2027-28 :";
             }
             else
             {
@@ -121,10 +121,10 @@ public partial class OnlineAdmissionUI : SchoolBase
                //trOldStandardRow.Visible = false;
                //trOldStandardListview.Visible = false;
 
-               lblStandardList.Text = "Standard List for admission in 2025-26 :";
+             //  lblStandardList.Text = "Standard List for admission in 2026-27 :";
 
                trNextYear.Visible = true;
-               spnNextYearLabel.InnerText = "Standard List for admission in 2026-27 :";
+               spnNextYearLabel.InnerText = "Standard List for admission in 2027-28 :";
                trHeight2.Visible = true;
            }
 
@@ -1046,13 +1046,23 @@ public partial class OnlineAdmissionUI : SchoolBase
             }
             else
             {
-                if (ConfigurationManager.AppSettings["SchoolId"].ToInt() != Constants.SchoolId.PPSH.ToInt())
+            //    if (ConfigurationManager.AppSettings["SchoolId"].ToInt() != Constants.SchoolId.PPSH.ToInt())
+            //    {
+            //        lstvwAdmissionStatus.DataSource = oDataTable;
+            //        lstvwAdmissionStatus.DataBind();
+            //    }
+            //    else
+            //        trOldStandardRow.Visible = false;
+
+                lstvwAdmissionStatus.DataSource = oDataTable;
+                lstvwAdmissionStatus.DataBind();
+
+                if (ConfigurationManager.AppSettings["SchoolId"].ToInt() == Constants.SchoolId.PPSH.ToInt())
                 {
-                    lstvwAdmissionStatus.DataSource = oDataTable;
-                    lstvwAdmissionStatus.DataBind();
-                }
-                else
+                    //trOldStandardRow.Visible = oDataTable.Rows.Count > 0;
                     trOldStandardRow.Visible = false;
+                    trOldStandardListview.Visible = false;
+                 }
             }
 
             if (oDataTable.Rows.Count > 0)
@@ -1174,6 +1184,10 @@ public partial class OnlineAdmissionUI : SchoolBase
 
         lstvwAdmissionStatusNxtYear.DataSource = oDataTable;   //
         lstvwAdmissionStatusNxtYear.DataBind();               //
+        if (ConfigurationManager.AppSettings["SchoolId"].ToInt() == Constants.SchoolId.PPSH.ToInt())
+        {
+            trNextYear.Visible = oDataTable.Rows.Count > 0;
+        }
 
         //if (oDataTable.Rows.Count > 0)
         //   // Session[Constants.S_SESSION_CURRENT_ACADEMIC_YEAR_ID] = oDataTable.Rows[0]["Academic_Year_Id"]; //

@@ -815,7 +815,14 @@ public partial class AdmissionFormStudentDetails : SchoolBase
 
             reqValLangKnown.Enabled = true;
             hidShowreligionValidation.Value = Constants.S_YES;
-        }
+            if (QueryString["AcadmicYearId"] == null)
+                hidAcademicYearId.Value = QueryString["AcademicYearId"];
+            if (hidAcademicYearId.Value.ToInt() >= 16)
+            {
+                reqValNameAsPerAadhar.Enabled = true;
+                txtNameOnAadharCard.Style.Add("background-color", "#ffffa0");
+            }
+           }
 
         // Table Indices
         //const int AdmissionMasterData.I_TABLE_ACADAMIC_YEARS = 0;
@@ -911,7 +918,7 @@ public partial class AdmissionFormStudentDetails : SchoolBase
      
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_BLOOD_GROUPS], ref cmbStudentBloodGroup, "Id", "BloodGroup", Constants.S_SELECT);
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_RESIDENCE_TYPES], ref cmbResidenceType, "ResidenceTypeId", "Name", Constants.S_SELECT);
-        RemoveResidenceOptionsForStd6();
+        RemoveDropdownOptionsForPPSNStandards();
         
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_SECOND_LANGUAGE], ref cmbSecondSLanguageSubjectId, "Subject_Id", "Subject_Name", Constants.S_SELECT);
         ControlUtility.FillDropDownList(oDataSet.Tables[AdmissionMasterData.I_TABLE_THIRD_LANGUAGE], ref cmbThirdLanguage, "Subject_Id", "Subject_Name", Constants.S_SELECT);
@@ -2721,7 +2728,7 @@ public partial class AdmissionFormStudentDetails : SchoolBase
 
         return sReturnErrorMsg;
     }
-    private void RemoveResidenceOptionsForStd6()
+    private void RemoveDropdownOptionsForPPSNStandards()
     {
         int iSchoolId = ConfigurationManager.AppSettings["SchoolID"].ToInt();
         if (iSchoolId == Constants.SchoolId.PPSN.ToInt() && cmbStd.SelectedItem.Text == "6")
@@ -2737,6 +2744,16 @@ public partial class AdmissionFormStudentDetails : SchoolBase
                 if (item != null)
                     cmbResidenceType.Items.Remove(item);
             }
+        }
+        if (iSchoolId == Constants.SchoolId.PPSN.ToInt() && cmbStd.SelectedItem.Text == "Nursery")
+        {
+            var item = cmbResidenceType.Items.FindByText("Others");
+            if (item != null)
+                cmbResidenceType.Items.Remove(item);
+
+            var livingItem = cmbLivingLocation.Items.FindByText("Other");
+            if (livingItem != null)
+                cmbLivingLocation.Items.Remove(livingItem);
         }
     }
     #endregion " Private Methods "	        

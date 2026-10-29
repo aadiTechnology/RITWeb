@@ -37,6 +37,7 @@ public partial class LeaveDeatilsUI : SchoolBase
                 CheckFullAccess();
                 FillAcademicYear();
                 FillCategory();
+                FillLeaveStatus();
                 ReadQueryString();
                 FillApprovalCategories();
             }
@@ -74,7 +75,16 @@ public partial class LeaveDeatilsUI : SchoolBase
 
 
                 Label lblEndDate = oCurrentItem.FindControl("lblEndDate") as Label;
-                lblEndDate.Text = oUserApplyLeaveDetails.EndDate.ToString(Constants.S_DATE_FORMAT);                
+                lblEndDate.Text = oUserApplyLeaveDetails.EndDate.ToString(Constants.S_DATE_FORMAT);
+
+                Label lblAddedOn = oCurrentItem.FindControl("lblAddedOn") as Label;
+                if (lblAddedOn != null)
+                {
+                    if (oUserApplyLeaveDetails.InsertDate != DateTime.MinValue)
+                        lblAddedOn.Text = oUserApplyLeaveDetails.InsertDate.ToString("dd-MMM-yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+                    else
+                        lblAddedOn.Text = string.Empty;
+                }                
                 ImageButton imgDelete = oCurrentItem.FindControl("imgDelete") as ImageButton;
 
                 imgDelete.Attributes.Add("onclick", "if(!ConfirmDelete()) return false;");
@@ -127,6 +137,8 @@ public partial class LeaveDeatilsUI : SchoolBase
                         lnkStatus.Style.Add("color", "navy");
                     lblLeaveType.Style.Add("color", "navy");
                     lblLeaveBalance.Style.Add("color", "navy");
+                    if (lblAddedOn != null)
+                        lblAddedOn.Style.Add("color", "navy");
                 }
             }
         }
@@ -232,6 +244,19 @@ public partial class LeaveDeatilsUI : SchoolBase
         }
     }
 
+    protected void cmbStatus_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            HideLeaveRemarksDiv();
+            FillApprovalCategories();
+        }
+        catch (Exception ex)
+        {
+            ExceptionHandler.WriteExceptionToErrorLog(ex, System.Reflection.MethodBase.GetCurrentMethod());
+        }
+    }
+
     protected void cmbAcademicYear_SelectedIndexChanged(object sender, EventArgs e)
     {
         try
@@ -325,6 +350,12 @@ public partial class LeaveDeatilsUI : SchoolBase
 
         ListSource.FillDropDownList(dt, cmbReportingRole, "Category", "Id", string.Empty);
         cmbReportingRole.SelectedIndex = Constants.I_ZERO;
+    }
+
+    private void FillLeaveStatus()
+    {
+        DataTable dtStatus = moUserApplyLeaveDetailsBL.GetLeaveStatuses();
+        ListSource.FillDropDownList(dtStatus, cmbStatus, "Status", "Id", Constants.S_SELECT);
     }
 
     private void FillAcademicYear()

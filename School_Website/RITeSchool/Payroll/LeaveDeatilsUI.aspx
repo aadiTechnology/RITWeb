@@ -15,6 +15,7 @@
                                 </ContentTemplate>
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="cmbReportingRole" EventName="SelectedIndexChanged" />
+                                    <asp:AsyncPostBackTrigger ControlID="cmbStatus" EventName="SelectedIndexChanged" />
                                     <asp:AsyncPostBackTrigger ControlID="chkNonLeave" EventName="CheckedChanged" />
                                     <asp:AsyncPostBackTrigger ControlID="lstvwConfiguration" EventName="ItemCommand" />
                                 </Triggers>
@@ -46,7 +47,17 @@
                                 ControlToValidate="cmbReportingRole" CssClass="ClsMdtStar" InitialValue="0" ErrorMessage="<%$Resources:LocalizedResources, valReportingUserRole%>"></asp:RequiredFieldValidator>
                         </td>
                     </tr>
-                 
+                    <tr>
+                        <td align="left" class="ClsBorderlight" style="width: 200px;">
+                            <asp:Label ID="lblStatusFilter" runat="server" CssClass="ClsLabel" Text="Status"></asp:Label>
+                            <span class="ClsLabel colonPadding">:</span>
+                        </td>
+                        <td align="left">
+                            <asp:DropDownList ID="cmbStatus" runat="server" CssClass="LrgCombo" AutoPostBack="true"
+                                CausesValidation="false" OnSelectedIndexChanged="cmbStatus_SelectedIndexChanged">
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="2">
                             <asp:UpdatePanel ID="upnl1" runat="server" UpdateMode="Conditional">
@@ -155,6 +166,9 @@
                                                     <th align="center" style="width: 110px;">
                                                         <asp:Label ID="Label7" runat="server" Text="Leave Balance"></asp:Label>
                                                     </th>
+                                                    <th align="center" style="width: 150px;">
+                                                        <asp:Label ID="lblAddedOnHeader" runat="server" Text="Added On"></asp:Label>
+                                                    </th>
                                                     <th align="center" style="width: 50px; padding-right: 5px">
                                                         <asp:Label ID="Label3" runat="server" Text="View"></asp:Label>
                                                     </th>
@@ -165,7 +179,7 @@
                                                 <tr id="trItemPlaceholder" runat="server">
                                                 </tr>
                                                 <tr class="ClsBorderPager" id="trDataPager" runat="server">
-                                                    <td colspan="10">
+                                                    <td colspan="11">
                                                         <asp:DataPager ID="DtPgDropDown" runat="server" PagedControlID="lstvwConfiguration"
                                                             PageSize="20">
                                                             <Fields>
@@ -220,6 +234,9 @@
                                                 <td align="center" style="text-align: center;">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblLeaveBalance" Text='<%#Eval("LeaveBalance") %>'></asp:Label>
                                                 </td>
+                                                <td align="center" style="text-align: center;">
+                                                    <asp:Label runat="server" CssClass="ClsLabel" ID="lblAddedOn" Text='<%#Eval("InsertDate") %>'></asp:Label>
+                                                </td>
                                                 <td align="center">
                                                     <asp:ImageButton runat="server" ID="BtnView" CommandName="UpdateCommand" AlternateText="<%$ Resources:LocalizedResources, View%>"
                                                         ToolTip="<%$ Resources:LocalizedResources, View%>" CausesValidation="false" ImageUrl="../images/iconGridSml_ViewGE.gif">
@@ -261,6 +278,9 @@
                                                 <td align="center" style="text-align: center;">
                                                     <asp:Label runat="server" CssClass="ClsLabel" ID="lblLeaveBalance" Text='<%#Eval("LeaveBalance") %>'></asp:Label>
                                                 </td>
+                                                <td align="center" style="text-align: center;">
+                                                    <asp:Label runat="server" CssClass="ClsLabel" ID="lblAddedOn" Text='<%#Eval("InsertDate") %>'></asp:Label>
+                                                </td>
                                                 <td align="center">
                                                     <asp:ImageButton runat="server" ID="BtnView" CommandName="UpdateCommand" AlternateText="<%$ Resources:LocalizedResources, View%>"
                                                         ToolTip="<%$ Resources:LocalizedResources, View%>" CausesValidation="false" ImageUrl="../images/iconGridSml_ViewGE.gif">
@@ -289,6 +309,8 @@
                                             <asp:SessionParameter Name="aiSchoolId" SessionField="I_SCHOOL_ID" Type="int32" />
                                             <asp:SessionParameter Name="aiUserId" SessionField="I_USER_ID" Type="int32" />
                                             <asp:ControlParameter ControlID="cmbReportingRole" Name="aiCategoryId" Type="String"
+                                                PropertyName="SelectedValue" />
+                                            <asp:ControlParameter ControlID="cmbStatus" Name="aiStatusId" Type="Int32"
                                                 PropertyName="SelectedValue" />
                                             <asp:ControlParameter ControlID="cmbAcademicYear" Name="aiAcademicYearId" Type="int32" PropertyName="SelectedValue" />
                                             <asp:ControlParameter ControlID="chkNonLeave" Name="abShowOnlyNonUpdated" Type="Boolean"
@@ -337,6 +359,7 @@
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="cmbReportingRole" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="cmbStatus" EventName="SelectedIndexChanged" />
                         <asp:AsyncPostBackTrigger ControlID="cmbAcademicYear" EventName="SelectedIndexChanged" />
                         <asp:AsyncPostBackTrigger ControlID="chkNonLeave" EventName="CheckedChanged" />
                         <asp:AsyncPostBackTrigger ControlID="lstvwConfiguration" EventName="ItemCommand" />

@@ -321,12 +321,66 @@ public partial class AdmissionFormDocuments : SchoolBase
 
             spnPPSHAdmissionProcess.InnerText = "ADMISSION PROCESS FOR GRADE " + sStandardName.ToUpper();
             spnPPSHAdmissionForNurTo1.InnerText = "ADMISSION PROCESS FOR " + (sStandardName == "1" ? "GRADE 1" : sStandardName.ToUpper());
+
+            if (hidAcademicYearId.Value.ToInt() == 16)
+            {
+                if (sStandardName == "Nursery")
+                {
+                    liPPSHAdmissionNote.Visible = false;
+                    spnAdmissionDate.InnerHtml = 
+                        "with effect from <b>Tuesday, 17th November 2026; 8:30 a.m. onwards.</b>";
+                }
+
+                if (sStandardName == "Nursery" || sStandardName == "Junior KG" || sStandardName == "Senior KG" || sStandardName == "1")
+                {
+                    liPPSHAdmissionExample.InnerHtml =
+                        "For Example: If you apply for Jr KG it is mandatory to complete Nursery in previous school as well as applicable documents have to be submitted. Same applies for Sr. KG to Grade 1.";
+                }
+                if (sStandardName == "Junior KG" || sStandardName == "Senior KG" || sStandardName == "1" || sStandardName == "6")
+                {
+                    spnAdmissionDate.InnerHtml = "as on today.";
+                    spn1to5.InnerHtml = " as on today.";
+                }
+
+                if (sStandardName == "5"  || sStandardName == "7" || sStandardName == "8" || sStandardName == "9")
+                    spn1to5.InnerHtml = "with effect from <b>Monday, 7th December 2026; 8:30 a.m. onwards.</b>";
+
+                if (sStandardName == "5"  ||sStandardName == "6"  || sStandardName == "7" || sStandardName == "8" || sStandardName == "9")
+                    liPPSHSTEMFees2027_28.Visible = true;
+                 else
+                    liPPSHSTEMFees2027_28.Visible = false;
+
+                 if (sStandardName == "2" || sStandardName == "3" ||sStandardName == "4" || sStandardName == "5" || sStandardName == "6" || sStandardName == "7" || sStandardName == "8" || sStandardName == "9")
+                {
+                    Spanadmission2728.InnerHtml = "is Friday, 25<sup>th</sup> June, 2027.";
+                }
+               
+
+            }
+            //if (hidAcademicYearId.Value.ToInt() == 16 && (sStandardName == "Junior KG" || sStandardName == "Senior KG" || sStandardName == "1" || sStandardName == "2" || sStandardName == "3" || sStandardName == "4" || sStandardName == "6"))
+            //{
+            //    TrPPSHWaitingList2027_28.Visible = true;
+            //    trPPSHAdmissson.Visible = false;
+            //    trPPSHAdmissson2to9.Visible = false;
+            //}
+            
+           
         }
 
         if (ConfigurationManager.AppSettings["SchoolID"].ToInt() == Constants.SchoolId.PPSN.ToInt())
         {
             if (sStandardName == "Junior KG" || sStandardName == "1")
                 liDueNote.Visible = false;
+            if (sStandardName == "Nursery")
+            {
+                AgeCriteriaNurseryNote.Visible = true;
+                spNonNandedResidents.Visible = false;
+            }
+            else
+            {
+                AgeCriteriaNurseryNote.Visible = false;
+                spNonNandedResidents.Visible = true;
+            }
 
             if (!(sStandardName == "Nursery" || sStandardName == "Junior KG" || sStandardName == "Senior KG" || sStandardName == "1"))
             {

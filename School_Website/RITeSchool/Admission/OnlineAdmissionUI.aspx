@@ -449,7 +449,7 @@
                                     <ol style="line-height:20px;">
                                         <li>Click on the 'Admission Form' link for the Online Admission Application. (Please refer to the section "Grade Selection for Admission Application" mentioned below)</li>
                                         <li>Fill out the details mentioned in the admission application form.</li>
-                                        <li>Admission Application Form Fee of Rs. 1000 is payable for each application of any grade.</li>
+                                        <li>Admission Application Form Fee of Rs. 1500 is payable for each application of any grade.</li>
                                         <li>After filling up and submission of the online admission form, three pdf files will be generated containing :
                                         <ol style="list-style-type: lower-alpha;">
                                             <li>Form Fee Receipt</li>
@@ -687,7 +687,7 @@
                                                 NURSERY
                                             </td>
                                             <td class="BorderRightCell">
-                                                Born between 1<sup>st</sup> Oct 2022 to 31<sup>st</sup> Dec 2023
+                                                Born between 1<sup>st</sup> July 2023 to 30<sup>th</sup> June 2024
                                             </td>
                                         </tr>
                                         <tr>
@@ -695,7 +695,7 @@
                                                 JUNIOR KG
                                             </td>
                                             <td class="BorderRightCell">
-                                                Born between 1<sup>st</sup> Oct 2021 to 31<sup>st</sup> Dec 2022
+                                                Born between 1<sup>st</sup> July 2022 to 30<sup>th</sup> June 2023
                                             </td>
                                         </tr>
                                         <tr>
@@ -703,7 +703,7 @@
                                                 SENIOR KG
                                             </td>
                                             <td class="BorderRightCell">
-                                               Born between 1<sup>st</sup> Oct 2020 to 31<sup>st</sup> Dec 2021
+                                               Born between 1<sup>st</sup> July 2021 to 30<sup>th</sup> June 2022
                                             </td>
                                         </tr>
                                         <tr>
@@ -711,7 +711,7 @@
                                                 1
                                             </td>
                                             <td class="BorderRightCell">
-                                               Born between 1<sup>st</sup> Oct 2019 to 31<sup>st</sup> Dec 2020
+                                               Born between 1<sup>st</sup> July 2020 to 30<sup>th</sup> June 2021
                                             </td>
                                         </tr>                                        
                                     </table>

@@ -101,6 +101,14 @@ namespace DataCommunicator.PayrollDC
            }
         }
 
+        public DataTable GetLeaveStatuses()
+        {
+            using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
+            {
+                return oSQLServerDbUtility.ExecuteStoredProcedureAndGetDataTable("usp_GetLeaveStatuses");
+            }
+        }
+
         //private List<UserApplyLeaveDetails> FillCategories(SqlDataReader aoSqlDataReader)
         //{
         //    List<UserApplyLeaveDetails> lstUserApplyLeaveDetails = new List<UserApplyLeaveDetails>();
@@ -155,7 +163,7 @@ namespace DataCommunicator.PayrollDC
 
         public List<LeaveApprovalDetails> LeaveApprovalRemarks { get; private set; }
 
-        public List<UserApplyLeaveDetails> GetAll(int aiSchoolId, int aiUserId, int aiCategoryId,bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, string asSortExpression, int aiStartIndex, int aiEndIndex)
+        public List<UserApplyLeaveDetails> GetAll(int aiSchoolId, int aiUserId, int aiCategoryId,bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, int aiStatusId, string asSortExpression, int aiStartIndex, int aiEndIndex)
         {
             LeaveApprovalRemarks = new List<LeaveApprovalDetails>();
             using (SQLServerDbUtility oSQLServerDbUtility = new SQLServerDbUtility())
@@ -169,6 +177,7 @@ namespace DataCommunicator.PayrollDC
                 oSQLServerDbUtility.AddParameter("ShowOldNonUpdated", abShowOldNonUpdated, SqlDbType.Bit);
                 oSQLServerDbUtility.AddParameter("ShowOnlyNonUpdated", abShowOnlyNonUpdated, SqlDbType.Bit);
                 oSQLServerDbUtility.AddParameter("AcademicYearId", aiAcademicYearId, SqlDbType.Int);
+                oSQLServerDbUtility.AddParameter("StatusId", aiStatusId, SqlDbType.Int);
                 using (SqlDataReader oSqlDataReader = oSQLServerDbUtility.ExecuteStoredProcedureAndGetresult("usp_GetAllLeaveApprovalCatgories"))
                 {
                     List<UserApplyLeaveDetails> lstUserApplyLeaveDetails = new List<UserApplyLeaveDetails>();
@@ -212,7 +221,8 @@ namespace DataCommunicator.PayrollDC
                 LeaveName = Convert.ToString(aoSqlDataReader["LeaveName"]),
                 LeaveBalance = Convert.ToDecimal(aoSqlDataReader["LeaveBalance"]),
                 IsApprovedByApprover = Convert.ToBoolean(aoSqlDataReader["IsApprovedByApprover"]),
-                IsLeaveUpdatedInPayroll = aoSqlDataReader["IsLeaveUpdatedInPayroll"].ToBool()
+                IsLeaveUpdatedInPayroll = aoSqlDataReader["IsLeaveUpdatedInPayroll"].ToBool(),
+                InsertDate = aoSqlDataReader["InsertDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(aoSqlDataReader["InsertDate"])
             };
         }
 

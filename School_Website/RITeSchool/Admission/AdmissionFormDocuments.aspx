@@ -425,10 +425,11 @@
 
                                             <li id="liGrade2" runat="server" visible="false">Activity paper of 1 hour will be conducted on Saturday, <b>11<sup>th</sup> January 2025</b> and Saturday, <b>25<sup>th</sup> January 2025 at 10.00 a.m.</b> in school premises. Form numbers of selected students in <b>merit list will be declared on 16<sup>th</sup> & 30<sup>th</sup> January 2025 at 03:00 pm on website and notice board.</b> </li>
                                             <li id="liGrade2to8" runat="server" visible="false">If seats remain vacant and those who have not appeared 7th February 2026 activity, another activity will be conducted on Saturday, 14th February 2026 at 10:00 a.m. in the school premises. The form numbers of selected students (merit list) will be declared on 18th February 2026 at 3:00 p.m. on the school website and notice board.</li>
-
-                                            <li id="NursaryCriteria" runat="server">Eligibility : 3 years complete as on 31<sup>st</sup>
-                                                December, 2025.(All children born on or between 1<sup>st</sup> October, 2021 and
-                                                31<sup>st</sup> December, 2022).</li>
+                                            <li id="AgeCriteriaNurseryNote" runat="server">Age Criteria is as per the Maharashtra Government Resolution No. </br>
+                                                <b># RTE - 2024 / PRA. KRA. 139(E-1446124) / S.D.1 dated 15/10/2026.</b></li>
+                                            <li id="NursaryCriteria" runat="server">Eligibility : 3 years complete as on 30<sup>th</sup>
+                                                June, 2027.(All children born on or between 15<sup>th</sup>June, 2023 and
+                                                15<sup>th</sup> July, 2024).</li>
                                             <li id="JrkG" runat="server">Eligibility : 4 years complete as on 31<sup>st</sup> December, 2025.(All children born on or between 1<sup>st</sup> October, 2020 to 31<sup>st</sup> December, 2021).</li>
                                             <li id="SrKg" runat="server">Eligibility : 5 years complete as on 31<sup>st</sup> December,
                                                 2025.(All children born on or between 1<sup>st</sup> October, 2019 to 31<sup>st</sup>
@@ -456,7 +457,7 @@
                                                 <span style="padding-left: 18px; font-weight: bold;">Note: Cousins will not be considered
                                                     as siblings.</span></br> 
                                                 4. If seats remain, Nanded City tenants. <b>(*Bonafide certificate from Nanded City is required)</b></br> 
-                                                5. If seats remain, then Non-Nanded City residents.
+                                               <span id="spNonNandedResidents" runat="server">5. If seats remain, then Non-Nanded City residents.</span>
                                                 <%--5. If seats remain, then Non-Nanded City residents.--%>
                                             </li>
                                         </ul>
@@ -720,7 +721,7 @@
                                     <span id="spnPPSHAdmissionForNurTo1" runat="server">ADMISSION PROCESS FOR NURSERY TO GRADE 1</span>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="trPPSHAdmissson" runat="server">
                                 <td class="TxtNormal">
                                     <ul>
                                         <li>Forms will be available on our website <a href="#" onclick="OpenPPSHPopup()">https://pawarpublicschool.com/hinjawadi</a> <span runat="server" id="spnAdmissionDate">with effect from  <b>Monday,
@@ -737,16 +738,17 @@
                                         <li>Submission of all the documents as per the requirement is mandatory to complete the admission process.</li>
                                         <li>Admission will be confirmed upon receipt of Admission fees,Quarterly fees, and Caution Money Deposit.</li>
                                         <li>Procurement of form is not a guarantee of admission.</li>
-                                        <li>Please Note: We have limited seats for each class.Hence admissions will be granted subject to availability of seats.</li>
-                                            **Please check the age criteria to confirm the eligibility of the child for admission.
+                                        <li id="liPPSHAdmissionNote" runat="Server">Please Note: We have limited seats for each class.Hence admissions will be granted subject to availability of seats. </br>
+                                            **Please check the age criteria to confirm the eligibility of the child for admission.</li>
                                         <li>Please note: It is mandatory for your ward to have completed the previous grade.</li>
-                                        <li>For Example: A child born between 1st October, 2022 and 31st December, 2022 is applicable for Nursery as well as Jr KG. If you apply for Jr KG it is mandatory to complete Nursery in previous school as well as applicable documents have to be submitted. Same applies for Sr. KG to Grade 1.</li>
+                                        <li id="liPPSHAdmissionExample" runat="server">For Example: A child born between 1st October, 2022 and 31st December, 2022 is applicable for Nursery as well as Jr KG. If you apply for Jr KG it is mandatory to complete Nursery in previous school as well as applicable documents have to be submitted. Same applies for Sr. KG to Grade 1.</li>
                                     </ul>
                                 </td>
                             </tr>
                            </table> 
                         </td>
                     </tr>
+                    
                     <tr id="TrPPSHGrade2ToGrade9AdmissionProcess" runat="server" visible="false">
                         <td colspan="4">
                             <table>
@@ -755,7 +757,7 @@
                                         <span id="spnPPSHAdmissionProcess" runat="server">ADMISSION PROCESS FOR GRADE 2 TO GRADE 9</span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="trPPSHAdmissson2to9" runat="server">
                                     <td class="TxtNormal">
                                         <ul>
                                             <li>Forms will be available on our website <a href="#" onclick="OpenPPSHPopup()">https://pawarpublicschool.com/hinjawadi</a><span runat="server" id="spn1to5"> with effect from <b>Monday,
@@ -775,24 +777,43 @@
                                             <li>Please provide the receipt of the online payment for the admission form fee, along with the bonafide certificate from the previous school. The bonafide certificate should include the Apaar ID and UDISE +ID of the student, as these are mandatory for further processing.</li>                                            
                                             <li>Kindly carry both the original and photocopy of documents for physical verification of documents.</li>
                                             <li>PTA fees- Cash of amount &#8377; 50/- has to be paid towards Parent Teacher Association at the same time.</li>
+                                            <li id="liPPSHSTEMFees2027_28" runat="server" visible="false">STEM Fees (Mandatory for Grade 5 to Grade 9) Annual fees have to be paid along with the school fees, which will be informed at the time of admission.</li>
                                             <li>School will share the online payment details through mail once the activity papers are checked and 
                                                 the admission form along with the self-attested documents are clear.</li>
                                             <li>Admission will be confirmed upon receipt of Admission fees,Quarterly fees, and Caution Money Deposit.</li>
                                             <li>Procurement of form is not a guarantee of admission.</li>
                                             <li>Please Note: We have limited seats for each class. Hence admissions will be granted subject to availability of seats.</li>
-                                                **Please check the age criteria to confirm the eligibility of the child for admission.
+                                                  **Please check the age criteria to confirm the eligibility of the child for admission.
                                             <li><b>If a parent, fails to submit all the supporting documents required by the school for granting 
                                                    admission, the school will have right to cancel the admission.</b></li>
                                             <li><b>Mandatory to submit Students Aadhar card to complete admission process.</b></li>
                                             <li><b>Admission to Grade 2 to 9 will be treated as provisional till the receipt of the Original 
                                                    Leaving/ Transfer Certificate from the previous school. The last date for submission  
-                                                   is Friday, 26<sup>th</sup> June, 2026.</b></li>
+                                                  <span runat="server" id="Spanadmission2728">  is Friday, 26<sup>th</sup> June, 2026.</span></b></li>
                                         </ul>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
+
+                    <tr id="TrPPSHWaitingList2027_28" runat="server" visible="false">
+                        <td colspan="4">
+                            <table>
+                                 <tr>
+                                    <td class="TxtNormal">
+                                        <ul>
+                                            <li>Presently we do not have seats for Junior KG to Grade 4 and Grade 6.</li>
+                                            <li> We request you to visit our website<a href="#" onclick="OpenPPSHPopup()">www.ppshinjewadi.com</a>and fill the waiting list form as per the respective grades from <b>Tuesday, 17th November, 2026 onwards.</b> </li>
+                                            <li> Once a seat becomes available in the specified grades for the 2027-2028 academic year, the school administration will contact you via email or phone.</li>
+                                            <li>Please note the preference will be first given to thesiblings and then the general category admissions.</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                  
                     <%-- <tr id="tr6" runat="server" visible="true">
                         <td colspan="4">
                             <table>

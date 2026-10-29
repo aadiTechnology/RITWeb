@@ -282,7 +282,7 @@ public partial class ApplyLeaveUI : SchoolBase
 
             DateTime dtEndDate;
             // If the start date is missing/unparseable, let the RequiredField/date validators handle it.
-            if (!DateTime.TryParse(txtStartDate.Text, out dtEndDate))
+            if (!DateTime.TryParse(txtEndDate.Text, out dtEndDate))
             {
                 e.IsValid = true;
                 return;
@@ -385,6 +385,7 @@ public partial class ApplyLeaveUI : SchoolBase
         }
         else if (iCategoryId == 5)
         {
+            tblRemark.Visible = true;
             txtRemark.Text = oUserApplyLeaveDetails.ApproverRemark;
         }
         else
@@ -435,7 +436,9 @@ public partial class ApplyLeaveUI : SchoolBase
             txtEndDate.Enabled = true;
             txtTotalDays.Enabled = true;
             custValDateValidate.Enabled = true;
-            trRemark.Visible = false;
+            // Keep Remark visible for All Leaves (CategoryId=5) so Final Approve can capture remark.
+            if (iCategoryId != 5)
+                trRemark.Visible = false;
             btnApprove.Visible = false;
             btnReject.Visible = false;
             trSeparator.Visible = false;

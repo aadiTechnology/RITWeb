@@ -19,6 +19,11 @@ namespace BusinessLogic.PayrollBL
        private int miTotalRows;
 
        /// <summary>
+       /// Approver remarks loaded with the last GetAll call (second result set from usp_GetAllLeaveApprovalCatgories).
+       /// </summary>
+       public List<LeaveApprovalDetails> LeaveApprovalRemarks { get; private set; }
+
+       /// <summary>
        /// Leave types (by ShortName) that ARE allowed with a back-dated start date.
        /// Any leave type not in this list is blocked when the start date is older than the
        /// configured number of days. Extend this list to allow more types for back-dated apply.
@@ -29,10 +34,12 @@ namespace BusinessLogic.PayrollBL
        public UserApplyLeaveDetailsBL()
        {
            moUserApplyLeaveDetailsDC = new UserApplyLeaveDetailsDC();
+           LeaveApprovalRemarks = new List<LeaveApprovalDetails>();
        }
        public UserApplyLeaveDetailsBL(int aiSchoolId, int aiInsertedById, int aiAcademicYearId)
        {
            moUserApplyLeaveDetailsDC = new UserApplyLeaveDetailsDC(aiSchoolId, aiInsertedById, aiAcademicYearId);
+           LeaveApprovalRemarks = new List<LeaveApprovalDetails>();
        }
        //public UserApplyLeaveDetailsBL(int aiSchoolId, int aiInsertedById, int aiAcademicYearId)
        // {
@@ -58,6 +65,11 @@ namespace BusinessLogic.PayrollBL
           return moUserApplyLeaveDetailsDC.GetCategory(Id);
       }
 
+      public DataTable GetLeaveStatuses()
+      {
+          return moUserApplyLeaveDetailsDC.GetLeaveStatuses();
+      }
+
       //public List<UserApplyLeaveDetails> GetAllFillCategories(int aiCategoryId, int aiUserId)
       //{
       //    return this.moUserApplyLeaveDetailsDC.GetAllFillCategories(aiCategoryId,aiUserId);
@@ -70,7 +82,7 @@ namespace BusinessLogic.PayrollBL
 
 
 
-      public List<UserApplyLeaveDetails> GetAll(int aiSchoolId, int aiUserId, string aiCategoryId, bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, string sortExpression, string sortDirection, int startRowIndex, int maximumRows)
+      public List<UserApplyLeaveDetails> GetAll(int aiSchoolId, int aiUserId, string aiCategoryId, bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, int aiStatusId, string sortExpression, string sortDirection, int startRowIndex, int maximumRows)
       {
           if (sortExpression == string.Empty)
               sortExpression = "StartDate Desc, EndDate asc, DesignationId asc ,FirstName  asc, MiddleName asc, LastName asc";
@@ -91,7 +103,9 @@ namespace BusinessLogic.PayrollBL
 
           maximumRows = startRowIndex + Constants.I_GRID_PAGE_COUNT;
 
-          List<UserApplyLeaveDetails> lstUserApplyLeaveDetails = moUserApplyLeaveDetailsDC.GetAll(aiSchoolId, aiUserId, aiCategoryId.ToInt(),abShowOldNonUpdated, aiAcademicYearId, abShowOnlyNonUpdated, sortExpression, startRowIndex, maximumRows);
+          List<UserApplyLeaveDetails> lstUserApplyLeaveDetails = moUserApplyLeaveDetailsDC.GetAll(aiSchoolId, aiUserId, aiCategoryId.ToInt(),abShowOldNonUpdated, aiAcademicYearId, abShowOnlyNonUpdated, aiStatusId, sortExpression, startRowIndex, maximumRows);
+
+          LeaveApprovalRemarks = moUserApplyLeaveDetailsDC.LeaveApprovalRemarks ?? new List<LeaveApprovalDetails>();
 
           //miTotalRows
 
@@ -101,7 +115,7 @@ namespace BusinessLogic.PayrollBL
           return lstUserApplyLeaveDetails;
       }
 
-      public int Count(int aiSchoolId, int aiUserId, string aiCategoryId, bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, string sortExpression, string sortDirection, int startRowIndex, int maximumRows)
+      public int Count(int aiSchoolId, int aiUserId, string aiCategoryId, bool abShowOldNonUpdated, int aiAcademicYearId, bool abShowOnlyNonUpdated, int aiStatusId, string sortExpression, string sortDirection, int startRowIndex, int maximumRows)
       {
           return miTotalRows;
       }
