@@ -4,6 +4,13 @@
 
 <%@ Register TagPrefix="Wizard" TagName="AdmissionSteps" Src="~/UserControls/AdmissionWizardStepsUC.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainBody" runat="Server">
+<style>
+    .blink-text {
+        color: red;
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
     <div>
         <table>
             <tr>
@@ -23,7 +30,7 @@
                 <tbody>
                     <tr id="trInst" runat="server">
                         <td class="HeadTxtBWOPadding borderBtm" align="left" colspan="4">
-                            Admission Form - Instructions
+                            Admission Form - Instructions 
                         </td>
                     </tr>
                     <tr>
@@ -262,7 +269,7 @@
                 <tbody>
                     <tr>
                         <td class="HeadTxtBWOPadding borderBtm" align="left" colspan="4">
-                            Admission Form - Instructions
+                            Admission Form - Instructions <span id="spnPPSN" runat="server" style="color: red; font-weight: bold;" class="blink-text">(Only for Nanded City Residents)</span>
                         </td>
                     </tr>
                     <tr>
@@ -332,8 +339,8 @@
                                      <span style="display: block;
                                         padding-left: 15px;"><b>Please Note </b>- Ration Card <b>Will NOT</b> be accepted
                                         as proof of residence.</span>
-                                    <li>The Medical Certificate provided in the printout of online Admission Form has to
-                                        be completely filled, signed and stamped by a Registered Medical Practitioner <b>(Mandatory)</b>.</li>
+                                    <li>The Medical <span id="SPNPPSNMedicalCertificate" runat="server">Certificate</span> provided in the printout of online Admission Form has to
+                                         be completely filled, signed and stamped by a Registered Medical Practitioner <b>(Mandatory)</b>.</li>
                                     <li>Photocopy of Passport / OCI card (for students migrating from outside India).</li>
                                     <li>Parents from the Reserved Category, who want the caste to be entered in the school register should submit a self-attested copy of the <b>Caste Certificate in the name of the student/ father and issued by the concerned Government Authorities at the time of admission</b> </li>
 
@@ -1261,5 +1268,13 @@
                 window.open('https://pawarpublicschool.com/hinjawadi/', "_blank")
             }
         </script>
+        <script>
+            $(document).ready(function () {
+                setInterval(function () {
+                    $('.blink-text').fadeToggle(500);
+                }, 500);
+            });
+       </script>
+ 
     </div>
 </asp:Content>

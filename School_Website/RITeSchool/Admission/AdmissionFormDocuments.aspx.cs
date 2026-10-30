@@ -422,7 +422,10 @@ public partial class AdmissionFormDocuments : SchoolBase
                 trProcessfor6STD.Visible = false;
                 trProcessforSTD.Visible = true;
             }
-               
+
+            SPNPPSNMedicalCertificate.InnerHtml = "History Sheet";
+            spnPPSN.Visible = true;
+            spnPPSN.Style["color"] = "red" ;              
           }
         
         if (ConfigurationManager.AppSettings["SchoolID"].ToInt() == Constants.SchoolId.PPS.ToInt())

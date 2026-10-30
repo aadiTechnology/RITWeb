@@ -756,11 +756,11 @@
                                 <td>
                                 </td>
                             </tr>
-                            <tr>
-                                <td align="justify" class="clsMainPoints">
-                                    The Application Form can be filled online with the help of the following instructions :
-                                </td>
-                            </tr>
+                           <tr>
+                          <td align="justify" class="clsMainPoints">
+                           <li id="liApplForm" runat="Server" style="display: inline;">The Application Form</li> can be filled online with the help of the following instructions :
+                           </td>
+                           </tr>
                             <tr class="Height5">
                                 <td>
                                 </td>
@@ -776,7 +776,7 @@
                             </tr>
                             <tr>
                                 <td align="justify" class="clsMainPoints">
-                                    2. Click on the 'Submit Form' button for the Online Admission Application. (Please refer to the section "Grade List" mentioned below).
+                                    2. Click on the 'Submit Form' button for the Online Admission Application. (Please refer to the section  "<li id="liGradeList" runat="Server" style="display: inline;">Grade List</li>" mentioned below).
                                 </td>
                             </tr>
                             <tr class="Height5">
@@ -1065,7 +1065,11 @@
                                     </span>
                                 </td>
                                 </tr>
-                 <tr>
+                 <tr id="trPpshNextYearNote" runat="server" visible="false">
+                    <td>
+                        <span style="font-size:12px;font-weight:bold;">For details regarding mid term admissions for the current academic year 2026-2027 please mail on <a href="mailto:admissions@ppshinjewadi.com">admissions@ppshinjewadi.com</a></span>
+                    </td>
+                 </tr>
                 <td align="left" colspan="2">
                 <asp:ListView ID="lstvwAdmissionStatusNxtYear" runat="server" ItemPlaceholderID="itemPlaceholder" DataKeyNames="EnableAdmissionFormFee,Standard_Id,Academic_Year_Id,Standard_Name"
                             OnItemDataBound="lstvwAdmissionStatusNxtYear_ItemDataBound" OnItemCommand="lstvwAdmissionStatusNxtYear_ItemCommand"

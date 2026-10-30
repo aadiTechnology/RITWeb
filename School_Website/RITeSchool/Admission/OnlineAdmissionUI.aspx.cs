@@ -935,6 +935,12 @@ public partial class OnlineAdmissionUI : SchoolBase
             trDPISBranch.Visible = true;
             lblBranchName.Text = "Branch - Ravet";
         }
+        if (iSchoolId == Constants.SchoolId.PPSN.ToInt())
+        {
+            liApplForm.InnerHtml = "The Admission Form";
+            liGradeList.InnerHtml = "Standard List";
+        }
+
 	}
 
     
@@ -1179,6 +1185,16 @@ public partial class OnlineAdmissionUI : SchoolBase
                 {
                     dictGoogleForm.Add(item.StandardName, item.WaitingListURL);
                 }
+            }
+        }
+
+        if (ConfigurationManager.AppSettings["SchoolId"].ToInt() == Constants.SchoolId.PPSH.ToInt())
+        {
+            if (oDataTable.Rows[0]["Academic_Year_Id"] != DBNull.Value && oDataTable.Rows[0]["Academic_Year_Id"].ToString() == "15")
+            {
+                oDataTable.Rows.Clear();
+                spnNextYearLabel.Visible = false;
+                trPpshNextYearNote.Visible = true;
             }
         }
 

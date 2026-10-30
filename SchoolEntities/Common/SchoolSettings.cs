@@ -248,6 +248,7 @@ namespace SchoolEntities
         public bool ForceStudentToSubmitMandatoryFields { get; set; }
         public bool ForceStudentToUseMobileApp { get; set; }
         public int RestrictLeaveApplyCount { get; set; }
+        public bool RedirectToNewWebsite { get; set; }
    }
 
     /// <summary>
